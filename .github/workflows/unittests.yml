@@ -1,0 +1,33 @@
+name: Xamarin
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches: 
+      - "*"
+
+jobs:
+    UnitTest_GitTrends:
+      runs-on: macos-latest
+
+      steps:
+      - uses: actions/checkout@v1
+        
+      - name: Setup .NET v6.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+          include-prerelease: true
+        
+      - name: Restore NuGet 
+        run: |
+          nuget restore
+          
+      - name: Run Unit Tests
+        run: |   
+          UnitTestProject=`find . -name CommunityToolkit.Maui.Markup.UnitTests.csproj`
+          echo $UnitTestProject
+          
+          dotnet test  -c Release $UnitTestProject
