@@ -356,15 +356,15 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			AssertLabelTextMultiBound(label, 5, testConvert, testConvertBack, 2, converter);
 		}
 
-		List<BindingBase> GetTestBindings(int count) => testBindings.Take(count).ToList();
+		List<BindingBase> GetTestBindings(int count) => testBindings?.Take(count).ToList() ?? Enumerable.Empty<BindingBase>().ToList();
 
-		object[] GetTestConvertValues(int count) => testConvertValues.Take(count).ToArray();
+		object[] GetTestConvertValues(int count) => testConvertValues?.Take(count).ToArray() ?? Array.Empty<BindingBase>();
 
-		string PrefixDots(object? value, int count) => $"{new string('.', count)}{value}";
+        static string PrefixDots(object? value, int count) => $"{new string('.', count)}{value}";
 
-		string RemoveDots(string text, int count) => text.Substring(count);
+        static string RemoveDots(string text, int count) => text.Substring(count);
 
-		string Format(int parameter, params object?[] values)
+        static string Format(int parameter, params object?[] values)
 		{
 			var formatted = $"'{PrefixDots(values[0], parameter)}'";
 			for (var i = 1; i < values.Length; i++)
