@@ -112,8 +112,8 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             var converter = new FuncConverter<bool, Color, float>(
                 (isRed, alpha, culture) => { convertCulture = culture; return (isRed ? Colors.Red : Colors.Green).MultiplyAlpha(alpha); },
                 (color, alpha, culture) => { convertBackCulture = culture; return color == Colors.Red.MultiplyAlpha(alpha); })
-            .AssertConvert(true, 0.5, Colors.Red.MultiplyAlpha(0.5f), twoWay: true, culture: expectedCulture)
-            .AssertConvert(false, 0.2, Colors.Green.MultiplyAlpha(0.2f), twoWay: true, culture: expectedCulture);
+            .AssertConvert(true, 0.5f, Colors.Red.MultiplyAlpha(0.5f), twoWay: true, culture: expectedCulture)
+            .AssertConvert(false, 0.2f, Colors.Green.MultiplyAlpha(0.2f), twoWay: true, culture: expectedCulture);
 
             Assert.That(convertCulture, Is.EqualTo(expectedCulture));
             Assert.That(convertBackCulture, Is.EqualTo(expectedCulture));
@@ -128,8 +128,8 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             var converter = new FuncConverter<bool, Color, float>(
                 (isRed, alpha) => (isRed ? Colors.Red : Colors.Green).MultiplyAlpha(alpha),
                 (color, alpha) => color == Colors.Red.MultiplyAlpha(alpha))
-            .AssertConvert(true, 0.5, Colors.Red.MultiplyAlpha(0.5f), twoWay: true)
-            .AssertConvert(false, 0.2, Colors.Green.MultiplyAlpha(0.2f), twoWay: true);
+            .AssertConvert(true, 0.5f, Colors.Red.MultiplyAlpha(0.5f), twoWay: true)
+            .AssertConvert(false, 0.2f, Colors.Green.MultiplyAlpha(0.2f), twoWay: true);
 
             Assert.That(converter.Convert(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(Colors.Green.MultiplyAlpha(default)));
             Assert.That(converter.ConvertBack(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(default(bool)));
@@ -153,8 +153,8 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
         {
             new FuncConverter<bool, Color, float>(
                 (isRed, alpha) => (isRed ? Colors.Red : Colors.Green).MultiplyAlpha(alpha))
-            .AssertConvert(true, 0.5, Colors.Red.MultiplyAlpha(0.5f))
-            .AssertConvert(false, 0.2, Colors.Green.MultiplyAlpha(0.2f));
+            .AssertConvert(true, 0.5f, Colors.Red.MultiplyAlpha(0.5f))
+            .AssertConvert(false, 0.2f, Colors.Green.MultiplyAlpha(0.2f));
         }
 
         [Test]
@@ -172,8 +172,8 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             new FuncConverter<bool, Color, float>(
                 null,
                 (color, alpha) => color == Colors.Red.MultiplyAlpha(alpha))
-            .AssertConvert(true, 0.5, Colors.Red.MultiplyAlpha(0.5f), backOnly: true)
-            .AssertConvert(false, 0.2, Colors.Green.MultiplyAlpha(0.2f), backOnly: true);
+            .AssertConvert(true, 0.5f, Colors.Red.MultiplyAlpha(0.5f), backOnly: true)
+            .AssertConvert(false, 0.2f, Colors.Green.MultiplyAlpha(0.2f), backOnly: true);
         }
 
         [Test]
