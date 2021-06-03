@@ -100,7 +100,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             label.Bind(
                 Label.TextColorProperty,
                 nameof(viewModel.IsRed),
-                convert: (bool? isRed, float? alpha) => (isRed.HasValue && isRed.Value) ? Color.FromRgb(1, 0, 0) : Color.FromRgb(0, 1, 0).MultiplyAlpha(alpha ?? throw new NullReferenceException()),
+                convert: (bool? isRed, float? alpha) => (isRed.HasValue && isRed.Value ? Color.FromRgb(1, 0, 0) : Color.FromRgb(0, 1, 0)).MultiplyAlpha(alpha ?? throw new NullReferenceException()),
                 converterParameter: 0.5f
             );
 
@@ -109,9 +109,9 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 Label.TextColorProperty,
                 nameof(viewModel.IsRed),
                 assertConverterInstanceIsAnyNotNull: true,
-                converterParameter: 0.5,
-                assertConvert: c => c.AssertConvert<bool?, Color>(true, 0.5, Color.FromRgb(1, 0, 0).MultiplyAlpha(0.5f))
-                                     .AssertConvert<bool?, Color>(false, 0.2, Color.FromRgb(0, 1, 0).MultiplyAlpha(0.2f))
+                converterParameter: 0.5f,
+                assertConvert: c => c.AssertConvert<bool?, Color>(true, 0.5f, Color.FromRgb(1, 0, 0).MultiplyAlpha(0.5f))
+                                     .AssertConvert<bool?, Color>(false, 0.2f, Color.FromRgb(0, 1, 0).MultiplyAlpha(0.2f))
             );
         }
 
@@ -157,9 +157,9 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 nameof(viewModel.IsRed),
                 BindingMode.TwoWay,
                 assertConverterInstanceIsAnyNotNull: true,
-                converterParameter: 0.5,
-                assertConvert: c => c.AssertConvert(true, 0.5, Color.FromRgb(1, 0, 0).MultiplyAlpha(0.5f), twoWay: true)
-                                     .AssertConvert(false, 0.2, Color.FromRgb(0, 1, 0).MultiplyAlpha(0.2f), twoWay: true)
+                converterParameter: 0.5f,
+                assertConvert: c => c.AssertConvert(true, 0.5f, Color.FromRgb(1, 0, 0).MultiplyAlpha(0.5f), twoWay: true)
+                                     .AssertConvert(false, 0.2f, Color.FromRgb(0, 1, 0).MultiplyAlpha(0.2f), twoWay: true)
             );
         }
 

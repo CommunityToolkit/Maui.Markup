@@ -40,7 +40,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 	public class MarkupBaseTestFixture : BaseTestFixture
 	{
-		protected void TestPropertiesSet<TBindable, TPropertyValue>(
+		protected static void TestPropertiesSet<TBindable, TPropertyValue>(
 			TBindable? bindable,
 			Action<TBindable?> modify,
 			params (BindableProperty property, TPropertyValue beforeValue, TPropertyValue expectedValue)[] propertyChanges) where TBindable : BindableObject
@@ -53,11 +53,11 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 			modify(bindable);
 
-			foreach (var change in propertyChanges)
-				Assert.That(bindable.GetPropertyIfSet(change.property, change.beforeValue), Is.EqualTo(change.expectedValue));
+			foreach (var (property, beforeValue, expectedValue) in propertyChanges)
+				Assert.That(bindable.GetPropertyIfSet(property, beforeValue), Is.EqualTo(expectedValue));
 		}
 
-		protected void TestPropertiesSet<TBindable, TPropertyValue>(
+		protected static void TestPropertiesSet<TBindable, TPropertyValue>(
 			TBindable? bindable,
 			Action<TBindable?> modify,
 			params (BindableProperty property, TPropertyValue expectedValue)[] propertyChanges) where TBindable : BindableObject
