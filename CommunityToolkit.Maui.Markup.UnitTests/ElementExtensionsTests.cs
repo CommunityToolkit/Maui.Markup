@@ -32,15 +32,15 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
             label.RemoveDynamicResources(Label.TextProperty, Label.TextColorProperty);
             label.Resources["TextKey"] = "ChangedTextValue";
-            label.Resources["ColorKey"] = Color.FromRgb(1, 0, 0);
+            label.Resources["ColorKey"] = Colors.Green;
 
             Assert.That(label.Text, Is.EqualTo("TextValue"));
-            Assert.That(label.TextColor, Is.EqualTo(Color.FromRgb(0, 1, 0)));
+            Assert.That(label.TextColor, Is.EqualTo(Colors.Green));
         }
 
         Label AssertDynamicResources()
         {
-            var label = new Label { Resources = new ResourceDictionary { { "TextKey", "TextValue" }, { "ColorKey", Color.FromRgb(0, 1, 0) } } };
+            var label = new Label { Resources = new ResourceDictionary { { "TextKey", "TextValue" }, { "ColorKey", Colors.Green } } };
 
             Assert.That(label.Text, Is.EqualTo(Label.TextProperty.DefaultValue));
             Assert.That(label.TextColor, Is.EqualTo(Label.TextColorProperty.DefaultValue));
@@ -49,7 +49,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                                    (Label.TextColorProperty, "ColorKey"));
 
             Assert.That(label.Text, Is.EqualTo("TextValue"));
-            Assert.That(label.TextColor, Is.EqualTo(Color.FromRgb(0, 1, 0)));
+            Assert.That(label.TextColor, Is.EqualTo(Colors.Green));
 
             return label;
         }

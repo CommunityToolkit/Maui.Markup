@@ -81,7 +81,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             label.Bind(
                 Label.TextColorProperty,
                 nameof(viewModel.IsRed),
-                convert: (bool? isRed) => isRed.HasValue && isRed.Value ? Color.FromRgb(1, 0, 0) : Color.FromRgba(0, 0, 0, 0)
+                convert: (bool? isRed) => isRed.HasValue && isRed.Value ? Colors.Red : Colors.Transparent
             );
 
             BindingHelpers.AssertBindingExists<Color>(
@@ -89,7 +89,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 Label.TextColorProperty,
                 nameof(viewModel.IsRed),
                 assertConverterInstanceIsAnyNotNull: true,
-                assertConvert: c => c.AssertConvert<bool?, Color>(true, Color.FromRgb(1, 0, 0)).AssertConvert<bool?, Color>(false, Color.FromRgba(0, 0, 0, 0))
+                assertConvert: c => c.AssertConvert<bool?, Color>(true, Colors.Red).AssertConvert<bool?, Color>(false, Colors.Transparent)
             );
         }
 
@@ -100,7 +100,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             label.Bind(
                 Label.TextColorProperty,
                 nameof(viewModel.IsRed),
-                convert: (bool? isRed, float? alpha) => (isRed.HasValue && isRed.Value ? Color.FromRgb(1, 0, 0) : Color.FromRgb(0, 1, 0)).MultiplyAlpha(alpha ?? throw new NullReferenceException()),
+                convert: (bool? isRed, float? alpha) => (isRed.HasValue && isRed.Value ? Colors.Red : Colors.Green).MultiplyAlpha(alpha ?? throw new NullReferenceException()),
                 converterParameter: 0.5f
             );
 
@@ -110,8 +110,8 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 nameof(viewModel.IsRed),
                 assertConverterInstanceIsAnyNotNull: true,
                 converterParameter: 0.5f,
-                assertConvert: c => c.AssertConvert<bool?, Color>(true, 0.5f, Color.FromRgb(1, 0, 0).MultiplyAlpha(0.5f))
-                                     .AssertConvert<bool?, Color>(false, 0.2f, Color.FromRgb(0, 1, 0).MultiplyAlpha(0.2f))
+                assertConvert: c => c.AssertConvert<bool?, Color>(true, 0.5f, Colors.Red.MultiplyAlpha(0.5f))
+                                     .AssertConvert<bool?, Color>(false, 0.2f, Colors.Green.MultiplyAlpha(0.2f))
             );
         }
 
@@ -123,8 +123,8 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 Label.TextColorProperty,
                 nameof(viewModel.IsRed),
                 BindingMode.TwoWay,
-                (bool? isRed) => isRed.HasValue && isRed.Value ? Color.FromRgb(1, 0, 0) : Color.FromRgba(0, 0, 0, 0),
-                color => color == Color.FromRgb(1, 0, 0)
+                (bool? isRed) => isRed.HasValue && isRed.Value ? Colors.Red : Colors.Transparent,
+                color => color == Colors.Red
             );
 
             BindingHelpers.AssertBindingExists<Color>(
@@ -133,8 +133,8 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 nameof(viewModel.IsRed),
                 BindingMode.TwoWay,
                 assertConverterInstanceIsAnyNotNull: true,
-                assertConvert: c => c.AssertConvert(true, Color.FromRgb(1, 0, 0), twoWay: true)
-                                     .AssertConvert(false, Color.FromRgba(0, 0, 0, 0), twoWay: true)
+                assertConvert: c => c.AssertConvert(true, Colors.Red, twoWay: true)
+                                     .AssertConvert(false, Colors.Transparent, twoWay: true)
             );
         }
 
@@ -146,8 +146,8 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 Label.TextColorProperty,
                 nameof(viewModel.IsRed),
                 BindingMode.TwoWay,
-                (bool? isRed, float? alpha) => (isRed.HasValue && isRed.Value ? Color.FromRgb(1, 0, 0) : Color.FromRgb(0, 1, 0)).MultiplyAlpha(alpha ?? throw new NullReferenceException()),
-                (color, alpha) => color == Color.FromRgb(1, 0, 0).MultiplyAlpha(alpha ?? throw new NullReferenceException()),
+                (bool? isRed, float? alpha) => (isRed.HasValue && isRed.Value ? Colors.Red : Colors.Green).MultiplyAlpha(alpha ?? throw new NullReferenceException()),
+                (color, alpha) => color == Colors.Red.MultiplyAlpha(alpha ?? throw new NullReferenceException()),
                 0.5f
             );
 
@@ -158,8 +158,8 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 BindingMode.TwoWay,
                 assertConverterInstanceIsAnyNotNull: true,
                 converterParameter: 0.5f,
-                assertConvert: c => c.AssertConvert(true, 0.5f, Color.FromRgb(1, 0, 0).MultiplyAlpha(0.5f), twoWay: true)
-                                     .AssertConvert(false, 0.2f, Color.FromRgb(0, 1, 0).MultiplyAlpha(0.2f), twoWay: true)
+                assertConvert: c => c.AssertConvert(true, 0.5f, Colors.Red.MultiplyAlpha(0.5f), twoWay: true)
+                                     .AssertConvert(false, 0.2f, Colors.Green.MultiplyAlpha(0.2f), twoWay: true)
             );
         }
 
@@ -648,11 +648,11 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 .Bind(
                     DerivedFromLabel.BackgroundColorProperty,
                     nameof(viewModel.IsRed),
-                    convert: (bool? isRed) => isRed.HasValue && isRed.Value ? Color.FromRgb(1, 1, 1) : Color.FromRgba(0, 0, 0, 0))
+                    convert: (bool? isRed) => isRed.HasValue && isRed.Value ? Colors.Black : Colors.Transparent)
                 .Bind(
                     Label.TextColorProperty,
                     nameof(viewModel.IsRed),
-                    convert: (bool? isRed, float? alpha) => (isRed.HasValue && isRed.Value ? Color.FromRgb(1, 0, 0) : Color.FromRgb(0, 1, 0)).MultiplyAlpha(alpha ?? throw new NullReferenceException()))
+                    convert: (bool? isRed, float? alpha) => (isRed.HasValue && isRed.Value ? Colors.Red : Colors.Green).MultiplyAlpha(alpha ?? throw new NullReferenceException()))
                 .Invoke(l => l.Text = nameof(SupportDerivedElements))
                 .Assign(out DerivedFromLabel assignDerivedFromLabel));
 
@@ -669,7 +669,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
             public string? Text { get; set; }
 
-            public Color TextColor { get; set; } = Color.FromRgb(0, 0, 0);
+            public Color TextColor { get; set; } = Colors.Transparent;
 
             public bool IsRed { get; set; }
         }

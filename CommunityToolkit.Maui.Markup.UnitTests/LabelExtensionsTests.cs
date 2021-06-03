@@ -59,11 +59,11 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
         {
             Label.FormattedText = null;
             Label.FormattedText(
-                new Span { BackgroundColor = Color.FromRgb(0, 0, 1) }
+                new Span { BackgroundColor = Colors.Blue }
             );
 
             var spans = Label.FormattedText?.Spans;
-            Assert.That(spans?.Count == 1 && spans[0].BackgroundColor == Color.FromRgb(0, 0, 1));
+            Assert.That(spans?.Count == 1 && spans[0].BackgroundColor == Colors.Blue);
         }
 
         [Test]
@@ -71,12 +71,12 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
         {
             Label.FormattedText = null;
             Label.FormattedText(
-                new Span { BackgroundColor = Color.FromRgb(0, 0, 1) },
-                new Span { BackgroundColor = Color.FromRgb(0, 1, 0) }
+                new Span { BackgroundColor = Colors.Blue },
+                new Span { BackgroundColor = Colors.Green }
             );
 
             var spans = Label.FormattedText?.Spans;
-            Assert.That(spans?.Count == 2 && spans[0].BackgroundColor == Color.FromRgb(0, 0, 0) && spans[1].BackgroundColor == Color.FromRgb(0, 1, 0));
+            Assert.That(spans?.Count == 2 && spans[0].BackgroundColor == Colors.Blue && spans[1].BackgroundColor == Colors.Green);
         }
 
         [Test]

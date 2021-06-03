@@ -25,21 +25,21 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
         public void StyleSingleSetter()
         {
             var style = new Style<Label>(
-                (Label.TextColorProperty, Color.FromRgb(1, 0, 0)));
+                (Label.TextColorProperty, Colors.Red));
             Style? formsStyle = style;
 
             Assert.That(formsStyle?.Setters?.Count, Is.EqualTo(1));
 
             var setter = formsStyle?.Setters?[0];
             Assert.That(setter?.Property, Is.EqualTo(Label.TextColorProperty));
-            Assert.That(setter?.Value, Is.EqualTo(Color.FromRgb(1, 0, 0)));
+            Assert.That(setter?.Value, Is.EqualTo(Colors.Red));
         }
 
         [Test]
         public void StyleMultipleSetters()
         {
             var style = new Style<Label>(
-                (Label.TextColorProperty, Color.FromRgb(1, 0, 0)),
+                (Label.TextColorProperty, Colors.Red),
                 (Label.TranslationXProperty, 8.0));
             Style? formsStyle = style;
 
@@ -47,7 +47,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
             var setter1 = formsStyle?.Setters?[0];
             Assert.That(setter1?.Property, Is.EqualTo(Label.TextColorProperty));
-            Assert.That(setter1?.Value, Is.EqualTo(Color.FromRgb(1, 0, 0)));
+            Assert.That(setter1?.Value, Is.EqualTo(Colors.Red));
 
             var setter2 = formsStyle?.Setters?[1];
             Assert.That(setter2?.Property, Is.EqualTo(Label.TranslationXProperty));
@@ -86,13 +86,13 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
             Assume.That(formsStyle?.Setters?.Count ?? 0, Is.EqualTo(0));
 
-            style.Add((Label.TextColorProperty, Color.FromRgb(1, 0, 0)));
+            style.Add((Label.TextColorProperty, Colors.Red));
 
             Assert.That(formsStyle?.Setters?.Count, Is.EqualTo(1));
 
             var setter = formsStyle?.Setters?[0];
             Assert.That(setter?.Property, Is.EqualTo(Label.TextColorProperty));
-            Assert.That(setter?.Value, Is.EqualTo(Color.FromRgb(1, 0, 0)));
+            Assert.That(setter?.Value, Is.EqualTo(Colors.Red));
         }
 
         [Test]
@@ -103,14 +103,14 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assume.That(formsStyle?.Setters?.Count ?? 0, Is.EqualTo(0));
 
             style.Add(
-                (Label.TextColorProperty, Color.FromRgb(1, 0, 0)),
+                (Label.TextColorProperty, Colors.Red),
                 (Label.TranslationXProperty, 8.0));
 
             Assert.That(formsStyle?.Setters?.Count, Is.EqualTo(2));
 
             var setter1 = formsStyle?.Setters?[0];
             Assert.That(setter1?.Property, Is.EqualTo(Label.TextColorProperty));
-            Assert.That(setter1?.Value, Is.EqualTo(Color.FromRgb(1, 0, 0)));
+            Assert.That(setter1?.Value, Is.EqualTo(Colors.Red));
 
             var setter2 = formsStyle?.Setters?[1];
             Assert.That(setter2?.Property, Is.EqualTo(Label.TranslationXProperty));
@@ -200,7 +200,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 new Style<Label>()
                 .ApplyToDerivedTypes(true)
                 .BasedOn(basedOnStyle)
-                .Add((Label.TextColorProperty, Color.FromRgb(1, 0, 0)))
+                .Add((Label.TextColorProperty, Colors.Red))
                 .Add(new LabelBehavior())
                 .Add(new Trigger(typeof(Label)))
                 .CanCascade(true);

@@ -110,15 +110,15 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             var expectedCulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 
             var converter = new FuncConverter<bool, Color, float>(
-                (isRed, alpha, culture) => { convertCulture = culture; return (isRed ? Color.FromRgb(1, 0, 0) : Color.FromRgb(0, 1, 0)).MultiplyAlpha(alpha); },
-                (color, alpha, culture) => { convertBackCulture = culture; return color == Color.FromRgb(1, 0, 0).MultiplyAlpha(alpha); })
-            .AssertConvert(true, 0.5, Color.FromRgb(1, 0, 0).MultiplyAlpha(0.5f), twoWay: true, culture: expectedCulture)
-            .AssertConvert(false, 0.2, Color.FromRgb(0, 1, 0).MultiplyAlpha(0.2f), twoWay: true, culture: expectedCulture);
+                (isRed, alpha, culture) => { convertCulture = culture; return (isRed ? Colors.Red : Colors.Green).MultiplyAlpha(alpha); },
+                (color, alpha, culture) => { convertBackCulture = culture; return color == Colors.Red.MultiplyAlpha(alpha); })
+            .AssertConvert(true, 0.5, Colors.Red.MultiplyAlpha(0.5f), twoWay: true, culture: expectedCulture)
+            .AssertConvert(false, 0.2, Colors.Green.MultiplyAlpha(0.2f), twoWay: true, culture: expectedCulture);
 
             Assert.That(convertCulture, Is.EqualTo(expectedCulture));
             Assert.That(convertBackCulture, Is.EqualTo(expectedCulture));
 
-            Assert.That(converter.Convert(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(Color.FromRgb(0, 1, 0).MultiplyAlpha(default)));
+            Assert.That(converter.Convert(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(Colors.Green.MultiplyAlpha(default)));
             Assert.That(converter.ConvertBack(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(default(bool)));
         }
 
@@ -126,12 +126,12 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
         public void FullyTypedTwoWayWithParam()
         {
             var converter = new FuncConverter<bool, Color, float>(
-                (isRed, alpha) => (isRed ? Color.FromRgb(1, 0, 0) : Color.FromRgb(0, 1, 0)).MultiplyAlpha(alpha),
-                (color, alpha) => color == Color.FromRgb(1, 0, 0).MultiplyAlpha(alpha))
-            .AssertConvert(true, 0.5, Color.FromRgb(1, 0, 0).MultiplyAlpha(0.5f), twoWay: true)
-            .AssertConvert(false, 0.2, Color.FromRgb(0, 1, 0).MultiplyAlpha(0.2f), twoWay: true);
+                (isRed, alpha) => (isRed ? Colors.Red : Colors.Green).MultiplyAlpha(alpha),
+                (color, alpha) => color == Colors.Red.MultiplyAlpha(alpha))
+            .AssertConvert(true, 0.5, Colors.Red.MultiplyAlpha(0.5f), twoWay: true)
+            .AssertConvert(false, 0.2, Colors.Green.MultiplyAlpha(0.2f), twoWay: true);
 
-            Assert.That(converter.Convert(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(Color.FromRgb(0, 1, 0).MultiplyAlpha(default)));
+            Assert.That(converter.Convert(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(Colors.Green.MultiplyAlpha(default)));
             Assert.That(converter.ConvertBack(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(default(bool)));
         }
 
@@ -139,12 +139,12 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
         public void FullyTypedTwoWay()
         {
             var converter = new FuncConverter<bool, Color, object>(
-                isRed => isRed ? Color.FromRgb(1, 0, 0) : Color.FromRgb(0, 1, 0),
-                color => color == Color.FromRgb(1, 0, 0))
-            .AssertConvert(true, Color.FromRgb(1, 0, 0), twoWay: true)
-            .AssertConvert(false, Color.FromRgb(0, 1, 0), twoWay: true);
+                isRed => isRed ? Colors.Red : Colors.Green,
+                color => color == Colors.Red)
+            .AssertConvert(true, Colors.Red, twoWay: true)
+            .AssertConvert(false, Colors.Green, twoWay: true);
 
-            Assert.That(converter.Convert(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(Color.FromRgb(0, 1, 0)));
+            Assert.That(converter.Convert(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(Colors.Green));
             Assert.That(converter.ConvertBack(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(default(bool)));
         }
 
@@ -152,18 +152,18 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
         public void FullyTypedOneWayWithParam()
         {
             new FuncConverter<bool, Color, float>(
-                (isRed, alpha) => (isRed ? Color.FromRgb(1, 0, 0) : Color.FromRgb(0, 1, 0)).MultiplyAlpha(alpha))
-            .AssertConvert(true, 0.5, Color.FromRgb(1, 0, 0).MultiplyAlpha(0.5f))
-            .AssertConvert(false, 0.2, Color.FromRgb(0, 1, 0).MultiplyAlpha(0.2f));
+                (isRed, alpha) => (isRed ? Colors.Red : Colors.Green).MultiplyAlpha(alpha))
+            .AssertConvert(true, 0.5, Colors.Red.MultiplyAlpha(0.5f))
+            .AssertConvert(false, 0.2, Colors.Green.MultiplyAlpha(0.2f));
         }
 
         [Test]
         public void FullyTypedOneWay()
         {
             new FuncConverter<bool, Color, object>(
-                isRed => isRed ? Color.FromRgb(1, 0, 0) : Color.FromRgb(0, 1, 0))
-            .AssertConvert(true, Color.FromRgb(1, 0, 0))
-            .AssertConvert(false, Color.FromRgb(0, 1, 0));
+                isRed => isRed ? Colors.Red : Colors.Green)
+            .AssertConvert(true, Colors.Red)
+            .AssertConvert(false, Colors.Green);
         }
 
         [Test]
@@ -171,9 +171,9 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
         {
             new FuncConverter<bool, Color, float>(
                 null,
-                (color, alpha) => color == Color.FromRgb(1, 0, 0).MultiplyAlpha(alpha))
-            .AssertConvert(true, 0.5, Color.FromRgb(1, 0, 0).MultiplyAlpha(0.5f), backOnly: true)
-            .AssertConvert(false, 0.2, Color.FromRgb(0, 1, 0).MultiplyAlpha(0.2f), backOnly: true);
+                (color, alpha) => color == Colors.Red.MultiplyAlpha(alpha))
+            .AssertConvert(true, 0.5, Colors.Red.MultiplyAlpha(0.5f), backOnly: true)
+            .AssertConvert(false, 0.2, Colors.Green.MultiplyAlpha(0.2f), backOnly: true);
         }
 
         [Test]
@@ -181,28 +181,28 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
         {
             new FuncConverter<bool, Color, object>(
                 null,
-                color => color == Color.FromRgb(1, 0, 0))
-            .AssertConvert(true, Color.FromRgb(1, 0, 0), backOnly: true)
-            .AssertConvert(false, Color.FromRgb(0, 1, 0), backOnly: true);
+                color => color == Colors.Red)
+            .AssertConvert(true, Colors.Red, backOnly: true)
+            .AssertConvert(false, Colors.Green, backOnly: true);
         }
 
         [Test]
         public void TwoWay()
         {
             new FuncConverter<bool, Color>(
-                isRed => isRed ? Color.FromRgb(1, 0, 0) : Color.FromRgb(0, 1, 0),
-                color => color == Color.FromRgb(1, 0, 0))
-            .AssertConvert(true, Color.FromRgb(1, 0, 0), twoWay: true)
-            .AssertConvert(false, Color.FromRgb(0, 1, 0), twoWay: true);
+                isRed => isRed ? Colors.Red : Colors.Green,
+                color => color == Colors.Red)
+            .AssertConvert(true, Colors.Red, twoWay: true)
+            .AssertConvert(false, Colors.Green, twoWay: true);
         }
 
         [Test]
         public void OneWay()
         {
             new FuncConverter<bool, Color>(
-                isRed => isRed ? Color.FromRgb(1, 0, 0) : Color.FromRgb(0, 1, 0))
-            .AssertConvert(true, Color.FromRgb(1, 0, 0))
-            .AssertConvert(false, Color.FromRgb(0, 1, 0));
+                isRed => isRed ? Colors.Red : Colors.Green)
+            .AssertConvert(true, Colors.Red)
+            .AssertConvert(false, Colors.Green);
         }
 
         [Test]
@@ -210,28 +210,28 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
         {
             new FuncConverter<bool, Color>(
                 null,
-                color => color == Color.FromRgb(1, 0, 0))
-            .AssertConvert(true, Color.FromRgb(1, 0, 0), backOnly: true)
-            .AssertConvert(false, Color.FromRgb(0, 1, 0), backOnly: true);
+                color => color == Colors.Red)
+            .AssertConvert(true, Colors.Red, backOnly: true)
+            .AssertConvert(false, Colors.Green, backOnly: true);
         }
 
         [Test]
         public void TypedSourceTwoWay()
         {
             new FuncConverter<bool>(
-                isRed => isRed ? Color.FromRgb(1, 0, 0) : Color.FromRgb(0, 1, 0),
-                color => (Color?)color == Color.FromRgb(1, 0, 0))
-            .AssertConvert(true, Color.FromRgb(1, 0, 0), twoWay: true)
-            .AssertConvert(false, Color.FromRgb(0, 1, 0), twoWay: true);
+                isRed => isRed ? Colors.Red : Colors.Green,
+                color => (Color?)color == Colors.Red)
+            .AssertConvert(true, Colors.Red, twoWay: true)
+            .AssertConvert(false, Colors.Green, twoWay: true);
         }
 
         [Test]
         public void TypedSourceOneWay()
         {
             new FuncConverter<bool>(
-                isRed => isRed ? Color.FromRgb(1, 0, 0) : Color.FromRgb(0, 1, 0))
-            .AssertConvert(true, Color.FromRgb(1, 0, 0))
-            .AssertConvert(false, Color.FromRgb(0, 1, 0));
+                isRed => isRed ? Colors.Red : Colors.Green)
+            .AssertConvert(true, Colors.Red)
+            .AssertConvert(false, Colors.Green);
         }
 
         [Test]
@@ -239,28 +239,28 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
         {
             new FuncConverter<bool>(
                 null,
-                color => (Color?)color == Color.FromRgb(1, 0, 0))
-            .AssertConvert(true, (object)Color.FromRgb(1, 0, 0), backOnly: true)
-            .AssertConvert(false, (object)Color.FromRgb(0, 1, 0), backOnly: true);
+                color => (Color?)color == Colors.Red)
+            .AssertConvert(true, (object)Colors.Red, backOnly: true)
+            .AssertConvert(false, (object)Colors.Green, backOnly: true);
         }
 
         [Test]
         public void UntypedTwoWay()
         {
             new Markup.FuncConverter(
-                isRed => (bool)(isRed ?? throw new NullReferenceException()) ? Color.FromRgb(1, 0, 0) : Color.FromRgb(0, 1, 0),
-                color => (Color?)color == Color.FromRgb(1, 0, 0))
-            .AssertConvert((object)true, (object)Color.FromRgb(1, 0, 0), twoWay: true)
-            .AssertConvert((object)false, (object)Color.FromRgb(0, 1, 0), twoWay: true);
+                isRed => (bool)(isRed ?? throw new NullReferenceException()) ? Colors.Red : Colors.Green,
+                color => (Color?)color == Colors.Red)
+            .AssertConvert((object)true, (object)Colors.Red, twoWay: true)
+            .AssertConvert((object)false, (object)Colors.Green, twoWay: true);
         }
 
         [Test]
         public void UntypedOneWay()
         {
             new Markup.FuncConverter(
-                isRed => (bool)(isRed ?? throw new NullReferenceException()) ? Color.FromRgb(1, 0, 0) : Color.FromRgb(0, 1, 0))
-            .AssertConvert((object)true, (object)Color.FromRgb(1, 0, 0))
-            .AssertConvert((object)false, (object)Color.FromRgb(0, 1, 0));
+                isRed => (bool)(isRed ?? throw new NullReferenceException()) ? Colors.Red : Colors.Green)
+            .AssertConvert((object)true, (object)Colors.Red)
+            .AssertConvert((object)false, (object)Colors.Green);
         }
 
         [Test]
@@ -268,9 +268,9 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
         {
             new Markup.FuncConverter(
                 null,
-                color => (Color?)color == Color.FromRgb(1, 0, 0))
-            .AssertConvert((object)true, (object)Color.FromRgb(1, 0, 0), backOnly: true)
-            .AssertConvert((object)false, (object)Color.FromRgb(0, 1, 0), backOnly: true);
+                color => (Color?)color == Colors.Red)
+            .AssertConvert((object)true, (object)Colors.Red, backOnly: true)
+            .AssertConvert((object)false, (object)Colors.Green, backOnly: true);
         }
 
         [Test]
