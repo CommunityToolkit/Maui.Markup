@@ -1,10 +1,10 @@
-﻿using NUnit.Framework;
-using Xamarin.Forms;
-using CommunityToolkit.Maui.Markup.RightToLeft;
+﻿using CommunityToolkit.Maui.Markup.RightToLeft;
+using Microsoft.Maui.Controls;
+using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
-	[TestFixture]
+    [TestFixture]
 	public class ViewExtensionsRightToLeftTests : MarkupBaseTestFixture<BoxView>
 	{
 		[Test]

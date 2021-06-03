@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Maui.Controls;
 using NUnit.Framework;
-using Xamarin.Forms;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
@@ -64,10 +64,12 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			Assert.That(binding, Is.Not.Null);
 			Assert.That(binding.Path, Is.EqualTo(path));
 			Assert.That(binding.Mode, Is.EqualTo(mode));
+
 			if (assertConverterInstanceIsAnyNotNull)
 				Assert.That(binding.Converter, Is.Not.Null);
 			else
 				Assert.That(binding.Converter, Is.EqualTo(converter));
+
 			Assert.That(binding.ConverterParameter, Is.EqualTo(converterParameter));
 			Assert.That(binding.StringFormat, Is.EqualTo(stringFormat));
 			Assert.That(binding.Source, Is.EqualTo(source));
@@ -109,6 +111,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			Assert.That(binding, Is.Not.Null);
 			Assert.That(binding.Bindings.SequenceEqual(bindings), Is.True);
 			Assert.That(binding.Mode, Is.EqualTo(mode));
+
 			if (assertConverterInstanceIsAnyNotNull)
 				Assert.That(binding.Converter, Is.Not.Null);
 			else
@@ -158,7 +161,9 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		internal static IMultiValueConverter AssertConvert<TConvertedValue>(this IMultiValueConverter converter, object[] values, object? parameter, TConvertedValue expectedConvertedValue, bool twoWay = false, bool backOnly = false, CultureInfo? culture = null)
 		{
 			Assert.That(converter.Convert(values, typeof(TConvertedValue), parameter, culture), Is.EqualTo(backOnly ? BindableProperty.UnsetValue : expectedConvertedValue));
+
 			var convertedBackValues = converter.ConvertBack(expectedConvertedValue, null, parameter, culture);
+
 			if (twoWay || backOnly)
 			{
 				Assert.That(convertedBackValues.Length, Is.EqualTo(values.Length));
@@ -166,11 +171,14 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 					Assert.That(convertedBackValues[i], Is.EqualTo(values[i]));
 			}
 			else
+			{
 				Assert.That(convertedBackValues, Is.Null);
+			}
+
 			return converter;
 		}
 
 		internal static IMultiValueConverter AssertConvert<TConvertedValue>(this IMultiValueConverter converter, object[] values, TConvertedValue expectedConvertedValue, bool twoWay = false, bool backOnly = false, CultureInfo? culture = null)
-		=> AssertConvert<TConvertedValue>(converter, values, null, expectedConvertedValue, twoWay, backOnly, culture);
+		=> AssertConvert(converter, values, null, expectedConvertedValue, twoWay, backOnly, culture);
 	}
 }

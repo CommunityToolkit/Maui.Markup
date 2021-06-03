@@ -1,6 +1,7 @@
-﻿using NUnit.Framework;
-using Xamarin.Forms;
-using PaddingElement = Xamarin.Forms.Label; // TODO: Get rid of this after we have default interface implementation in Forms for IPaddingElement
+﻿using Microsoft.Maui;
+using Microsoft.Maui.Controls;
+using NUnit.Framework;
+using PaddingElement = Microsoft.Maui.Controls.Label; // TODO: Get rid of this after we have default interface implementation in Forms for IPaddingElement
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {

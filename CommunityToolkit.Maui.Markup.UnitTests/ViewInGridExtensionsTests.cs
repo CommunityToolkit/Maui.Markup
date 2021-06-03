@@ -1,5 +1,5 @@
-﻿using NUnit.Framework;
-using Xamarin.Forms;
+﻿using Microsoft.Maui.Controls;
+using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {

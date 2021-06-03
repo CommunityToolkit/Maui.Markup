@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
+using Microsoft.Maui.Controls;
 using NUnit.Framework;
-using Xamarin.Forms;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Xamarin.Forms.Internals;
+using Microsoft.Maui.Controls.Internals;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
-	class UnitExpressionSearch : ExpressionVisitor, IExpressionSearch
+    class UnitExpressionSearch : ExpressionVisitor, IExpressionSearch
 	{
 		List<object>? results;
 		Type? targeType;
@@ -22,16 +22,20 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 		protected override Expression VisitMember(MemberExpression node)
 		{
-			if (node.Expression is ConstantExpression && node.Member is FieldInfo)
+			if (node.Expression is ConstantExpression expression 
+				&& node.Member is FieldInfo info)
 			{
-				var container = ((ConstantExpression)node.Expression).Value;
-				var value = ((FieldInfo)node.Member).GetValue(container);
+				var container = expression.Value;
+				var value = info.GetValue(container);
 
-				if (targeType?.IsInstanceOfType(value) is true && results is not null && value is not null)
+				if (targeType?.IsInstanceOfType(value) is true 
+					&& results is not null
+					&& value is not null)
 				{
 					results.Add(value);
 				}
 			}
+
 			return base.VisitMember(node);
 		}
 	}

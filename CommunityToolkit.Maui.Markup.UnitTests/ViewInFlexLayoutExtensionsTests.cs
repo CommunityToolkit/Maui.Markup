@@ -1,5 +1,5 @@
-﻿using NUnit.Framework;
-using Xamarin.Forms;
+﻿using Microsoft.Maui.Controls;
+using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
@@ -11,6 +11,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		{
 			FlexLayout.SetAlignSelf(Bindable, FlexAlignSelf.End);
 			Bindable?.AlignSelf(FlexAlignSelf.Start);
+
 			Assert.That(FlexLayout.GetAlignSelf(Bindable), Is.EqualTo(FlexAlignSelf.Start));
 		}
 
@@ -19,6 +20,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		{
 			FlexLayout.SetBasis(Bindable, FlexBasis.Auto);
 			Bindable?.Basis(50);
+
 			Assert.That(FlexLayout.GetBasis(Bindable), Is.EqualTo(new FlexBasis(50)));
 		}
 
@@ -27,6 +29,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		{
 			FlexLayout.SetGrow(Bindable, 0f);
 			Bindable?.Grow(1f);
+
 			Assert.That(FlexLayout.GetGrow(Bindable), Is.EqualTo(1f));
 		}
 
@@ -35,6 +38,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		{
 			FlexLayout.SetOrder(Bindable, 0);
 			Bindable?.Order(1);
+
 			Assert.That(FlexLayout.GetOrder(Bindable), Is.EqualTo(1));
 		}
 
@@ -43,6 +47,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		{
 			FlexLayout.SetShrink(Bindable, 1f);
 			Bindable?.Shrink(0f);
+
 			Assert.That(FlexLayout.GetShrink(Bindable), Is.EqualTo(0f));
 		}
 	}

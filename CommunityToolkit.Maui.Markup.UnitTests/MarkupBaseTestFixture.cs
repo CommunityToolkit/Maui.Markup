@@ -1,10 +1,10 @@
 ﻿using System;
+using Microsoft.Maui.Controls;
 using NUnit.Framework;
-using Xamarin.Forms;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
-	public class MarkupBaseTestFixture<TBindable> : MarkupBaseTestFixture where TBindable : BindableObject, new()
+    public class MarkupBaseTestFixture<TBindable> : MarkupBaseTestFixture where TBindable : BindableObject, new()
 	{
 		protected TBindable? Bindable { get; private set; }
 

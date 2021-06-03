@@ -1,9 +1,10 @@
-﻿using NUnit.Framework;
-using Xamarin.Forms;
+﻿using Microsoft.Maui;
+using Microsoft.Maui.Controls;
+using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
-	[TestFixture]
+    [TestFixture]
 	public class ViewExtensionsTests : MarkupBaseTestFixture<BoxView>
 	{
 		[Test]

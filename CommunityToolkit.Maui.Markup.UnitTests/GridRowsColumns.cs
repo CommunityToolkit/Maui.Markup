@@ -1,6 +1,7 @@
 ﻿using System;
+using Microsoft.Maui;
+using Microsoft.Maui.Controls;
 using NUnit.Framework;
-using Xamarin.Forms;
 using static CommunityToolkit.Maui.Markup.GridRowsColumns;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
@@ -17,7 +18,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		[Test]
 		public void DefineRowsWithoutEnums()
 		{
-			var grid = new Forms.Grid
+			var grid = new Grid
 			{
 				RowDefinitions = Rows.Define(Auto, Star, Stars (starsValue), 20)
 			};
@@ -32,7 +33,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		[Test]
 		public void DefineRowsWithEnums()
 		{
-			var grid = new Forms.Grid
+			var grid = new Grid
 			{
 				RowDefinitions = Rows.Define(
 					(Row.First , Auto),
@@ -61,7 +62,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		[Test]
 		public void DefineColumnsWithoutEnums()
 		{
-			var grid = new Forms.Grid
+			var grid = new Grid
 			{
 				ColumnDefinitions = Columns.Define(Auto, Star, Stars (starsValue), 20, 40)
 			};
@@ -77,7 +78,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		[Test]
 		public void DefineColumnsWithEnums()
 		{
-			var grid = new Forms.Grid
+			var grid = new Grid
 			{
 				ColumnDefinitions = Columns.Define(
 					(Col.First , Auto),

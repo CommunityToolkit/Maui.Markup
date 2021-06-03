@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Input;
+using Microsoft.Maui.Controls;
 using NUnit.Framework;
-using Xamarin.Forms;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
@@ -68,7 +68,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 			gestureElement.ClickGesture(g => gestureRecognizer = g);
 
-			AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
+            AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
 		}
 
 		[Test]
@@ -79,7 +79,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 			gestureElement.TapGesture(g => gestureRecognizer = g);
 
-			AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
+            AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
 		}
 	}
 
@@ -119,7 +119,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 			gestureElement.PanGesture(g => gestureRecognizer = g);
 
-			AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
+            AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
 		}
 
 		[Test]
@@ -130,7 +130,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 			gestureElement.PinchGesture(g => gestureRecognizer = g);
 
-			AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
+            AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
 		}
 
 		[Test]
@@ -141,7 +141,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 			gestureElement.SwipeGesture(g => gestureRecognizer = g);
 
-			AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
+            AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
 		}
 
 		[Test]
@@ -155,8 +155,8 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			gestureElement.TapGesture(g => gestureRecognizer2 = g);
 			gestureElement.SwipeGesture(g => gestureRecognizer3 = g);
 
-			AssertHasGestureRecognizers(gestureElement, gestureRecognizer1 ?? throw new NullReferenceException(), gestureRecognizer2 ?? throw new NullReferenceException());
-			AssertHasGestureRecognizer(gestureElement, gestureRecognizer3 ?? throw new NullReferenceException());
+            AssertHasGestureRecognizers(gestureElement, gestureRecognizer1 ?? throw new NullReferenceException(), gestureRecognizer2 ?? throw new NullReferenceException());
+            AssertHasGestureRecognizer(gestureElement, gestureRecognizer3 ?? throw new NullReferenceException());
 		}
 
 		[Test]
@@ -167,7 +167,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 			gestureElement.Gesture((DerivedFromGestureRecognizer g) => gestureRecognizer = g);
 
-			AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
+            AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
 		}
 
 		[Test]
@@ -191,19 +191,19 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 	{
 		protected const string commandPath = nameof(ViewModel.Command), parameterPath = nameof(ViewModel.Id);
 
-		protected TGestureRecognizer AssertHasGestureRecognizer<TGestureRecognizer>(IGestureRecognizers element)
+		protected static TGestureRecognizer AssertHasGestureRecognizer<TGestureRecognizer>(IGestureRecognizers element)
 			where TGestureRecognizer : GestureRecognizer
 			=> AssertHasGestureRecognizers<TGestureRecognizer>(element, 1)[0];
 
-		protected TGestureRecognizer AssertHasGestureRecognizer<TGestureRecognizer>(IGestureRecognizers element, TGestureRecognizer gestureRecognizer)
+		protected static TGestureRecognizer AssertHasGestureRecognizer<TGestureRecognizer>(IGestureRecognizers element, TGestureRecognizer gestureRecognizer)
 			where TGestureRecognizer : GestureRecognizer
 			=> AssertHasGestureRecognizers(element, 1, gestureRecognizer)[0];
 
-		protected TGestureRecognizer[] AssertHasGestureRecognizers<TGestureRecognizer>(IGestureRecognizers element, params TGestureRecognizer[] gestureRecognizers)
+		protected static TGestureRecognizer[] AssertHasGestureRecognizers<TGestureRecognizer>(IGestureRecognizers element, params TGestureRecognizer[] gestureRecognizers)
 			where TGestureRecognizer : GestureRecognizer
 			=> AssertHasGestureRecognizers(element, gestureRecognizers.Length, gestureRecognizers: gestureRecognizers);
 
-		protected TGestureRecognizer[] AssertHasGestureRecognizers<TGestureRecognizer>(IGestureRecognizers element, int count, params TGestureRecognizer[] gestureRecognizers)
+		protected static TGestureRecognizer[] AssertHasGestureRecognizers<TGestureRecognizer>(IGestureRecognizers element, int count, params TGestureRecognizer[] gestureRecognizers)
 			where TGestureRecognizer : GestureRecognizer
 		{
 			if (gestureRecognizers.Length == 0)
