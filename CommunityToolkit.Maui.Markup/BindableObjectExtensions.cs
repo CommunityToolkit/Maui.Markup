@@ -94,6 +94,7 @@ namespace CommunityToolkit.Maui.Markup
 			bindable.Bind(
 				DefaultBindableProperties.GetFor(bindable),
 				path, mode, converter, converterParameter, stringFormat, source, targetNullValue, fallbackValue);
+
 			return bindable;
 		}
 
@@ -113,6 +114,7 @@ namespace CommunityToolkit.Maui.Markup
 			bindable.Bind(
 				DefaultBindableProperties.GetFor(bindable),
 				path, mode, converter, null, stringFormat, source, targetNullValue, fallbackValue);
+
 			return bindable;
 		}
 
@@ -133,6 +135,7 @@ namespace CommunityToolkit.Maui.Markup
 			bindable.Bind(
 				DefaultBindableProperties.GetFor(bindable),
 				path, mode, converter, converterParameter, stringFormat, source, targetNullValue, fallbackValue);
+
 			return bindable;
 		}
 

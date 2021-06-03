@@ -40,42 +40,5 @@
 		<PackageReference Include="Microsoft.Maui" Version="6.0.100-preview.4.631" />
 		<PackageReference Include="mdoc" Version="5.8.0" PrivateAssets="all" />
 	</ItemGroup>
-	<ItemGroup>
-	  <Compile Include="BindableLayoutExtensions.cs" />
-	  <Compile Include="BindableObjectExtensions.cs" />
-	  <Compile Include="BindableObjectMultiBindExtensions.cs" />
-	  <Compile Include="DefaultBindableProperties.cs" />
-	  <Compile Include="ElementExtensions.cs" />
-	  <Compile Include="ElementGesturesExtensions.cs" />
-	  <Compile Include="FuncConverter.cs" />
-	  <Compile Include="FuncMultiConverter.cs" />
-	  <Compile Include="GlobalSuppressions.cs" />
-	  <Compile Include="GridRowsColumns.cs" />
-	  <Compile Include="LabelExtensions.cs" />
-	  <Compile Include="RelativeLayout.cs" />
-	  <Compile Include="Style.cs" />
-	  <Compile Include="ViewExtensions.cs" />
-	  <Compile Include="ViewInFlexLayoutExtensions.cs" />
-	  <Compile Include="ViewInGridExtensions.cs" />
-	  <Compile Include="VisualElementExtensions.cs" />
-	  <Compile Include="Properties\AssemblyInfo.cs" />
-	  <Compile Include="BindableLayoutExtensions.cs" />
-	  <Compile Include="BindableObjectExtensions.cs" />
-	  <Compile Include="BindableObjectMultiBindExtensions.cs" />
-	  <Compile Include="DefaultBindableProperties.cs" />
-	  <Compile Include="ElementExtensions.cs" />
-	  <Compile Include="ElementGesturesExtensions.cs" />
-	  <Compile Include="FuncConverter.cs" />
-	  <Compile Include="FuncMultiConverter.cs" />
-	  <Compile Include="GlobalSuppressions.cs" />
-	  <Compile Include="GridRowsColumns.cs" />
-	  <Compile Include="LabelExtensions.cs" />
-	  <Compile Include="RelativeLayout.cs" />
-	  <Compile Include="Style.cs" />
-	  <Compile Include="ViewExtensions.cs" />
-	  <Compile Include="ViewInFlexLayoutExtensions.cs" />
-	  <Compile Include="ViewInGridExtensions.cs" />
-	  <Compile Include="VisualElementExtensions.cs" />
-	</ItemGroup>
 	<Import Project="..\..\mdoc.targets" Condition=" '$(OS)' == 'Windows_NT' AND '$(GenerateApiDocs)' == 'true'" />
 </Project>

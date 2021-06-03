@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Xamarin.Forms;
+using Microsoft.Maui.Controls;
 
 namespace CommunityToolkit.Maui.Markup
 {
@@ -169,6 +169,7 @@ namespace CommunityToolkit.Maui.Markup
 				TargetNullValue = targetNullValue,
 				FallbackValue = fallbackValue
             });
+
 			return bindable;
 		}
 	}

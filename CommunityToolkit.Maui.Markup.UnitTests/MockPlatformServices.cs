@@ -3,12 +3,10 @@ using System.IO.IsolatedStorage;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Xamarin.Forms;
-using Xamarin.Forms.Internals;
+using Microsoft.Maui.Controls.Internals;
 using FileAccess = System.IO.FileAccess;
 using FileMode = System.IO.FileMode;
 using FileShare = System.IO.FileShare;
-using Internals = Xamarin.Forms.Internals;
 using Stream = System.IO.Stream;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests

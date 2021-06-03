@@ -21,32 +21,4 @@
   <ItemGroup>
     <ProjectReference Include="..\CommunityToolkit.Maui.Markup\CommunityToolkit.Maui.Markup.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="BaseTestFixture.cs" />
-    <Compile Include="BindableLayoutExtensionsTests.cs" />
-    <Compile Include="BindableObjectExtensionsTests.cs" />
-    <Compile Include="BindableObjectMultiBindExtensionsTests.cs" />
-    <Compile Include="BindingHelpers.cs" />
-    <Compile Include="DefaultBindablePropertiesTests.cs" />
-    <Compile Include="ElementExtensionsTests.cs" />
-    <Compile Include="ElementGesturesExtensionsTests.cs" />
-    <Compile Include="FuncConverter.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="GridRowsColumns.cs" />
-    <Compile Include="LabelExtensionsLeftToRightTests.cs" />
-    <Compile Include="LabelExtensionsRightToLeftTests.cs" />
-    <Compile Include="LabelExtensionsTests.cs" />
-    <Compile Include="MarkupBaseTestFixture.cs" />
-    <Compile Include="MockPlatformServices.cs" />
-    <Compile Include="PaddingElementExtensionsTests.cs" />
-    <Compile Include="RelativeLayoutExtensionsTests.cs" />
-    <Compile Include="StyleTests.cs" />
-    <Compile Include="UnitExpressionSearch.cs" />
-    <Compile Include="ViewExtensionsLeftToRightTests.cs" />
-    <Compile Include="ViewExtensionsRightToLeftTests.cs" />
-    <Compile Include="ViewExtensionsTests.cs" />
-    <Compile Include="ViewInFlexLayoutExtensionsTests.cs" />
-    <Compile Include="ViewInGridExtensionsTests.cs" />
-    <Compile Include="VisualElementExtensionsTests.cs" />
-  </ItemGroup>
 </Project>

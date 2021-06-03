@@ -1,5 +1,5 @@
 ﻿using System;
-using Xamarin.Forms;
+using Microsoft.Maui.Controls;
 
 namespace CommunityToolkit.Maui.Markup
 {
