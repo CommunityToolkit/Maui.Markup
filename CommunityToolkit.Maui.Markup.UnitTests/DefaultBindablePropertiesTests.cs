@@ -137,7 +137,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 {
                     failMessage.AppendLine(type.FullName);
                     var propertyNames = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
-                                            .Where(f => f.FieldType == typeof(BindableProperty)).Select(f => f?.DeclaringType?.Name + "." + f?.Name).ToList();
+                                        .Where(f => f.FieldType == typeof(BindableProperty)).Select(f => f?.DeclaringType?.Name + "." + f?.Name).ToList();
 
                     if (propertyNames.Count > 0)
                     {
@@ -227,11 +227,17 @@ namespace CommunityToolkit.Maui.Markup.UnitTests.DefaultBindablePropertiesViews 
     using Microsoft.Maui.Controls;
 #pragma warning restore SA1200 // Using directives should be placed correctly
 
-    class DerivedFromBoxView : BoxView { }
+    class DerivedFromBoxView : BoxView
+    {
+    }
 
-    class DerivedFromButton : Button { }
+    class DerivedFromButton : Button
+    {
+    }
 
-    class CustomView : View { }
+    class CustomView : View
+    {
+    }
 
     class CustomViewWithText : View
     {

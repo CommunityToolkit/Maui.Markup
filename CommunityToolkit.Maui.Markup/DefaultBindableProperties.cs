@@ -63,7 +63,8 @@ namespace CommunityToolkit.Maui.Markup
             { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ToolbarItem)}", ToolbarItem.CommandProperty },
             { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(UriImageSource)}", UriImageSource.UriProperty },
             { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(UrlWebViewSource)}", UrlWebViewSource.UrlProperty },
-            { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(WebView)}", WebView.SourceProperty }
+            { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(WebView)}", WebView.SourceProperty },
+            { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(Window)}", Window.MenuProperty }
         };
 
         static readonly Dictionary<string, (BindableProperty, BindableProperty)> bindableObjectTypeDefaultCommandAndParameterProperties = new()
@@ -120,24 +121,22 @@ namespace CommunityToolkit.Maui.Markup
             return defaultProperty;
         }
 
-        internal static BindableProperty GetFor(Type bindableObjectType)
+        internal static BindableProperty? GetFor(Type? bindableObjectType)
         {
             BindableProperty? defaultProperty;
 
             do
             {
-                string bindableObjectTypeName = bindableObjectType.FullName ?? throw new InvalidOperationException($"{nameof(BindableProperty)}.{nameof(BindableProperty.DeclaringType)}.{nameof(BindableProperty.DeclaringType.FullName)} cannot be null");
+                string bindableObjectTypeName = bindableObjectType?.FullName ?? throw new InvalidOperationException($"{nameof(BindableProperty)}.{nameof(BindableProperty.DeclaringType)}.{nameof(BindableProperty.DeclaringType.FullName)} cannot be null");
 
                 if (bindableObjectTypeDefaultProperty.TryGetValue(bindableObjectTypeName, out defaultProperty))
                     break;
-                if (bindableObjectTypeName.StartsWith("", StringComparison.Ordinal))
-                    break;
 
-                bindableObjectType = bindableObjectType.GetTypeInfo().BaseType ?? throw new InvalidOperationException($"{nameof(TypeInfo.BaseType)} cannot be null");
+                bindableObjectType = bindableObjectType.GetTypeInfo().BaseType;
             }
             while (bindableObjectType != null);
 
-            return defaultProperty ?? throw new InvalidOperationException($"{nameof(BindableProperty)} cannot be null");
+            return defaultProperty;
         }
 
         internal static void UnregisterForCommand(BindableProperty commandProperty)
