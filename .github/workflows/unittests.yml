@@ -1,4 +1,4 @@
-name: Xamarin
+name: Unit Tests
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - "*"
 
 jobs:
-    UnitTest_GitTrends:
+    UnitTest:
       runs-on: macos-latest
 
       steps:
