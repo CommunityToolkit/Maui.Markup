@@ -21,7 +21,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
         public void AllBindableElementsInCoreHaveDefaultBindablePropertyOrAreExcluded()
         {
             const string na = "not applicable", tbd = "to be determined";
-            var excludedTypeReasons = new Dictionary<Type, string>
+            IReadOnlyDictionary<Type,string> excludedTypeReasons = new Dictionary<Type, string>
             { // Key: type, Value: reason why it does not have a default bindable property
 				{ typeof(Application), na },
                 { typeof(AdaptiveTrigger), na },
@@ -45,7 +45,9 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 { typeof(GestureRecognizer), na },
                 { typeof(GradientStop), na },
                 { typeof(GridItemsLayout), na },
+                { typeof(Microsoft.Maui.Controls.Layout2.GridLayout), na },
                 { typeof(GroupableItemsView), na },
+                { typeof(HorizontalStackLayout), na },
                 { typeof(ImageSource), na },
                 { typeof(InputView), na },
                 { typeof(ItemsLayout), na },
@@ -71,6 +73,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 { typeof(TableView), na },
                 { typeof(Trigger), na },
                 { typeof(TriggerBase), na },
+                { typeof(VerticalStackLayout), na },
                 { typeof(View), na },
                 { typeof(ViewCell), na },
                 { typeof(VisualElement), na },

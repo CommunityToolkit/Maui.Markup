@@ -151,7 +151,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 0.5f
             );
 
-            BindingHelpers.AssertBindingExists<Color, double>(
+            BindingHelpers.AssertBindingExists<Color, float>(
                 label,
                 Label.TextColorProperty,
                 nameof(viewModel.IsRed),
@@ -680,7 +680,11 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 namespace CommunityToolkit.Maui.Markup.UnitTests.BindableObjectViews // This namespace simulates derived controls defined in a separate app, for use in the tests in this file only
 #pragma warning restore SA1403 // File may only contain a single namespace
 {
-    class DerivedFromLabel : Label { }
+    class DerivedFromLabel : Label
+    {
+    }
 
-    class DerivedFromTextCell : TextCell { }
+    class DerivedFromTextCell : TextCell
+    {
+    }
 }

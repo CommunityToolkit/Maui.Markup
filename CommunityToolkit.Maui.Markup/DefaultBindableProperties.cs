@@ -25,6 +25,7 @@ namespace CommunityToolkit.Maui.Markup
             { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(EntryCell)}", EntryCell.TextProperty },
             { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(FileImageSource)}", FileImageSource.FileProperty },
             { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(FlyoutPage)}", FlyoutPage.IsPresentedProperty },
+            { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(GraphicsView)}", GraphicsView.DrawableProperty },
             { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(HtmlWebViewSource)}", HtmlWebViewSource.HtmlProperty },
             { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(Image)}", Image.SourceProperty },
             { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ImageButton)}", ImageButton.CommandProperty },
@@ -123,16 +124,22 @@ namespace CommunityToolkit.Maui.Markup
 
         internal static BindableProperty? GetFor(Type? bindableObjectType)
         {
-            BindableProperty? defaultProperty;
+            BindableProperty? defaultProperty = null;
 
             do
             {
-                string bindableObjectTypeName = bindableObjectType?.FullName ?? throw new InvalidOperationException($"{nameof(BindableProperty)}.{nameof(BindableProperty.DeclaringType)}.{nameof(BindableProperty.DeclaringType.FullName)} cannot be null");
-
-                if (bindableObjectTypeDefaultProperty.TryGetValue(bindableObjectTypeName, out defaultProperty))
+                var bindableObjectTypeName = bindableObjectType?.FullName;
+                if (bindableObjectTypeName is not null && bindableObjectTypeDefaultProperty.TryGetValue(bindableObjectTypeName, out defaultProperty))
+                {
                     break;
+                }
 
-                bindableObjectType = bindableObjectType.GetTypeInfo().BaseType;
+                if (bindableObjectTypeName?.StartsWith($"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.", StringComparison.Ordinal) is true)
+                {
+                    break;
+                }
+
+                bindableObjectType = bindableObjectType?.GetTypeInfo().BaseType;
             }
             while (bindableObjectType != null);
 
@@ -151,7 +158,7 @@ namespace CommunityToolkit.Maui.Markup
         {
             var type = bindableObject.GetType();
             (var commandProperty, var parameterProperty) = GetForCommand(type);
-            if (commandProperty == null)
+            if (commandProperty is null || parameterProperty is null)
             {
                 throw new ArgumentException(
                     "No command + command parameter properties are registered for BindableObject type " + type.FullName +
@@ -161,19 +168,26 @@ namespace CommunityToolkit.Maui.Markup
             return (commandProperty, parameterProperty);
         }
 
-        internal static (BindableProperty, BindableProperty) GetForCommand(Type bindableObjectType)
+        internal static (BindableProperty?, BindableProperty?) GetForCommand(Type? bindableObjectType)
         {
-            (BindableProperty, BindableProperty) commandAndParameterProperties;
+            (BindableProperty?, BindableProperty?) commandAndParameterProperties = (null, null);
 
             do
             {
-                string bindableObjectTypeName = bindableObjectType.FullName ?? throw new InvalidOperationException($"{nameof(BindableProperty)}.{nameof(BindableProperty.DeclaringType)}.{nameof(BindableProperty.DeclaringType.FullName)} cannot be null");
-                if (bindableObjectTypeDefaultCommandAndParameterProperties.TryGetValue(bindableObjectTypeName, out commandAndParameterProperties))
+                var bindableObjectTypeName = bindableObjectType?.FullName;
+                if (bindableObjectTypeName is not null && bindableObjectTypeDefaultCommandAndParameterProperties.TryGetValue(bindableObjectTypeName, out var dictionaryResult))
+                {
+                    commandAndParameterProperties.Item1 = dictionaryResult.Item1;
+                    commandAndParameterProperties.Item2 = dictionaryResult.Item2;
                     break;
-                if (bindableObjectTypeName.StartsWith("", StringComparison.Ordinal))
-                    break;
+                }
 
-                bindableObjectType = bindableObjectType.GetTypeInfo().BaseType ?? throw new InvalidOperationException($"{nameof(TypeInfo.BaseType)} cannot be null");
+                if (bindableObjectTypeName?.StartsWith($"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.", StringComparison.Ordinal) is true)
+                {
+                    break;
+                }
+
+                bindableObjectType = bindableObjectType?.GetTypeInfo().BaseType;
             }
             while (bindableObjectType != null);
 
