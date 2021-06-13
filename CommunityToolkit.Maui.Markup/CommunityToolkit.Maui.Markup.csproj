@@ -37,8 +37,8 @@
 		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui" Version="6.0.100-preview.4.631" />
-		<PackageReference Include="mdoc" Version="5.8.0" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.Maui" Version="6.0.100-preview.5.764" />
+		<PackageReference Include="mdoc" Version="5.8.3" PrivateAssets="all" />
 	</ItemGroup>
 	<Import Project="..\..\mdoc.targets" Condition=" '$(OS)' == 'Windows_NT' AND '$(GenerateApiDocs)' == 'true'" />
 </Project>
