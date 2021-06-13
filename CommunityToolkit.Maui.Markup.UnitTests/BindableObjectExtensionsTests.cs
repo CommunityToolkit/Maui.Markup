@@ -146,8 +146,8 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 Label.TextColorProperty,
                 nameof(viewModel.IsRed),
                 BindingMode.TwoWay,
-                (bool? isRed, float? alpha) => (isRed.HasValue && isRed.Value ? Colors.Red : Colors.Green).MultiplyAlpha(alpha ?? throw new NullReferenceException()),
-                (color, alpha) => color == Colors.Red.MultiplyAlpha(alpha ?? throw new NullReferenceException()),
+                convert(),
+                convertBack(),
                 0.5f
             );
 
@@ -161,6 +161,16 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 assertConvert: c => c.AssertConvert(true, 0.5f, Colors.Red.MultiplyAlpha(0.5f), twoWay: true)
                                      .AssertConvert(false, 0.2f, Colors.Green.MultiplyAlpha(0.2f), twoWay: true)
             );
+
+            static Func<bool, float, Color> convert()
+            {
+                return (isRed, alpha) => (isRed ? Colors.Red : Colors.Green).MultiplyAlpha(alpha);
+            }
+
+            static Func<Color?, float, bool> convertBack()
+            {
+                return (color, alpha) => color?.Alpha == alpha && color.Red == Colors.Red.Red && color.Green == Colors.Red.Green && color.Blue == Colors.Red.Blue;
+            }
         }
 
         [Test]

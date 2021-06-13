@@ -110,8 +110,16 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             var expectedCulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 
             var converter = new FuncConverter<bool, Color, float>(
-                (isRed, alpha, culture) => { convertCulture = culture; return (isRed ? Colors.Red : Colors.Green).MultiplyAlpha(alpha); },
-                (color, alpha, culture) => { convertBackCulture = culture; return color == Colors.Red.MultiplyAlpha(alpha); })
+                (isRed, alpha, culture) =>
+                {
+                    convertCulture = culture;
+                    return (isRed ? Colors.Red : Colors.Green).MultiplyAlpha(alpha);
+                },
+                (color, alpha, culture) =>
+                {
+                    convertBackCulture = culture;
+                    return color?.Alpha == alpha && color?.Red == Colors.Red.Red && color?.Green == Colors.Red.Green && color?.Blue == Colors.Red.Blue;
+                })
             .AssertConvert(true, 0.5f, Colors.Red.MultiplyAlpha(0.5f), twoWay: true, culture: expectedCulture)
             .AssertConvert(false, 0.2f, Colors.Green.MultiplyAlpha(0.2f), twoWay: true, culture: expectedCulture);
 
@@ -127,7 +135,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
         {
             var converter = new FuncConverter<bool, Color, float>(
                 (isRed, alpha) => (isRed ? Colors.Red : Colors.Green).MultiplyAlpha(alpha),
-                (color, alpha) => color == Colors.Red.MultiplyAlpha(alpha))
+                (color, alpha) => color?.Alpha == alpha && color?.Red == Colors.Red.Red && color?.Green == Colors.Red.Green && color?.Blue == Colors.Red.Blue)
             .AssertConvert(true, 0.5f, Colors.Red.MultiplyAlpha(0.5f), twoWay: true)
             .AssertConvert(false, 0.2f, Colors.Green.MultiplyAlpha(0.2f), twoWay: true);
 
@@ -171,7 +179,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
         {
             new FuncConverter<bool, Color, float>(
                 null,
-                (color, alpha) => color == Colors.Red.MultiplyAlpha(alpha))
+                (color, alpha) => color?.Alpha == alpha && color?.Red == Colors.Red.Red && color?.Green == Colors.Red.Green && color?.Blue == Colors.Red.Blue)
             .AssertConvert(true, 0.5f, Colors.Red.MultiplyAlpha(0.5f), backOnly: true)
             .AssertConvert(false, 0.2f, Colors.Green.MultiplyAlpha(0.2f), backOnly: true);
         }
