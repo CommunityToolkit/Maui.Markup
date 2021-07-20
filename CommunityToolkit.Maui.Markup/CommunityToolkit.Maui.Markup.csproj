@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFrameworks>net6.0-ios;net6.0-android;net6.0-maccatalyst</TargetFrameworks>
+		<UseMaui>true</UseMaui>
 	</PropertyGroup>
 	<PropertyGroup>
-		<UseMaui>true</UseMaui>
 		<GitInfoReportImportance>high</GitInfoReportImportance>
 		<PackageId>CommunityToolkit.Maui.Markup</PackageId>
 		<Summary>Community-created toolkit with C# Markup classes and fluent helper methods</Summary>
@@ -14,13 +14,13 @@
 		<Product>CommunityToolkit.Maui.Markup (net6.0)</Product>
 		<Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageProjectUrl>https://github.com/windows-toolkit/Maui.Markup</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/windows-toolkit/Maui.Markup</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/communitytoolkit/Maui.Markup</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/communitytoolkit/Maui.Markup</RepositoryUrl>
 		<PackageReleaseNotes>TBD</PackageReleaseNotes>
 		<DefineConstants>$(DefineConstants);</DefineConstants>
 		<UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
 		<Title>CommunityToolkit.Maui.Markup</Title>
-		<Description>CommunityToolkit.Maui.Markup is a set of fluent helper methods and classes to simplify building declarative Xamarin.Forms user interfaces in C#</Description>
+		<Description>CommunityToolkit.Maui.Markup is a set of fluent helper methods and classes to simplify building declarative .NET MAUI user interfaces in C#</Description>
 		<PackageIcon>icon.png</PackageIcon>
 		<Product>$(AssemblyName) ($(TargetFramework))</Product>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -28,18 +28,15 @@
 		<Version>1.0.0-pre1</Version>
 		<PackageVersion>$(Version)$(VersionSuffix)</PackageVersion>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-		<PackageTags>xamarin,xamarin.forms,toolkit,kit,communitytoolkit,xamarincommunitytoolkit,markup,csharpformarkup,csharp,csharpmarkup</PackageTags>
+		<PackageTags>xamarin,xamarin.forms,net,maui,netmaui,toolkit,kit,communitytoolkit,netmauitoolkit,mauicommunitytoolkit,markup,csharpformarkup,csharp,csharpmarkup</PackageTags>
 		<Configurations>Debug;Release</Configurations>
 	</PropertyGroup>
-	<PropertyGroup>
-		<InvariantGlobalization Condition="$(TargetFramework.Contains('-maccatalyst'))">true</InvariantGlobalization>
-		<RuntimeIdentifier Condition="$(TargetFramework.Contains('-ios'))">iossimulator-x64</RuntimeIdentifier>
-		<RuntimeIdentifier Condition="$(TargetFramework.Contains('-maccatalyst'))">maccatalyst-x64</RuntimeIdentifier>
-		<UseInterpreter Condition="$(TargetFramework.Contains('-android'))">False</UseInterpreter>
-	</PropertyGroup>
-	<ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard1.0')) ">
-		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
-	</ItemGroup>
+  <PropertyGroup>
+    <InvariantGlobalization Condition="$(TargetFramework.Contains('-maccatalyst'))">true</InvariantGlobalization>
+    <RuntimeIdentifier Condition="$(TargetFramework.Contains('-ios'))">iossimulator-x64</RuntimeIdentifier>
+    <RuntimeIdentifier Condition="$(TargetFramework.Contains('-maccatalyst'))">maccatalyst-x64</RuntimeIdentifier>
+    <UseInterpreter Condition="$(TargetFramework.Contains('-android'))">False</UseInterpreter>
+  </PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="mdoc" Version="5.8.3" PrivateAssets="all" />
 	</ItemGroup>
