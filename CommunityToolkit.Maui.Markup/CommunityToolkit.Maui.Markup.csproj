@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>net6.0-ios;net6.0-android;net6.0-maccatalyst</TargetFrameworks>
-    <IsPackable>false</IsPackable>
+		<IsPackable>false</IsPackable>
 		<UseMaui>true</UseMaui>
 	</PropertyGroup>
 	<PropertyGroup>
@@ -32,12 +32,12 @@
 		<PackageTags>xamarin,xamarin.forms,net,maui,netmaui,toolkit,kit,communitytoolkit,netmauitoolkit,mauicommunitytoolkit,markup,csharpformarkup,csharp,csharpmarkup</PackageTags>
 		<Configurations>Debug;Release</Configurations>
 	</PropertyGroup>
-  <PropertyGroup>
-    <InvariantGlobalization Condition="$(TargetFramework.Contains('-maccatalyst'))">true</InvariantGlobalization>
-    <RuntimeIdentifier Condition="$(TargetFramework.Contains('-ios'))">iossimulator-x64</RuntimeIdentifier>
-    <RuntimeIdentifier Condition="$(TargetFramework.Contains('-maccatalyst'))">maccatalyst-x64</RuntimeIdentifier>
-    <UseInterpreter Condition="$(TargetFramework.Contains('-android'))">False</UseInterpreter>
-  </PropertyGroup>
+	<PropertyGroup>
+		<InvariantGlobalization Condition="$(TargetFramework.Contains('-maccatalyst'))">true</InvariantGlobalization>
+		<RuntimeIdentifier Condition="$(TargetFramework.Contains('-ios'))">iossimulator-x64</RuntimeIdentifier>
+		<RuntimeIdentifier Condition="$(TargetFramework.Contains('-maccatalyst'))">maccatalyst-x64</RuntimeIdentifier>
+		<UseInterpreter Condition="$(TargetFramework.Contains('-android'))">False</UseInterpreter>
+	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="mdoc" Version="5.8.3" PrivateAssets="all" />
 	</ItemGroup>
