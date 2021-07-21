@@ -27,7 +27,7 @@ jobs:
         
       - name: Restore NuGet 
         run: |
-          nuget restore
+          dotnet restore
           
       - name: Run Unit Tests
         run: |   
