@@ -9,8 +9,33 @@ on:
       - "*"
 
 jobs:
-    UnitTest:
+    Build_macOS:
       runs-on: macos-latest
+
+      steps:
+        - uses: actions/checkout@v1
+          
+        - name: Setup .NET v6.0
+          uses: actions/setup-dotnet@v1
+          with:
+            dotnet-version: '6.0.x'
+            include-prerelease: true
+
+        - name: Install .NET MAUI Workload
+          run: |
+            dotnet workload install maui
+          
+        - name: Restore NuGet 
+          run: |
+            dotnet restore
+
+        - name: Build 
+          run: |
+            dotnet build
+
+    UnitTest_macOS:
+      runs-on: macos-latest
+      needs: Build_macOS
 
       steps:
       - uses: actions/checkout@v1
@@ -20,10 +45,66 @@ jobs:
         with:
           dotnet-version: '6.0.x'
           include-prerelease: true
+
+      - name: Install .NET MAUI Workload
+        run: |
+          dotnet workload install maui
         
       - name: Restore NuGet 
         run: |
-          nuget restore
+          dotnet restore
+          
+      - name: Run Unit Tests
+        run: |   
+          UnitTestProject=`find . -name CommunityToolkit.Maui.Markup.UnitTests.csproj`
+          echo $UnitTestProject
+          
+          dotnet test  -c Release $UnitTestProject
+
+    Build_Windows:
+      runs-on: windows-latest
+
+      steps:
+        - uses: actions/checkout@v1
+          
+        - name: Setup .NET v6.0
+          uses: actions/setup-dotnet@v1
+          with:
+            dotnet-version: '6.0.x'
+            include-prerelease: true
+
+        - name: Install .NET MAUI Workload
+          run: |
+            dotnet workload install maui
+          
+        - name: Restore NuGet 
+          run: |
+            dotnet restore
+
+        - name: Build 
+          run: |
+            dotnet build
+
+    UnitTest_Windows:
+      runs-on: macos-latest
+      needs: Build_Windows
+
+      steps:
+      - uses: actions/checkout@v1
+        
+      - name: Setup .NET v6.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+          include-prerelease: true
+
+      - name: Install .NET MAUI Workload
+        run: |
+          dotnet workload install maui
+        
+      - name: Restore NuGet 
+        run: |
+          dotnet restore
           
       - name: Run Unit Tests
         run: |   

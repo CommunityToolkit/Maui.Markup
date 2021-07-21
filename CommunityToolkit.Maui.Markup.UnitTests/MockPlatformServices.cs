@@ -37,8 +37,6 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
         public void BeginInvokeOnMainThread(Action action) => throw new NotImplementedException();
 
-        public Microsoft.Maui.Controls.Internals.Ticker CreateTicker() => throw new NotImplementedException();
-
         public void StartTimer(TimeSpan interval, Func<bool> callback) => throw new NotImplementedException();
 
         public Task<Stream> GetStreamAsync(Uri uri, CancellationToken cancellationToken) => throw new NotImplementedException();
