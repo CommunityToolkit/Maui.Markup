@@ -27,11 +27,11 @@ jobs:
           
         - name: Restore NuGet 
           run: |
-            dotnet restore
+            dotnet restore ./src/
 
-        - name: Build 
+        - name: Build
           run: |
-            dotnet build
+            dotnet build ./src/
 
     UnitTest_macOS:
       runs-on: macos-latest
@@ -52,7 +52,7 @@ jobs:
         
       - name: Restore NuGet 
         run: |
-          dotnet restore
+          dotnet restore ./src/
           
       - name: Run Unit Tests
         run: |   
@@ -79,11 +79,11 @@ jobs:
           
         - name: Restore NuGet 
           run: |
-            dotnet restore
+            dotnet restore ./src/
 
         - name: Build 
           run: |
-            dotnet build
+            dotnet build ./src/
 
     UnitTest_Windows:
       runs-on: macos-latest
@@ -104,7 +104,7 @@ jobs:
         
       - name: Restore NuGet 
         run: |
-          dotnet restore
+          dotnet restore ./src/
           
       - name: Run Unit Tests
         run: |   
