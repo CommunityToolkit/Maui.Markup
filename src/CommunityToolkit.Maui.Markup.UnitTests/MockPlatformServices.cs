@@ -1,8 +1,5 @@
-﻿using System;
-using System.IO.IsolatedStorage;
+﻿using System.IO.IsolatedStorage;
 using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Internals;
@@ -18,8 +15,6 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
     class MockPlatformServices : IPlatformServices
     {
         public string GetHash(string input) => throw new NotImplementedException();
-
-        string IPlatformServices.GetMD5Hash(string input) => throw new NotImplementedException();
 
         public double GetNamedSize(NamedSize size, Type targetElement, bool useOldSizes) => size switch
         {

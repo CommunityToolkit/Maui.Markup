@@ -33,7 +33,6 @@ namespace CommunityToolkit.Maui.Markup
             { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ItemsView)}", ItemsView.ItemsSourceProperty },
             { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(Label)}", Label.TextProperty },
             { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ListView)}", ListView.ItemsSourceProperty },
-            { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(MasterDetailPage)}", Page.TitleProperty },
             { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(MenuItem)}", MenuItem.CommandProperty },
             { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(MultiPage<Page>)}", Page.TitleProperty },
             { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(NavigationPage)}", Page.TitleProperty },
