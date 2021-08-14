@@ -3,9 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31606.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityToolkit.Maui.Markup.Sample", "CommunityToolkit.Maui.Markup.Sample\CommunityToolkit.Maui.Markup.Sample\CommunityToolkit.Maui.Markup.Sample.csproj", "{A15CD688-94E8-483B-8B87-A173B2DD0E40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityToolkit.Maui.Markup.Sample", "CommunityToolkit.Maui.Markup.Sample\CommunityToolkit.Maui.Markup.Sample.csproj", "{A15CD688-94E8-483B-8B87-A173B2DD0E40}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityToolkit.Maui.Markup", "..\..\src\CommunityToolkit.Maui.Markup\CommunityToolkit.Maui.Markup.csproj", "{A4511CE3-FBBE-467E-AC49-522D3D308189}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityToolkit.Maui.Markup", "..\src\CommunityToolkit.Maui.Markup\CommunityToolkit.Maui.Markup.csproj", "{A4511CE3-FBBE-467E-AC49-522D3D308189}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FB2C97E0-5C47-4A80-BE66-6DE982933BD0}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+		global.json = global.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

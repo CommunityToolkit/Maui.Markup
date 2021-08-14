@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<!-- iOS, Android, MacCatalyst -->
@@ -33,8 +33,14 @@
 		<MauiFont Include="Resources\Fonts\*" />
 	</ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="6.0.0" />
+    <PackageReference Include="Polly" Version="7.2.2" />
+    <PackageReference Include="Refit" Version="6.0.38" />
+  </ItemGroup>
+
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\..\src\CommunityToolkit.Maui.Markup\CommunityToolkit.Maui.Markup.csproj" />
+	  <ProjectReference Include="..\..\src\CommunityToolkit.Maui.Markup\CommunityToolkit.Maui.Markup.csproj" />
 	</ItemGroup>
 
 	<PropertyGroup>
