@@ -1,4 +1,4 @@
-name: Unit Tests
+name: CommunityToolkit.Maui.Markup
 
 on:
   push:
