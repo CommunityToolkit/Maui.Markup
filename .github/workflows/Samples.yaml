@@ -31,7 +31,7 @@ jobs:
 
         - name: Build
           run: |
-            dotnet build ./samples/
+            dotnet build ./samples/ -c Release
 
     Build_Sample_Windows:
       runs-on: windows-latest
