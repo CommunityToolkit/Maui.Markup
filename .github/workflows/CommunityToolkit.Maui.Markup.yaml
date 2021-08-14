@@ -31,7 +31,7 @@ jobs:
 
         - name: Build
           run: |
-            dotnet build ./src/
+            dotnet build ./src/ -c Release
 
     UnitTest_macOS:
       runs-on: macos-latest
@@ -83,7 +83,7 @@ jobs:
 
         - name: Build 
           run: |
-            dotnet build ./src/
+            dotnet build ./src/ -c Release
 
     UnitTest_Windows:
       runs-on: macos-latest
