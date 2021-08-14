@@ -9,7 +9,7 @@ on:
       - "*"
 
 jobs:
-    Build_macOS:
+    Build_Sample_macOS:
       runs-on: macos-latest
 
       steps:
@@ -31,9 +31,9 @@ jobs:
 
         - name: Build
           run: |
-            dotnet build ./samples/ -c Release
+            dotnet build ./samples/
 
-    Build_Windows:
+    Build_Sample_Windows:
       runs-on: windows-latest
 
       steps:

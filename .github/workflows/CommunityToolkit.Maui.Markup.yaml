@@ -9,7 +9,7 @@ on:
       - "*"
 
 jobs:
-    Build_macOS:
+    Build_Library_macOS:
       runs-on: macos-latest
 
       steps:
@@ -61,7 +61,7 @@ jobs:
           
           dotnet test  -c Release $UnitTestProject
 
-    Build_Windows:
+    Build_Library_Windows:
       runs-on: windows-latest
 
       steps:
