@@ -5,7 +5,8 @@
 		<TargetFrameworks>net6.0-ios;net6.0-android;net6.0-maccatalyst</TargetFrameworks>
 		<OutputType>Exe</OutputType>
 		<UseMaui>true</UseMaui>
-		<SingleProject>true</SingleProject>
+    <PublishTrimmed>false</PublishTrimmed>
+    <SingleProject>true</SingleProject>
 		<RootNamespace>CommunityToolkit.Maui.Markup.Sample</RootNamespace>
 
 		<!-- Display name -->
