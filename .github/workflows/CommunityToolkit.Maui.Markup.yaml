@@ -23,7 +23,7 @@ jobs:
 
         - name: Install .NET MAUI Workload
           run: |
-            dotnet workload install maui
+            dotnet workload install maui 
           
         - name: Restore NuGet 
           run: |
@@ -35,7 +35,7 @@ jobs:
 
     UnitTest_macOS:
       runs-on: macos-latest
-      needs: Build_macOS
+      needs: Build_Library_macOS
 
       steps:
       - uses: actions/checkout@v1
@@ -87,7 +87,7 @@ jobs:
 
     UnitTest_Windows:
       runs-on: macos-latest
-      needs: Build_Windows
+      needs: Build_Library_Windows
 
       steps:
       - uses: actions/checkout@v1
