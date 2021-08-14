@@ -1,4 +1,4 @@
-name: Samples
+name: CommunityToolkit.Maui.Markup.Sample
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - "*"
 
 jobs:
-    Build_Sample_macOS:
+    Build_Android_Sample_macOS:
       runs-on: macos-latest
 
       steps:
@@ -29,9 +29,9 @@ jobs:
           run: |
             dotnet restore ./samples/
 
-        - name: Build
+        - name: Build Android
           run: |
-            dotnet build ./samples/ -c Release
+            dotnet build ./samples/ -c Release -f net6.0-android
 
     Build_Sample_Windows:
       runs-on: windows-latest
