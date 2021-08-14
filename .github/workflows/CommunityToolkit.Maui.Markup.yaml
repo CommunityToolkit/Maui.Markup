@@ -1,4 +1,4 @@
-name: Unit Tests
+name: CommunityToolkit.Maui.Markup
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - "*"
 
 jobs:
-    Build_macOS:
+    Build_Library_macOS:
       runs-on: macos-latest
 
       steps:
@@ -31,7 +31,7 @@ jobs:
 
         - name: Build
           run: |
-            dotnet build ./src/
+            dotnet build ./src/ -c Release
 
     UnitTest_macOS:
       runs-on: macos-latest
@@ -61,7 +61,7 @@ jobs:
           
           dotnet test  -c Release $UnitTestProject
 
-    Build_Windows:
+    Build_Library_Windows:
       runs-on: windows-latest
 
       steps:
@@ -83,7 +83,7 @@ jobs:
 
         - name: Build 
           run: |
-            dotnet build ./src/
+            dotnet build ./src/ -c Release
 
     UnitTest_Windows:
       runs-on: macos-latest
