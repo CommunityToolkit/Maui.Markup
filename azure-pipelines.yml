@@ -114,7 +114,7 @@ jobs:
         displayName: 'Build Community Toolkit'
         inputs:
           script: 'dotnet build $(PathToCommunityToolkitCsproj) -c Release'
-      # Doesn't work (yet) https://github.com/dotnet/maui/issues/2112
+      # Doesn't work yet https://github.com/dotnet/maui/issues/2112
       # - task: DotNetCoreCLI@2
       #   displayName: 'Run Unit Tests'
       #   inputs:
