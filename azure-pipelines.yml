@@ -119,10 +119,10 @@ jobs:
         displayName: 'Build Community Toolkit'
         inputs:
           script: 'dotnet build $(PathToCommunityToolkitCsproj) -c Release'
-      - task: CmdLine@2
-        displayName: 'Build Community Toolkit Sample'
+      - task: CmdLine@2 # Building iOS + macOS requires a signing certificate
+        displayName: 'Build Community Toolkit Android Sample'
         inputs:
-          script: 'dotnet build $(PathToSample) -c Release'
+          script: 'dotnet build $(PathToSample) -f net6.0-android -c Release'
       # Doesn't work yet https://github.com/dotnet/maui/issues/2112
       # - task: DotNetCoreCLI@2
       #   displayName: 'Run Unit Tests'
