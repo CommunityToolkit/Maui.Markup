@@ -1,4 +1,4 @@
-[![CommunityToolkit.Maui.Markup](https://github.com/CommunityToolkit/Maui.Markup/actions/workflows/CommunityToolkit.Maui.Markup.yaml/badge.svg)](https://github.com/CommunityToolkit/Maui.Markup/actions/workflows/CommunityToolkit.Maui.Markup.yaml) [![CommunityToolkit.Maui.Markup.Sample](https://github.com/CommunityToolkit/Maui.Markup/actions/workflows/Samples.yaml/badge.svg)](https://github.com/CommunityToolkit/Maui.Markup/actions/workflows/Samples.yaml)
+[![Build Status](https://dev.azure.com/dotnet/CommunityToolkit/_apis/build/status/CommunityToolkit.Maui.Markup?branchName=main)](https://dev.azure.com/dotnet/CommunityToolkit/_build/latest?definitionId=173&branchName=main)
 
 [<img src="https://raw.githubusercontent.com/dotnet-foundation/swag/master/logo/dotnetfoundation_v4.svg" alt=".NET Foundation" width=100>](https://dotnetfoundation.org) 
 
