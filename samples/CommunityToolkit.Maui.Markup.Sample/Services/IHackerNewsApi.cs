@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Maui.Markup.Sample.Models;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using CommunityToolkit.Maui.Markup.Sample.Models;
 using Refit;
 
 namespace CommunityToolkit.Maui.Markup.Sample.Services
