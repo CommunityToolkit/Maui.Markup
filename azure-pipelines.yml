@@ -53,6 +53,12 @@ jobs:
         displayName: 'Install .NET MAUI workload'
         inputs:
           script: 'dotnet workload install maui'
+      - task: JavaToolInstaller@0
+        displayName: 'Install Java SDK 11.0'
+        inputs:
+          versionSpec: '11'
+          jdkArchitectureOption: 'x64'
+          jdkSourceOption: 'PreInstalled'
       - task: CmdLine@2
         displayName: 'Clear Local NuGet Cache' #https://github.com/actions/virtual-environments/issues/1090#issuecomment-748452120
         inputs:

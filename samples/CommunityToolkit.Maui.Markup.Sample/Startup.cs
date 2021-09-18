@@ -5,31 +5,30 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls.Hosting;
 using Microsoft.Maui.Controls.Xaml;
-using Microsoft.Maui.Hosting;
 using Refit;
 
 [assembly: XamlCompilationAttribute(XamlCompilationOptions.Compile)]
 
 namespace CommunityToolkit.Maui.Markup.Sample
 {
-    public class Startup : IStartup
+    public class Startup
     {
-        public void Configure(IAppHostBuilder appBuilder)
+        public static MauiApp Create()
         {
-            appBuilder
-                .UseMauiApp<App>()
-                .ConfigureServices(services =>
-                {
-                    // Services
-                    services.AddSingleton(RestService.For<IHackerNewsApi>("https://hacker-news.firebaseio.com/v0"));
-                    services.AddSingleton<HackerNewsAPIService>();
+            var builder = MauiApp.CreateBuilder();
+            builder.UseMauiApp<App>();
 
-                    // View Models
-                    services.AddTransient<NewsViewModel>();
+            // Services
+            builder.Services.AddSingleton(RestService.For<IHackerNewsApi>("https://hacker-news.firebaseio.com/v0"));
+            builder.Services.AddSingleton<HackerNewsAPIService>();
 
-                    // Pages
-                    services.AddTransient<NewsPage>();
-                });
+            // View Models
+            builder.Services.AddTransient<NewsViewModel>();
+
+            // Pages
+            builder.Services.AddTransient<NewsPage>();
+
+            return builder.Build();
         }
     }
 }

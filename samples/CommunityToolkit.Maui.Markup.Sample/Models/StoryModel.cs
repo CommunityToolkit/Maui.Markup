@@ -1,4 +1,6 @@
-﻿namespace CommunityToolkit.Maui.Markup.Sample.Models
+﻿using System;
+
+namespace CommunityToolkit.Maui.Markup.Sample.Models
 {
     record StoryModel(long Id, string By, long Score, long Time, string Title, string Url)
     {
@@ -7,7 +9,6 @@
         public DateTimeOffset CreatedAt => UnixTimeStampToDateTimeOffset(Time);
 
         public override string ToString() => $"{Score} Points by {By}, {GetAgeOfStory(CreatedAt)} ago";
-
 
         static string GetAgeOfStory(DateTimeOffset storyCreatedAt)
         {
