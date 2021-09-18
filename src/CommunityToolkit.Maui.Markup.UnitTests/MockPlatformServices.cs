@@ -1,5 +1,8 @@
-﻿using System.IO.IsolatedStorage;
+﻿using System;
+using System.IO.IsolatedStorage;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Internals;
