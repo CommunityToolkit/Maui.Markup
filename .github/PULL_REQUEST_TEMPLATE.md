@@ -1,52 +1,20 @@
-<!-- 
-Hey there friend! First of all, thank you so much for this PR!
+<!--
+Hello, and thanks for your interest in contributing to the .NET MAUI Toolkit! 
 
-Before doing a lot of work, please check if there's an open issue for this change and that it has been approved by one of our maintainers.
+For Bug Fixes:
+If you haven't yet opened an Issue that reports the bug in detail, provides a reproduction sample, and has been verified + reproduced by a member of the .NET MAUI Toolkit core team, please do that before submitting a Pull Request. Bug Fix Pull Requests without an associated Issue will be closed.
 
-If not, please open an issue first so we can discuss upfront.
+For New Feature Proposals:
+If you haven't yet submitted a Proposal that has been Championed by a .NET MAUI core team member, please instead open a Discussion at https://github.com/communitytoolkit/maui/discussions/new where we can discuss the pros/cons of the feature and its implementation. 
 -->
 
-### Description of Change ###
+## Fixes
+<!-- Please link to the Issue that this Pull Request resolves -->
 
-<!-- Describe your changes here. -->
+## Description
 
-### Bugs Fixed ###
-<!-- Provide links to issues here. Ensure that a GitHub issue was created for your feature or bug fix before sending PR. -->
+<!-- Please copy/paste the Description/Summary from your Issue-->
 
-- Fixes #
+## Detailed Solution
 
-### API Changes ###
-
-<!-- List all API changes here (or just put None), example:
-
-Added: 
- 
-- `string Class.Property { get; set; }`
-- `void Class.Method();`
-
-Changed:
-
- - `object Cell.OldPropertyName` => `object Cell.NewPropertyName`
- 
-If there is an entirely new API, then you can use a more verbose style:
-
-```csharp
-public static class NewClass {
-    public static int SomeProperty { get; set; }
-    public static void SomeMethod(string value);
-}
-``` -->
-
-### Behavioral Changes ###
-
-<!-- Describe any non-bug related behavioral changes that may change how users app behaves when upgrading to this version of the codebase. -->
-
-### PR Checklist ###
-<!-- Please check all the things you did here and double-check that you got it all, or state why you didn't do something -->
-- [ ] Has a linked Issue, and the Issue has been `approved`
-- [ ] Has tests (if omitted, state reason in description)
-- [ ] Has samples (if omitted, state reason in description)
-- [ ] Rebased on top of main at time of PR
-- [ ] Changes adhere to coding standard
-<!-- If at all possible, please update/add the documentation on the repo below. We would very much appreciate that. If you are unable to, please consider at least opening an issue on the repo below so we know that Docs still need to be adjusted/created. Thanks! <3 -->
-- [ ] Updated Documentation
+<!-- Please describe the solution in detail-->
