@@ -35,6 +35,6 @@
 		<PackageReference Include="mdoc" Version="5.8.3" PrivateAssets="all" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Include="icon.png" Pack="true" PackagePath=""/>
+	  <None Include="icon.png" Pack="true" PackagePath="" />
 	</ItemGroup>
 </Project>

@@ -1,14 +1,14 @@
 ﻿using System;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
-using NUnit.Framework;
+using Xunit;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
-    [TestFixture]
-    public class StyleTests : MarkupBaseTestFixture
+    
+    public class StyleTests : MarkupBaseTest
     {
-        [Test]
+        [Fact]
         public void ImplicitCast()
         {
             Style<Label>? style = null;
@@ -21,7 +21,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(ReferenceEquals(style.FormsStyle, formsStyle));
         }
 
-        [Test]
+        [Fact]
         public void StyleSingleSetter()
         {
             var style = new Style<Label>(
@@ -35,7 +35,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(setter?.Value, Is.EqualTo(Colors.Red));
         }
 
-        [Test]
+        [Fact]
         public void StyleMultipleSetters()
         {
             var style = new Style<Label>(
@@ -54,7 +54,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(setter2?.Value, Is.EqualTo(8.0));
         }
 
-        [Test]
+        [Fact]
         public void ApplyToDerivedTypes()
         {
             var style = new Style<Label>();
@@ -65,7 +65,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.IsTrue(formsStyle?.ApplyToDerivedTypes);
         }
 
-        [Test]
+        [Fact]
         public void BasedOn()
         {
             Style? baseStyle = new Style<Label>();
@@ -78,7 +78,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(ReferenceEquals(formsStyle?.BasedOn, formsBaseStyle));
         }
 
-        [Test]
+        [Fact]
         public void AddSingleSetter()
         {
             var style = new Style<Label>();
@@ -95,7 +95,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(setter?.Value, Is.EqualTo(Colors.Red));
         }
 
-        [Test]
+        [Fact]
         public void AddMultipleSetters()
         {
             var style = new Style<Label>();
@@ -117,7 +117,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(setter2?.Value, Is.EqualTo(8.0));
         }
 
-        [Test]
+        [Fact]
         public void AddSingleBehavior()
         {
             var style = new Style<Label>();
@@ -131,7 +131,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(ReferenceEquals(formsStyle?.Behaviors?[0], behavior));
         }
 
-        [Test]
+        [Fact]
         public void AddMultipleBehaviors()
         {
             var style = new Style<Label>();
@@ -147,7 +147,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(ReferenceEquals(formsStyle?.Behaviors?[1], behavior2));
         }
 
-        [Test]
+        [Fact]
         public void AddSingleTrigger()
         {
             var style = new Style<Label>();
@@ -161,7 +161,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(ReferenceEquals(formsStyle?.Triggers?[0], trigger));
         }
 
-        [Test]
+        [Fact]
         public void AddMultipleTriggers()
         {
             var style = new Style<Label>();
@@ -177,7 +177,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(ReferenceEquals(formsStyle?.Triggers?[1], trigger2));
         }
 
-        [Test]
+        [Fact]
         public void CanCascade()
         {
             var style = new Style<Label>();
@@ -188,7 +188,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.IsTrue(formsStyle?.CanCascade);
         }
 
-        [Test]
+        [Fact]
         public void Fluent()
         {
             Style? basedOnStyle = new Style<Label>();

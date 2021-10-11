@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Maui.Controls;
-using NUnit.Framework;
+using Xunit;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
-	[TestFixture]
-	public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
+	
+	public class BindableObjectMultiBindExtensionsTests : MarkupBaseTest
 	{
 		ViewModel? viewModel;
 		List<BindingBase>? testBindings;
@@ -47,7 +47,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			base.TearDown();
 		}
 
-		[Test]
+		[Fact]
 		[TestCase(true, false)]
 		[TestCase(false, true)]
 		[TestCase(true, true)]
@@ -92,7 +92,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			AssertLabelTextMultiBound(label, 2, testConvert, testConvertBack);
 		}
 
-		[Test]
+		[Fact]
 		[TestCase(true, false)]
 		[TestCase(false, true)]
 		[TestCase(true, true)]
@@ -135,7 +135,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			AssertLabelTextMultiBound(label, 2, testConvert, testConvertBack, 2);
 		}
 
-		[Test]
+		[Fact]
 		[TestCase(true, false)]
 		[TestCase(false, true)]
 		[TestCase(true, true)]
@@ -175,7 +175,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			AssertLabelTextMultiBound(label, 3, testConvert, testConvertBack);
 		}
 
-		[Test]
+		[Fact]
 		[TestCase(true, false)]
 		[TestCase(false, true)]
 		[TestCase(true, true)]
@@ -218,7 +218,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			AssertLabelTextMultiBound(label, 3, testConvert, testConvertBack, 2);
 		}
 
-		[Test]
+		[Fact]
 		[TestCase(true, false)]
 		[TestCase(false, true)]
 		[TestCase(true, true)]
@@ -258,7 +258,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			AssertLabelTextMultiBound(label, 4, testConvert, testConvertBack);
 		}
 
-		[Test]
+		[Fact]
 		[TestCase(true, false)]
 		[TestCase(false, true)]
 		[TestCase(true, true)]
@@ -301,7 +301,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			AssertLabelTextMultiBound(label, 4, testConvert, testConvertBack, 2);
 		}
 
-		[Test]
+		[Fact]
 		[TestCase(true, false)]
 		[TestCase(false, true)]
 		[TestCase(true, true)]
@@ -328,7 +328,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			AssertLabelTextMultiBound(label, 5, testConvert, testConvertBack, converter: converter);
 		}
 
-		[Test]
+		[Fact]
 		[TestCase(true, false)]
 		[TestCase(false, true)]
 		[TestCase(true, true)]

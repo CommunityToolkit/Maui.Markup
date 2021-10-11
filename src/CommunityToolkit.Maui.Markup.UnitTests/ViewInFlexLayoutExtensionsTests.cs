@@ -1,13 +1,13 @@
 ﻿using Microsoft.Maui.Controls;
 using Microsoft.Maui.Layouts;
-using NUnit.Framework;
+using Xunit;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
-	[TestFixture]
-	public class ViewInFlexLayoutExtensionsTests : MarkupBaseTestFixture<BoxView>
+	
+	public class ViewInFlexLayoutExtensionsTests : MarkupBaseTest<BoxView>
 	{
-		[Test]
+		[Fact]
 		public void AlignSelf()
 		{
 			FlexLayout.SetAlignSelf(Bindable, FlexAlignSelf.End);
@@ -16,7 +16,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			Assert.That(FlexLayout.GetAlignSelf(Bindable), Is.EqualTo(FlexAlignSelf.Start));
 		}
 
-		[Test]
+		[Fact]
 		public void Basis()
 		{
 			FlexLayout.SetBasis(Bindable, FlexBasis.Auto);
@@ -25,7 +25,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			Assert.That(FlexLayout.GetBasis(Bindable), Is.EqualTo(new FlexBasis(50)));
 		}
 
-		[Test]
+		[Fact]
 		public void Grow()
 		{
 			FlexLayout.SetGrow(Bindable, 0f);
@@ -34,7 +34,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			Assert.That(FlexLayout.GetGrow(Bindable), Is.EqualTo(1f));
 		}
 
-		[Test]
+		[Fact]
 		public void Order()
 		{
 			FlexLayout.SetOrder(Bindable, 0);
@@ -43,7 +43,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			Assert.That(FlexLayout.GetOrder(Bindable), Is.EqualTo(1));
 		}
 
-		[Test]
+		[Fact]
 		public void Shrink()
 		{
 			FlexLayout.SetShrink(Bindable, 1f);

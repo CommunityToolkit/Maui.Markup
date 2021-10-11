@@ -1,15 +1,15 @@
 ﻿using System;
 using Microsoft.Maui.Controls;
-using NUnit.Framework;
+using Xunit;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
-    [TestFixture]
-    public class VisualElementExtensionsTests : MarkupBaseTestFixture<BoxView>
+    
+    public class VisualElementExtensionsTests : MarkupBaseTest<BoxView>
     {
         BoxView BoxView => Bindable ?? throw new NullReferenceException();
 
-        [Test]
+        [Fact]
         public void Height()
         {
             BoxView.HeightRequest = 1;
@@ -17,7 +17,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(BoxView.HeightRequest, Is.EqualTo(2));
         }
 
-        [Test]
+        [Fact]
         public void Width()
         {
             BoxView.WidthRequest = 1;
@@ -25,7 +25,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(BoxView.WidthRequest, Is.EqualTo(2));
         }
 
-        [Test]
+        [Fact]
         public void MinHeight()
         {
             BoxView.MinimumHeightRequest = 1;
@@ -33,7 +33,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(BoxView.MinimumHeightRequest, Is.EqualTo(2));
         }
 
-        [Test]
+        [Fact]
         public void MinWidth()
         {
             BoxView.MinimumWidthRequest = 1;
@@ -41,7 +41,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(BoxView.MinimumWidthRequest, Is.EqualTo(2));
         }
 
-        [Test]
+        [Fact]
         public void SizeNotUniform()
         {
             BoxView.WidthRequest = BoxView.HeightRequest = 1;
@@ -50,7 +50,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(BoxView.HeightRequest, Is.EqualTo(3));
         }
 
-        [Test]
+        [Fact]
         public void SizeUniform()
         {
             BoxView.WidthRequest = BoxView.HeightRequest = 1;
@@ -59,7 +59,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(BoxView.HeightRequest, Is.EqualTo(2));
         }
 
-        [Test]
+        [Fact]
         public void MinSizeNotUniform()
         {
             BoxView.MinimumWidthRequest = BoxView.MinimumHeightRequest = 1;
@@ -68,7 +68,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(BoxView.MinimumHeightRequest, Is.EqualTo(3));
         }
 
-        [Test]
+        [Fact]
         public void MinSizeUniform()
         {
             BoxView.MinimumWidthRequest = BoxView.MinimumHeightRequest = 1;
@@ -77,7 +77,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(BoxView.MinimumHeightRequest, Is.EqualTo(2));
         }
 
-        [Test]
+        [Fact]
         public void Style()
         {
             var style = new Style<BoxView>();
@@ -86,7 +86,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(BoxView.Style, Is.EqualTo(style.FormsStyle));
         }
 
-        [Test]
+        [Fact]
         public void SupportDerivedFromBoxView()
         {
             Assert.IsInstanceOf<DerivedFromBoxView>(

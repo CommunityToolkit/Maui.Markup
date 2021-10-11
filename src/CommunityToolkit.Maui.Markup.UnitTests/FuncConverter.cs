@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Globalization;
 using Microsoft.Maui.Graphics;
-using NUnit.Framework;
+using Xunit;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
-    [TestFixture]
-    public class FuncConverter : MarkupBaseTestFixture
+    
+    public class FuncConverter : MarkupBaseTest
     {
-        [Test]
+        [Fact]
         public void TwoWayMultiWithParamAndCulture()
         {
             CultureInfo? convertCulture = null, convertBackCulture = null;
@@ -47,7 +47,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That((int)backValues[1], Is.EqualTo(0));
         }
 
-        [Test]
+        [Fact]
         public void TwoWayMultiWithParam()
         {
             // Convert char a and int i values to string of a repeated i times, or double that if parameter was true
@@ -76,7 +76,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That((int)backValues[1], Is.EqualTo(0));
         }
 
-        [Test]
+        [Fact]
         public void TwoWayMulti()
         {
             // Convert char a and int i values to string of a repeated i times
@@ -103,7 +103,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That((int)backValues[1], Is.EqualTo(0));
         }
 
-        [Test]
+        [Fact]
         public void FullyTypedTwoWayWithParamAndCulture()
         {
             CultureInfo? convertCulture = null, convertBackCulture = null;
@@ -130,7 +130,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(converter.ConvertBack(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(default(bool)));
         }
 
-        [Test]
+        [Fact]
         public void FullyTypedTwoWayWithParam()
         {
             var converter = new FuncConverter<bool, Color, float>(
@@ -143,7 +143,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(converter.ConvertBack(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(default(bool)));
         }
 
-        [Test]
+        [Fact]
         public void FullyTypedTwoWay()
         {
             var converter = new FuncConverter<bool, Color, object>(
@@ -156,7 +156,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(converter.ConvertBack(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(default(bool)));
         }
 
-        [Test]
+        [Fact]
         public void FullyTypedOneWayWithParam()
         {
             new FuncConverter<bool, Color, float>(
@@ -165,7 +165,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             .AssertConvert(false, 0.2f, Colors.Green.MultiplyAlpha(0.2f));
         }
 
-        [Test]
+        [Fact]
         public void FullyTypedOneWay()
         {
             new FuncConverter<bool, Color, object>(
@@ -174,7 +174,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             .AssertConvert(false, Colors.Green);
         }
 
-        [Test]
+        [Fact]
         public void FullyTypedBackOnlyWithParam()
         {
             new FuncConverter<bool, Color, float>(
@@ -184,7 +184,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             .AssertConvert(false, 0.2f, Colors.Green.MultiplyAlpha(0.2f), backOnly: true);
         }
 
-        [Test]
+        [Fact]
         public void FullyTypedBackOnly()
         {
             new FuncConverter<bool, Color, object>(
@@ -194,7 +194,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             .AssertConvert(false, Colors.Green, backOnly: true);
         }
 
-        [Test]
+        [Fact]
         public void TwoWay()
         {
             new FuncConverter<bool, Color>(
@@ -204,7 +204,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             .AssertConvert(false, Colors.Green, twoWay: true);
         }
 
-        [Test]
+        [Fact]
         public void OneWay()
         {
             new FuncConverter<bool, Color>(
@@ -213,7 +213,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             .AssertConvert(false, Colors.Green);
         }
 
-        [Test]
+        [Fact]
         public void BackOnly()
         {
             new FuncConverter<bool, Color>(
@@ -223,7 +223,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             .AssertConvert(false, Colors.Green, backOnly: true);
         }
 
-        [Test]
+        [Fact]
         public void TypedSourceTwoWay()
         {
             new FuncConverter<bool>(
@@ -233,7 +233,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             .AssertConvert(false, Colors.Green, twoWay: true);
         }
 
-        [Test]
+        [Fact]
         public void TypedSourceOneWay()
         {
             new FuncConverter<bool>(
@@ -242,7 +242,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             .AssertConvert(false, Colors.Green);
         }
 
-        [Test]
+        [Fact]
         public void TypedSourceBackOnly()
         {
             new FuncConverter<bool>(
@@ -252,7 +252,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             .AssertConvert(false, (object)Colors.Green, backOnly: true);
         }
 
-        [Test]
+        [Fact]
         public void UntypedTwoWay()
         {
             new Markup.FuncConverter(
@@ -262,7 +262,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             .AssertConvert((object)false, (object)Colors.Green, twoWay: true);
         }
 
-        [Test]
+        [Fact]
         public void UntypedOneWay()
         {
             new Markup.FuncConverter(
@@ -271,7 +271,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             .AssertConvert((object)false, (object)Colors.Green);
         }
 
-        [Test]
+        [Fact]
         public void UntypedBackOnly()
         {
             new Markup.FuncConverter(
@@ -281,21 +281,21 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             .AssertConvert((object)false, (object)Colors.Green, backOnly: true);
         }
 
-        [Test]
+        [Fact]
         public void ToStringConverter()
         {
             new ToStringConverter("Converted {0}")
                 .AssertConvert((object)3, "Converted 3");
         }
 
-        [Test]
+        [Fact]
         public void ToStringConverterDefault()
         {
             new ToStringConverter()
                 .AssertConvert((object)3, "3");
         }
 
-        [Test]
+        [Fact]
         public void NotConverterTest()
         {
             var c = NotConverter.Instance;

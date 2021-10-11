@@ -3,25 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using NUnit.Framework;
+using Xunit;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
-#pragma warning disable SA1200 // Using directives should be placed correctly
     // These usings are placed here to avoid ambiguities
     using Microsoft.Maui.Controls;
     using CommunityToolkit.Maui.Markup.UnitTests.DefaultBindablePropertiesViews;
     using Microsoft.Maui.Controls.Shapes;
-#pragma warning restore SA1200 // Using directives should be placed correctly
 
-    [TestFixture]
-    public class DefaultBindablePropertiesTests : MarkupBaseTestFixture
+    public class DefaultBindablePropertiesTests : MarkupBaseTest
     {
-        [Test]
+        [Fact]
         public void AllBindableElementsInCoreHaveDefaultBindablePropertyOrAreExcluded()
         {
             const string na = "not applicable", tbd = "to be determined";
-            IReadOnlyDictionary<Type,string> excludedTypeReasons = new Dictionary<Type, string>
+            IReadOnlyDictionary<Type, string> excludedTypeReasons = new Dictionary<Type, string>
             { // Key: type, Value: reason why it does not have a default bindable property
 				{ typeof(Application), na },
                 { typeof(AdaptiveTrigger), na },
@@ -145,35 +142,31 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                     {
                         failMessage.AppendLine("\tCandidate properties:");
                         foreach (var propertyName in propertyNames)
-                            failMessage.Append("\t").AppendLine(propertyName);
+                            failMessage.Append('\t').AppendLine(propertyName);
                     }
                 }
             }
 
             if (failMessage.Length > 0)
             {
-                Assert.Fail(
+                throw new Exception(
                     $"Missing default BindableProperty / exclusion for BindableObject types:\n{failMessage}\n" +
                     $"Either register these types in {typeof(DefaultBindableProperties).FullName} or exclude them in this test");
             }
         }
 
-        [Test]
-        public void GetDefaultBindablePropertyForBuiltInType()
-            => Assert.That(DefaultBindableProperties.GetFor(new Label()), Is.Not.Null);
+        [Fact]
+        public void GetDefaultBindablePropertyForBuiltInType() => Assert.NotNull(DefaultBindableProperties.GetFor(new Label()));
 
-        [Test]
-        public void GetDefaultBindablePropertyForDerivedType()
-            => Assert.That(DefaultBindableProperties.GetFor(new DerivedFromBoxView()), Is.Not.Null);
+        [Fact]
+        public void GetDefaultBindablePropertyForDerivedType() => Assert.NotNull(DefaultBindableProperties.GetFor(new DerivedFromBoxView()));
 
-        [Test]
-        public void GetDefaultBindablePropertyForUnsupportedType()
-            => Assert.Throws<ArgumentException>(
-                () => DefaultBindableProperties.GetFor(new CustomView()),
-                "No default bindable property is registered for BindableObject type XamarinFormsMarkupUnitTestsDefaultBindablePropertiesViews.CustomView" +
-                "\r\nEither specify a property when calling Bind() or register a default bindable property for this BindableObject type");
+        [Fact]
+        //  "No default bindable property is registered for BindableObject type XamarinFormsMarkupUnitTestsDefaultBindablePropertiesViews.CustomView"
+        //  Either specify a property when calling Bind() or register a default bindable property for this BindableObject type");
+        public void GetDefaultBindablePropertyForUnsupportedType() => Assert.Throws<ArgumentException>(() => DefaultBindableProperties.GetFor(new CustomView()));
 
-        [Test]
+        [Fact]
         public void RegisterDefaultBindableProperty()
         {
             var v = new CustomViewWithText();
@@ -182,22 +175,24 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             DefaultBindableProperties.Register(CustomViewWithText.TextProperty);
         }
 
-        [Test]
+        [Fact]
         public void GetDefaultBindableCommandPropertiesForBuiltInType()
-            => Assert.That(DefaultBindableProperties.GetForCommand(new Button()), Is.Not.Null);
+        {
+            var (commandProperty, commandParameterProperty) = DefaultBindableProperties.GetForCommand(new Button());
 
-        [Test]
-        public void GetDefaultBindableCommandPropertiesForDerivedType()
-            => Assert.That(DefaultBindableProperties.GetFor(new DerivedFromButton()), Is.Not.Null);
+            Assert.NotNull(commandProperty);
+            Assert.NotNull(commandParameterProperty);
+        }
 
-        [Test]
-        public void GetDefaultBindableCommandPropertiesForUnsupportedType()
-            => Assert.Throws<ArgumentException>(
-                () => DefaultBindableProperties.GetFor(new CustomView()),
-                "No command + command parameter properties are registered for BindableObject type XamarinFormsMarkupUnitTestsDefaultBindablePropertiesViews.CustomView" +
-                "\r\nRegister command + command parameter properties for this BindableObject type");
+        [Fact]
+        public void GetDefaultBindableCommandPropertiesForDerivedType() => Assert.NotNull(DefaultBindableProperties.GetFor(new DerivedFromButton()));
 
-        [Test]
+        [Fact]
+        //  "No command + command parameter properties are registered for BindableObject type XamarinFormsMarkupUnitTestsDefaultBindablePropertiesViews.CustomView"
+        //  Register command + command parameter properties for this BindableObject type");
+        public void GetDefaultBindableCommandPropertiesForUnsupportedType() => Assert.Throws<ArgumentException>(() => DefaultBindableProperties.GetFor(new CustomView()));
+
+        [Fact]
         public void RegisterDefaultBindableCommandProperties()
         {
             var v = new CustomViewWithCommand();
@@ -206,28 +201,24 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             DefaultBindableProperties.RegisterForCommand((CustomViewWithCommand.CommandProperty, CustomViewWithCommand.CommandParameterProperty));
         }
 
-        [TearDown]
-        public override void TearDown()
+        protected override void Dispose(bool isDisposing)
         {
             if (DefaultBindableProperties.GetFor(typeof(CustomViewWithText)) != null)
                 DefaultBindableProperties.Unregister(CustomViewWithText.TextProperty);
 
             if (DefaultBindableProperties.GetForCommand(typeof(CustomViewWithCommand)) != (null, null))
                 DefaultBindableProperties.UnregisterForCommand(CustomViewWithCommand.CommandProperty);
-            base.TearDown();
+
+            base.Dispose(isDisposing);
         }
     }
 }
 
-#pragma warning disable SA1403 // File may only contain a single namespace
 namespace CommunityToolkit.Maui.Markup.UnitTests.DefaultBindablePropertiesViews // This namespace simulates derived controls defined in a separate app, for use in the tests in this file only
-#pragma warning restore SA1403 // File may only contain a single namespace
 {
-#pragma warning disable SA1200 // Using directives should be placed correctly
     // These usings are placed here to avoid ambiguities
     using System.Windows.Input;
     using Microsoft.Maui.Controls;
-#pragma warning restore SA1200 // Using directives should be placed correctly
 
     class DerivedFromBoxView : BoxView
     {
@@ -243,7 +234,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests.DefaultBindablePropertiesViews 
 
     class CustomViewWithText : View
     {
-        public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(CustomViewWithText), default(string));
+        public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(CustomViewWithText), string.Empty);
 
         public string Text
         {
@@ -254,16 +245,16 @@ namespace CommunityToolkit.Maui.Markup.UnitTests.DefaultBindablePropertiesViews 
 
     class CustomViewWithCommand : View
     {
-        public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(CustomViewWithCommand), default(ICommand));
-        public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(CustomViewWithCommand), default(object));
+        public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(CustomViewWithCommand));
+        public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(CustomViewWithCommand));
 
-        public ICommand Command
+        public ICommand? Command
         {
             get => (ICommand)GetValue(CommandProperty);
             set => SetValue(CommandProperty, value);
         }
 
-        public object CommandParameter
+        public object? CommandParameter
         {
             get => GetValue(CommandParameterProperty);
             set => SetValue(CommandParameterProperty, value);

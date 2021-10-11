@@ -1,13 +1,13 @@
 ﻿using System;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
-using NUnit.Framework;
+using Xunit;
 using static CommunityToolkit.Maui.Markup.GridRowsColumns;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
-	[TestFixture]
-	public class GridRowsColumns : MarkupBaseTestFixture
+	
+	public class GridRowsColumns : MarkupBaseTest
 	{
 		const double starsValue = 1.5;
 		readonly GridLength starsLength = new GridLength(starsValue, GridUnitType.Star);
@@ -15,7 +15,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		enum Row { First, Second, Third, Fourth }
 		enum Col { First, Second, Third, Fourth, Fifth }
 
-		[Test]
+		[Fact]
 		public void DefineRowsWithoutEnums()
 		{
 			var grid = new Grid
@@ -30,7 +30,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			Assert.That(grid.RowDefinitions[3]?.Height, Is.EqualTo(new GridLength(20)));
 		}
 
-		[Test]
+		[Fact]
 		public void DefineRowsWithEnums()
 		{
 			var grid = new Grid
@@ -50,7 +50,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			Assert.That(grid.RowDefinitions[3]?.Height, Is.EqualTo(new GridLength(20)));
 		}
 
-		[Test]
+		[Fact]
 		public void InvalidRowEnumOrder()
 		{
 			Assert.Throws<ArgumentException>(
@@ -59,7 +59,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				"Rows must be defined with enum names whose values form the sequence 0,1,2,...");
 		}
 
-		[Test]
+		[Fact]
 		public void DefineColumnsWithoutEnums()
 		{
 			var grid = new Grid
@@ -75,7 +75,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			Assert.That(grid.ColumnDefinitions[4]?.Width, Is.EqualTo(new GridLength(40)));
 		}
 
-		[Test]
+		[Fact]
 		public void DefineColumnsWithEnums()
 		{
 			var grid = new Grid
@@ -97,7 +97,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			Assert.That(grid.ColumnDefinitions[4]?.Width, Is.EqualTo(new GridLength(40)));
 		}
 
-		[Test]
+		[Fact]
 		public void InvalidColumnEnumOrder()
 		{
 			Assert.Throws<ArgumentException>(
@@ -106,10 +106,10 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				"Columns must be defined with enum names whose values form the sequence 0,1,2,...");
 		}
 
-		[Test]
+		[Fact]
 		public void AllColumns() => Assert.That(All<Col>(), Is.EqualTo(5));
 
-		[Test]
+		[Fact]
 		public void LastRow() => Assert.That(Last<Row>(), Is.EqualTo(3));
 	}
 }

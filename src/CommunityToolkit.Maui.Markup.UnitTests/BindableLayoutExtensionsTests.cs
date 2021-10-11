@@ -1,27 +1,27 @@
 ﻿using System;
 using Microsoft.Maui.Controls;
-using NUnit.Framework;
+using Xunit;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
-    [TestFixture]
-    public class BindableLayoutExtensionsTests : MarkupBaseTestFixture<StackLayout>
+    
+    public class BindableLayoutExtensionsTests : MarkupBaseTest<StackLayout>
     {
-        [Test]
+        [Fact]
         public void EmptyView()
         {
             var view = new BoxView();
             TestPropertiesSet(l => l?.EmptyView(view), (BindableLayout.EmptyViewProperty, view));
         }
 
-        [Test]
+        [Fact]
         public void EmptyViewTemplate()
         {
             var template = new DataTemplate(() => new BoxView());
             TestPropertiesSet(l => l?.EmptyViewTemplate(template), (BindableLayout.EmptyViewTemplateProperty, template));
         }
 
-        [Test]
+        [Fact]
         public void EmptyViewTemplateFunction()
         {
             Func<object> loadTemplate = () => new BoxView();
@@ -30,21 +30,21 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(BindableLayout.GetEmptyViewTemplate(Bindable), Is.Not.Null);
         }
 
-        [Test]
+        [Fact]
         public void ItemsSource()
         {
             var source = new string[] { };
             TestPropertiesSet(l => l?.ItemsSource(source), (BindableLayout.ItemsSourceProperty, source));
         }
 
-        [Test]
+        [Fact]
         public void ItemTemplate()
         {
             var template = new DataTemplate(() => new BoxView());
             TestPropertiesSet(l => l?.ItemTemplate(template), (BindableLayout.ItemTemplateProperty, template));
         }
 
-        [Test]
+        [Fact]
         public void ItemTemplateFunction()
         {
             Func<object> loadTemplate = () => new BoxView();
@@ -53,7 +53,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(BindableLayout.GetItemTemplate(Bindable), Is.Not.Null);
         }
 
-        [Test]
+        [Fact]
         public void ItemTemplateSelector()
         {
             var selector = new Selector();
@@ -65,7 +65,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new(() => new BoxView());
         }
 
-        [Test]
+        [Fact]
         public void SupportDerivedFromView()
         {
             _ = new DerivedFromView()

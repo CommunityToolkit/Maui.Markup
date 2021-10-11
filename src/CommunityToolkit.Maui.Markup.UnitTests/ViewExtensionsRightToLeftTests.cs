@@ -1,29 +1,29 @@
 ﻿using CommunityToolkit.Maui.Markup.RightToLeft;
 using Microsoft.Maui.Controls;
-using NUnit.Framework;
+using Xunit;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
-    [TestFixture]
-	public class ViewExtensionsRightToLeftTests : MarkupBaseTestFixture<BoxView>
+    
+	public class ViewExtensionsRightToLeftTests : MarkupBaseTest<BoxView>
 	{
-		[Test]
+		[Fact]
 		public void Left()
 			=> TestPropertiesSet(v => v?.Left(), (View.HorizontalOptionsProperty, LayoutOptions.Start, LayoutOptions.End));
 
-		[Test]
+		[Fact]
 		public void Right()
 			=> TestPropertiesSet(v => v?.Right(), (View.HorizontalOptionsProperty, LayoutOptions.End, LayoutOptions.Start));
 
-		[Test]
+		[Fact]
 		public void LeftExpand()
 			=> TestPropertiesSet(v => v?.LeftExpand(), (View.HorizontalOptionsProperty, LayoutOptions.Start, LayoutOptions.EndAndExpand));
 
-		[Test]
+		[Fact]
 		public void RightExpand()
 			=> TestPropertiesSet(v => v?.RightExpand(), (View.HorizontalOptionsProperty, LayoutOptions.End, LayoutOptions.StartAndExpand));
 
-		[Test]
+		[Fact]
 		public void SupportDerivedFromView()
 		{
 			Assert.IsInstanceOf<DerivedFromView>(

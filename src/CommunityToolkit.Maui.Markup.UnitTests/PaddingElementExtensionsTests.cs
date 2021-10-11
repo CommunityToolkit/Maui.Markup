@@ -1,6 +1,6 @@
 ﻿using Microsoft.Maui;
 using Microsoft.Maui.Controls;
-using NUnit.Framework;
+using Xunit;
 using PaddingElement = Microsoft.Maui.Controls.Label; // TODO: Get rid of this after we have default interface implementation in Forms for IPaddingElement
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
@@ -10,25 +10,25 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 	[TestFixture(typeof(ImageButton))]
 	[TestFixture(typeof(Label))]
 	[TestFixture(typeof(Page))]
-	public class PaddingElementExtensionsTests<TPaddingElement> : MarkupBaseTestFixture<TPaddingElement> where TPaddingElement : Element, IPaddingElement, new()
+	public class PaddingElementExtensionsTests<TPaddingElement> : MarkupBaseTest<TPaddingElement> where TPaddingElement : Element, IPaddingElement, new()
 	{
-		[Test]
+		[Fact]
 		public void PaddingThickness()
 			=> TestPropertiesSet(l => l?.Padding(new Thickness(1)), (PaddingElement.PaddingProperty, new Thickness(0), new Thickness(1)));
 
-		[Test]
+		[Fact]
 		public void PaddingUniform()
 			=> TestPropertiesSet(l => l?.Padding(1), (PaddingElement.PaddingProperty, new Thickness(0), new Thickness(1)));
 
-		[Test]
+		[Fact]
 		public void PaddingHorizontalVertical()
 			=> TestPropertiesSet(l => l?.Padding(1, 2), (PaddingElement.PaddingProperty, new Thickness(0), new Thickness(1, 2)));
 
-		[Test]
+		[Fact]
 		public void Paddings()
 			=> TestPropertiesSet(l => l?.Paddings(left: 1, top: 2, right: 3, bottom: 4), (PaddingElement.PaddingProperty, new Thickness(0), new Thickness(1, 2, 3, 4)));
 
-		[Test]
+		[Fact]
 		public void SupportDerivedFrom()
 		{
 			Assert.IsInstanceOf<DerivedFrom>(

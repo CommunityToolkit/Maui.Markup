@@ -153,7 +153,7 @@ namespace CommunityToolkit.Maui.Markup
             bindableObjectTypeDefaultCommandAndParameterProperties.Remove(commandProperty.DeclaringType.FullName);
         }
 
-        internal static (BindableProperty, BindableProperty) GetForCommand(BindableObject bindableObject)
+        internal static (BindableProperty CommandProperty, BindableProperty CommandParameterProperty) GetForCommand(BindableObject bindableObject)
         {
             var type = bindableObject.GetType();
             (var commandProperty, var parameterProperty) = GetForCommand(type);

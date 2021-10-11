@@ -4,12 +4,12 @@ using System.Windows.Input;
 using CommunityToolkit.Maui.Markup.UnitTests.BindableObjectViews;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
-using NUnit.Framework;
+using Xunit;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
-    [TestFixture]
-    public class BindableObjectExtensionsTests : MarkupBaseTestFixture
+    
+    public class BindableObjectExtensionsTests : MarkupBaseTest
     {
         ViewModel? viewModel;
 
@@ -27,7 +27,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             base.TearDown();
         }
 
-        [Test]
+        [Fact]
         public void BindSpecifiedPropertyWithDefaults()
         {
             var label = new Label();
@@ -37,7 +37,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
         // Note that we test positional parameters to catch API parameter order changes (which would be breaking).
         // Testing named parameters is not useful because a parameter rename operation in the API would also rename it in the test
-        [Test]
+        [Fact]
         public void BindSpecifiedPropertyWithPositionalParameters()
         {
             var button = new Button();
@@ -74,7 +74,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             );
         }
 
-        [Test]
+        [Fact]
         public void BindSpecifiedPropertyWithInlineOneWayConvertAndDefaults()
         {
             var label = new Label();
@@ -93,7 +93,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             );
         }
 
-        [Test]
+        [Fact]
         public void BindSpecifiedPropertyWithInlineOneWayParameterizedConvertAndDefaults()
         {
             var label = new Label();
@@ -115,7 +115,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             );
         }
 
-        [Test]
+        [Fact]
         public void BindSpecifiedPropertyWithInlineTwoWayConvertAndDefaults()
         {
             var label = new Label();
@@ -138,7 +138,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             );
         }
 
-        [Test]
+        [Fact]
         public void BindSpecifiedPropertyWithInlineTwoWayParameterizedConvertAndDefaults()
         {
             var label = new Label();
@@ -173,7 +173,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             }
         }
 
-        [Test]
+        [Fact]
         public void BindSpecifiedPropertyWithInlineOneWayConvertAndPositionalParameters()
         {
             var button = new Button();
@@ -208,7 +208,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             );
         }
 
-        [Test]
+        [Fact]
         public void BindSpecifiedPropertyWithInlineOneWayParameterizedConvertAndPositionalParameters()
         {
             var button = new Button();
@@ -246,7 +246,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             );
         }
 
-        [Test]
+        [Fact]
         public void BindSpecifiedPropertyWithInlineTwoWayConvertAndPositionalParameters()
         {
             var button = new Button();
@@ -281,7 +281,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             );
         }
 
-        [Test]
+        [Fact]
         public void BindSpecifiedPropertyWithInlineTwoWayParameterizedConvertAndPositionalParameters()
         {
             var button = new Button();
@@ -319,7 +319,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             );
         }
 
-        [Test]
+        [Fact]
         public void BindDefaultPropertyWithDefaults()
         {
             var label = new Label();
@@ -327,7 +327,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             BindingHelpers.AssertBindingExists(label, Label.TextProperty, nameof(viewModel.Text));
         }
 
-        [Test]
+        [Fact]
         public void BindDefaultPropertyWithPositionalParameters()
         {
             var label = new Label();
@@ -363,7 +363,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             );
         }
 
-        [Test]
+        [Fact]
         public void BindDefaultPropertyWithInlineOneWayConvertAndDefaults()
         {
             var label = new Label();
@@ -381,7 +381,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             );
         }
 
-        [Test]
+        [Fact]
         public void BindDefaultPropertyWithInlineOneWayParameterizedConvertAndDefaults()
         {
             var label = new Label();
@@ -401,7 +401,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             );
         }
 
-        [Test]
+        [Fact]
         public void BindDefaultPropertyWithInlineTwoWayConvertAndDefaults()
         {
             var label = new Label();
@@ -422,7 +422,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             );
         }
 
-        [Test]
+        [Fact]
         public void BindDefaultPropertyWithInlineTwoWayParameterizedConvertAndDefaults()
         {
             var label = new Label();
@@ -445,7 +445,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             );
         }
 
-        [Test]
+        [Fact]
         public void BindDefaultPropertyWithInlineOneWayConvertAndPositionalParameters()
         {
             var label = new Label();
@@ -479,7 +479,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             );
         }
 
-        [Test]
+        [Fact]
         public void BindDefaultPropertyWithInlineOneWayParameterizedConvertAndPositionalParameters()
         {
             var label = new Label();
@@ -516,7 +516,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             );
         }
 
-        [Test]
+        [Fact]
         public void BindDefaultPropertyWithInlineTwoWayConvertAndPositionalParameters()
         {
             var label = new Label();
@@ -550,7 +550,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             );
         }
 
-        [Test]
+        [Fact]
         public void BindDefaultPropertyWithInlineTwoWayParameterizedConvertAndPositionalParameters()
         {
             var label = new Label();
@@ -587,7 +587,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             );
         }
 
-        [Test]
+        [Fact]
         public void BindCommandWithDefaults()
         {
             var textCell = new TextCell();
@@ -599,7 +599,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             BindingHelpers.AssertBindingExists(textCell, TextCell.CommandParameterProperty);
         }
 
-        [Test]
+        [Fact]
         public void BindCommandWithoutParameter()
         {
             var textCell = new TextCell();
@@ -611,7 +611,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             Assert.That(BindingHelpers.GetBinding(textCell, TextCell.CommandParameterProperty), Is.Null);
         }
 
-        [Test]
+        [Fact]
         public void BindCommandWithPositionalParameters()
         {
             var textCell = new TextCell();
@@ -626,21 +626,21 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             BindingHelpers.AssertBindingExists(textCell, TextCell.CommandParameterProperty, parameterPath, source: parameterSource);
         }
 
-        [Test]
+        [Fact]
         public void Assign()
         {
             var createdLabel = new Label().Assign(out Label assignLabel);
             Assert.That(ReferenceEquals(createdLabel, assignLabel));
         }
 
-        [Test]
+        [Fact]
         public void Invoke()
         {
             var createdLabel = new Label().Invoke(null).Invoke(l => l.Text = nameof(Invoke));
             Assert.That(createdLabel.Text, Is.EqualTo(nameof(Invoke)));
         }
 
-        [Test]
+        [Fact]
         public void SupportDerivedElements()
         {
             Assert.IsInstanceOf<DerivedFromLabel>(
