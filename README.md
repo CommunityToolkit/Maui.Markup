@@ -4,6 +4,8 @@
 
 # .NET MAUI Markup Community Toolkit
 
+[![NuGet](https://buildstats.info/nuget/CommunityToolkit.Maui.Markup?includePreReleases=true)](https://www.nuget.org/packages/CommunityToolkit.Maui.Markup/)
+
 The .NET MAUI Markup Community Toolkit is a collection of Fluent C# Extension Methods that allows developers to continue architecting their apps using MVVM, Bindings, Resource Dictionaries, etc., without the need for XAML
 
 All features are contributed by you, our amazing .NET community, and maintained by a core set of maintainers.
