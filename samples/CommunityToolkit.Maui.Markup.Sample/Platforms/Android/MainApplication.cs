@@ -2,17 +2,17 @@
 using Android.App;
 using Android.Runtime;
 using Microsoft.Maui;
+using Microsoft.Maui.Hosting;
 
-namespace CommunityToolkit.Maui.Markup.Sample
+namespace CommunityToolkit.Maui.Markup.Sample;
+
+[Application]
+public class MainApplication : MauiApplication
 {
-	[Application]
-	public class MainApplication : MauiApplication
-	{
-		public MainApplication(IntPtr handle, JniHandleOwnership ownership)
-			: base(handle, ownership)
-		{
-		}
-
-		protected override MauiApp CreateMauiApp() => Startup.Create();
+    public MainApplication(IntPtr handle, JniHandleOwnership ownership)
+        : base(handle, ownership)
+    {
     }
+
+    protected override MauiApp CreateMauiApp() => MauiProgram.Create();
 }

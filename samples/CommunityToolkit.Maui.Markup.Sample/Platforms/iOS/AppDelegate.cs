@@ -1,11 +1,11 @@
 ﻿using Foundation;
 using Microsoft.Maui;
+using Microsoft.Maui.Hosting;
 
-namespace CommunityToolkit.Maui.Markup.Sample
+namespace CommunityToolkit.Maui.Markup.Sample;
+
+[Register(nameof(AppDelegate))]
+public class AppDelegate : MauiUIApplicationDelegate
 {
-    [Register(nameof(AppDelegate))]
-    public class AppDelegate : MauiUIApplicationDelegate
-    {
-        protected override MauiApp CreateMauiApp() => Startup.Create();
-    }
+    protected override MauiApp CreateMauiApp() => MauiProgram.Create();
 }
