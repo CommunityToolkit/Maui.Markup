@@ -80,6 +80,13 @@ jobs:
         displayName: 'Build Community Toolkit'
         inputs:
           script: 'dotnet build $(PathToCommunityToolkitCsproj) -c Release'
+      # `dotnet test` does not yet support optional workloads https://github.com/dotnet/sdk/issues/21845#issuecomment-943270826
+      - task: CmdLine@2
+        displayName: 'Run Unit Tests'
+        inputs:
+          script: |
+            dotnet build $(PathToCommunityToolkitUnitTestCsproj) -c Release
+            :: dotnet test $(PathToCommunityToolkitUnitTestCsproj) -c Release
       - task: CmdLine@2
         displayName: 'Build Community Toolkit Sample'
         inputs:
@@ -138,13 +145,14 @@ jobs:
       - task: CmdLine@2 # Building iOS + macOS requires a signing certificate
         displayName: 'Build Community Toolkit Android Sample'
         inputs:
-          script: 'dotnet build $(PathToSample) -f net6.0-android -c Release'
-      # Doesn't work yet https://github.com/dotnet/maui/issues/2112
-      # - task: DotNetCoreCLI@2
-      #   displayName: 'Run Unit Tests'
-      #   inputs:
-      #     command: 'test'
-      #     projects: $(PathToCommunityToolkitUnitTestCsproj)
+          script: 'dotnet build $(PathToSample) -c Release'
+      # `dotnet test` does not yet support optional workloads https://github.com/dotnet/sdk/issues/21845#issuecomment-943270826
+      - task: CmdLine@2
+        displayName: 'Run Unit Tests'
+        inputs:
+          script: |
+            dotnet build $(PathToCommunityToolkitUnitTestCsproj) -c Release
+            # dotnet test $(PathToCommunityToolkitUnitTestCsproj) -c Release
       - task: CmdLine@2
         displayName: 'Pack CommunityToolkit NuGets'
         inputs:
