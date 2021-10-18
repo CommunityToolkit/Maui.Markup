@@ -148,7 +148,7 @@ jobs:
         inputs:
           script: 'dotnet build $(PathToCommunityToolkitCsproj) -c Release'
       - task: CmdLine@2 # Building iOS + macOS requires a signing certificate
-        displayName: 'Build Community Toolkit Android Sample'
+        displayName: 'Build Community Toolkit Sample'
         inputs:
           script: 'dotnet build $(PathToSample) -c Release'
       # `dotnet test` does not yet support optional workloads https://github.com/dotnet/sdk/issues/21845#issuecomment-943270826
