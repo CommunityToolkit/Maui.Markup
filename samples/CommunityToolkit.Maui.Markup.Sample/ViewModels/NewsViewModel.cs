@@ -48,6 +48,30 @@ namespace CommunityToolkit.Maui.Markup.Sample.ViewModels
             set => SetProperty(ref _isListRefreshing, value);
         }
 
+        static void InsertIntoSortedCollection<T>(ObservableCollection<T> collection, Comparison<T> comparison, T modelToInsert)
+        {
+            if (collection.Count is 0)
+            {
+                collection.Add(modelToInsert);
+            }
+            else
+            {
+                int index = 0;
+                foreach (var model in collection)
+                {
+                    if (comparison(model, modelToInsert) >= 0)
+                    {
+                        collection.Insert(index, modelToInsert);
+                        return;
+                    }
+
+                    index++;
+                }
+
+                collection.Insert(index, modelToInsert);
+            }
+        }
+
         async Task ExecuteRefreshCommand()
         {
             TopStoryCollection.Clear();
@@ -82,30 +106,6 @@ namespace CommunityToolkit.Maui.Markup.Sample.ViewModels
 
                 var story = await completedGetStoryTask.ConfigureAwait(false);
                 yield return story;
-            }
-        }
-
-        void InsertIntoSortedCollection<T>(ObservableCollection<T> collection, Comparison<T> comparison, T modelToInsert)
-        {
-            if (collection.Count is 0)
-            {
-                collection.Add(modelToInsert);
-            }
-            else
-            {
-                int index = 0;
-                foreach (var model in collection)
-                {
-                    if (comparison(model, modelToInsert) >= 0)
-                    {
-                        collection.Insert(index, modelToInsert);
-                        return;
-                    }
-
-                    index++;
-                }
-
-                collection.Insert(index, modelToInsert);
             }
         }
 
