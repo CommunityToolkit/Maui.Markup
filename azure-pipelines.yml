@@ -9,6 +9,7 @@ variables:
   PathToSample: 'samples/CommunityToolkit.Maui.Markup.Sample/CommunityToolkit.Maui.Markup.Sample.csproj'
   PathToCommunityToolkitCsproj: 'src/CommunityToolkit.Maui.Markup/CommunityToolkit.Maui.Markup.csproj'
   PathToCommunityToolkitUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.UnitTests/CommunityToolkit.Maui.Markup.UnitTests.csproj'
+  XcodeVersion: '13.0_beta'
 
 trigger:
   branches:
@@ -84,6 +85,13 @@ jobs:
         displayName: 'Build Community Toolkit Sample'
         inputs:
           script: 'dotnet build $(PathToSample) -c Release'
+      # `dotnet test` does not yet support optional workloads https://github.com/dotnet/sdk/issues/21845#issuecomment-943270826
+      - task: CmdLine@2
+        displayName: 'Run Unit Tests'
+        inputs:
+          script: |
+            dotnet build $(PathToCommunityToolkitUnitTestCsproj) -c Release
+            :: dotnet test $(PathToCommunityToolkitUnitTestCsproj) -c Release
       - task: CmdLine@2
         displayName: Pack Community Toolkit NuGets
         inputs:
@@ -108,7 +116,7 @@ jobs:
   - job: build_macos
     displayName: Build macOS Library
     pool:
-      vmImage: macos-latest
+      vmImage: macos-11
     steps:
       # if this is a tagged build, then update the version number
       - powershell: |
@@ -122,7 +130,11 @@ jobs:
         displayName: 'Install .NET SDK'
         inputs:
           version: $(NET_VERSION)
-          includePreviewVersions: true      
+          includePreviewVersions: true    
+      - task: CmdLine@2
+        displayName: 'Set Xcode Version'
+        inputs:
+          script: echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(XcodeVersion).app;sudo xcode-select --switch /Applications/Xcode_$(XcodeVersion).app/Contents/Developer
       - task: CmdLine@2
         displayName: 'Install .NET MAUI workload'
         inputs:
@@ -136,15 +148,16 @@ jobs:
         inputs:
           script: 'dotnet build $(PathToCommunityToolkitCsproj) -c Release'
       - task: CmdLine@2 # Building iOS + macOS requires a signing certificate
-        displayName: 'Build Community Toolkit Android Sample'
+        displayName: 'Build Community Toolkit Sample'
         inputs:
-          script: 'dotnet build $(PathToSample) -f net6.0-android -c Release'
-      # Doesn't work yet https://github.com/dotnet/maui/issues/2112
-      # - task: DotNetCoreCLI@2
-      #   displayName: 'Run Unit Tests'
-      #   inputs:
-      #     command: 'test'
-      #     projects: $(PathToCommunityToolkitUnitTestCsproj)
+          script: 'dotnet build $(PathToSample) -c Release'
+      # `dotnet test` does not yet support optional workloads https://github.com/dotnet/sdk/issues/21845#issuecomment-943270826
+      - task: CmdLine@2
+        displayName: 'Run Unit Tests'
+        inputs:
+          script: |
+            dotnet build $(PathToCommunityToolkitUnitTestCsproj) -c Release
+            # dotnet test $(PathToCommunityToolkitUnitTestCsproj) -c Release
       - task: CmdLine@2
         displayName: 'Pack CommunityToolkit NuGets'
         inputs:
