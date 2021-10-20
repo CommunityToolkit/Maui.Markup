@@ -5,6 +5,9 @@ using Microsoft.Maui.Controls;
 
 namespace CommunityToolkit.Maui.Markup;
 
+/// <summary>
+/// Default Bindable Properties
+/// </summary>
 public static class DefaultBindableProperties
 {
     static readonly Dictionary<string, BindableProperty> bindableObjectTypeDefaultProperty = new()
@@ -80,6 +83,10 @@ public static class DefaultBindableProperties
         { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(TapGestureRecognizer)}", (TapGestureRecognizer.CommandProperty, TapGestureRecognizer.CommandParameterProperty) }
     };
 
+    /// <summary>
+    /// Registers Bindable Properties
+    /// </summary>
+    /// <param name="properties"></param>
     public static void Register(params BindableProperty[] properties)
     {
         foreach (var property in properties)
@@ -89,6 +96,10 @@ public static class DefaultBindableProperties
         }
     }
 
+    /// <summary>
+    /// Registeres Command and CommandParameter Properties
+    /// </summary>
+    /// <param name="propertyPairs"></param>
     public static void RegisterForCommand(params (BindableProperty commandProperty, BindableProperty parameterProperty)[] propertyPairs)
     {
         foreach (var propertyPair in propertyPairs)
