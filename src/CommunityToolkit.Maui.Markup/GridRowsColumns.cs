@@ -5,16 +5,38 @@ using Microsoft.Maui.Controls;
 
 namespace CommunityToolkit.Maui.Markup;
 
+/// <summary>
+/// Grid Rows and Column Extensions
+/// </summary>
 public static class GridRowsColumns
 {
+    /// <summary>
+    /// GridLength.Auto
+    /// </summary>
     public static GridLength Auto => GridLength.Auto;
 
+    /// <summary>
+    /// GridLength.Star
+    /// </summary>
     public static GridLength Star => GridLength.Star;
 
+    /// <summary>
+    /// new GridLength(value, GridUnitType.Star)
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public static GridLength Stars(double value) => new(value, GridUnitType.Star);
 
+    /// <summary>
+    /// Grid Columns
+    /// </summary>
     public static class Columns
     {
+        /// <summary>
+        /// Define Columns
+        /// </summary>
+        /// <param name="widths"></param>
+        /// <returns></returns>
         public static ColumnDefinitionCollection Define(params GridLength[] widths)
         {
             var columnDefinitions = new ColumnDefinitionCollection();
@@ -25,6 +47,13 @@ public static class GridRowsColumns
             return columnDefinitions;
         }
 
+        /// <summary>
+        /// Define Columns
+        /// </summary>
+        /// <typeparam name="TEnum"></typeparam>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public static ColumnDefinitionCollection Define<TEnum>(params (TEnum name, GridLength width)[] columns) where TEnum : Enum
         {
             var columnDefinitions = new ColumnDefinitionCollection();
@@ -45,8 +74,16 @@ public static class GridRowsColumns
         }
     }
 
+    /// <summary>
+    /// Grid Rows
+    /// </summary>
     public static class Rows
     {
+        /// <summary>
+        /// Define Grid Rows
+        /// </summary>
+        /// <param name="heights"></param>
+        /// <returns></returns>
         public static RowDefinitionCollection Define(params GridLength[] heights)
         {
             var rowDefinitions = new RowDefinitionCollection();
@@ -57,6 +94,13 @@ public static class GridRowsColumns
             return rowDefinitions;
         }
 
+        /// <summary>
+        /// Define Grid Row
+        /// </summary>
+        /// <typeparam name="TEnum"></typeparam>
+        /// <param name="rows"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public static RowDefinitionCollection Define<TEnum>(params (TEnum name, GridLength height)[] rows) where TEnum : Enum
         {
             var rowDefinitions = new RowDefinitionCollection();
@@ -75,6 +119,13 @@ public static class GridRowsColumns
         }
     }
 
+    /// <summary>
+    /// Get Enum Value Count
+    /// </summary>
+    /// <typeparam name="TEnum"></typeparam>
+    /// <returns>Count of enum values</returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
     public static int All<TEnum>() where TEnum : Enum
     {
         var values = Enum.GetValues(typeof(TEnum)) ?? throw new ArgumentNullException(nameof(TEnum));
@@ -83,6 +134,12 @@ public static class GridRowsColumns
         return span;
     }
 
+    /// <summary>
+    /// Get Last Enum value
+    /// </summary>
+    /// <typeparam name="TEnum"></typeparam>
+    /// <returns>Last value in Enum</returns>
+    /// <exception cref="InvalidOperationException"></exception>
     public static int Last<TEnum>() where TEnum : Enum
     {
         var values = Enum.GetValues(typeof(TEnum));
