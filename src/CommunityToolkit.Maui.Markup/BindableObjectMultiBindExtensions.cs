@@ -4,6 +4,9 @@ using Microsoft.Maui.Controls;
 
 namespace CommunityToolkit.Maui.Markup;
 
+/// <summary>
+/// Extension methods for Bindable Objects
+/// </summary>
 public static class BindableObjectMultiBindExtensions
 {
     /// <summary>Bind to a specified property with 2 bindings and an inline convertor</summary>

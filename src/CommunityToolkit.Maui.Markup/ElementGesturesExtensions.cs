@@ -3,6 +3,9 @@ using Microsoft.Maui.Controls;
 
 namespace CommunityToolkit.Maui.Markup;
 
+/// <summary>
+/// Extension Methods for Element Gestures
+/// </summary>
 public static class ElementGesturesExtensions
 {
     const string bindingContextPath = Binding.SelfPath;
