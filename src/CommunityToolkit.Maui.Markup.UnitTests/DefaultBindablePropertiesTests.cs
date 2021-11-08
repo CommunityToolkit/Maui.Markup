@@ -21,7 +21,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
         public void AllBindableElementsInCoreHaveDefaultBindablePropertyOrAreExcluded()
         {
             const string na = "not applicable", tbd = "to be determined";
-            IReadOnlyDictionary<Type,string> excludedTypeReasons = new Dictionary<Type, string>
+            IReadOnlyDictionary<Type, string> excludedTypeReasons = new Dictionary<Type, string>
             { // Key: type, Value: reason why it does not have a default bindable property
 				{ typeof(Application), na },
                 { typeof(AdaptiveTrigger), na },
@@ -77,6 +77,11 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 { typeof(ViewCell), na },
                 { typeof(VisualElement), na },
                 { typeof(WebViewSource), na },
+                { typeof(Microsoft.Maui.Controls.Compatibility.AbsoluteLayout), na },
+                { typeof(Microsoft.Maui.Controls.Compatibility.FlexLayout), na },
+                { typeof(Microsoft.Maui.Controls.Compatibility.Grid), na },
+                { typeof(Microsoft.Maui.Controls.Compatibility.RelativeLayout), na },
+                { typeof(Microsoft.Maui.Controls.Compatibility.StackLayout), na },
                 { typeof(AppLinkEntry), tbd },
                 { typeof(FlyoutItem), tbd },
                 { typeof(Shell), tbd },
@@ -116,6 +121,8 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 { typeof(Polygon), tbd },
                 { typeof(Polyline), tbd },
                 { typeof(Rectangle), tbd },
+                { typeof(ScrollView), tbd },
+                { typeof(RoundRectangle), tbd },
             };
 
             var failMessage = new StringBuilder();

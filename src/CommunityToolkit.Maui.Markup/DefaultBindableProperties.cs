@@ -67,7 +67,16 @@ public static class DefaultBindableProperties
         { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(UriImageSource)}", UriImageSource.UriProperty },
         { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(UrlWebViewSource)}", UrlWebViewSource.UrlProperty },
         { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(WebView)}", WebView.SourceProperty },
-        { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(Window)}", Window.MenuProperty }
+        { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(Window)}", Window.MenuProperty },
+        { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(Border)}", Border.ContentProperty},
+        { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ContentPresenter)}", ContentPresenter.ContentProperty },
+        { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ContentView)}", ContentView.ContentProperty },
+        { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(Frame)}", Frame.ContentProperty },
+        { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(IndicatorView)}", IndicatorView.ItemsSourceProperty },
+        { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(Shadow)}", Shadow.BrushProperty },
+        { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(SwipeItemView)}", SwipeItemView.ContentProperty },
+        { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(SwipeView)}", SwipeView.ContentProperty },
+        { $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(TemplatedView)}", TemplatedView.ControlTemplateProperty },
     };
 
     static readonly Dictionary<string, (BindableProperty, BindableProperty)> bindableObjectTypeDefaultCommandAndParameterProperties = new()
