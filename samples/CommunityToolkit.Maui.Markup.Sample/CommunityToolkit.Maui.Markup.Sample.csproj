@@ -59,6 +59,12 @@
 		<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.0.0.29-preview3" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Remove="Platforms\Windows\App.xaml" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Include="Platforms\Windows\App.xaml" />
+	</ItemGroup>
 	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
 		<OutputType>WinExe</OutputType>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
