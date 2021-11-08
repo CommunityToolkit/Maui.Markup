@@ -112,7 +112,7 @@ jobs:
   - job: build_macos
     displayName: Build macOS Library
     pool:
-      vmImage: macos-11
+      vmImage: macos-latest
     steps:
       # if this is a tagged build, then update the version number
       - powershell: |
