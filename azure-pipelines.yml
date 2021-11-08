@@ -9,7 +9,6 @@ variables:
   PathToSample: 'samples/CommunityToolkit.Maui.Markup.Sample/CommunityToolkit.Maui.Markup.Sample.csproj'
   PathToCommunityToolkitCsproj: 'src/CommunityToolkit.Maui.Markup/CommunityToolkit.Maui.Markup.csproj'
   PathToCommunityToolkitUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.UnitTests/CommunityToolkit.Maui.Markup.UnitTests.csproj'
-  XcodeVersion: '13.0_beta'
 
 trigger:
   branches:
@@ -48,8 +47,6 @@ jobs:
         displayName: 'Install .NET SDK'
         inputs:
           version: '$(NET_VERSION)'
-          includePreviewVersions: true
-
       - task: CmdLine@2
         displayName: 'Install .NET MAUI workload'
         inputs:
@@ -129,11 +126,6 @@ jobs:
         displayName: 'Install .NET SDK'
         inputs:
           version: $(NET_VERSION)
-          includePreviewVersions: true    
-      - task: CmdLine@2
-        displayName: 'Set Xcode Version'
-        inputs:
-          script: echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(XcodeVersion).app;sudo xcode-select --switch /Applications/Xcode_$(XcodeVersion).app/Contents/Developer
       - task: CmdLine@2
         displayName: 'Install .NET MAUI workload'
         inputs:
