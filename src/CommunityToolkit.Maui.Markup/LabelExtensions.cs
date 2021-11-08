@@ -40,7 +40,7 @@ namespace CommunityToolkit.Maui.Markup
         /// <returns>Label with added TextAlignment.End</returns>
         public static TLabel TextEnd<TLabel>(this TLabel label) where TLabel : Label
         {
-            label.VerticalTextAlignment = TextAlignment.End;
+            label.HorizontalTextAlignment = TextAlignment.End;
             return label;
         }
 
