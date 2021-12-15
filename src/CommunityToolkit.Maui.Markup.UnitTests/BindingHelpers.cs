@@ -135,14 +135,14 @@ static class BindingHelpers
     /// </remarks>
     internal static BindingBase? GetBindingBase(BindableObject bindable, BindableProperty property)
     {
-        if (getContextMethodInfo == null)
+        if (getContextMethodInfo is null)
             getContextMethodInfo = typeof(BindableObject).GetMethod("GetContext", BindingFlags.NonPublic | BindingFlags.Instance);
 
         var context = getContextMethodInfo?.Invoke(bindable, new object[] { property });
-        if (context == null)
+        if (context is null)
             return null;
 
-        if (bindingFieldInfo == null)
+        if (bindingFieldInfo is null)
             bindingFieldInfo = context?.GetType().GetField("Binding");
 
         return bindingFieldInfo?.GetValue(context) as BindingBase;

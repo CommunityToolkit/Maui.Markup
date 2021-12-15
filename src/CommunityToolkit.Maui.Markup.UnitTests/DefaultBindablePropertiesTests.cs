@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
-#pragma warning disable SA1200 // Using directives should be placed correctly
-    // These usings are placed here to avoid ambiguities
-    using Microsoft.Maui.Controls;
+	// These usings are placed here to avoid ambiguities
+	using Microsoft.Maui.Controls;
     using CommunityToolkit.Maui.Markup.UnitTests.DefaultBindablePropertiesViews;
     using Microsoft.Maui.Controls.Shapes;
-#pragma warning restore SA1200 // Using directives should be placed correctly
 
-    [TestFixture]
-    public class DefaultBindablePropertiesTests : MarkupBaseTestFixture
+	[TestFixture]
+    class DefaultBindablePropertiesTests : BaseMarkupTestFixture
     {
         [Test]
         public void AllBindableElementsInCoreHaveDefaultBindablePropertyOrAreExcluded()
@@ -142,7 +141,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                     continue;
                 }
 
-                if (DefaultBindableProperties.GetFor(type) == null)
+                if (DefaultBindableProperties.GetFor(type) is null)
                 {
                     failMessage.AppendLine(type.FullName);
                     var propertyNames = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
@@ -226,17 +225,13 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
     }
 }
 
-#pragma warning disable SA1403 // File may only contain a single namespace
 namespace CommunityToolkit.Maui.Markup.UnitTests.DefaultBindablePropertiesViews // This namespace simulates derived controls defined in a separate app, for use in the tests in this file only
-#pragma warning restore SA1403 // File may only contain a single namespace
 {
-#pragma warning disable SA1200 // Using directives should be placed correctly
-    // These usings are placed here to avoid ambiguities
-    using System.Windows.Input;
+	// These usings are placed here to avoid ambiguities
+	using System.Windows.Input;
     using Microsoft.Maui.Controls;
-#pragma warning restore SA1200 // Using directives should be placed correctly
 
-    class DerivedFromBoxView : BoxView
+	class DerivedFromBoxView : BoxView
     {
     }
 

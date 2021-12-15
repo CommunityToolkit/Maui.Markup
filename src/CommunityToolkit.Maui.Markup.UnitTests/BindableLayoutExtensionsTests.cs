@@ -1,11 +1,12 @@
 ﻿using System;
+using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using Microsoft.Maui.Controls;
 using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
-public class BindableLayoutExtensionsTests : MarkupBaseTestFixture<StackLayout>
+class BindableLayoutExtensionsTests : BaseMarkupTestFixture<StackLayout>
 {
     [Test]
     public void EmptyView()
@@ -33,7 +34,7 @@ public class BindableLayoutExtensionsTests : MarkupBaseTestFixture<StackLayout>
     [Test]
     public void ItemsSource()
     {
-        var source = new string[] { };
+        var source = Array.Empty<string>();
         TestPropertiesSet(l => l?.ItemsSource(source), (BindableLayout.ItemsSourceProperty, source));
     }
 

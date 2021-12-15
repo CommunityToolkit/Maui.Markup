@@ -1,11 +1,12 @@
 ﻿using CommunityToolkit.Maui.Markup.RightToLeft;
+using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using Microsoft.Maui.Controls;
 using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
-public class ViewExtensionsRightToLeftTests : MarkupBaseTestFixture<BoxView>
+class ViewExtensionsRightToLeftTests : BaseMarkupTestFixture<BoxView>
 {
     [Test]
     public void Left()

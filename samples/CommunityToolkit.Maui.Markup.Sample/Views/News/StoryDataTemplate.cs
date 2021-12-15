@@ -13,7 +13,7 @@ class StoryDataTemplate : DataTemplate
 
     }
 
-    static Grid CreateGrid() => new Grid
+    static Grid CreateGrid() => new()
     {
         RowSpacing = 1,
 
@@ -23,12 +23,13 @@ class StoryDataTemplate : DataTemplate
             (Row.BottomPadding, 1)),
 
         Children =
-            {
-                new TitleLabel().Row(Row.Title)
-                    .Bind(Label.TextProperty, nameof(StoryModel.Title)),
-                new DescriptionLabel().Row(Row.Description)
-                    .Bind(Label.TextProperty, nameof(StoryModel.Description))
-            }
+        {
+            new TitleLabel().Row(Row.Title)
+                .Bind(Label.TextProperty, nameof(StoryModel.Title)),
+
+            new DescriptionLabel().Row(Row.Description)
+                .Bind(Label.TextProperty, nameof(StoryModel.Description))
+        }
     };
 
     enum Row { Title, Description, BottomPadding }

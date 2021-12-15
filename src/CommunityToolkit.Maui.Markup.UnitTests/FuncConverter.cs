@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Globalization;
+using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using Microsoft.Maui.Graphics;
 using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
-public class FuncConverter : MarkupBaseTestFixture
+class FuncConverter : BaseMarkupTestFixture
 {
     [Test]
     public void TwoWayMultiWithParamAndCulture()
@@ -256,7 +257,12 @@ public class FuncConverter : MarkupBaseTestFixture
     public void UntypedTwoWay()
     {
         new Markup.FuncConverter(
-            isRed => (bool)(isRed ?? throw new NullReferenceException()) ? Colors.Red : Colors.Green,
+            isRed =>
+            {
+                ArgumentNullException.ThrowIfNull(isRed);
+
+                return (bool)isRed ? Colors.Red : Colors.Green;
+            },
             color => (Color?)color == Colors.Red)
         .AssertConvert((object)true, (object)Colors.Red, twoWay: true)
         .AssertConvert((object)false, (object)Colors.Green, twoWay: true);
@@ -265,8 +271,11 @@ public class FuncConverter : MarkupBaseTestFixture
     [Test]
     public void UntypedOneWay()
     {
-        new Markup.FuncConverter(
-            isRed => (bool)(isRed ?? throw new NullReferenceException()) ? Colors.Red : Colors.Green)
+        new Markup.FuncConverter(isRed =>
+        {
+            ArgumentNullException.ThrowIfNull(isRed);
+            return (bool)isRed ? Colors.Red : Colors.Green;
+        })
         .AssertConvert((object)true, (object)Colors.Red)
         .AssertConvert((object)false, (object)Colors.Green);
     }

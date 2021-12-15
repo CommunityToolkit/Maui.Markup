@@ -1,4 +1,5 @@
 ﻿using System;
+using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using NUnit.Framework;
@@ -7,7 +8,7 @@ using static CommunityToolkit.Maui.Markup.GridRowsColumns;
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
-public class GridRowsColumns : MarkupBaseTestFixture
+class GridRowsColumns : BaseMarkupTestFixture
 {
     const double starsValue = 1.5;
     readonly GridLength starsLength = new GridLength(starsValue, GridUnitType.Star);

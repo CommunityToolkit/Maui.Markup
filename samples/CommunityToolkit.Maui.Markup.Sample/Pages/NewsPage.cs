@@ -24,17 +24,15 @@ class NewsPage : BaseContentPage<NewsViewModel>
 
             Content = new CollectionView
             {
-                BackgroundColor = Color.FromHex("F6F6EF"),
+                BackgroundColor = Color.FromArgb("F6F6EF"),
                 SelectionMode = SelectionMode.Single,
                 ItemTemplate = new StoryDataTemplate(),
 
-            }.Assign(out CollectionView collectionView)
+            }.Invoke(collectionView => collectionView.SelectionChanged += HandleSelectionChanged)
              .Bind(CollectionView.ItemsSourceProperty, nameof(NewsViewModel.TopStoryCollection))
 
         }.Bind(RefreshView.IsRefreshingProperty, nameof(NewsViewModel.IsListRefreshing))
          .Bind(RefreshView.CommandProperty, nameof(NewsViewModel.RefreshCommand));
-
-        collectionView.SelectionChanged += HandleSelectionChanged;
     }
 
     protected override void OnAppearing()
@@ -53,7 +51,9 @@ class NewsPage : BaseContentPage<NewsViewModel>
 
     async void HandleSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        var collectionView = (CollectionView)(sender ?? throw new NullReferenceException());
+        ArgumentNullException.ThrowIfNull(sender);
+
+        var collectionView = (CollectionView)sender;
         collectionView.SelectedItem = null;
 
         if (e.CurrentSelection.FirstOrDefault() is StoryModel storyModel)

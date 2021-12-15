@@ -1,11 +1,12 @@
 ﻿using System;
+using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using Microsoft.Maui.Controls;
 using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
-public class VisualElementExtensionsTests : MarkupBaseTestFixture<BoxView>
+class VisualElementExtensionsTests : BaseMarkupTestFixture<BoxView>
 {
     BoxView BoxView => Bindable ?? throw new NullReferenceException();
 

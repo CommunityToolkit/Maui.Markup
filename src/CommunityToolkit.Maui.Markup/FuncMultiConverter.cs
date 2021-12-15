@@ -138,8 +138,8 @@ public class FuncMultiConverter<TSource1, TSource2, TDest> : FuncMultiConverter<
     /// <param name="convertBack"></param>
     public FuncMultiConverter(Func<ValueTuple<TSource1?, TSource2?>, TDest>? convert = null,
                                 Func<TDest?, ValueTuple<TSource1, TSource2>>? convertBack = null)
-    : base(convert == null ? default(Func<object[], TDest>) : (object[] values) => convert((To<TSource1>(values[0]), To<TSource2>(values[1]))),
-            convertBack == null ? default(Func<TDest?, object?[]>) : (TDest? value) => ToObjects(convertBack(value)))
+    : base(convert is null ? default(Func<object[], TDest>) : (object[] values) => convert((To<TSource1>(values[0]), To<TSource2>(values[1]))),
+            convertBack is null ? default(Func<TDest?, object?[]>) : (TDest? value) => ToObjects(convertBack(value)))
     {
 
     }
@@ -165,8 +165,8 @@ public class FuncMultiConverter<TSource1, TSource2, TSource3, TDest> : FuncMulti
     /// <param name="convertBack"></param>
     public FuncMultiConverter(Func<ValueTuple<TSource1?, TSource2?, TSource3?>, TDest>? convert = null,
                                 Func<TDest?, ValueTuple<TSource1, TSource2, TSource3>>? convertBack = null)
-    : base(convert == null ? default(Func<object[], TDest>) : (object[] values) => convert((To<TSource1>(values[0]), To<TSource2>(values[1]), To<TSource3>(values[2]))),
-            convertBack == null ? default(Func<TDest?, object?[]>) : (TDest? value) => ToObjects(convertBack(value)))
+    : base(convert is null ? default(Func<object[], TDest>) : (object[] values) => convert((To<TSource1>(values[0]), To<TSource2>(values[1]), To<TSource3>(values[2]))),
+            convertBack is null ? default(Func<TDest?, object?[]>) : (TDest? value) => ToObjects(convertBack(value)))
     {
 
     }
@@ -193,8 +193,8 @@ public class FuncMultiConverter<TSource1, TSource2, TSource3, TSource4, TDest> :
     /// <param name="convertBack"></param>
     public FuncMultiConverter(Func<ValueTuple<TSource1?, TSource2?, TSource3?, TSource4?>, TDest>? convert = null,
                                 Func<TDest?, ValueTuple<TSource1, TSource2, TSource3, TSource4>>? convertBack = null)
-    : base(convert == null ? default(Func<object[], TDest>) : (object[] values) => convert((To<TSource1>(values[0]), To<TSource2>(values[1]), To<TSource3>(values[2]), To<TSource4>(values[3]))),
-            convertBack == null ? default(Func<TDest?, object?[]>) : (TDest? value) => ToObjects(convertBack(value)))
+    : base(convert is null ? default(Func<object[], TDest>) : (object[] values) => convert((To<TSource1>(values[0]), To<TSource2>(values[1]), To<TSource3>(values[2]), To<TSource4>(values[3]))),
+            convertBack is null ? default(Func<TDest?, object?[]>) : (TDest? value) => ToObjects(convertBack(value)))
     {
 
     }
@@ -220,8 +220,8 @@ public class FuncMultiConverterWithParam<TSource1, TSource2, TDest, TParam> : Fu
     /// <param name="convertBack"></param>
     public FuncMultiConverterWithParam(Func<ValueTuple<TSource1?, TSource2?>, TParam?, TDest>? convert = null,
                                         Func<TDest?, TParam?, ValueTuple<TSource1, TSource2>>? convertBack = null)
-    : base(convert == null ? default(Func<object[], TParam?, TDest>) : (object[] values, TParam? param) => convert((To<TSource1>(values[0]), To<TSource2>(values[1])), param),
-            convertBack == null ? default(Func<TDest?, TParam?, object?[]>) : (TDest? value, TParam? param) => ToObjects(convertBack(value, param)))
+    : base(convert is null ? default(Func<object[], TParam?, TDest>) : (object[] values, TParam? param) => convert((To<TSource1>(values[0]), To<TSource2>(values[1])), param),
+            convertBack is null ? default(Func<TDest?, TParam?, object?[]>) : (TDest? value, TParam? param) => ToObjects(convertBack(value, param)))
     {
     }
 }
@@ -247,8 +247,8 @@ public class FuncMultiConverterWithParam<TSource1, TSource2, TSource3, TDest, TP
     /// <param name="convertBack"></param>
     public FuncMultiConverterWithParam(Func<ValueTuple<TSource1?, TSource2?, TSource3?>, TParam?, TDest>? convert = null,
                                         Func<TDest?, TParam?, ValueTuple<TSource1, TSource2, TSource3>>? convertBack = null)
-    : base(convert == null ? default(Func<object[], TParam?, TDest>) : (object[] values, TParam? param) => convert((To<TSource1>(values[0]), To<TSource2>(values[1]), To<TSource3>(values[2])), param),
-            convertBack == null ? default(Func<TDest?, TParam?, object?[]>) : (TDest? value, TParam? param) => ToObjects(convertBack(value, param)))
+    : base(convert is null ? default(Func<object[], TParam?, TDest>) : (object[] values, TParam? param) => convert((To<TSource1>(values[0]), To<TSource2>(values[1]), To<TSource3>(values[2])), param),
+            convertBack is null ? default(Func<TDest?, TParam?, object?[]>) : (TDest? value, TParam? param) => ToObjects(convertBack(value, param)))
     { 
     
     }
@@ -276,8 +276,8 @@ public class FuncMultiConverterWithParam<TSource1, TSource2, TSource3, TSource4,
     /// <param name="convertBack"></param>
     public FuncMultiConverterWithParam(Func<ValueTuple<TSource1?, TSource2?, TSource3?, TSource4?>, TParam?, TDest>? convert = null,
                                         Func<TDest?, TParam?, ValueTuple<TSource1, TSource2, TSource3, TSource4>>? convertBack = null)
-    : base(convert == null ? default(Func<object[], TParam?, TDest>) : (object[] values, TParam? param) => convert((To<TSource1>(values[0]), To<TSource2>(values[1]), To<TSource3>(values[2]), To<TSource4>(values[3])), param),
-            convertBack == null ? default(Func<TDest?, TParam?, object?[]>) : (TDest? value, TParam? param) => ToObjects(convertBack(value, param)))
+    : base(convert is null ? default(Func<object[], TParam?, TDest>) : (object[] values, TParam? param) => convert((To<TSource1>(values[0]), To<TSource2>(values[1]), To<TSource3>(values[2]), To<TSource4>(values[3])), param),
+            convertBack is null ? default(Func<TDest?, TParam?, object?[]>) : (TDest? value, TParam? param) => ToObjects(convertBack(value, param)))
     { 
 
     }

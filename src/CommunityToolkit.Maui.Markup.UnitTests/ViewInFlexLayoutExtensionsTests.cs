@@ -1,11 +1,12 @@
-﻿using Microsoft.Maui.Controls;
+﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Layouts;
 using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
-public class ViewInFlexLayoutExtensionsTests : MarkupBaseTestFixture<BoxView>
+class ViewInFlexLayoutExtensionsTests : BaseMarkupTestFixture<BoxView>
 {
     [Test]
     public void AlignSelf()

@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Input;
+using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using CommunityToolkit.Maui.Markup.UnitTests.BindableObjectViews;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
+using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
     [TestFixture]
-    public class BindableObjectExtensionsTests : MarkupBaseTestFixture
+    class BindableObjectExtensionsTests : BaseMarkupTestFixture
     {
         ViewModel? viewModel;
 
@@ -97,11 +99,14 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
         public void BindSpecifiedPropertyWithInlineOneWayParameterizedConvertAndDefaults()
         {
             var label = new Label();
-            label.Bind(
-                Label.TextColorProperty,
-                nameof(viewModel.IsRed),
-                convert: (bool? isRed, float? alpha) => (isRed.HasValue && isRed.Value ? Colors.Red : Colors.Green).MultiplyAlpha(alpha ?? throw new NullReferenceException()),
-                converterParameter: 0.5f
+            label.Bind(Label.TextColorProperty,
+                        nameof(viewModel.IsRed),
+                        convert: (bool? isRed, float? alpha) =>
+                        {
+                            ArgumentNullException.ThrowIfNull(alpha);
+                            return (isRed.HasValue && isRed.Value ? Colors.Red : Colors.Green).MultiplyAlpha(alpha.Value);
+                        },
+                        converterParameter: 0.5f
             );
 
             BindingHelpers.AssertBindingExists<Color, double>(
@@ -222,7 +227,11 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 Button.TextProperty,
                 nameof(viewModel.Text),
                 BindingMode.OneWay,
-                (string? text, int? repeat) => string.Concat(Enumerable.Repeat($"'{text?.Trim('\'')}'", repeat ?? throw new NullReferenceException())),
+                (string? text, int? repeat) =>
+                {
+                    ArgumentNullException.ThrowIfNull(repeat);
+                    return string.Concat(Enumerable.Repeat($"'{text?.Trim('\'')}'", repeat.Value));
+                },
                 null,
                 converterParameter,
                 stringFormat,
@@ -260,7 +269,11 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 nameof(viewModel.Text),
                 BindingMode.TwoWay,
                 (string? text) => $"'{text?.Trim('\'')}'",
-                text => text?.Trim('\'') ?? throw new NullReferenceException(),
+                text =>
+                {
+                    ArgumentNullException.ThrowIfNull(text);
+                    return text.Trim('\'');
+                },
                 stringFormat,
                 source,
                 targetNullValue,
@@ -295,8 +308,19 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 Button.TextProperty,
                 nameof(viewModel.Text),
                 BindingMode.TwoWay,
-                (string? text, int? repeat) => string.Concat(Enumerable.Repeat($"'{text?.Trim('\'')}'", repeat ?? throw new NullReferenceException())),
-                (text, repeat) => text?.Substring(0, text.Length / repeat ?? throw new NullReferenceException())?.Trim('\'') ?? throw new NullReferenceException(),
+                (string? text, int? repeat) =>
+                {
+                    ArgumentNullException.ThrowIfNull(repeat);
+
+                    return string.Concat(Enumerable.Repeat($"'{text?.Trim('\'')}'", repeat.Value));
+                },
+                (text, repeat) =>
+                {
+                    ArgumentNullException.ThrowIfNull(text);
+                    ArgumentNullException.ThrowIfNull(repeat);
+
+                    return text[..(text.Length / repeat.Value)].Trim('\'');
+                },
                 converterParameter,
                 stringFormat,
                 source,
@@ -387,7 +411,13 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             var label = new Label();
             label.Bind(
                 nameof(viewModel.Text),
-                convert: (string? text, int? repeat) => string.Concat(Enumerable.Repeat($"'{text?.Trim('\'')}'", repeat ?? throw new NullReferenceException())),
+                convert: (string? text, int? repeat) =>
+                {
+                    ArgumentNullException.ThrowIfNull(text);
+                    ArgumentNullException.ThrowIfNull(repeat);
+
+                    return string.Concat(Enumerable.Repeat($"'{text.Trim('\'')}'", repeat.Value));
+                },
                 converterParameter: 1
             );
 
@@ -409,7 +439,11 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 nameof(viewModel.Text),
                 BindingMode.TwoWay,
                 (string? text) => $"'{text?.Trim('\'')}'",
-                text => text?.Trim('\'') ?? throw new NullReferenceException()
+                text =>
+                {
+                    ArgumentNullException.ThrowIfNull(text);
+                    return text.Trim('\'');
+                }
             );
 
             BindingHelpers.AssertBindingExists(
@@ -429,8 +463,20 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             label.Bind(
                 nameof(viewModel.Text),
                 BindingMode.TwoWay,
-                (string? text, int? repeat) => string.Concat(Enumerable.Repeat($"'{text?.Trim('\'')}'", repeat ?? throw new NullReferenceException())),
-                (text, repeat) => text?.Substring(0, text.Length / repeat ?? throw new NullReferenceException()).Trim('\'') ?? throw new NullReferenceException(),
+                (string? text, int? repeat) =>
+                {
+                    ArgumentNullException.ThrowIfNull(text);
+                    ArgumentNullException.ThrowIfNull(repeat);
+
+                    return string.Concat(Enumerable.Repeat($"'{text.Trim('\'')}'", repeat.Value));
+                },
+                (text, repeat) =>
+                {
+                    ArgumentNullException.ThrowIfNull(text);
+                    ArgumentNullException.ThrowIfNull(repeat);
+
+                    return text.Substring(0, text.Length / repeat.Value).Trim('\'');
+                },
                 2
             );
 
@@ -492,7 +538,12 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             label.Bind(
                 nameof(viewModel.Text),
                 BindingMode.OneWay,
-                (string? text, int? repeat) => string.Concat(Enumerable.Repeat($"'{text?.Trim('\'')}'", repeat ?? throw new NullReferenceException())),
+                (string? text, int? repeat) =>
+                {
+                    ArgumentNullException.ThrowIfNull(repeat);
+
+                    return string.Concat(Enumerable.Repeat($"'{text?.Trim('\'')}'", repeat.Value));
+                },
                 null,
                 converterParameter,
                 stringFormat,
@@ -529,7 +580,11 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 nameof(viewModel.Text),
                 BindingMode.TwoWay,
                 (string? text) => $"'{text?.Trim('\'')}'",
-                text => text?.Trim('\'') ?? throw new NullReferenceException(),
+                text =>
+                {
+                    ArgumentNullException.ThrowIfNull(text);
+                    return text.Trim('\'');
+                },
                 stringFormat,
                 source,
                 targetNullValue,
@@ -563,8 +618,19 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
             label.Bind(
                 nameof(viewModel.Text),
                 BindingMode.TwoWay,
-                (string? text, int? repeat) => string.Concat(Enumerable.Repeat($"'{text?.Trim('\'')}'", repeat ?? throw new NullReferenceException())),
-                (text, repeat) => text?.Substring(0, text.Length / repeat ?? throw new NullReferenceException()).Trim('\'') ?? throw new NullReferenceException(),
+                (string? text, int? repeat) =>
+                {
+                    ArgumentNullException.ThrowIfNull(repeat);
+
+                    return string.Concat(Enumerable.Repeat($"'{text?.Trim('\'')}'", repeat.Value));
+                },
+                (text, repeat) =>
+                {
+                    ArgumentNullException.ThrowIfNull(text);
+                    ArgumentNullException.ThrowIfNull(repeat);
+
+                    return text[..(text.Length / repeat.Value)].Trim('\'');
+                },
                 converterParameter,
                 stringFormat,
                 source,
@@ -651,7 +717,13 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                     convert: (string? text) => $"'{text}'")
                 .Bind(
                     nameof(viewModel.Text),
-                    convert: (string? text, int? repeat) => string.Concat(Enumerable.Repeat($"'{text?.Trim('\'')}'", repeat ?? throw new NullReferenceException())))
+                    convert: (string? text, int? repeat) =>
+                    {
+                        ArgumentNullException.ThrowIfNull(text);
+                        ArgumentNullException.ThrowIfNull(repeat);
+
+                        return string.Concat(Enumerable.Repeat($"'{text.Trim('\'')}'", repeat.Value));
+                    })
                 .Bind(
                     DerivedFromLabel.TextColorProperty,
                     nameof(viewModel.TextColor))
@@ -662,13 +734,16 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
                 .Bind(
                     Label.TextColorProperty,
                     nameof(viewModel.IsRed),
-                    convert: (bool? isRed, float? alpha) => (isRed.HasValue && isRed.Value ? Colors.Red : Colors.Green).MultiplyAlpha(alpha ?? throw new NullReferenceException()))
+                    convert: (bool? isRed, float? alpha) =>
+                    {
+                        ArgumentNullException.ThrowIfNull(alpha);
+
+                        return (isRed.HasValue && isRed.Value ? Colors.Red : Colors.Green).MultiplyAlpha(alpha.Value);
+                    })
                 .Invoke(l => l.Text = nameof(SupportDerivedElements))
                 .Assign(out DerivedFromLabel assignDerivedFromLabel));
 
-            Assert.IsInstanceOf<DerivedFromTextCell>(
-                new DerivedFromTextCell()
-                .BindCommand(nameof(viewModel.Command)));
+            Assert.IsInstanceOf<DerivedFromTextCell>(new DerivedFromTextCell().BindCommand(nameof(viewModel.Command)));
         }
 
         class ViewModel
@@ -686,9 +761,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
     }
 }
 
-#pragma warning disable SA1403 // File may only contain a single namespace
 namespace CommunityToolkit.Maui.Markup.UnitTests.BindableObjectViews // This namespace simulates derived controls defined in a separate app, for use in the tests in this file only
-#pragma warning restore SA1403 // File may only contain a single namespace
 {
     class DerivedFromLabel : Label
     {

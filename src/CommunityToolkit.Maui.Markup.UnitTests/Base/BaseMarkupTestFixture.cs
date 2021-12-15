@@ -2,9 +2,9 @@
 using Microsoft.Maui.Controls;
 using NUnit.Framework;
 
-namespace CommunityToolkit.Maui.Markup.UnitTests;
+namespace CommunityToolkit.Maui.Markup.UnitTests.Base;
 
-public class MarkupBaseTestFixture<TBindable> : MarkupBaseTestFixture where TBindable : BindableObject, new()
+class BaseMarkupTestFixture<TBindable> : BaseMarkupTestFixture where TBindable : BindableObject, new()
 {
     protected TBindable? Bindable { get; private set; }
 
@@ -38,7 +38,7 @@ public class MarkupBaseTestFixture<TBindable> : MarkupBaseTestFixture where TBin
         => TestPropertiesSet(Bindable, modify, propertyChanges);
 }
 
-public class MarkupBaseTestFixture : BaseTestFixture
+class BaseMarkupTestFixture : BaseTestFixture
 {
     protected static void TestPropertiesSet<TBindable, TPropertyValue>(
         TBindable? bindable,

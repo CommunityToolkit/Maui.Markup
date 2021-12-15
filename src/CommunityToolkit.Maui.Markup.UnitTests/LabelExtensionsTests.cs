@@ -1,4 +1,5 @@
 ﻿using System;
+using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
@@ -7,7 +8,7 @@ using NUnit.Framework;
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
-public class LabelExtensionsTests : MarkupBaseTestFixture<Label>
+class LabelExtensionsTests : BaseMarkupTestFixture<Label>
 {
     Label Label => Bindable ?? throw new NullReferenceException();
 

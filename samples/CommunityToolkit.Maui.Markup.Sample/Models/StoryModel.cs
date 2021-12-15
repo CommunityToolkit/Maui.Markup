@@ -10,7 +10,7 @@ record StoryModel(long Id, string By, long Score, long Time, string Title, strin
 
     public override string ToString() => $"{Score} Points by {By}, {GetAgeOfStory(CreatedAt)} ago";
 
-    static string GetAgeOfStory(DateTimeOffset storyCreatedAt)
+    static string GetAgeOfStory(in DateTimeOffset storyCreatedAt)
     {
         var timespanSinceStoryCreated = DateTimeOffset.UtcNow - storyCreatedAt;
 
@@ -30,7 +30,7 @@ record StoryModel(long Id, string By, long Score, long Time, string Title, strin
         };
     }
 
-    static DateTimeOffset UnixTimeStampToDateTimeOffset(long unixTimeStamp)
+    static DateTimeOffset UnixTimeStampToDateTimeOffset(in long unixTimeStamp)
     {
         var dateTimeOffset = new DateTimeOffset(1970, 1, 1, 0, 0, 0, 0, default);
         return dateTimeOffset.AddSeconds(unixTimeStamp);

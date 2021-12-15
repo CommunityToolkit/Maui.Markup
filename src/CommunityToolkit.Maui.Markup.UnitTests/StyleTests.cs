@@ -1,4 +1,5 @@
 ﻿using System;
+using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using NUnit.Framework;
@@ -6,7 +7,7 @@ using NUnit.Framework;
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
-public class StyleTests : MarkupBaseTestFixture
+class StyleTests : BaseMarkupTestFixture
 {
     [Test]
     public void ImplicitCast()

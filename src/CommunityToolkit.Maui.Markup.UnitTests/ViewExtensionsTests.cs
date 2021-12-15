@@ -1,11 +1,12 @@
-﻿using Microsoft.Maui;
+﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
+using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
-public class ViewExtensionsTests : MarkupBaseTestFixture<BoxView>
+class ViewExtensionsTests : BaseMarkupTestFixture<BoxView>
 {
     [Test]
     public void Start()

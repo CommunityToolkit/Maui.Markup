@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Input;
+using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using Microsoft.Maui.Controls;
 using NUnit.Framework;
 
@@ -8,7 +9,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture(typeof(Label))] // Derived from View
 [TestFixture(typeof(Span))] // Derived from GestureElement
-public class ElementGesturesExtensionsTests<TGestureElement> : ElementGesturesBaseTestFixture where TGestureElement : Element, IGestureRecognizers, new()
+class ElementGesturesExtensionsTests<TGestureElement> : ElementGesturesBaseTestFixture where TGestureElement : Element, IGestureRecognizers, new()
 {
     [Test]
     public void BindClickGestureDefaults()
@@ -84,7 +85,7 @@ public class ElementGesturesExtensionsTests<TGestureElement> : ElementGesturesBa
 }
 
 [TestFixture]
-public class ElementGesturesExtensionsTests : ElementGesturesBaseTestFixture
+class ElementGesturesExtensionsTests : ElementGesturesBaseTestFixture
 {
     [Test]
     public void BindSwipeGestureDefaults()
@@ -187,7 +188,7 @@ public class ElementGesturesExtensionsTests : ElementGesturesBaseTestFixture
     }
 }
 
-public class ElementGesturesBaseTestFixture : MarkupBaseTestFixture
+class ElementGesturesBaseTestFixture : BaseMarkupTestFixture
 {
     protected const string commandPath = nameof(ViewModel.Command), parameterPath = nameof(ViewModel.Id);
 

@@ -1,12 +1,13 @@
 ﻿using NUnit.Framework;
 using CommunityToolkit.Maui.Markup.RightToLeft;
+using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
-public class LabelExtensionsRightToLeftTests : MarkupBaseTestFixture<Label>
+class LabelExtensionsRightToLeftTests : BaseMarkupTestFixture<Label>
 {
     [Test]
     public void TextLeft()

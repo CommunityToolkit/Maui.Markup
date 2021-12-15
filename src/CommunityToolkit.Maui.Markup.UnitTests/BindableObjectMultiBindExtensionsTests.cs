@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using Microsoft.Maui.Controls;
 using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
-public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
+class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 {
     ViewModel? viewModel;
     List<BindingBase>? testBindings;
@@ -17,25 +18,26 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
     public override void Setup()
     {
         base.Setup();
+
         viewModel = new ViewModel();
 
         testBindings = new List<BindingBase>
-            {
-                new Binding(nameof(viewModel.Text)),
-                new Binding(nameof(viewModel.Id)),
-                new Binding(nameof(viewModel.IsDone)),
-                new Binding(nameof(viewModel.Fraction)),
-                new Binding(nameof(viewModel.Count))
-            };
+        {
+            new Binding(nameof(viewModel.Text)),
+            new Binding(nameof(viewModel.Id)),
+            new Binding(nameof(viewModel.IsDone)),
+            new Binding(nameof(viewModel.Fraction)),
+            new Binding(nameof(viewModel.Count))
+        };
 
         testConvertValues = new List<object>
-            {
-                "Hi",
-                Guid.Parse("{272383A4-92E3-46BA-99DC-438D81E039AB}"),
-                true,
-                0.5,
-                3
-            };
+        {
+            "Hi",
+            Guid.Parse("{272383A4-92E3-46BA-99DC-438D81E039AB}"),
+            true,
+            0.5,
+            3
+        };
     }
 
     [TearDown]
@@ -53,7 +55,7 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
     [TestCase(true, true)]
     public void BindSpecifiedPropertyWith2BindingsAndInlineConvert(bool testConvert, bool testConvertBack)
     {
-        _ = testBindings ?? throw new NullReferenceException();
+        ArgumentNullException.ThrowIfNull(testBindings);
 
         var label = new Label();
 
@@ -66,7 +68,8 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
                 ((string? text, Guid id) v) => Format(0, v.text, v.id),
                 (string? formatted) =>
                 {
-                    _ = formatted ?? throw new NullReferenceException();
+                    ArgumentNullException.ThrowIfNull(formatted);
+
                     var u = Unformat(0, formatted);
                     return (u.Text, u.Id);
                 }
@@ -85,7 +88,13 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
             label.Bind(
                 Label.TextProperty,
                 testBindings[0], testBindings[1],
-                convertBack: (string? formatted) => { var u = Unformat(0, formatted ?? throw new NullReferenceException()); return (u.Text, u.Id); }
+                convertBack: (string? formatted) =>
+                {
+                    ArgumentNullException.ThrowIfNull(formatted);
+
+                    var u = Unformat(0, formatted);
+                    return (u.Text, u.Id);
+                }
             );
         }
 
@@ -98,7 +107,7 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
     [TestCase(true, true)]
     public void BindSpecifiedPropertyWith2BindingsAndInlineConvertAndParameter(bool testConvert, bool testConvertBack)
     {
-        _ = testBindings ?? throw new NullReferenceException();
+        ArgumentNullException.ThrowIfNull(testBindings);
 
         var label = new Label();
 
@@ -107,9 +116,23 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
         {
             label.Bind<Label, string?, Guid, int?, string>(
                 Label.TextProperty,
-                testBindings[0], testBindings[1],
-                ((string? text, Guid id) v, int? parameter) => Format(parameter ?? throw new NullReferenceException(), v.text, v.id),
-                (string? formatted, int? parameter) => { var u = Unformat(parameter ?? throw new NullReferenceException(), formatted ?? throw new NullReferenceException()); return (u.Text, u.Id); },
+                testBindings[0],
+                testBindings[1],
+                ((string? text, Guid id) v, int? parameter) =>
+                {
+                    ArgumentNullException.ThrowIfNull(parameter);
+
+                    var formattedText = Format(parameter.Value, v.text, v.id);
+                    return formattedText;
+                },
+                (string? formatted, int? parameter) =>
+                {
+                    ArgumentNullException.ThrowIfNull(parameter);
+                    ArgumentNullException.ThrowIfNull(formatted);
+
+                    var unformattedResult = Unformat(parameter.Value, formatted);
+                    return (unformattedResult.Text, unformattedResult.Id);
+                },
                 converterParameter: 2
             );
         }
@@ -118,7 +141,13 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
             label.Bind<Label, string?, Guid, int?, string>(
                 Label.TextProperty,
                 testBindings[0], testBindings[1],
-                ((string? text, Guid id) v, int? parameter) => Format(parameter ?? throw new NullReferenceException(), v.text, v.id),
+                ((string? text, Guid id) v, int? parameter) =>
+                {
+                    ArgumentNullException.ThrowIfNull(parameter);
+
+                    var formattedText = Format(parameter.Value, v.text, v.id);
+                    return formattedText;
+                },
                 converterParameter: 2
             );
         }
@@ -127,7 +156,14 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
             label.Bind<Label, string?, Guid, int?, string>(
                 Label.TextProperty,
                 testBindings[0], testBindings[1],
-                convertBack: (string? formatted, int? parameter) => { var u = Unformat(parameter ?? throw new NullReferenceException(), formatted ?? throw new NullReferenceException()); return (u.Text, u.Id); },
+                convertBack: (string? formatted, int? parameter) =>
+                {
+                    ArgumentNullException.ThrowIfNull(parameter);
+                    ArgumentNullException.ThrowIfNull(formatted);
+
+                    var unformattedResult = Unformat(parameter.Value, formatted);
+                    return (unformattedResult.Text, unformattedResult.Id);
+                },
                 converterParameter: 2
             );
         }
@@ -141,7 +177,7 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
     [TestCase(true, true)]
     public void BindSpecifiedPropertyWith3BindingsAndInlineConvert(bool testConvert, bool testConvertBack)
     {
-        _ = testBindings ?? throw new NullReferenceException();
+        ArgumentNullException.ThrowIfNull(testBindings);
 
         var label = new Label();
 
@@ -152,7 +188,13 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
                 Label.TextProperty,
                 testBindings[0], testBindings[1], testBindings[2],
                 ((string? text, Guid id, bool isDone) v) => Format(0, v.text, v.id, v.isDone),
-                (string? formatted) => { var u = Unformat(0, formatted ?? throw new NullReferenceException()); return (u.Text, u.Id, u.IsDone); }
+                (string? formatted) =>
+                {
+                    ArgumentNullException.ThrowIfNull(formatted);
+
+                    var unformattedResult = Unformat(0, formatted);
+                    return (unformattedResult.Text, unformattedResult.Id, unformattedResult.IsDone);
+                }
             );
         }
         else if (testConvert && !testConvertBack)
@@ -168,7 +210,13 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
             label.Bind<Label, string?, Guid, bool, string>(
                 Label.TextProperty,
                 testBindings[0], testBindings[1], testBindings[2],
-                convertBack: (string? formatted) => { var u = Unformat(0, formatted ?? throw new NullReferenceException()); return (u.Text, u.Id, u.IsDone); }
+                convertBack: (string? formatted) =>
+                {
+                    ArgumentNullException.ThrowIfNull(formatted);
+
+                    var unformatedResult = Unformat(0, formatted);
+                    return (unformatedResult.Text, unformatedResult.Id, unformatedResult.IsDone);
+                }
             );
         }
 
@@ -181,7 +229,7 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
     [TestCase(true, true)]
     public void BindSpecifiedPropertyWith3BindingsAndInlineConvertAndParameter(bool testConvert, bool testConvertBack)
     {
-        _ = testBindings ?? throw new NullReferenceException();
+        ArgumentNullException.ThrowIfNull(testBindings);
 
         var label = new Label();
 
@@ -191,8 +239,20 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
             label.Bind(
                     Label.TextProperty,
                     testBindings[0], testBindings[1], testBindings[2],
-                    ((string? text, Guid id, bool isDone) v, int? parameter) => Format(parameter ?? throw new NullReferenceException(), v.text, v.id, v.isDone),
-                    (string? formatted, int? parameter) => { var u = Unformat(parameter ?? throw new NullReferenceException(), formatted ?? throw new NullReferenceException()); return (u.Text ?? throw new NullReferenceException(), u.Id, u.IsDone); },
+                    ((string? text, Guid id, bool isDone) v, int? parameter) =>
+                    {
+                        ArgumentNullException.ThrowIfNull(parameter);
+
+                        return Format(parameter.Value, v.text, v.id, v.isDone);
+                    },
+                    (string? formatted, int? parameter) =>
+                    {
+                        ArgumentNullException.ThrowIfNull(parameter);
+                        ArgumentNullException.ThrowIfNull(formatted);
+
+                        var unformattedResult = Unformat(parameter.Value, formatted);
+                        return (unformattedResult.Text ?? throw new NullReferenceException(), unformattedResult.Id, unformattedResult.IsDone);
+                    },
                     converterParameter: 2
                 );
         }
@@ -201,7 +261,12 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
             label.Bind(
                 Label.TextProperty,
                 testBindings[0], testBindings[1], testBindings[2],
-                ((string? text, Guid id, bool isDone) v, int? parameter) => Format(parameter ?? throw new NullReferenceException(), v.text, v.id, v.isDone),
+                ((string? text, Guid id, bool isDone) v, int? parameter) =>
+                {
+                    ArgumentNullException.ThrowIfNull(parameter);
+
+                    return Format(parameter.Value, v.text, v.id, v.isDone);
+                },
                 converterParameter: 2
             );
         }
@@ -210,7 +275,14 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
             label.Bind(
                 Label.TextProperty,
                 testBindings[0], testBindings[1], testBindings[2],
-                convertBack: (string? formatted, int? parameter) => { var u = Unformat(parameter ?? throw new NullReferenceException(), formatted ?? throw new NullReferenceException()); return (u.Text, u.Id, u.IsDone); },
+                convertBack: (string? formatted, int? parameter) =>
+                {
+                    ArgumentNullException.ThrowIfNull(formatted);
+                    ArgumentNullException.ThrowIfNull(parameter);
+
+                    var unformattedResult = Unformat(parameter.Value, formatted);
+                    return (unformattedResult.Text, unformattedResult.Id, unformattedResult.IsDone);
+                },
                 converterParameter: 2
             );
         }
@@ -224,7 +296,7 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
     [TestCase(true, true)]
     public void BindSpecifiedPropertyWith4BindingsAndInlineConvert(bool testConvert, bool testConvertBack)
     {
-        _ = testBindings ?? throw new NullReferenceException();
+        ArgumentNullException.ThrowIfNull(testBindings);
 
         var label = new Label();
 
@@ -235,7 +307,13 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
                 Label.TextProperty,
                 testBindings[0], testBindings[1], testBindings[2], testBindings[3],
                 ((string? text, Guid id, bool isDone, double fraction) v) => Format(0, v.text, v.id, v.isDone, v.fraction),
-                (string? formatted) => { var u = Unformat(0, formatted ?? throw new NullReferenceException()); return (u.Text ?? string.Empty, u.Id, u.IsDone, u.Fraction); }
+                (string? formatted) =>
+                {
+                    ArgumentNullException.ThrowIfNull(formatted);
+
+                    var unformattedResult = Unformat(0, formatted);
+                    return (unformattedResult.Text ?? string.Empty, unformattedResult.Id, unformattedResult.IsDone, unformattedResult.Fraction);
+                }
             );
         }
         else if (testConvert && !testConvertBack)
@@ -251,7 +329,13 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
             label.Bind(
                 Label.TextProperty,
                 testBindings[0], testBindings[1], testBindings[2], testBindings[3],
-                convertBack: (string? formatted) => { var u = Unformat(0, formatted ?? throw new NullReferenceException()); return (u.Text, u.Id, u.IsDone, u.Fraction); }
+                convertBack: (string? formatted) =>
+                {
+                    ArgumentNullException.ThrowIfNull(formatted);
+
+                    var unformattedResult = Unformat(0, formatted);
+                    return (unformattedResult.Text, unformattedResult.Id, unformattedResult.IsDone, unformattedResult.Fraction);
+                }
             );
         }
 
@@ -264,7 +348,7 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
     [TestCase(true, true)]
     public void BindSpecifiedPropertyWith4BindingsAndInlineConvertAndParameter(bool testConvert, bool testConvertBack)
     {
-        _ = testBindings ?? throw new NullReferenceException();
+        ArgumentNullException.ThrowIfNull(testBindings);
 
         var label = new Label();
 
@@ -274,8 +358,19 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
             label.Bind(
                 Label.TextProperty,
                 testBindings[0], testBindings[1], testBindings[2], testBindings[3],
-                ((string? text, Guid id, bool isDone, double fraction) v, int? parameter) => Format(parameter ?? throw new NullReferenceException(), v.text, v.id, v.isDone, v.fraction),
-                (string? formatted, int? parameter) => { var u = Unformat(parameter ?? throw new NullReferenceException(), formatted ?? throw new NullReferenceException()); return (u.Text ?? string.Empty, u.Id, u.IsDone, u.Fraction); },
+                ((string? text, Guid id, bool isDone, double fraction) v, int? parameter) =>
+                {
+                    ArgumentNullException.ThrowIfNull(parameter);
+                    return Format(parameter.Value, v.text, v.id, v.isDone, v.fraction);
+                },
+                (string? formatted, int? parameter) =>
+                {
+                    ArgumentNullException.ThrowIfNull(formatted);
+                    ArgumentNullException.ThrowIfNull(parameter);
+
+                    var unformattedResult = Unformat(parameter.Value, formatted);
+                    return (unformattedResult.Text ?? string.Empty, unformattedResult.Id, unformattedResult.IsDone, unformattedResult.Fraction);
+                },
                 converterParameter: 2
             );
         }
@@ -284,7 +379,11 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
             label.Bind(
                 Label.TextProperty,
                 testBindings[0], testBindings[1], testBindings[2], testBindings[3],
-                ((string? text, Guid id, bool isDone, double fraction) v, int? parameter) => Format(parameter ?? throw new NullReferenceException(), v.text, v.id, v.isDone, v.fraction),
+                ((string? text, Guid id, bool isDone, double fraction) v, int? parameter) =>
+                {
+                    ArgumentNullException.ThrowIfNull(parameter);
+                    return Format(parameter.Value, v.text, v.id, v.isDone, v.fraction);
+                },
                 converterParameter: 2
             );
         }
@@ -293,7 +392,14 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
             label.Bind(
                 Label.TextProperty,
                 testBindings[0], testBindings[1], testBindings[2], testBindings[3],
-                convertBack: (string? formatted, int? parameter) => { var u = Unformat(parameter ?? throw new NullReferenceException(), formatted ?? throw new NullReferenceException()); return (u.Text, u.Id, u.IsDone, u.Fraction); },
+                convertBack: (string? formatted, int? parameter) =>
+                {
+                    ArgumentNullException.ThrowIfNull(formatted);
+                    ArgumentNullException.ThrowIfNull(parameter);
+
+                    var unformattedResult = Unformat(parameter.Value, formatted);
+                    return (unformattedResult.Text, unformattedResult.Id, unformattedResult.IsDone, unformattedResult.Fraction);
+                },
                 converterParameter: 2
             );
         }
@@ -307,7 +413,7 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
     [TestCase(true, true)]
     public void BindSpecifiedPropertyWithMultipleBindings(bool testConvert, bool testConvertBack)
     {
-        _ = testBindings ?? throw new NullReferenceException();
+        ArgumentNullException.ThrowIfNull(testBindings);
 
         Func<object[], string>? convert = null;
         if (testConvert)
@@ -318,7 +424,9 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
         {
             convertBack = (string? formatted) =>
             {
-                var result = Unformat(0, formatted ?? throw new NullReferenceException());
+                ArgumentNullException.ThrowIfNull(formatted);
+
+                var result = Unformat(0, formatted);
                 return new object[] { result.Text ?? string.Empty, result.Id, result.IsDone, result.Fraction, result.Count };
             };
         }
@@ -346,8 +454,10 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
         {
             convertBack = (string? text, int parameter) =>
             {
-                var u = Unformat(parameter, text ?? throw new NullReferenceException());
-                return new object[] { u.Text ?? string.Empty, u.Id, u.IsDone, u.Fraction, u.Count };
+                ArgumentNullException.ThrowIfNull(text);
+
+                var unformattedResult = Unformat(parameter, text);
+                return new object[] { unformattedResult.Text ?? string.Empty, unformattedResult.Id, unformattedResult.IsDone, unformattedResult.Fraction, unformattedResult.Count };
             };
         }
 
@@ -372,7 +482,7 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
         return formatted;
     }
 
-    (string? Text, Guid Id, bool IsDone, double Fraction, int Count) Unformat(int parameter, string formatted)
+    static (string? Text, Guid Id, bool IsDone, double Fraction, int Count) Unformat(int parameter, string formatted)
     {
         var split = formatted.Split('\'');
         var n = split.Length;
@@ -380,7 +490,7 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
         return (
             n > 1 ? RemoveDots(split[1], parameter) : null,
             n > 3 ? Guid.Parse(split[3]) : Guid.Empty,
-            n > 5 ? bool.Parse(split[5]) : false,
+            n > 5 && bool.Parse(split[5]),
             n > 7 ? double.Parse(split[7]) : 0,
             n > 9 ? int.Parse(split[9]) : 0);
     }
@@ -396,7 +506,7 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
             GetTestBindings(nBindings),
             converter,
             parameter,
-            assertConverterInstanceIsAnyNotNull: converter == null,
+            assertConverterInstanceIsAnyNotNull: converter is null,
             assertConvert: c => c.AssertConvert(values, parameter, expected, twoWay: testConvert && testConvertBack, backOnly: !testConvert && testConvertBack));
     }
 
@@ -410,7 +520,7 @@ public class BindableObjectMultiBindExtensionsTests : MarkupBaseTestFixture
             targetProperty: Label.TextProperty,
             GetTestBindings(nBindings),
             converter,
-            assertConverterInstanceIsAnyNotNull: converter == null,
+            assertConverterInstanceIsAnyNotNull: converter is null,
             assertConvert: c => c.AssertConvert(values, expected, twoWay: testConvert && testConvertBack, backOnly: !testConvert && testConvertBack));
     }
 

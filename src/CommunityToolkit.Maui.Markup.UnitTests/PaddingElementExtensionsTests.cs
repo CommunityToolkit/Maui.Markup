@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui;
+﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
+using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using NUnit.Framework;
 using PaddingElement = Microsoft.Maui.Controls.Label; // TODO: Get rid of this after we have default interface implementation in Forms for IPaddingElement
@@ -10,7 +11,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests;
 [TestFixture(typeof(ImageButton))]
 [TestFixture(typeof(Label))]
 [TestFixture(typeof(Page))]
-public class PaddingElementExtensionsTests<TPaddingElement> : MarkupBaseTestFixture<TPaddingElement> where TPaddingElement : Element, IPaddingElement, new()
+class PaddingElementExtensionsTests<TPaddingElement> : BaseMarkupTestFixture<TPaddingElement> where TPaddingElement : Element, IPaddingElement, new()
 {
     [Test]
     public void PaddingThickness()

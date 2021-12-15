@@ -1,4 +1,5 @@
 ﻿using System;
+using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
@@ -8,7 +9,7 @@ using FontElement = Microsoft.Maui.Controls.Label; // TODO: Get rid of this afte
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
-public class ElementExtensionsTests : MarkupBaseTestFixture<Label>
+class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 {
     Label Label => Bindable ?? throw new NullReferenceException();
 
