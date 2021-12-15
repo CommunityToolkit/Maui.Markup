@@ -5,7 +5,7 @@ using Microsoft.Maui.Dispatching;
 namespace CommunityToolkit.Maui.Markup.UnitTests.Mocks;
 
 // Inspired by https://github.com/dotnet/maui/blob/main/src/Core/tests/UnitTests/TestClasses/DispatcherStub.cs
-sealed class MockDispatcherProvider: IDispatcherProvider, IDisposable
+sealed class MockDispatcherProvider : IDispatcherProvider, IDisposable
 {
 	readonly static DispatcherMock _dispatcherMock = new();
 

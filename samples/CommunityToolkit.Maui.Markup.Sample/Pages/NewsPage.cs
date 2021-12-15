@@ -14,67 +14,67 @@ namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
 class NewsPage : BaseContentPage<NewsViewModel>
 {
-    public NewsPage(NewsViewModel newsViewModel) : base(newsViewModel, "Top Stories")
-    {
-        ViewModel.PullToRefreshFailed += HandlePullToRefreshFailed;
+	public NewsPage(NewsViewModel newsViewModel) : base(newsViewModel, "Top Stories")
+	{
+		ViewModel.PullToRefreshFailed += HandlePullToRefreshFailed;
 
-        Content = new RefreshView
-        {
-            RefreshColor = Colors.Black,
+		Content = new RefreshView
+		{
+			RefreshColor = Colors.Black,
 
-            Content = new CollectionView
-            {
-                BackgroundColor = Color.FromArgb("F6F6EF"),
-                SelectionMode = SelectionMode.Single,
-                ItemTemplate = new StoryDataTemplate(),
+			Content = new CollectionView
+			{
+				BackgroundColor = Color.FromArgb("F6F6EF"),
+				SelectionMode = SelectionMode.Single,
+				ItemTemplate = new StoryDataTemplate(),
 
-            }.Invoke(collectionView => collectionView.SelectionChanged += HandleSelectionChanged)
-             .Bind(CollectionView.ItemsSourceProperty, nameof(NewsViewModel.TopStoryCollection))
+			}.Invoke(collectionView => collectionView.SelectionChanged += HandleSelectionChanged)
+			 .Bind(CollectionView.ItemsSourceProperty, nameof(NewsViewModel.TopStoryCollection))
 
-        }.Bind(RefreshView.IsRefreshingProperty, nameof(NewsViewModel.IsListRefreshing))
-         .Bind(RefreshView.CommandProperty, nameof(NewsViewModel.RefreshCommand));
-    }
+		}.Bind(RefreshView.IsRefreshingProperty, nameof(NewsViewModel.IsListRefreshing))
+		 .Bind(RefreshView.CommandProperty, nameof(NewsViewModel.RefreshCommand));
+	}
 
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
+	protected override void OnAppearing()
+	{
+		base.OnAppearing();
 
-        if (Content is RefreshView refreshView
-            && refreshView.Content is CollectionView collectionView
-            && IsNullOrEmpty(collectionView.ItemsSource))
-        {
-            refreshView.IsRefreshing = true;
-        }
+		if (Content is RefreshView refreshView
+			&& refreshView.Content is CollectionView collectionView
+			&& IsNullOrEmpty(collectionView.ItemsSource))
+		{
+			refreshView.IsRefreshing = true;
+		}
 
-        static bool IsNullOrEmpty(in IEnumerable? enumerable) => !enumerable?.GetEnumerator().MoveNext() ?? true;
-    }
+		static bool IsNullOrEmpty(in IEnumerable? enumerable) => !enumerable?.GetEnumerator().MoveNext() ?? true;
+	}
 
-    async void HandleSelectionChanged(object? sender, SelectionChangedEventArgs e)
-    {
-        ArgumentNullException.ThrowIfNull(sender);
+	async void HandleSelectionChanged(object? sender, SelectionChangedEventArgs e)
+	{
+		ArgumentNullException.ThrowIfNull(sender);
 
-        var collectionView = (CollectionView)sender;
-        collectionView.SelectedItem = null;
+		var collectionView = (CollectionView)sender;
+		collectionView.SelectedItem = null;
 
-        if (e.CurrentSelection.FirstOrDefault() is StoryModel storyModel)
-        {
-            if (!string.IsNullOrEmpty(storyModel.Url))
-            {
-                var browserOptions = new BrowserLaunchOptions
-                {
-                    PreferredControlColor = ColorConstants.BrowserNavigationBarTextColor,
-                    PreferredToolbarColor = ColorConstants.BrowserNavigationBarBackgroundColor
-                };
+		if (e.CurrentSelection.FirstOrDefault() is StoryModel storyModel)
+		{
+			if (!string.IsNullOrEmpty(storyModel.Url))
+			{
+				var browserOptions = new BrowserLaunchOptions
+				{
+					PreferredControlColor = ColorConstants.BrowserNavigationBarTextColor,
+					PreferredToolbarColor = ColorConstants.BrowserNavigationBarBackgroundColor
+				};
 
-                await Browser.OpenAsync(storyModel.Url, browserOptions);
-            }
-            else
-            {
-                await DisplayAlert("Invalid Article", "ASK HN articles have no url", "OK");
-            }
-        }
-    }
+				await Browser.OpenAsync(storyModel.Url, browserOptions);
+			}
+			else
+			{
+				await DisplayAlert("Invalid Article", "ASK HN articles have no url", "OK");
+			}
+		}
+	}
 
-    void HandlePullToRefreshFailed(object? sender, string message) =>
-        MainThread.BeginInvokeOnMainThread(async () => await DisplayAlert("Refresh Failed", message, "OK"));
+	void HandlePullToRefreshFailed(object? sender, string message) =>
+		MainThread.BeginInvokeOnMainThread(async () => await DisplayAlert("Refresh Failed", message, "OK"));
 }

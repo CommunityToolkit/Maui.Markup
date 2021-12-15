@@ -9,27 +9,27 @@ namespace CommunityToolkit.Maui.Markup.UnitTests.Base;
 
 public class BaseTestFixture
 {
-    CultureInfo? defaultCulture;
-    CultureInfo? defaultUICulture;
+	CultureInfo? defaultCulture;
+	CultureInfo? defaultUICulture;
 
-    [SetUp]
-    public virtual void Setup()
-    {
-        defaultCulture = System.Threading.Thread.CurrentThread.CurrentCulture;
-        defaultUICulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+	[SetUp]
+	public virtual void Setup()
+	{
+		defaultCulture = System.Threading.Thread.CurrentThread.CurrentCulture;
+		defaultUICulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 
-        Device.PlatformServices = new MockPlatformServices();
-        DispatcherProvider.SetCurrent(new MockDispatcherProvider());
-    }
+		Device.PlatformServices = new MockPlatformServices();
+		DispatcherProvider.SetCurrent(new MockDispatcherProvider());
+	}
 
-    [TearDown]
-    public virtual void TearDown()
-    {
-        Device.PlatformServices = null;
+	[TearDown]
+	public virtual void TearDown()
+	{
+		Device.PlatformServices = null;
 
-        System.Threading.Thread.CurrentThread.CurrentCulture = defaultCulture ?? throw new NullReferenceException();
-        System.Threading.Thread.CurrentThread.CurrentUICulture = defaultUICulture ?? throw new NullReferenceException();
+		System.Threading.Thread.CurrentThread.CurrentCulture = defaultCulture ?? throw new NullReferenceException();
+		System.Threading.Thread.CurrentThread.CurrentUICulture = defaultUICulture ?? throw new NullReferenceException();
 
-        DispatcherProvider.SetCurrent(null);
-    }
+		DispatcherProvider.SetCurrent(null);
+	}
 }

@@ -12,22 +12,22 @@ namespace CommunityToolkit.Maui.Markup.Sample;
 
 public class MauiProgram
 {
-    public static MauiApp Create()
-    {
-        var builder = MauiApp.CreateBuilder();
-        builder.UseMauiApp<App>();
+	public static MauiApp Create()
+	{
+		var builder = MauiApp.CreateBuilder();
+		builder.UseMauiApp<App>();
 
-        // Services
-        builder.Services.AddSingleton<App>();
-        builder.Services.AddSingleton(RestService.For<IHackerNewsApi>("https://hacker-news.firebaseio.com/v0"));
-        builder.Services.AddSingleton<HackerNewsAPIService>();
+		// Services
+		builder.Services.AddSingleton<App>();
+		builder.Services.AddSingleton(RestService.For<IHackerNewsApi>("https://hacker-news.firebaseio.com/v0"));
+		builder.Services.AddSingleton<HackerNewsAPIService>();
 
-        // View Models
-        builder.Services.AddTransient<NewsViewModel>();
+		// View Models
+		builder.Services.AddTransient<NewsViewModel>();
 
-        // Pages
-        builder.Services.AddTransient<NewsPage>();
+		// Pages
+		builder.Services.AddTransient<NewsPage>();
 
-        return builder.Build();
-    }
+		return builder.Build();
+	}
 }
