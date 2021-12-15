@@ -57,54 +57,6 @@ namespace CommunityToolkit.Maui.Markup
         }
 
         /// <summary>
-        /// HorizontalOptions = LayoutOptions.StartAndExpand
-        /// </summary>
-        /// <typeparam name="TView"></typeparam>
-        /// <param name="view"></param>
-        /// <returns>View with LayoutOptions.StartAndExpand</returns>
-        public static TView StartExpand<TView>(this TView view) where TView : View
-        {
-            view.HorizontalOptions = LayoutOptions.StartAndExpand;
-            return view;
-        }
-
-        /// <summary>
-        /// HorizontalOptions = LayoutOptions.CenterAndExpand
-        /// </summary>
-        /// <typeparam name="TView"></typeparam>
-        /// <param name="view"></param>
-        /// <returns>View with LayoutOptions.CenterAndExpand</returns>
-        public static TView CenterExpandHorizontal<TView>(this TView view) where TView : View
-        {
-            view.HorizontalOptions = LayoutOptions.CenterAndExpand;
-            return view;
-        }
-
-        /// <summary>
-        /// HorizontalOptions = LayoutOptions.FillAndExpand
-        /// </summary>
-        /// <typeparam name="TView"></typeparam>
-        /// <param name="view"></param>
-        /// <returns>View with LayoutOptions.FillAndExpand</returns>
-        public static TView FillExpandHorizontal<TView>(this TView view) where TView : View
-        {
-            view.HorizontalOptions = LayoutOptions.FillAndExpand;
-            return view;
-        }
-
-        /// <summary>
-        /// HorizontalOptions = LayoutOptions.EndAndExpand
-        /// </summary>
-        /// <typeparam name="TView"></typeparam>
-        /// <param name="view"></param>
-        /// <returns>View with LayoutOptions.EndAndExpand</returns>
-        public static TView EndExpand<TView>(this TView view) where TView : View
-        {
-            view.HorizontalOptions = LayoutOptions.EndAndExpand;
-            return view;
-        }
-
-        /// <summary>
         /// VerticalOptions = LayoutOptions.Start
         /// </summary>
         /// <typeparam name="TView"></typeparam>
@@ -153,54 +105,6 @@ namespace CommunityToolkit.Maui.Markup
         }
 
         /// <summary>
-        /// VerticalOptions = LayoutOptions.StartAndExpand
-        /// </summary>
-        /// <typeparam name="TView"></typeparam>
-        /// <param name="view"></param>
-        /// <returns>View with LayoutOptions.StartAndExpand</returns>
-        public static TView TopExpand<TView>(this TView view) where TView : View
-        {
-            view.VerticalOptions = LayoutOptions.StartAndExpand;
-            return view;
-        }
-
-        /// <summary>
-        /// VerticalOptions = LayoutOptions.EndAndExpand
-        /// </summary>
-        /// <typeparam name="TView"></typeparam>
-        /// <param name="view"></param>
-        /// <returns>View with LayoutOptions.EndAndExpand</returns>
-        public static TView BottomExpand<TView>(this TView view) where TView : View
-        {
-            view.VerticalOptions = LayoutOptions.EndAndExpand;
-            return view;
-        }
-
-        /// <summary>
-        /// VerticalOptions = LayoutOptions.CenterAndExpand
-        /// </summary>
-        /// <typeparam name="TView"></typeparam>
-        /// <param name="view"></param>
-        /// <returns>View with LayoutOptions.CenterAndExpand</returns>
-        public static TView CenterExpandVertical<TView>(this TView view) where TView : View
-        {
-            view.VerticalOptions = LayoutOptions.CenterAndExpand;
-            return view;
-        }
-
-        /// <summary>
-        /// VerticalOptions = LayoutOptions.FillAndExpand
-        /// </summary>
-        /// <typeparam name="TView"></typeparam>
-        /// <param name="view"></param>
-        /// <returns>View with LayoutOptions.FillAndExpand</returns>
-        public static TView FillExpandVertical<TView>(this TView view) where TView : View
-        {
-            view.VerticalOptions = LayoutOptions.FillAndExpand;
-            return view;
-        }
-
-        /// <summary>
         /// VerticalOptions = HorizontalOptions = LayoutOptions.Center
         /// </summary>
         /// <typeparam name="TView"></typeparam>
@@ -217,24 +121,6 @@ namespace CommunityToolkit.Maui.Markup
         /// <returns>View with LayoutOptions.FillAndExpand</returns>
         public static TView Fill<TView>(this TView view) where TView : View
             => view.FillHorizontal().FillVertical();
-
-        /// <summary>
-        /// VerticalOptions = HorizontalOptions = LayoutOptions.CenterAndExpand
-        /// </summary>
-        /// <typeparam name="TView"></typeparam>
-        /// <param name="view"></param>
-        /// <returns>View with LayoutOptions.CenterAndExpand</returns>
-        public static TView CenterExpand<TView>(this TView view) where TView : View
-            => view.CenterExpandHorizontal().CenterExpandVertical();
-
-        /// <summary>
-        /// VerticalOptions = HorizontalOptions = LayoutOptions.FillAndExpand
-        /// </summary>
-        /// <typeparam name="TView"></typeparam>
-        /// <param name="view"></param>
-        /// <returns>View with LayoutOptions.FillAndExpand</returns>
-        public static TView FillExpand<TView>(this TView view) where TView : View
-            => view.FillExpandHorizontal().FillExpandVertical();
 
         /// <summary>
         /// Set Margin
@@ -312,30 +198,6 @@ namespace CommunityToolkit.Maui.Markup
                 view.HorizontalOptions = LayoutOptions.End;
                 return view;
             }
-
-            /// <summary>
-            /// HorizontalOptions = LayoutOptions.StartAndExpand
-            /// </summary>
-            /// <typeparam name="TView"></typeparam>
-            /// <param name="view"></param>
-            /// <returns>View with LayoutOptions.StartAndExpand</returns>
-            public static TView LeftExpand<TView>(this TView view) where TView : View
-            {
-                view.HorizontalOptions = LayoutOptions.StartAndExpand;
-                return view;
-            }
-
-            /// <summary>
-            /// HorizontalOptions = LayoutOptions.EndAndExpand
-            /// </summary>
-            /// <typeparam name="TView"></typeparam>
-            /// <param name="view"></param>
-            /// <returns>View with LayoutOptions.EndAndExpand</returns>
-            public static TView RightExpand<TView>(this TView view) where TView : View
-            {
-                view.HorizontalOptions = LayoutOptions.EndAndExpand;
-                return view;
-            }
         }
     }
 
@@ -367,30 +229,6 @@ namespace CommunityToolkit.Maui.Markup
             public static TView Right<TView>(this TView view) where TView : View
             {
                 view.HorizontalOptions = LayoutOptions.Start;
-                return view;
-            }
-
-            /// <summary>
-            /// HorizontalOptions = LayoutOptions.EndAndExpand
-            /// </summary>
-            /// <typeparam name="TView"></typeparam>
-            /// <param name="view"></param>
-            /// <returns>View with LayoutOptions.EndAndExpand</returns>
-            public static TView LeftExpand<TView>(this TView view) where TView : View
-            {
-                view.HorizontalOptions = LayoutOptions.EndAndExpand;
-                return view;
-            }
-
-            /// <summary>
-            /// HorizontalOptions = LayoutOptions.StartAndExpand
-            /// </summary>
-            /// <typeparam name="TView"></typeparam>
-            /// <param name="view"></param>
-            /// <returns>View with LayoutOptions.StartAndExpand</returns>
-            public static TView RightExpand<TView>(this TView view) where TView : View
-            {
-                view.HorizontalOptions = LayoutOptions.StartAndExpand;
                 return view;
             }
         }

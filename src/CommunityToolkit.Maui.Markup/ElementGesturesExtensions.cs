@@ -12,7 +12,11 @@ public static class ElementGesturesExtensions
 
     /// <summary>Add a <see cref="ClickGestureRecognizer"/>,
     /// and bind to its Command and (optionally) CommandParameter properties</summary>
+	/// <param name="gestureElement">An Element implementing IGestureRecognizers</param>
+	/// <param name="commandPath">Path to Command Binding</param>
+	/// <param name="commandSource">Binding source for Command Binding</param>
     /// <param name="parameterPath">If not specified or null, no binding is created for the CommandParameter property</param>
+	/// <param name="parameterSource">Binding source for Command Binding</param>
     public static TGestureElement BindClickGesture<TGestureElement>(
         this TGestureElement gestureElement,
         string commandPath = bindingContextPath,
@@ -23,7 +27,11 @@ public static class ElementGesturesExtensions
 
     /// <summary>Add a <see cref="SwipeGestureRecognizer"/>,
     /// and bind to its Command and (optionally) CommandParameter properties</summary>
+    /// <param name="gestureElement">An Element implementing IGestureRecognizers</param>
+	/// <param name="commandPath">Path to Command Binding</param>
+	/// <param name="commandSource">Binding source for Command Binding</param>
     /// <param name="parameterPath">If not specified or null, no binding is created for the CommandParameter property</param>
+	/// <param name="parameterSource">Binding source for Command Binding</param>
     public static TGestureElement BindSwipeGesture<TGestureElement>(
         this TGestureElement gestureElement,
         string commandPath = bindingContextPath,
@@ -34,7 +42,11 @@ public static class ElementGesturesExtensions
 
     /// <summary>Add a <see cref="TapGestureRecognizer"/>,
     /// and bind to its Command and (optionally) CommandParameter properties</summary>
+    /// <param name="gestureElement">An Element implementing IGestureRecognizers</param>
+	/// <param name="commandPath">Path to Command Binding</param>
+	/// <param name="commandSource">Binding source for Command Binding</param>
     /// <param name="parameterPath">If not specified or null, no binding is created for the CommandParameter property</param>
+	/// <param name="parameterSource">Binding source for Command Binding</param>
     public static TGestureElement BindTapGesture<TGestureElement>(
         this TGestureElement gestureElement,
         string commandPath = bindingContextPath,

@@ -143,7 +143,11 @@ public static class BindableObjectExtensions
     }
 
     /// <summary>Bind to the <typeparamref name="TBindable"/>'s default Command and CommandParameter properties </summary>
+	/// <param name="bindable">The Bindable Object</param>
+	/// <param name="path">Binding Path</param>
+	/// <param name="source">Binding Source</param>
     /// <param name="parameterPath">If null, no binding is created for the CommandParameter property</param>
+	/// <param name="parameterSource">Parameter Binding Source</param>
     public static TBindable BindCommand<TBindable>(
         this TBindable bindable,
         string path = bindingContextPath,

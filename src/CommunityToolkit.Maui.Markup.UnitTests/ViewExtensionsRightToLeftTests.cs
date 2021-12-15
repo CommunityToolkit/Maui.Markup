@@ -17,22 +17,9 @@ class ViewExtensionsRightToLeftTests : BaseMarkupTestFixture<BoxView>
         => TestPropertiesSet(v => v?.Right(), (View.HorizontalOptionsProperty, LayoutOptions.End, LayoutOptions.Start));
 
     [Test]
-    public void LeftExpand()
-        => TestPropertiesSet(v => v?.LeftExpand(), (View.HorizontalOptionsProperty, LayoutOptions.Start, LayoutOptions.EndAndExpand));
-
-    [Test]
-    public void RightExpand()
-        => TestPropertiesSet(v => v?.RightExpand(), (View.HorizontalOptionsProperty, LayoutOptions.End, LayoutOptions.StartAndExpand));
-
-    [Test]
     public void SupportDerivedFromView()
     {
-        Assert.IsInstanceOf<DerivedFromView>(
-            new DerivedFromView()
-            .Left()
-            .Right()
-            .LeftExpand()
-            .RightExpand());
+        Assert.IsInstanceOf<DerivedFromView>(new DerivedFromView().Left().Right());
     }
 
     class DerivedFromView : BoxView { }
