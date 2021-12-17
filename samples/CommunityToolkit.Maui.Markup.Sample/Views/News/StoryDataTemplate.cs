@@ -8,52 +8,53 @@ namespace CommunityToolkit.Maui.Markup.Sample.Views.News;
 
 class StoryDataTemplate : DataTemplate
 {
-    public StoryDataTemplate() : base(CreateGrid)
-    {
+	public StoryDataTemplate() : base(CreateGrid)
+	{
 
-    }
+	}
 
-    static Grid CreateGrid() => new Grid
-    {
-        RowSpacing = 1,
+	static Grid CreateGrid() => new()
+	{
+		RowSpacing = 1,
 
-        RowDefinitions = Rows.Define(
-            (Row.Title, 20),
-            (Row.Description, 20),
-            (Row.BottomPadding, 1)),
+		RowDefinitions = Rows.Define(
+			(Row.Title, 20),
+			(Row.Description, 20),
+			(Row.BottomPadding, 1)),
 
-        Children =
-            {
-                new TitleLabel().Row(Row.Title)
-                    .Bind(Label.TextProperty, nameof(StoryModel.Title)),
-                new DescriptionLabel().Row(Row.Description)
-                    .Bind(Label.TextProperty, nameof(StoryModel.Description))
-            }
-    };
+		Children =
+		{
+			new TitleLabel().Row(Row.Title)
+				.Bind(Label.TextProperty, nameof(StoryModel.Title)),
 
-    enum Row { Title, Description, BottomPadding }
+			new DescriptionLabel().Row(Row.Description)
+				.Bind(Label.TextProperty, nameof(StoryModel.Description))
+		}
+	};
 
-    class TitleLabel : Label
-    {
-        public TitleLabel()
-        {
-            FontSize = 16;
-            TextColor = ColorConstants.TextCellTextColor;
+	enum Row { Title, Description, BottomPadding }
 
-            VerticalTextAlignment = TextAlignment.Start;
+	class TitleLabel : Label
+	{
+		public TitleLabel()
+		{
+			FontSize = 16;
+			TextColor = ColorConstants.TextCellTextColor;
 
-            Padding = new Thickness(10, 0);
-        }
-    }
+			VerticalTextAlignment = TextAlignment.Start;
 
-    class DescriptionLabel : Label
-    {
-        public DescriptionLabel()
-        {
-            FontSize = 13;
-            TextColor = ColorConstants.TextCellDetailColor;
+			Padding = new Thickness(10, 0);
+		}
+	}
 
-            Padding = new Thickness(10, 0, 10, 5);
-        }
-    }
+	class DescriptionLabel : Label
+	{
+		public DescriptionLabel()
+		{
+			FontSize = 13;
+			TextColor = ColorConstants.TextCellDetailColor;
+
+			Padding = new Thickness(10, 0, 10, 5);
+		}
+	}
 }
