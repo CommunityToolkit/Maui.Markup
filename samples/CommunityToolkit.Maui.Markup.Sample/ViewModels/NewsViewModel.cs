@@ -38,7 +38,7 @@ class NewsViewModel : BaseViewModel
 		remove => _pullToRefreshEventManager.RemoveEventHandler(value);
 	}
 
-	public ObservableCollection<StoryModel> TopStoryCollection { get; } = new ObservableCollection<StoryModel>();
+	public ObservableCollection<StoryModel> TopStoryCollection { get; } = new();
 
 	public ICommand RefreshCommand { get; }
 
