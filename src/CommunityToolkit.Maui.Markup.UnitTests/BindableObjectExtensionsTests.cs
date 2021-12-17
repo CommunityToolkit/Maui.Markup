@@ -5,7 +5,6 @@ using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using CommunityToolkit.Maui.Markup.UnitTests.BindableObjectViews;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
-using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
