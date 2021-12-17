@@ -23,12 +23,4 @@
     <ProjectReference Include="..\CommunityToolkit.Maui.Markup\CommunityToolkit.Maui.Markup.csproj" />
   </ItemGroup>
   
-  <ItemGroup>
-    <None Remove="Mocks\" />
-    <None Remove="Base\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Mocks\" />
-    <Folder Include="Base\" />
-  </ItemGroup>
 </Project>
