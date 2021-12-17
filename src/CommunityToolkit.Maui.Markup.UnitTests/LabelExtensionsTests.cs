@@ -10,8 +10,6 @@ namespace CommunityToolkit.Maui.Markup.UnitTests;
 [TestFixture]
 class LabelExtensionsTests : BaseMarkupTestFixture<Label>
 {
-	Label Label => Bindable ?? throw new NullReferenceException();
-
 	[Test]
 	public void TextStart()
 		=> TestPropertiesSet(l => l?.TextStart(), (Label.HorizontalTextAlignmentProperty, TextAlignment.End, TextAlignment.Start));
@@ -58,30 +56,30 @@ class LabelExtensionsTests : BaseMarkupTestFixture<Label>
 	[Test]
 	public void FormattedTextSingleSpan()
 	{
-		Label.FormattedText = null;
-		Label.FormattedText(
+		Bindable.FormattedText = null;
+		Bindable.FormattedText(
 			new Span { BackgroundColor = Colors.Blue }
 		);
 
-		var spans = Label.FormattedText?.Spans;
+		var spans = Bindable.FormattedText?.Spans;
 		Assert.That(spans?.Count == 1 && spans[0].BackgroundColor == Colors.Blue);
 	}
 
 	[Test]
 	public void FormattedTextMultipleSpans()
 	{
-		Label.FormattedText = null;
-		Label.FormattedText(
+		Bindable.FormattedText = null;
+		Bindable.FormattedText(
 			new Span { BackgroundColor = Colors.Blue },
 			new Span { BackgroundColor = Colors.Green }
 		);
 
-		var spans = Label.FormattedText?.Spans;
+		var spans = Bindable.FormattedText?.Spans;
 		Assert.That(spans?.Count == 2 && spans[0].BackgroundColor == Colors.Blue && spans[1].BackgroundColor == Colors.Green);
 	}
 
 	[Test]
-	public void SupportDerivedFromLabel()
+	public void SupportDerivedFromBindable()
 	{
 		Assert.IsInstanceOf<DerivedFromLabel>(
 			new DerivedFromLabel()

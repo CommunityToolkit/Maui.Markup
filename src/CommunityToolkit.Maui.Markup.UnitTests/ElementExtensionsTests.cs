@@ -11,8 +11,6 @@ namespace CommunityToolkit.Maui.Markup.UnitTests;
 [TestFixture]
 class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 {
-	Label Label => Bindable ?? throw new NullReferenceException();
-
 	[Test]
 	public void DynamicResource()
 	{
@@ -58,28 +56,28 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 	[Test]
 	public void EffectSingle()
 	{
-		Label.Effects.Clear();
-		Assume.That(Label.Effects.Count, Is.EqualTo(0));
+		Bindable.Effects.Clear();
+		Assume.That(Bindable.Effects.Count, Is.EqualTo(0));
 
 		var effect1 = new NullEffect();
-		Label.Effects(effect1);
+		Bindable.Effects(effect1);
 
-		Assert.That(Label.Effects.Count, Is.EqualTo(1));
-		Assert.That(Label.Effects.Contains(effect1));
+		Assert.That(Bindable.Effects.Count, Is.EqualTo(1));
+		Assert.That(Bindable.Effects.Contains(effect1));
 	}
 
 	[Test]
 	public void EffectsMultiple()
 	{
-		Label.Effects.Clear();
-		Assume.That(Label.Effects.Count, Is.EqualTo(0));
+		Bindable.Effects.Clear();
+		Assume.That(Bindable.Effects.Count, Is.EqualTo(0));
 
 		NullEffect effect1 = new NullEffect(), effect2 = new NullEffect();
-		Label.Effects(effect1, effect2);
+		Bindable.Effects(effect1, effect2);
 
-		Assert.That(Label.Effects.Count, Is.EqualTo(2));
-		Assert.That(Label.Effects.Contains(effect1));
-		Assert.That(Label.Effects.Contains(effect2));
+		Assert.That(Bindable.Effects.Count, Is.EqualTo(2));
+		Assert.That(Bindable.Effects.Contains(effect1));
+		Assert.That(Bindable.Effects.Contains(effect2));
 	}
 
 	[Test]

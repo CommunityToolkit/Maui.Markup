@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests.Base;
 
-public class BaseTestFixture
+abstract class BaseTestFixture
 {
 	CultureInfo? defaultCulture;
 	CultureInfo? defaultUICulture;

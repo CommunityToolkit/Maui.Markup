@@ -26,7 +26,7 @@ class BindableLayoutExtensionsTests : BaseMarkupTestFixture<StackLayout>
 	public void EmptyViewTemplateFunction()
 	{
 		Func<object> loadTemplate = () => new BoxView();
-		Bindable?.EmptyViewTemplate(loadTemplate);
+		Bindable.EmptyViewTemplate(loadTemplate);
 
 		Assert.That(BindableLayout.GetEmptyViewTemplate(Bindable), Is.Not.Null);
 	}
@@ -49,7 +49,7 @@ class BindableLayoutExtensionsTests : BaseMarkupTestFixture<StackLayout>
 	public void ItemTemplateFunction()
 	{
 		Func<object> loadTemplate = () => new BoxView();
-		Bindable?.ItemTemplate(loadTemplate);
+		Bindable.ItemTemplate(loadTemplate);
 
 		Assert.That(BindableLayout.GetItemTemplate(Bindable), Is.Not.Null);
 	}

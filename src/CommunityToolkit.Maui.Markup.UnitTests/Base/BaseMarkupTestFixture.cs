@@ -4,21 +4,23 @@ using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests.Base;
 
-class BaseMarkupTestFixture<TBindable> : BaseMarkupTestFixture where TBindable : BindableObject, new()
+abstract class BaseMarkupTestFixture<TBindable> : BaseMarkupTestFixture where TBindable : BindableObject, new()
 {
-	protected TBindable? Bindable { get; private set; }
+	TBindable? _bindable;
+
+	protected TBindable Bindable => _bindable ?? throw new InvalidOperationException($"{nameof(Bindable)} is initialized in the {nameof(Setup)} method, marked by the {nameof(SetUpAttribute)}");
 
 	[SetUp]
 	public override void Setup()
 	{
 		base.Setup();
-		Bindable = new TBindable();
+		_bindable = new TBindable();
 	}
 
 	[TearDown]
 	public override void TearDown()
 	{
-		Bindable = null;
+		_bindable = null;
 		base.TearDown();
 	}
 
@@ -38,7 +40,7 @@ class BaseMarkupTestFixture<TBindable> : BaseMarkupTestFixture where TBindable :
 		=> TestPropertiesSet(Bindable, modify, propertyChanges);
 }
 
-class BaseMarkupTestFixture : BaseTestFixture
+abstract class BaseMarkupTestFixture : BaseTestFixture
 {
 	protected static void TestPropertiesSet<TBindable, TPropertyValue>(
 		TBindable? bindable,
