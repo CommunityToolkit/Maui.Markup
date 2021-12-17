@@ -43,13 +43,13 @@ abstract class BaseMarkupTestFixture<TBindable> : BaseMarkupTestFixture where TB
 abstract class BaseMarkupTestFixture : BaseTestFixture
 {
 	protected static void TestPropertiesSet<TBindable, TPropertyValue>(
-		TBindable? bindable,
-		Action<TBindable?> modify,
+		TBindable bindable,
+		Action<TBindable> modify,
 		params (BindableProperty property, TPropertyValue beforeValue, TPropertyValue expectedValue)[] propertyChanges) where TBindable : BindableObject
 	{
 		foreach (var (property, beforeValue, expectedValue) in propertyChanges)
 		{
-			bindable?.SetValue(property, beforeValue);
+			bindable.SetValue(property, beforeValue);
 			Assume.That(bindable.GetPropertyIfSet(property, expectedValue), Is.Not.EqualTo(expectedValue));
 		}
 
@@ -60,13 +60,13 @@ abstract class BaseMarkupTestFixture : BaseTestFixture
 	}
 
 	protected static void TestPropertiesSet<TBindable, TPropertyValue>(
-		TBindable? bindable,
-		Action<TBindable?> modify,
+		TBindable bindable,
+		Action<TBindable> modify,
 		params (BindableProperty property, TPropertyValue expectedValue)[] propertyChanges) where TBindable : BindableObject
 	{
 		foreach (var (property, expectedValue) in propertyChanges)
 		{
-			bindable?.SetValue(property, property.DefaultValue);
+			bindable.SetValue(property, property.DefaultValue);
 			Assume.That(bindable.GetPropertyIfSet(property, expectedValue), Is.Not.EqualTo(expectedValue));
 		}
 
