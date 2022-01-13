@@ -6,21 +6,21 @@ namespace CommunityToolkit.Maui.Markup.UnitTests.Base;
 
 abstract class BaseMarkupTestFixture<TBindable> : BaseMarkupTestFixture where TBindable : BindableObject, new()
 {
-	TBindable? _bindable;
+	TBindable? bindable;
 
-	protected TBindable Bindable => _bindable ?? throw new InvalidOperationException($"{nameof(Bindable)} is initialized in the {nameof(Setup)} method, marked by the {nameof(SetUpAttribute)}");
+	protected TBindable Bindable => bindable ?? throw new InvalidOperationException($"{nameof(Bindable)} is initialized in the {nameof(Setup)} method, marked by the {nameof(SetUpAttribute)}");
 
 	[SetUp]
 	public override void Setup()
 	{
 		base.Setup();
-		_bindable = new TBindable();
+		bindable = new TBindable();
 	}
 
 	[TearDown]
 	public override void TearDown()
 	{
-		_bindable = null;
+		bindable = null;
 		base.TearDown();
 	}
 
@@ -56,7 +56,9 @@ abstract class BaseMarkupTestFixture : BaseTestFixture
 		modify(bindable);
 
 		foreach (var (property, beforeValue, expectedValue) in propertyChanges)
+		{
 			Assert.That(bindable.GetPropertyIfSet(property, beforeValue), Is.EqualTo(expectedValue));
+		}
 	}
 
 	protected static void TestPropertiesSet<TBindable, TPropertyValue>(
@@ -73,6 +75,8 @@ abstract class BaseMarkupTestFixture : BaseTestFixture
 		modify(bindable);
 
 		foreach (var (property, expectedValue) in propertyChanges)
+		{
 			Assert.That(bindable.GetPropertyIfSet(property, property.DefaultValue), Is.EqualTo(expectedValue));
+		}
 	}
 }

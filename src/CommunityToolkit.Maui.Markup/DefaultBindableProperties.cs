@@ -101,7 +101,9 @@ public static class DefaultBindableProperties
 		foreach (var property in properties)
 		{
 			if (property.DeclaringType.FullName is not null)
+			{
 				bindableObjectTypeDefaultProperty.Add(property.DeclaringType.FullName, property);
+			}
 		}
 	}
 
@@ -114,14 +116,18 @@ public static class DefaultBindableProperties
 		foreach (var propertyPair in propertyPairs)
 		{
 			if (propertyPair.commandProperty.DeclaringType.FullName is not null)
+			{
 				bindableObjectTypeDefaultCommandAndParameterProperties.Add(propertyPair.commandProperty.DeclaringType.FullName, propertyPair);
+			}
 		}
 	}
 
 	internal static void Unregister(BindableProperty property)
 	{
 		if (property.DeclaringType.FullName is null)
+		{
 			throw new InvalidOperationException($"{nameof(BindableProperty)}.{nameof(BindableProperty.DeclaringType)}.{nameof(BindableProperty.DeclaringType.FullName)} cannot be null");
+		}
 
 		bindableObjectTypeDefaultProperty.Remove(property.DeclaringType.FullName);
 	}
@@ -168,7 +174,9 @@ public static class DefaultBindableProperties
 	internal static void UnregisterForCommand(BindableProperty commandProperty)
 	{
 		if (commandProperty.DeclaringType.FullName is null)
+		{
 			throw new InvalidOperationException($"{nameof(BindableProperty)}.{nameof(BindableProperty.DeclaringType)}.{nameof(BindableProperty.DeclaringType.FullName)} cannot be null");
+		}
 
 		bindableObjectTypeDefaultCommandAndParameterProperties.Remove(commandProperty.DeclaringType.FullName);
 	}

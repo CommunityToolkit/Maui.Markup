@@ -151,7 +151,9 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 					{
 						failMessage.AppendLine("\tCandidate properties:");
 						foreach (var propertyName in propertyNames)
+						{
 							failMessage.Append("\t").AppendLine(propertyName);
+						}
 					}
 				}
 			}
@@ -216,10 +218,15 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		public override void TearDown()
 		{
 			if (DefaultBindableProperties.GetFor(typeof(CustomViewWithText)) != null)
+			{
 				DefaultBindableProperties.Unregister(CustomViewWithText.TextProperty);
+			}
 
 			if (DefaultBindableProperties.GetForCommand(typeof(CustomViewWithCommand)) != (null, null))
+			{
 				DefaultBindableProperties.UnregisterForCommand(CustomViewWithCommand.CommandProperty);
+			}
+
 			base.TearDown();
 		}
 	}

@@ -59,7 +59,9 @@ public class Style<T> where T : BindableObject
 	public Style<T> Add(params (BindableProperty Property, object Value)[] setters)
 	{
 		foreach (var (Property, Value) in setters)
+		{
 			FormsStyle.Setters.Add(Property, Value);
+		}
 
 		return this;
 	}
@@ -72,7 +74,9 @@ public class Style<T> where T : BindableObject
 	public Style<T> Add(params Behavior[] behaviors)
 	{
 		foreach (var behavior in behaviors)
+		{
 			FormsStyle.Behaviors.Add(behavior);
+		}
 
 		return this;
 	}
@@ -85,7 +89,9 @@ public class Style<T> where T : BindableObject
 	public Style<T> Add(params TriggerBase[] triggers)
 	{
 		foreach (var trigger in triggers)
+		{
 			FormsStyle.Triggers.Add(trigger);
+		}
 
 		return this;
 	}

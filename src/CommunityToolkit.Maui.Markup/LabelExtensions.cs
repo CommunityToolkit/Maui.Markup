@@ -101,7 +101,9 @@ namespace CommunityToolkit.Maui.Markup
 			label.FormattedText = new FormattedString();
 
 			foreach (var span in spans)
+			{
 				label.FormattedText.Spans.Add(span);
+			}
 
 			return label;
 		}

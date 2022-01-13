@@ -17,14 +17,14 @@ namespace CommunityToolkit.Maui.Markup.Sample.ViewModels;
 
 class NewsViewModel : BaseViewModel
 {
-	readonly WeakEventManager<string> _pullToRefreshEventManager = new();
-	readonly HackerNewsAPIService _hackerNewsAPIService;
+	readonly WeakEventManager<string> pullToRefreshEventManager = new();
+	readonly HackerNewsAPIService hackerNewsAPIService;
 
-	bool _isListRefreshing;
+	bool isListRefreshing;
 
 	public NewsViewModel(HackerNewsAPIService hackerNewsAPIService)
 	{
-		_hackerNewsAPIService = hackerNewsAPIService;
+		this.hackerNewsAPIService = hackerNewsAPIService;
 
 		RefreshCommand = new AsyncCommand(ExecuteRefreshCommand);
 
@@ -34,8 +34,8 @@ class NewsViewModel : BaseViewModel
 
 	public event EventHandler<string> PullToRefreshFailed
 	{
-		add => _pullToRefreshEventManager.AddEventHandler(value);
-		remove => _pullToRefreshEventManager.RemoveEventHandler(value);
+		add => pullToRefreshEventManager.AddEventHandler(value);
+		remove => pullToRefreshEventManager.RemoveEventHandler(value);
 	}
 
 	public ObservableCollection<StoryModel> TopStoryCollection { get; } = new();
@@ -44,8 +44,8 @@ class NewsViewModel : BaseViewModel
 
 	public bool IsListRefreshing
 	{
-		get => _isListRefreshing;
-		set => SetProperty(ref _isListRefreshing, value);
+		get => isListRefreshing;
+		set => SetProperty(ref isListRefreshing, value);
 	}
 
 	static void InsertIntoSortedCollection<T>(ObservableCollection<T> collection, Comparison<T> comparison, T modelToInsert)
@@ -81,7 +81,9 @@ class NewsViewModel : BaseViewModel
 			await foreach (var story in GetTopStories(50).ConfigureAwait(false))
 			{
 				if (story is not null && !TopStoryCollection.Any(x => x.Title.Equals(story.Title)))
+				{
 					InsertIntoSortedCollection(TopStoryCollection, (a, b) => b.Score.CompareTo(a.Score), story);
+				}
 			}
 		}
 		catch (Exception e)
@@ -96,8 +98,8 @@ class NewsViewModel : BaseViewModel
 
 	async IAsyncEnumerable<StoryModel> GetTopStories(int? storyCount = int.MaxValue)
 	{
-		var topStoryIds = await _hackerNewsAPIService.GetTopStoryIDs().ConfigureAwait(false);
-		var getTopStoryTaskList = topStoryIds.Select(_hackerNewsAPIService.GetStory).ToList();
+		var topStoryIds = await hackerNewsAPIService.GetTopStoryIDs().ConfigureAwait(false);
+		var getTopStoryTaskList = topStoryIds.Select(hackerNewsAPIService.GetStory).ToList();
 
 		while (getTopStoryTaskList.Any() && storyCount-- > 0)
 		{
@@ -115,5 +117,5 @@ class NewsViewModel : BaseViewModel
 		MainThread.BeginInvokeOnMainThread(accessMethod);
 	}
 
-	void OnPullToRefreshFailed(string message) => _pullToRefreshEventManager.RaiseEvent(this, message, nameof(PullToRefreshFailed));
+	void OnPullToRefreshFailed(string message) => pullToRefreshEventManager.RaiseEvent(this, message, nameof(PullToRefreshFailed));
 }

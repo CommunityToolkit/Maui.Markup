@@ -23,7 +23,9 @@ class FuncConverter : BaseMarkupTestFixture
 				var c = (char)values[0];
 				var l = (int)values[1];
 				if (addOne)
+				{
 					l++;
+				}
 
 				return new string(c, l);
 			},
@@ -58,7 +60,10 @@ class FuncConverter : BaseMarkupTestFixture
 				var c = (char)values[0];
 				var l = (int)values[1];
 				if (addOne)
+				{
 					l++;
+				}
+
 				return new string(c, l);
 			},
 			(text, addOne) =>
