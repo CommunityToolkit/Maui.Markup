@@ -66,9 +66,13 @@ static class BindingHelpers
 		Assert.That(binding.Mode, Is.EqualTo(mode));
 
 		if (assertConverterInstanceIsAnyNotNull)
+		{
 			Assert.That(binding.Converter, Is.Not.Null);
+		}
 		else
+		{
 			Assert.That(binding.Converter, Is.EqualTo(converter));
+		}
 
 		Assert.That(binding.ConverterParameter, Is.EqualTo(converterParameter));
 		Assert.That(binding.StringFormat, Is.EqualTo(stringFormat));
@@ -113,9 +117,14 @@ static class BindingHelpers
 		Assert.That(binding.Mode, Is.EqualTo(mode));
 
 		if (assertConverterInstanceIsAnyNotNull)
+		{
 			Assert.That(binding.Converter, Is.Not.Null);
+		}
 		else
+		{
 			Assert.That(binding.Converter, Is.EqualTo(converter));
+		}
+
 		Assert.That(binding.ConverterParameter, Is.EqualTo(converterParameter));
 		Assert.That(binding.StringFormat, Is.EqualTo(stringFormat));
 		Assert.That(binding.TargetNullValue, Is.EqualTo(targetNullValue));
@@ -136,14 +145,20 @@ static class BindingHelpers
 	internal static BindingBase? GetBindingBase(BindableObject bindable, BindableProperty property)
 	{
 		if (getContextMethodInfo is null)
+		{
 			getContextMethodInfo = typeof(BindableObject).GetMethod("GetContext", BindingFlags.NonPublic | BindingFlags.Instance);
+		}
 
 		var context = getContextMethodInfo?.Invoke(bindable, new object[] { property });
 		if (context is null)
+		{
 			return null;
+		}
 
 		if (bindingFieldInfo is null)
+		{
 			bindingFieldInfo = context?.GetType().GetField("Binding");
+		}
 
 		return bindingFieldInfo?.GetValue(context) as BindingBase;
 	}
@@ -168,7 +183,9 @@ static class BindingHelpers
 		{
 			Assert.That(convertedBackValues.Length, Is.EqualTo(values.Length));
 			for (var i = 0; i < values.Length; i++)
+			{
 				Assert.That(convertedBackValues[i], Is.EqualTo(values[i]));
+			}
 		}
 		else
 		{

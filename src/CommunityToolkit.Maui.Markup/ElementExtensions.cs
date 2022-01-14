@@ -82,7 +82,9 @@ public static class ElementExtensions
 	public static TElement DynamicResources<TElement>(this TElement element, params (BindableProperty property, string key)[] resources) where TElement : Element
 	{
 		foreach (var resource in resources)
+		{
 			element.SetDynamicResource(resource.property, resource.key);
+		}
 
 		return element;
 	}
@@ -97,7 +99,9 @@ public static class ElementExtensions
 	public static TElement RemoveDynamicResources<TElement>(this TElement element, params BindableProperty[] properties) where TElement : Element
 	{
 		foreach (var property in properties)
+		{
 			element.RemoveDynamicResource(property);
+		}
 
 		return element;
 	}
@@ -112,7 +116,9 @@ public static class ElementExtensions
 	public static TElement Effects<TElement>(this TElement element, params Effect[] effects) where TElement : Element
 	{
 		for (var i = 0; i < effects.Length; i++)
+		{
 			element.Effects.Add(effects[i]);
+		}
 
 		return element;
 	}
@@ -172,19 +178,28 @@ public static class ElementExtensions
 		bool? italic = null) where TFontElement : Element, IFontElement
 	{
 		if (family != null)
+		{
 			fontElement.SetValue(FontElement.FontFamilyProperty, family);
+		}
 
 		if (size.HasValue)
+		{
 			fontElement.SetValue(FontElement.FontSizeProperty, size.Value);
+		}
 
 		if (bold.HasValue || italic.HasValue)
 		{
 			var attributes = FontAttributes.None;
 
 			if (bold == true)
+			{
 				attributes |= FontAttributes.Bold;
+			}
+
 			if (italic == true)
+			{
 				attributes |= FontAttributes.Italic;
+			}
 
 			fontElement.SetValue(FontElement.FontAttributesProperty, attributes);
 		}

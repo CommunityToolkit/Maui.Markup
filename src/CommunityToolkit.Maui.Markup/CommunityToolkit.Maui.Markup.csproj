@@ -4,7 +4,8 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<UseMaui>true</UseMaui>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-	</PropertyGroup>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+  </PropertyGroup>
 
 	<PropertyGroup>
 		<GitInfoReportImportance>high</GitInfoReportImportance>

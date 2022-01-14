@@ -8,6 +8,7 @@
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 
 		<!-- Display name -->
 		<ApplicationTitle>Sample</ApplicationTitle>
@@ -54,8 +55,8 @@
 
 	<ItemGroup Condition="$(TargetFramework.Contains('-windows'))">
 		<!-- Required - WinUI does not yet have buildTransitive for everything -->
-		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0-preview3" />
-		<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.0.0.29-preview3" />
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0" />
+		<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.0.0.30" />
 	</ItemGroup>
 
 	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">

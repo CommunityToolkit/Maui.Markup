@@ -42,7 +42,9 @@ public static class GridRowsColumns
 			var columnDefinitions = new ColumnDefinitionCollection();
 
 			for (int i = 0; i < widths.Length; i++)
+			{
 				columnDefinitions.Add(new ColumnDefinition { Width = widths[i] });
+			}
 
 			return columnDefinitions;
 		}
@@ -89,7 +91,9 @@ public static class GridRowsColumns
 			var rowDefinitions = new RowDefinitionCollection();
 
 			for (int i = 0; i < heights.Length; i++)
+			{
 				rowDefinitions.Add(new RowDefinition { Height = heights[i] });
+			}
 
 			return rowDefinitions;
 		}

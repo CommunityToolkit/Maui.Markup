@@ -208,12 +208,16 @@ class ElementGesturesBaseTestFixture : BaseMarkupTestFixture
 		where TGestureRecognizer : GestureRecognizer
 	{
 		if (gestureRecognizers.Length == 0)
+		{
 			gestureRecognizers = element.GestureRecognizers.Where(g => g is TGestureRecognizer).Cast<TGestureRecognizer>().ToArray();
+		}
 
 		Assert.That(gestureRecognizers.Length, Is.EqualTo(count));
 
 		foreach (var gestureRecognizer in gestureRecognizers)
+		{
 			Assert.That(element?.GestureRecognizers?.Count(g => ReferenceEquals(g, gestureRecognizer)) ?? 0, Is.EqualTo(1));
+		}
 
 		return gestureRecognizers;
 	}

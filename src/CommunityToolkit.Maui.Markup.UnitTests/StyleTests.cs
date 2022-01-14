@@ -71,7 +71,9 @@ class StyleTests : BaseMarkupTestFixture
 	{
 		Style? baseStyle = new Style<Label>();
 		if (baseStyle is null)
+		{
 			throw new NullReferenceException();
+		}
 
 		var style = new Style<Label>().BasedOn(baseStyle);
 		Style? formsStyle = style, formsBaseStyle = baseStyle;
@@ -195,7 +197,9 @@ class StyleTests : BaseMarkupTestFixture
 		Style? basedOnStyle = new Style<Label>();
 
 		if (basedOnStyle is null)
+		{
 			throw new NullReferenceException();
+		}
 
 		var style =
 			new Style<Label>()

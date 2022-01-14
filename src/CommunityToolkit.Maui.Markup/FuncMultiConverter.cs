@@ -63,8 +63,10 @@ public class FuncMultiConverter<TDest, TParam> : IMultiValueConverter
 	/// <returns></returns>
 	public object? Convert(object[] values, Type targetType, object? parameter, CultureInfo culture)
 	{
-		if (convert != null)
+		if (convert is not null)
+		{
 			return convert(values);
+		}
 
 		if (convertWithParam != null)
 		{

@@ -417,7 +417,9 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 
 		Func<object[], string>? convert = null;
 		if (testConvert)
+		{
 			convert = (object[] v) => Format(0, v[0], v[1], v[2], v[3], v[4]);
+		}
 
 		Func<string?, object[]>? convertBack = null;
 		if (testConvertBack)
@@ -478,7 +480,10 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 	{
 		var formatted = $"'{PrefixDots(values[0], parameter)}'";
 		for (var i = 1; i < values.Length; i++)
+		{
 			formatted += $", '{values[i]}'";
+		}
+
 		return formatted;
 	}
 

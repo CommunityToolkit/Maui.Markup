@@ -159,8 +159,10 @@ public static class BindableObjectExtensions
 
 		bindable.SetBinding(commandProperty, new Binding(path: path, source: source));
 
-		if (parameterPath != null)
+		if (parameterPath is not null)
+		{
 			bindable.SetBinding(parameterProperty, new Binding(path: parameterPath, source: parameterSource));
+		}
 
 		return bindable;
 	}
