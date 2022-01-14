@@ -8,7 +8,6 @@
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
-        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 
 		<!-- Display name -->
 		<ApplicationTitle>Sample</ApplicationTitle>
