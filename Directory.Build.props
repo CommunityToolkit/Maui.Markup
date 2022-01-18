@@ -9,5 +9,7 @@
 		<WarningsAsErrors>nullable,CS1574,CS1573,CS137</WarningsAsErrors>
 		<ProduceReferenceAssembly>True</ProduceReferenceAssembly>
 		<GenerateErrorForMissingTargetingPacks>false</GenerateErrorForMissingTargetingPacks>
+
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	</PropertyGroup>
 </Project>
