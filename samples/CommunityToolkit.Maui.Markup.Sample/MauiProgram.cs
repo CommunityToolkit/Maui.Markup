@@ -2,9 +2,7 @@
 using CommunityToolkit.Maui.Markup.Sample.Services;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Maui;
 using Microsoft.Maui.Controls.Hosting;
-using Microsoft.Maui.Controls.Xaml;
 using Microsoft.Maui.Hosting;
 using Refit;
 
@@ -15,7 +13,7 @@ public class MauiProgram
 	public static MauiApp Create()
 	{
 		var builder = MauiApp.CreateBuilder();
-		builder.UseMauiApp<App>();
+		builder.UseMauiApp<App>().UseMauiCommunityToolkitMarkup();
 
 		// Services
 		builder.Services.AddSingleton<App>();
