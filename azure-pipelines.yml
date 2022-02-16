@@ -9,7 +9,7 @@ variables:
   PathToSample: 'samples/CommunityToolkit.Maui.Markup.Sample/CommunityToolkit.Maui.Markup.Sample.csproj'
   PathToCommunityToolkitCsproj: 'src/CommunityToolkit.Maui.Markup/CommunityToolkit.Maui.Markup.csproj'
   PathToCommunityToolkitUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.UnitTests/CommunityToolkit.Maui.Markup.UnitTests.csproj'
-  XcodeVersion: '13.1'
+  XcodeVersion: '13.2'
   
 trigger:
   branches:
@@ -52,20 +52,6 @@ jobs:
         displayName: 'Install .NET MAUI workload'
         inputs:
           script: 'dotnet workload install maui'
-      - task: JavaToolInstaller@0
-        displayName: 'Install Java SDK 11.0'
-        inputs:
-          versionSpec: '11'
-          jdkArchitectureOption: 'x64'
-          jdkSourceOption: 'PreInstalled'
-      - task: CmdLine@2
-        displayName: 'Clear Local NuGet Cache' #https://github.com/actions/virtual-environments/issues/1090#issuecomment-748452120
-        inputs:
-          script: 'nuget locals all -clear'
-      - task: CmdLine@2
-        displayName: 'Clean Solution'
-        inputs:
-          script: 'dotnet clean $(PathToSolution)'
       # if this is a tagged build, then update the version number
       - powershell: |
           $buildSourceBranch = "$(Build.SourceBranch)"
@@ -74,7 +60,30 @@ jobs:
           Write-Host ("##vso[task.setvariable variable=NugetPackageVersion;]$tagVersion")
         displayName: Set NuGet Version to Tag Number
         condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')
+      # if this is a PR build, then update the version number
+      - powershell: |
+          $prNumber = $env:System_PullRequest_PullRequestNumber
+          $commitId = "$($env:System_PullRequest_SourceCommitId)".Substring(0, 7)
+          $fullVersionString = "$(CurrentSemanticVersionBase)-build-$prNumber.$(Build.BuildId)+$commitId"
+          Write-Host("GitHub PR = $prNumber, Commit = $commitId");
+          Write-Host ("##vso[task.setvariable variable=NugetPackageVersion;]$fullVersionString")
+          Write-Host "##vso[build.updatebuildnumber]$fullVersionString"
+        displayName: Set NuGet Version to PR Version
+        condition: and(succeeded(), eq(variables['build.reason'], 'PullRequest'))
       # restore, build and pack the packages
+      - task: DotNetCoreCLI@2
+        displayName: 'Run Unit Tests'
+        inputs:
+          command: test
+          projects: '$(PathToCommunityToolkitUnitTestCsproj)'
+          arguments: '--configuration Release --settings ".runsettings" --collect "Code coverage"'
+      - task: DotNetCoreCLI@2
+        displayName: 'Check Dependencies'
+        inputs:
+          command: 'custom'
+          custom: 'list'
+          arguments: 'package --vulnerable --include-transitive'
+          projects: $(PathToSolution)
       - task: CmdLine@2
         displayName: 'Build Community Toolkit'
         inputs:
@@ -83,16 +92,21 @@ jobs:
         displayName: 'Build Community Toolkit Sample'
         inputs:
           script: 'dotnet build $(PathToSample) -c Release'
-      - task: CmdLine@2
-        displayName: 'Run Unit Tests'
+      - task: VSBuild@1
+        displayName: 'Build and Pack CommunityToolkit.Maui.Markup'
         inputs:
+          solution: '$(PathToCommunityToolkitCsproj)'
+          configuration: 'Release'
+          msbuildArgs: '/restore -t:pack -p:PackageVersion=$(NugetPackageVersion) -p:Version=$(NugetPackageVersion) -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg'
+      - task: PowerShell@2
+        displayName: 'Copy NuGet Packages to Staging Directory'
+        inputs:
+          targetType: 'inline'
           script: |
-            dotnet build $(PathToCommunityToolkitUnitTestCsproj) -c Release
-            dotnet test $(PathToCommunityToolkitUnitTestCsproj) -c Release
-      - task: CmdLine@2
-        displayName: Pack Community Toolkit NuGets
-        inputs:
-          script: 'dotnet pack -c Release $(PathToCommunityToolkitCsproj) -p:PackageVersion=$(NugetPackageVersion) --output $(Build.ArtifactStagingDirectory)/nuget'
+            $source = ".\src"
+            $filter = "nupkg"
+            Get-ChildItem -Path $source -Recurse | Where-Object { $_.Extension -match $filter } | Copy-Item -Destination "$(Build.ArtifactStagingDirectory)"
+          pwsh: true
       # Sign NuGet Packages
       - task: PowerShell@2
         displayName: Authenticode Sign Packages
@@ -101,14 +115,14 @@ jobs:
         env:
           SignClientUser: $(SignClientUser)
           SignClientSecret: $(SignClientSecret)
-          ArtifactDirectory: $(Build.ArtifactStagingDirectory)/nuget
+          ArtifactDirectory: $(Build.ArtifactStagingDirectory)
         condition: and(succeeded(), not(eq(variables['build.reason'], 'PullRequest')), not(eq(variables['SignClientSecret'], '')), not(eq(variables['SignClientUser'], '')))
       # publish the packages
       - task: PublishBuildArtifacts@1
         displayName: 'Publish Unsigned NuGets'
         inputs:
           artifactName: nuget
-          pathToPublish: '$(Build.ArtifactStagingDirectory)/nuget'
+          pathToPublish: '$(Build.ArtifactStagingDirectory)'
 
   - job: build_macos
     displayName: Build macOS Library
@@ -150,9 +164,7 @@ jobs:
       - task: CmdLine@2
         displayName: 'Run Unit Tests'
         inputs:
-          script: |
-            dotnet build $(PathToCommunityToolkitUnitTestCsproj) -c Release
-            dotnet test $(PathToCommunityToolkitUnitTestCsproj) -c Release
+          script: dotnet test $(PathToCommunityToolkitUnitTestCsproj) -c Release
       - task: CmdLine@2
         displayName: 'Pack CommunityToolkit NuGets'
         inputs:
