@@ -19,8 +19,13 @@ New language feature proposals should fully fill out this template. This should 
 * [x] Proposed
 * [ ] Prototype: Not Started
 * [ ] Implementation: Not Started
-* [ ] Documentation: Not Started
+  * [ ] iOS Support
+  * [ ] Android Support
+  * [ ] macOS Support
+  * [ ] Windows Support
+* [ ] Unit Tests: Not Started
 * [ ] Sample: Not Started
+* [ ] Documentation: Not Started
 
 ## Link to Discussion
 
@@ -40,6 +45,21 @@ New language feature proposals should fully fill out this template. This should 
 [design]: #detailed-design
 
 <!-- This is the bulk of the proposal. Explain the design in enough detail for somebody familiar with .NET MAUI to understand, and for somebody familiar with the Community Toolkit to implement, and include examples of how the feature is used. Please include syntax and desired semantics for the change, including linking to the relevant parts of the existing .NET MAUI Toolkit spec to describe the changes necessary to implement this feature. An initial proposal does not need to cover all cases, but it should have enough detail to enable a community member to bring this proposal to design if they so choose. -->
+
+## Usage Syntax
+[usage]: #usage-syntax
+
+<!-- Please provide an example of how an end-user will use this feature. -->
+
+<!-- Here is an example from Font<TFontElement>:
+
+### C# Usage
+
+```cs
+Content = new Label().Font("OpenSansRegular", 14, bold: true, italic: true);
+```
+
+-->
 
 ## Drawbacks
 [drawbacks]: #drawbacks
