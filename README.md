@@ -12,6 +12,20 @@ All features are contributed by you, our amazing .NET community, and maintained 
 
 And – the best part – the features you add to the .NET MAUI Toolkit may one day be included into the official .NET MAUI library! We leverage the Community Toolkits to debut new features and work closely with the .NET MAUI engineering team to nominate features for promotion.
 
+## Getting Started
+
+In order to use the .NET MAUI Community Toolkit you need to call the extension method in your `MauiProgram.cs` file as follows:
+
+```csharp
+public static MauiApp CreateMauiApp()
+{
+    var builder = MauiApp.CreateBuilder();
+    // Initialise the toolkit
+ 	builder.UseMauiApp<App>().UseMauiCommunityToolkitMarkup();
+    // the rest of your logic...
+}
+```
+
 ## Submitting A New Feature
 
 New features will follow the following steps:
