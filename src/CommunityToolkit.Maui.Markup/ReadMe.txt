@@ -22,6 +22,6 @@ public static MauiApp CreateMauiApp()
 
 For more information please visit:
 
-- Our documentation site: https://docs.microsoft.com/dotnet/communitytoolkit/maui/markup/markup.md
+- Our documentation site: https://docs.microsoft.com/dotnet/communitytoolkit/maui/markup/
 
 - Our GitHub repository: https://github.com/CommunityToolkit/Maui.Markup
