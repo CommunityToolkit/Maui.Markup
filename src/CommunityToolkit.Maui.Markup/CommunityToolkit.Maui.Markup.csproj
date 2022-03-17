@@ -36,6 +36,7 @@
 
 	<ItemGroup>
 	    <None Include="icon.png" Pack="true" PackagePath="" />
+		<None Include="ReadMe.txt" pack="true" PackagePath="." />
 	</ItemGroup>
 
 </Project>
