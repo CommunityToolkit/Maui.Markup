@@ -51,7 +51,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				{ typeof(ItemsLayout), na },
 				{ typeof(LinearItemsLayout), na },
 				{ typeof(LinearGradientBrush), na },
-				{ typeof(Menu), na },
+				{ typeof(MenuBar), na },
 				{ typeof(MultiTrigger), na },
 				{ typeof(NavigableElement), na },
 				{ typeof(OpenGLView), na },
@@ -152,7 +152,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 						failMessage.AppendLine("\tCandidate properties:");
 						foreach (var propertyName in propertyNames)
 						{
-							failMessage.Append("\t").AppendLine(propertyName);
+							failMessage.Append('\t').AppendLine(propertyName);
 						}
 					}
 				}
