@@ -22,9 +22,9 @@ public static class ViewInAbsoluteLayoutExtensions
 	/// <param name="view"></param>
 	/// <param name="flag"></param>
 	/// <returns></returns>
-	public static TView LayoutFlag<TView>(this TView view, AbsoluteLayoutFlags flag) where TView : View
+	public static TView LayoutFlags<TView>(this TView view, AbsoluteLayoutFlags flag) where TView : View
 	{
-		view.SetValue(AbsoluteLayout.LayoutFlagsProperty, flag);
+		AbsoluteLayout.SetLayoutFlags(view, flag);
 		return view;
 	}
 
@@ -43,22 +43,6 @@ public static class ViewInAbsoluteLayoutExtensions
 		return view;
 	}
 
-
-	/// <summary>
-	/// Set LayoutBounds
-	/// </summary>
-	/// <typeparam name="TView"></typeparam>
-	/// <typeparam name="TValue"></typeparam>
-	/// <param name="view"></param>
-	/// <param name="x"></param>
-	/// <param name="y"></param>
-	/// <returns></returns>
-	public static TView LayoutBounds<TView, TValue>(this TView view, TValue x, TValue y) where TView : View where TValue : Enum
-	{
-		Rect rect = new(x.ToDouble(), y.ToDouble(), AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
-		AbsoluteLayout.SetLayoutBounds(view, rect);
-		return view;
-	}
 
 	/// <summary>
 	/// Set LayoutBounds
@@ -109,6 +93,38 @@ public static class ViewInAbsoluteLayoutExtensions
 	/// <param name="view"></param>
 	/// <param name="x"></param>
 	/// <param name="y"></param>
+	/// <param name="size"></param>
+	/// <returns></returns>
+	public static TView LayoutBounds<TView>(this TView view, double x, double y, Size size) where TView : View
+	{
+		Rect rect = new(x, y, size.Width, size.Height);
+		AbsoluteLayout.SetLayoutBounds(view, rect);
+		return view;
+	}
+
+	/// <summary>
+	/// Set LayoutBounds
+	/// </summary>
+	/// <typeparam name="TView"></typeparam>
+	/// <param name="view"></param>
+	/// <param name="point"></param>
+	/// <param name="width"></param>
+	/// <param name="height"></param>
+	/// <returns></returns>
+	public static TView LayoutBounds<TView>(this TView view, Point point, double width, double height) where TView : View
+	{
+		Rect rect = new(point.X, point.Y, width, height);
+		AbsoluteLayout.SetLayoutBounds(view, rect);
+		return view;
+	}
+
+	/// <summary>
+	/// Set LayoutBounds
+	/// </summary>
+	/// <typeparam name="TView"></typeparam>
+	/// <param name="view"></param>
+	/// <param name="x"></param>
+	/// <param name="y"></param>
 	/// <param name="width"></param>
 	/// <param name="height"></param>
 	/// <returns></returns>
@@ -118,26 +134,5 @@ public static class ViewInAbsoluteLayoutExtensions
 		AbsoluteLayout.SetLayoutBounds(view, rect);
 		return view;
 	}
-
-
-	/// <summary> 
-	/// Set LayoutBounds 
-	/// </summary> 
-	/// <typeparam name="TView"></typeparam> 
-	/// <typeparam name="TValue"></typeparam> 
-	/// <param name="view"></param> 
-	/// <param name="x"></param> 
-	/// <param name="y"></param> 
-	/// <param name="width"></param> 
-	/// <param name="height"></param> 
-	/// <returns></returns> 
-	public static TView LayoutBounds<TView, TValue>(this TView view, TValue x, TValue y, TValue width, TValue height) where TView : View where TValue : Enum
-	{
-		Rect rect = new(x.ToDouble(), y.ToDouble(), width.ToDouble(), height.ToDouble());
-		AbsoluteLayout.SetLayoutBounds(view, rect);
-		return view;
-	}
-
-	static double ToDouble(this Enum enumValue) => Convert.ToDouble(enumValue, CultureInfo.InvariantCulture);
 
 }
