@@ -72,7 +72,7 @@ class ViewInAbsoluteLayoutExtensionsTest : BaseMarkupTestFixture<BoxView>
 	public void LayoutBoundsAllDouble() => TestPropertiesSet(
 		b =>
 		{
-			b?.LayoutBounds(100,100,100,100);
+			b?.LayoutBounds(100, 100, 100, 100);
 		},
 		(AbsoluteLayout.LayoutBoundsProperty, new Rect(100, 100, 100, 100)));
 }
