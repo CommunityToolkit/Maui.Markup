@@ -28,36 +28,6 @@ public static class ViewInAbsoluteLayoutExtensions
 		return view;
 	}
 
-	/// <summary>
-	/// Set LayoutBounds
-	/// </summary>
-	/// <typeparam name="TView"></typeparam>
-	/// <param name="view"></param>
-	/// <param name="x"></param>
-	/// <param name="y"></param>
-	/// <returns></returns>
-	public static TView LayoutBounds<TView>(this TView view, double x, double y) where TView : View
-	{
-		Rect rect = new(x, y, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
-		AbsoluteLayout.SetLayoutBounds(view, rect);
-		return view;
-	}
-
-
-	/// <summary>
-	/// Set LayoutBounds
-	/// </summary>
-	/// <typeparam name="TView"></typeparam>
-	/// <param name="view"></param>
-	/// <param name="point"></param>
-	/// <returns></returns>
-	public static TView LayoutBounds<TView>(this TView view, Point point) where TView : View
-	{
-		Rect rect = new(point.X, point.Y, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
-		AbsoluteLayout.SetLayoutBounds(view, rect);
-		return view;
-	}
-
 	/// <summary> 
 	/// Set LayoutBounds 
 	/// </summary> 
@@ -71,6 +41,33 @@ public static class ViewInAbsoluteLayoutExtensions
 		return view;
 	}
 
+	/// <summary>
+	/// Set LayoutBounds
+	/// </summary>
+	/// <typeparam name="TView"></typeparam>
+	/// <param name="view"></param>
+	/// <param name="x"></param>
+	/// <param name="y"></param>
+	/// <returns></returns>
+	public static TView LayoutBounds<TView>(this TView view, double x, double y) where TView : View
+	{
+		return view.LayoutBounds(new Rect(x, y, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize));
+	}
+
+
+	/// <summary>
+	/// Set LayoutBounds
+	/// </summary>
+	/// <typeparam name="TView"></typeparam>
+	/// <param name="view"></param>
+	/// <param name="point"></param>
+	/// <returns></returns>
+	public static TView LayoutBounds<TView>(this TView view, Point point) where TView : View
+	{
+		return view.LayoutBounds(new Rect(point.X, point.Y, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize));
+	}
+
+	
 	/// <summary> 
 	/// Set LayoutBounds
 	/// </summary> 
@@ -81,9 +78,7 @@ public static class ViewInAbsoluteLayoutExtensions
 	/// <returns></returns> 
 	public static TView LayoutBounds<TView>(this TView view, Point point, Size size) where TView : View
 	{
-		Rect rect = new(point, size);
-		AbsoluteLayout.SetLayoutBounds(view, rect);
-		return view;
+		return view.LayoutBounds(new Rect(point, size));
 	}
 
 	/// <summary>
@@ -97,9 +92,7 @@ public static class ViewInAbsoluteLayoutExtensions
 	/// <returns></returns>
 	public static TView LayoutBounds<TView>(this TView view, double x, double y, Size size) where TView : View
 	{
-		Rect rect = new(x, y, size.Width, size.Height);
-		AbsoluteLayout.SetLayoutBounds(view, rect);
-		return view;
+		return view.LayoutBounds(new Rect(x, y, size.Width, size.Height));
 	}
 
 	/// <summary>
@@ -113,9 +106,7 @@ public static class ViewInAbsoluteLayoutExtensions
 	/// <returns></returns>
 	public static TView LayoutBounds<TView>(this TView view, Point point, double width, double height) where TView : View
 	{
-		Rect rect = new(point.X, point.Y, width, height);
-		AbsoluteLayout.SetLayoutBounds(view, rect);
-		return view;
+		return view.LayoutBounds(new Rect(point.X, point.Y, width, height));
 	}
 
 	/// <summary>
@@ -130,9 +121,7 @@ public static class ViewInAbsoluteLayoutExtensions
 	/// <returns></returns>
 	public static TView LayoutBounds<TView>(this TView view, double x, double y, double width, double height) where TView : View
 	{
-		Rect rect = new(x, y, width, height);
-		AbsoluteLayout.SetLayoutBounds(view, rect);
-		return view;
+		return view.LayoutBounds(new Rect(x, y, width, height));
 	}
 
 }
