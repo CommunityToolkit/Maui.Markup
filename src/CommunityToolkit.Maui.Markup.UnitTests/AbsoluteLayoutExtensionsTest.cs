@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
-class ViewInAbsoluteLayoutExtensionsTest : BaseMarkupTestFixture<BoxView>
+class AbsoluteLayoutExtensionsTest : BaseMarkupTestFixture<BoxView>
 {
 	[Test]
 	public void LayoutFlags() => TestPropertiesSet(

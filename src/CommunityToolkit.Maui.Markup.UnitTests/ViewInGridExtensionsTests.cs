@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
-class ViewInGridExtensionsTests : BaseMarkupTestFixture<BoxView>
+class GridExtensionsTests : BaseMarkupTestFixture<BoxView>
 {
 	enum TestRow { First, Second }
 

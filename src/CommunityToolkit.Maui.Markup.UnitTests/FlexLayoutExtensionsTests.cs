@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
-class ViewInFlexLayoutExtensionsTests : BaseMarkupTestFixture<BoxView>
+class FlexLayoutExtensionsTests : BaseMarkupTestFixture<BoxView>
 {
 	[Test]
 	public void AlignSelf()
