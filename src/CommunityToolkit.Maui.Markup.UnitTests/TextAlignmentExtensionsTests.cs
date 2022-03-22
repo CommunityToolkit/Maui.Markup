@@ -54,8 +54,8 @@ class TextAlignmentExtensionsTests : BaseMarkupTestFixture<Picker>
 	[Test]
 	public void SupportDerivedFromBindable()
 	{
-		Assert.IsInstanceOf<DerivedFromLabel>(
-			new DerivedFromLabel()
+		Assert.IsInstanceOf<DerivedFromEditor>(
+			new DerivedFromEditor()
 			.TextStart()
 			.TextCenterHorizontal()
 			.TextEnd()
@@ -68,5 +68,5 @@ class TextAlignmentExtensionsTests : BaseMarkupTestFixture<Picker>
 			.Italic());
 	}
 
-	class DerivedFromLabel : Picker { }
+	class DerivedFromEditor : Editor { }
 }
