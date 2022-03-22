@@ -1,6 +1,5 @@
 ﻿using Microsoft.Maui;
 using Microsoft.Maui.Controls;
-using TextAlignmentElement = Microsoft.Maui.Controls.Label; // TODO: Get rid of this after we have default interface implementation in Forms for ITextAlignmentElement
 
 
 namespace CommunityToolkit.Maui.Markup
