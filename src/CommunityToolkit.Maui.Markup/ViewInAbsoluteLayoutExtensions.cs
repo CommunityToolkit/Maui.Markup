@@ -16,7 +16,7 @@ namespace CommunityToolkit.Maui.Markup;
 public static class ViewInAbsoluteLayoutExtensions
 {
 	/// <summary>
-	/// Set LayoutFlags
+	/// Set an <see cref="AbsoluteLayoutFlags"/> that indicates whether the layout bounds position and size values for a child are proportional to the size of the <see cref="AbsoluteLayout"/>.
 	/// </summary>
 	/// <typeparam name="TView"></typeparam>
 	/// <param name="view"></param>
@@ -29,7 +29,7 @@ public static class ViewInAbsoluteLayoutExtensions
 	}
 
 	/// <summary> 
-	/// Set LayoutBounds 
+	/// Set the position and size of a <see cref="View"/> in an <see cref="AbsoluteLayout"/>
 	/// </summary> 
 	/// <typeparam name="TView"></typeparam> 
 	/// <param name="view"></param> 
@@ -42,7 +42,7 @@ public static class ViewInAbsoluteLayoutExtensions
 	}
 
 	/// <summary>
-	/// Set LayoutBounds
+	/// Set the position and of a <see cref="View"/> in an <see cref="AbsoluteLayout"/>, the <see cref="View"/> will size itself
 	/// </summary>
 	/// <typeparam name="TView"></typeparam>
 	/// <param name="view"></param>
@@ -56,7 +56,7 @@ public static class ViewInAbsoluteLayoutExtensions
 
 
 	/// <summary>
-	/// Set LayoutBounds
+	/// Set the position and of a <see cref="View"/> in an <see cref="AbsoluteLayout"/>, the <see cref="View"/> will size itself
 	/// </summary>
 	/// <typeparam name="TView"></typeparam>
 	/// <param name="view"></param>
@@ -67,9 +67,9 @@ public static class ViewInAbsoluteLayoutExtensions
 		return view.LayoutBounds(new Rect(point.X, point.Y, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize));
 	}
 
-	
+
 	/// <summary> 
-	/// Set LayoutBounds
+	/// Set the position and size of a <see cref="View"/> in an <see cref="AbsoluteLayout"/>
 	/// </summary> 
 	/// <typeparam name="TView"></typeparam> 
 	/// <param name="view"></param> 
@@ -82,7 +82,7 @@ public static class ViewInAbsoluteLayoutExtensions
 	}
 
 	/// <summary>
-	/// Set LayoutBounds
+	/// Set the position and size of a <see cref="View"/> in an <see cref="AbsoluteLayout"/>
 	/// </summary>
 	/// <typeparam name="TView"></typeparam>
 	/// <param name="view"></param>
@@ -96,7 +96,7 @@ public static class ViewInAbsoluteLayoutExtensions
 	}
 
 	/// <summary>
-	/// Set LayoutBounds
+	/// Set the position and size of a <see cref="View"/> in an <see cref="AbsoluteLayout"/>
 	/// </summary>
 	/// <typeparam name="TView"></typeparam>
 	/// <param name="view"></param>
@@ -110,7 +110,7 @@ public static class ViewInAbsoluteLayoutExtensions
 	}
 
 	/// <summary>
-	/// Set LayoutBounds
+	/// Set the position and size of a <see cref="View"/> in an <see cref="AbsoluteLayout"/>
 	/// </summary>
 	/// <typeparam name="TView"></typeparam>
 	/// <param name="view"></param>
