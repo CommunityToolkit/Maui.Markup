@@ -9,19 +9,6 @@ namespace CommunityToolkit.Maui.Markup.UnitTests;
 class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 {
 	[Test]
-	public void DynamicResource()
-	{
-		var label = new Label { Resources = new ResourceDictionary { { "TextKey", "TextValue" } } };
-		Assert.That(label.Text, Is.EqualTo(Label.TextProperty.DefaultValue));
-
-		label.DynamicResource(Label.TextProperty, "TextKey");
-		Assert.That(label.Text, Is.EqualTo("TextValue"));
-	}
-
-	[Test]
-	public void DynamicResources() => AssertDynamicResources();
-
-	[Test]
 	public void RemoveDynamicResources()
 	{
 		var label = AssertDynamicResources();
