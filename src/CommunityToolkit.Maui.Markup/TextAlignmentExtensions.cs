@@ -11,7 +11,7 @@ namespace CommunityToolkit.Maui.Markup
 	public static class TextAlignmentExtensions
 	{
 		/// <summary>
-		/// VerticalTextAlignment = TextAlignment.Start
+		/// HorizontalTextAlignment = TextAlignment.Start
 		/// </summary>
 		/// <typeparam name="TBindable"></typeparam>
 		/// <param name="bindable"></param>
@@ -23,7 +23,7 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// VerticalTextAlignment = TextAlignment.Center
+		/// HorizontalTextAlignment = TextAlignment.Center
 		/// </summary>
 		/// <typeparam name="TBindable"></typeparam>
 		/// <param name="bindable"></param>
@@ -35,7 +35,7 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// VerticalTextAlignment = TextAlignment.End
+		/// HorizontalTextAlignment = TextAlignment.End
 		/// </summary>
 		/// <typeparam name="TBindable"></typeparam>
 		/// <param name="bindable"></param>
@@ -83,7 +83,7 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// VerticalTextAlignment = TextAlignment.Center + HorizontalTextAlignment = TextAlignment.Center
+		/// VerticalTextAlignment = HorizontalTextAlignment = TextAlignment.Center
 		/// </summary>
 		/// <typeparam name="TBindable"></typeparam>
 		/// <param name="bindable"></param>
