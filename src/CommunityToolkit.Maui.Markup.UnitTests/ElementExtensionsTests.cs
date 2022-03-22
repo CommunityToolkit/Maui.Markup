@@ -1,29 +1,13 @@
-﻿using System;
-using CommunityToolkit.Maui.Markup.UnitTests.Base;
-using Microsoft.Maui;
+﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using NUnit.Framework;
-using FontElement = Microsoft.Maui.Controls.Label; // TODO: Get rid of this after we have default interface implementation in Forms for IFontElement
 
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
 class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 {
-	[Test]
-	public void DynamicResource()
-	{
-		var label = new Label { Resources = new ResourceDictionary { { "TextKey", "TextValue" } } };
-		Assert.That(label.Text, Is.EqualTo(Label.TextProperty.DefaultValue));
-
-		label.DynamicResource(Label.TextProperty, "TextKey");
-		Assert.That(label.Text, Is.EqualTo("TextValue"));
-	}
-
-	[Test]
-	public void DynamicResources() => AssertDynamicResources();
-
 	[Test]
 	public void RemoveDynamicResources()
 	{
@@ -35,22 +19,6 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 
 		Assert.That(label.Text, Is.EqualTo("TextValue"));
 		Assert.That(label.TextColor, Is.EqualTo(Colors.Green));
-	}
-
-	Label AssertDynamicResources()
-	{
-		var label = new Label { Resources = new ResourceDictionary { { "TextKey", "TextValue" }, { "ColorKey", Colors.Green } } };
-
-		Assert.That(label.Text, Is.EqualTo(Label.TextProperty.DefaultValue));
-		Assert.That(label.TextColor, Is.EqualTo(Label.TextColorProperty.DefaultValue));
-
-		label.DynamicResources((Label.TextProperty, "TextKey"),
-							   (Label.TextColorProperty, "ColorKey"));
-
-		Assert.That(label.Text, Is.EqualTo("TextValue"));
-		Assert.That(label.TextColor, Is.EqualTo(Colors.Green));
-
-		return label;
 	}
 
 	[Test]
@@ -126,6 +94,22 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 			.Bold()
 			.Italic()
 			.Font("AFontName", 8, true, true));
+	}
+
+	static Label AssertDynamicResources()
+	{
+		var label = new Label { Resources = new ResourceDictionary { { "TextKey", "TextValue" }, { "ColorKey", Colors.Green } } };
+
+		Assert.That(label.Text, Is.EqualTo(Label.TextProperty.DefaultValue));
+		Assert.That(label.TextColor, Is.EqualTo(Label.TextColorProperty.DefaultValue));
+
+		label.DynamicResources((Label.TextProperty, "TextKey"),
+							   (Label.TextColorProperty, "ColorKey"));
+
+		Assert.That(label.Text, Is.EqualTo("TextValue"));
+		Assert.That(label.TextColor, Is.EqualTo(Colors.Green));
+
+		return label;
 	}
 
 	class DerivedFromLabel : Label

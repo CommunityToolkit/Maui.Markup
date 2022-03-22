@@ -25,17 +25,17 @@ abstract class BaseMarkupTestFixture<TBindable> : BaseMarkupTestFixture where TB
 	}
 
 	protected void TestPropertiesSet<TPropertyValue>(
-		Action<TBindable?> modify,
+		Action<TBindable> modify,
 		params (BindableProperty property, TPropertyValue beforeValue, TPropertyValue expectedValue)[] propertyChanges)
 		=> TestPropertiesSet(Bindable, modify, propertyChanges);
 
 	protected void TestPropertiesSet(
-		Action<TBindable?> modify,
+		Action<TBindable> modify,
 		params (BindableProperty property, object beforeValue, object expectedValue)[] propertyChanges)
 		=> TestPropertiesSet(Bindable, modify, propertyChanges);
 
 	protected void TestPropertiesSet(
-		Action<TBindable?> modify,
+		Action<TBindable> modify,
 		params (BindableProperty property, object expectedValue)[] propertyChanges)
 		=> TestPropertiesSet(Bindable, modify, propertyChanges);
 }

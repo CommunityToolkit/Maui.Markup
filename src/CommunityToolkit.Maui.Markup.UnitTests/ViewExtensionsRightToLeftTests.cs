@@ -10,11 +10,11 @@ class ViewExtensionsRightToLeftTests : BaseMarkupTestFixture<BoxView>
 {
 	[Test]
 	public void Left()
-		=> TestPropertiesSet(v => v?.Left(), (View.HorizontalOptionsProperty, LayoutOptions.Start, LayoutOptions.End));
+		=> TestPropertiesSet(v => v.Left(), (View.HorizontalOptionsProperty, LayoutOptions.Start, LayoutOptions.End));
 
 	[Test]
 	public void Right()
-		=> TestPropertiesSet(v => v?.Right(), (View.HorizontalOptionsProperty, LayoutOptions.End, LayoutOptions.Start));
+		=> TestPropertiesSet(v => v.Right(), (View.HorizontalOptionsProperty, LayoutOptions.End, LayoutOptions.Start));
 
 	[Test]
 	public void SupportDerivedFromView()

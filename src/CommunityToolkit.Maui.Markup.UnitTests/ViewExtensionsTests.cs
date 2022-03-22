@@ -10,65 +10,65 @@ class ViewExtensionsTests : BaseMarkupTestFixture<BoxView>
 {
 	[Test]
 	public void Start()
-		=> TestPropertiesSet(v => v?.Start(), (View.HorizontalOptionsProperty, LayoutOptions.End, LayoutOptions.Start));
+		=> TestPropertiesSet(v => v.Start(), (View.HorizontalOptionsProperty, LayoutOptions.End, LayoutOptions.Start));
 
 	[Test]
 	public void CenterHorizontal()
-		=> TestPropertiesSet(v => v?.CenterHorizontal(), (View.HorizontalOptionsProperty, LayoutOptions.End, LayoutOptions.Center));
+		=> TestPropertiesSet(v => v.CenterHorizontal(), (View.HorizontalOptionsProperty, LayoutOptions.End, LayoutOptions.Center));
 
 	[Test]
 	public void FillHorizontal()
-		=> TestPropertiesSet(v => v?.FillHorizontal(), (View.HorizontalOptionsProperty, LayoutOptions.End, LayoutOptions.Fill));
+		=> TestPropertiesSet(v => v.FillHorizontal(), (View.HorizontalOptionsProperty, LayoutOptions.End, LayoutOptions.Fill));
 
 	[Test]
 	public void End()
-		=> TestPropertiesSet(v => v?.End(), (View.HorizontalOptionsProperty, LayoutOptions.Start, LayoutOptions.End));
+		=> TestPropertiesSet(v => v.End(), (View.HorizontalOptionsProperty, LayoutOptions.Start, LayoutOptions.End));
 
 	[Test]
 	public void Top()
-		=> TestPropertiesSet(v => v?.Top(), (View.VerticalOptionsProperty, LayoutOptions.End, LayoutOptions.Start));
+		=> TestPropertiesSet(v => v.Top(), (View.VerticalOptionsProperty, LayoutOptions.End, LayoutOptions.Start));
 
 	[Test]
 	public void Bottom()
-		=> TestPropertiesSet(v => v?.Bottom(), (View.VerticalOptionsProperty, LayoutOptions.Start, LayoutOptions.End));
+		=> TestPropertiesSet(v => v.Bottom(), (View.VerticalOptionsProperty, LayoutOptions.Start, LayoutOptions.End));
 
 	[Test]
 	public void CenterVertical()
-		=> TestPropertiesSet(v => v?.CenterVertical(), (View.VerticalOptionsProperty, LayoutOptions.End, LayoutOptions.Center));
+		=> TestPropertiesSet(v => v.CenterVertical(), (View.VerticalOptionsProperty, LayoutOptions.End, LayoutOptions.Center));
 
 	[Test]
 	public void FillVertical()
-		=> TestPropertiesSet(v => v?.FillVertical(), (View.VerticalOptionsProperty, LayoutOptions.End, LayoutOptions.Fill));
+		=> TestPropertiesSet(v => v.FillVertical(), (View.VerticalOptionsProperty, LayoutOptions.End, LayoutOptions.Fill));
 
 	[Test]
 	public void Center()
 		=> TestPropertiesSet(
-				v => v?.Center(),
+				v => v.Center(),
 				(View.HorizontalOptionsProperty, LayoutOptions.End, LayoutOptions.Center),
 				(View.VerticalOptionsProperty, LayoutOptions.End, LayoutOptions.Center));
 
 	[Test]
 	public void Fill()
 		=> TestPropertiesSet(
-				v => v?.Fill(),
+				v => v.Fill(),
 				(View.HorizontalOptionsProperty, LayoutOptions.End, LayoutOptions.Fill),
 				(View.VerticalOptionsProperty, LayoutOptions.End, LayoutOptions.Fill));
 
 	[Test]
 	public void MarginThickness()
-		=> TestPropertiesSet(v => v?.Margin(new Thickness(1)), (View.MarginProperty, new Thickness(0), new Thickness(1)));
+		=> TestPropertiesSet(v => v.Margin(new Thickness(1)), (View.MarginProperty, new Thickness(0), new Thickness(1)));
 
 	[Test]
 	public void MarginUniform()
-		=> TestPropertiesSet(v => v?.Margin(1), (View.MarginProperty, new Thickness(0), new Thickness(1)));
+		=> TestPropertiesSet(v => v.Margin(1), (View.MarginProperty, new Thickness(0), new Thickness(1)));
 
 	[Test]
 	public void MarginHorizontalVertical()
-		=> TestPropertiesSet(v => v?.Margin(1, 2), (View.MarginProperty, new Thickness(0), new Thickness(1, 2)));
+		=> TestPropertiesSet(v => v.Margin(1, 2), (View.MarginProperty, new Thickness(0), new Thickness(1, 2)));
 
 	[Test]
 	public void Margins()
-		=> TestPropertiesSet(v => v?.Margins(left: 1, top: 2, right: 3, bottom: 4), (View.MarginProperty, new Thickness(0), new Thickness(1, 2, 3, 4)));
+		=> TestPropertiesSet(v => v.Margins(left: 1, top: 2, right: 3, bottom: 4), (View.MarginProperty, new Thickness(0), new Thickness(1, 2, 3, 4)));
 
 	[Test]
 	public void SupportDerivedFromView()
