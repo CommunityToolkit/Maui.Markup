@@ -6,20 +6,20 @@ using NUnit.Framework;
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
-class BindableLayoutExtensionsTests : BaseMarkupTestFixture<StackLayout>
+class BindableLayoutExtensionsTests : BaseMarkupTestFixture<VerticalStackLayout>
 {
 	[Test]
 	public void EmptyView()
 	{
 		var view = new BoxView();
-		TestPropertiesSet(l => l?.EmptyView(view), (BindableLayout.EmptyViewProperty, view));
+		TestPropertiesSet(l => l.EmptyView(view), (BindableLayout.EmptyViewProperty, view));
 	}
 
 	[Test]
 	public void EmptyViewTemplate()
 	{
 		var template = new DataTemplate(() => new BoxView());
-		TestPropertiesSet(l => l?.EmptyViewTemplate(template), (BindableLayout.EmptyViewTemplateProperty, template));
+		TestPropertiesSet(l => l.EmptyViewTemplate(template), (BindableLayout.EmptyViewTemplateProperty, template));
 	}
 
 	[Test]
@@ -35,14 +35,14 @@ class BindableLayoutExtensionsTests : BaseMarkupTestFixture<StackLayout>
 	public void ItemsSource()
 	{
 		var source = Array.Empty<string>();
-		TestPropertiesSet(l => l?.ItemsSource(source), (BindableLayout.ItemsSourceProperty, source));
+		TestPropertiesSet(l => l.ItemsSource(source), (BindableLayout.ItemsSourceProperty, source));
 	}
 
 	[Test]
 	public void ItemTemplate()
 	{
 		var template = new DataTemplate(() => new BoxView());
-		TestPropertiesSet(l => l?.ItemTemplate(template), (BindableLayout.ItemTemplateProperty, template));
+		TestPropertiesSet(l => l.ItemTemplate(template), (BindableLayout.ItemTemplateProperty, template));
 	}
 
 	[Test]
@@ -58,7 +58,7 @@ class BindableLayoutExtensionsTests : BaseMarkupTestFixture<StackLayout>
 	public void ItemTemplateSelector()
 	{
 		var selector = new Selector();
-		TestPropertiesSet(l => l?.ItemTemplateSelector(selector), (BindableLayout.ItemTemplateSelectorProperty, selector));
+		TestPropertiesSet(l => l.ItemTemplateSelector(selector), (BindableLayout.ItemTemplateSelectorProperty, selector));
 	}
 
 	class Selector : DataTemplateSelector
@@ -77,7 +77,7 @@ class BindableLayoutExtensionsTests : BaseMarkupTestFixture<StackLayout>
 			.ItemTemplateSelector(new Selector());
 	}
 
-	class DerivedFromView : StackLayout
+	class DerivedFromView : VerticalStackLayout
 	{
 	}
 }

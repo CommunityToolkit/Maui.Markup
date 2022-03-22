@@ -9,7 +9,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture(typeof(Label))] // Derived from View
 [TestFixture(typeof(Span))] // Derived from GestureElement
-class ElementGesturesExtensionsTests<TGestureElement> : ElementGesturesBaseTestFixture where TGestureElement : Element, IGestureRecognizers, new()
+class ElementGesturesExtensionsTests<TGestureElement> : ElementGesturesBaseTestFixture where TGestureElement : IGestureRecognizers, new()
 {
 	[Test]
 	public void BindClickGestureDefaults()

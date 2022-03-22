@@ -1,8 +1,6 @@
 ﻿using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Internals;
-using FontElement = Microsoft.Maui.Controls.Label; // TODO: Get rid of this after we have default interface implementation in Forms for IFontElement
-using PaddingElement = Microsoft.Maui.Controls.Label; // TODO: Get rid of this after we have default interface implementation in Forms for IPaddingElement
 
 namespace CommunityToolkit.Maui.Markup;
 
@@ -60,50 +58,50 @@ public static class ElementExtensions
 	/// <summary>
 	/// Set Dynamic Resource
 	/// </summary>
-	/// <typeparam name="TElement"></typeparam>
-	/// <param name="element"></param>
+	/// <typeparam name="TDynamicResourceHandler"></typeparam>
+	/// <param name="dynamicResourceHandler"></param>
 	/// <param name="property"></param>
 	/// <param name="key"></param>
 	/// <returns>Layout with added Dynamic Resource</returns>
-	public static TElement DynamicResource<TElement>(this TElement element, BindableProperty property, string key) where TElement : Element
+	public static TDynamicResourceHandler DynamicResource<TDynamicResourceHandler>(this TDynamicResourceHandler dynamicResourceHandler, BindableProperty property, string key) where TDynamicResourceHandler : IDynamicResourceHandler
 	{
-		element.SetDynamicResource(property, key);
+		dynamicResourceHandler.SetDynamicResource(property, key);
 
-		return element;
+		return dynamicResourceHandler;
 	}
 
 	/// <summary>
 	/// Set Dynamic Resource
 	/// </summary>
-	/// <typeparam name="TElement"></typeparam>
-	/// <param name="element"></param>
+	/// <typeparam name="TDynamicResourceHandler"></typeparam>
+	/// <param name="dynamicResourceHandler"></param>
 	/// <param name="resources"></param>
 	/// <returns>Layout with added Dynamic Resource</returns>
-	public static TElement DynamicResources<TElement>(this TElement element, params (BindableProperty property, string key)[] resources) where TElement : Element
+	public static TDynamicResourceHandler DynamicResources<TDynamicResourceHandler>(this TDynamicResourceHandler dynamicResourceHandler, params (BindableProperty property, string key)[] resources) where TDynamicResourceHandler : IDynamicResourceHandler
 	{
-		foreach (var resource in resources)
+		foreach (var (property, key) in resources)
 		{
-			element.SetDynamicResource(resource.property, resource.key);
+			dynamicResourceHandler.DynamicResource(property, key);
 		}
 
-		return element;
+		return dynamicResourceHandler;
 	}
 
 	/// <summary>
 	/// Remove Dynamic Resource
 	/// </summary>
-	/// <typeparam name="TElement"></typeparam>
-	/// <param name="element"></param>
+	/// <typeparam name="TBindable"></typeparam>
+	/// <param name="bindable"></param>
 	/// <param name="properties"></param>
 	/// <returns>Layout without Dynamic Resource</returns>
-	public static TElement RemoveDynamicResources<TElement>(this TElement element, params BindableProperty[] properties) where TElement : Element
+	public static TBindable RemoveDynamicResources<TBindable>(this TBindable bindable, params BindableProperty[] properties) where TBindable : BindableObject
 	{
 		foreach (var property in properties)
 		{
-			element.RemoveDynamicResource(property);
+			bindable.RemoveDynamicResource(property);
 		}
 
-		return element;
+		return bindable;
 	}
 
 	/// <summary>
@@ -130,7 +128,7 @@ public static class ElementExtensions
 	/// <param name="fontElement"></param>
 	/// <param name="size"></param>
 	/// <returns></returns>
-	public static TFontElement FontSize<TFontElement>(this TFontElement fontElement, double size) where TFontElement : Element, IFontElement
+	public static TFontElement FontSize<TFontElement>(this TFontElement fontElement, double size) where TFontElement : BindableObject, IFontElement
 	{
 		fontElement.SetValue(FontElement.FontSizeProperty, size);
 		return fontElement;
@@ -142,7 +140,7 @@ public static class ElementExtensions
 	/// <typeparam name="TFontElement"></typeparam>
 	/// <param name="fontElement"></param>
 	/// <returns>Font element with added Bold</returns>
-	public static TFontElement Bold<TFontElement>(this TFontElement fontElement) where TFontElement : Element, IFontElement
+	public static TFontElement Bold<TFontElement>(this TFontElement fontElement) where TFontElement : BindableObject, IFontElement
 	{
 		fontElement.SetValue(FontElement.FontAttributesProperty, FontAttributes.Bold);
 		return fontElement;
@@ -154,7 +152,7 @@ public static class ElementExtensions
 	/// <typeparam name="TFontElement"></typeparam>
 	/// <param name="fontElement"></param>
 	/// <returns>Font element with added Italic</returns>
-	public static TFontElement Italic<TFontElement>(this TFontElement fontElement) where TFontElement : Element, IFontElement
+	public static TFontElement Italic<TFontElement>(this TFontElement fontElement) where TFontElement : BindableObject, IFontElement
 	{
 		fontElement.SetValue(FontElement.FontAttributesProperty, FontAttributes.Italic);
 		return fontElement;
@@ -175,7 +173,7 @@ public static class ElementExtensions
 		string? family = null,
 		double? size = null,
 		bool? bold = null,
-		bool? italic = null) where TFontElement : Element, IFontElement
+		bool? italic = null) where TFontElement : BindableObject, IFontElement
 	{
 		if (family != null)
 		{
@@ -191,12 +189,12 @@ public static class ElementExtensions
 		{
 			var attributes = FontAttributes.None;
 
-			if (bold == true)
+			if (bold is true)
 			{
 				attributes |= FontAttributes.Bold;
 			}
 
-			if (italic == true)
+			if (italic is true)
 			{
 				attributes |= FontAttributes.Italic;
 			}
