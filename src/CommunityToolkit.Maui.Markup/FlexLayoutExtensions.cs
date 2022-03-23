@@ -42,7 +42,7 @@ public static class FlexLayoutExtensions
 	/// <param name="length"></param>
 	/// <param name="isRelative"></param>
 	/// <returns></returns>
-	public static TBindable Basis<TBindable>(this TBindable bindable, float length, bool isRelative = false) where TBindable : BindableObject
+	public static TBindable Basis<TBindable>(this TBindable bindable, float length, bool isRelative) where TBindable : BindableObject
 	{
 		return bindable.Basis(new FlexBasis(length, isRelative));
 	}
