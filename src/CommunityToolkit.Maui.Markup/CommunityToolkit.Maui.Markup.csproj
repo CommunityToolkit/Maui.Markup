@@ -4,7 +4,7 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<UseMaui>true</UseMaui>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-    </PropertyGroup>
+	</PropertyGroup>
 
 	<PropertyGroup>
 		<GitInfoReportImportance>high</GitInfoReportImportance>
@@ -35,8 +35,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	    <None Include="icon.png" Pack="true" PackagePath="" />
+		<None Include="icon.png" Pack="true" PackagePath="" />
 		<None Include="ReadMe.txt" pack="true" PackagePath="." />
 	</ItemGroup>
-
 </Project>
