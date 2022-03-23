@@ -35,6 +35,19 @@ public static class FlexLayoutExtensions
 	}
 
 	/// <summary>
+	/// Set Basis
+	/// </summary>
+	/// <typeparam name="TBindable"></typeparam>
+	/// <param name="bindable"></param>
+	/// <param name="length"></param>
+	/// <param name="isRelative"></param>
+	/// <returns></returns>
+	public static TBindable Basis<TBindable>(this TBindable bindable, float length, bool isRelative = false) where TBindable : BindableObject
+	{
+		return bindable.Basis(new FlexBasis(length, isRelative));
+	}
+
+	/// <summary>
 	/// Set Grow
 	/// </summary>
 	/// <typeparam name="TBindable"></typeparam>
