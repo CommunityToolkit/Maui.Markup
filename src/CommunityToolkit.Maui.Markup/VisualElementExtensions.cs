@@ -113,4 +113,20 @@ public static class VisualElementExtensions
 		view.Style = style;
 		return view;
 	}
+
+	/// <summary>
+	/// Adds the supplied <paramref name="behaviors"/> to the Behaviors collection for this <see cref="VisualElement"/>.
+	/// </summary>
+	/// <typeparam name="TElement">The type of element.</typeparam>
+	/// <param name="element">This element to add the <paramref name="behaviors"/> to.</param>
+	/// <param name="behaviors">The <see cref="Behavior"/>s to add.</param>
+	/// <returns>The supplied <paramref name="element"/> with the supplied <paramref name="behaviors"/> added.</returns>
+	public static TElement Behaviors<TElement>(this TElement element, params Behavior[] behaviors) where TElement : VisualElement
+	{
+		foreach (var behavior in behaviors)
+		{
+			element.Behaviors.Add(behavior);
+		}
+		return element;
+	}
 }
