@@ -19,13 +19,13 @@ class NewsViewModel : BaseViewModel
 {
 	readonly WeakEventManager<string> pullToRefreshEventManager = new();
 	readonly HackerNewsAPIService hackerNewsAPIService;
-
+	readonly ISettingsService settingsService;
 	bool isListRefreshing;
 
-	public NewsViewModel(HackerNewsAPIService hackerNewsAPIService)
+	public NewsViewModel(HackerNewsAPIService hackerNewsAPIService, ISettingsService settingsService)
 	{
 		this.hackerNewsAPIService = hackerNewsAPIService;
-
+		this.settingsService = settingsService;
 		RefreshCommand = new AsyncCommand(ExecuteRefreshCommand);
 
 		//Ensure Observable Collection is thread-safe https://codetraveler.io/2019/09/11/using-observablecollection-in-a-multi-threaded-xamarin-forms-application/
@@ -78,7 +78,7 @@ class NewsViewModel : BaseViewModel
 
 		try
 		{
-			await foreach (var story in GetTopStories(50).ConfigureAwait(false))
+			await foreach (var story in GetTopStories(settingsService.NumberOfTopStoriesToFetch).ConfigureAwait(false))
 			{
 				if (story is not null && !TopStoryCollection.Any(x => x.Title.Equals(story.Title)))
 				{

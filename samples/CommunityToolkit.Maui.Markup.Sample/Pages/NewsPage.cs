@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using System.Threading.Tasks;
+using AsyncAwaitBestPractices.MVVM;
 using CommunityToolkit.Maui.Markup.Sample.Constants;
 using CommunityToolkit.Maui.Markup.Sample.Models;
 using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
@@ -14,9 +16,17 @@ namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
 class NewsPage : BaseContentPage<NewsViewModel>
 {
-	public NewsPage(NewsViewModel newsViewModel) : base(newsViewModel, "Top Stories")
+	readonly SettingsPage settingsPage;
+
+	public NewsPage(NewsViewModel newsViewModel, SettingsPage settingsPage) : base(newsViewModel, "Top Stories")
 	{
 		ViewModel.PullToRefreshFailed += HandlePullToRefreshFailed;
+
+		ToolbarItems.Add(new ToolbarItem
+		{
+			Command = new AsyncCommand(() => ShowSettings()),
+			Text = "Settings"
+		});
 
 		Content = new RefreshView
 		{
@@ -33,6 +43,7 @@ class NewsPage : BaseContentPage<NewsViewModel>
 
 		}.Bind(RefreshView.IsRefreshingProperty, nameof(NewsViewModel.IsListRefreshing))
 		 .Bind(RefreshView.CommandProperty, nameof(NewsViewModel.RefreshCommand));
+		this.settingsPage = settingsPage;
 	}
 
 	protected override void OnAppearing()
@@ -45,6 +56,8 @@ class NewsPage : BaseContentPage<NewsViewModel>
 		{
 			refreshView.IsRefreshing = true;
 		}
+
+		ViewModel.RefreshCommand.Execute(null);
 
 		static bool IsNullOrEmpty(in IEnumerable? enumerable) => !enumerable?.GetEnumerator().MoveNext() ?? true;
 	}
@@ -77,4 +90,9 @@ class NewsPage : BaseContentPage<NewsViewModel>
 
 	void HandlePullToRefreshFailed(object? sender, string message) =>
 		MainThread.BeginInvokeOnMainThread(async () => await DisplayAlert("Refresh Failed", message, "OK"));
+
+	async Task ShowSettings()
+	{
+		await Navigation.PushAsync(settingsPage);
+	}
 }
