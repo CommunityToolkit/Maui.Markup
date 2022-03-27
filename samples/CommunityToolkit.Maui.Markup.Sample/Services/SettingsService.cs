@@ -1,6 +1,16 @@
-﻿namespace CommunityToolkit.Maui.Markup.Sample.Services;
+﻿using Microsoft.Maui.Essentials;
 
-public class SettingsService : ISettingsService
+namespace CommunityToolkit.Maui.Markup.Sample.Services;
+
+public class SettingsService
 {
-	public int NumberOfTopStoriesToFetch { get; set; } = 50;
+	readonly IPreferences preferences;
+
+	public SettingsService(IPreferences preferences) => this.preferences = preferences;
+
+	public int NumberOfTopStoriesToFetch
+	{
+		get => preferences.Get(nameof(NumberOfTopStoriesToFetch), 25, nameof(CommunityToolkit.Maui.Markup.Sample));
+		set => preferences.Set(nameof(NumberOfTopStoriesToFetch), value, nameof(CommunityToolkit.Maui.Markup.Sample));
+	}
 }

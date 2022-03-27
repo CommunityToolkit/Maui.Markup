@@ -2,13 +2,14 @@
 using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
-using AsyncAwaitBestPractices.MVVM;
 using CommunityToolkit.Maui.Markup.Sample.Constants;
 using CommunityToolkit.Maui.Markup.Sample.Models;
 using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels;
 using CommunityToolkit.Maui.Markup.Sample.Views.News;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Dispatching;
 using Microsoft.Maui.Essentials;
 using Microsoft.Maui.Graphics;
 
@@ -16,15 +17,24 @@ namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
 class NewsPage : BaseContentPage<NewsViewModel>
 {
+	readonly IBrowser browser;
+	readonly IDispatcher dispatcher;
 	readonly SettingsPage settingsPage;
 
-	public NewsPage(NewsViewModel newsViewModel, SettingsPage settingsPage) : base(newsViewModel, "Top Stories")
+	public NewsPage(IBrowser browser,
+					IDispatcher dispatcher,					
+					SettingsPage settingsPage,
+					NewsViewModel newsViewModel) : base(newsViewModel, "Top Stories")
 	{
-		ViewModel.PullToRefreshFailed += HandlePullToRefreshFailed;
+		this.browser = browser;
+		this.dispatcher = dispatcher;
+		this.settingsPage = settingsPage;
+
+		BindingContext.PullToRefreshFailed += HandlePullToRefreshFailed;
 
 		ToolbarItems.Add(new ToolbarItem
 		{
-			Command = new AsyncCommand(() => ShowSettings()),
+			Command = new AsyncRelayCommand(ShowSettings, true),
 			Text = "Settings"
 		});
 
@@ -34,7 +44,7 @@ class NewsPage : BaseContentPage<NewsViewModel>
 
 			Content = new CollectionView
 			{
-				BackgroundColor = Color.FromArgb("F6F6EF"),
+				BackgroundColor = Colors.Transparent,
 				SelectionMode = SelectionMode.Single,
 				ItemTemplate = new StoryDataTemplate(),
 
@@ -43,7 +53,6 @@ class NewsPage : BaseContentPage<NewsViewModel>
 
 		}.Bind(RefreshView.IsRefreshingProperty, nameof(NewsViewModel.IsListRefreshing))
 		 .Bind(RefreshView.CommandProperty, nameof(NewsViewModel.RefreshCommand));
-		this.settingsPage = settingsPage;
 	}
 
 	protected override void OnAppearing()
@@ -57,7 +66,7 @@ class NewsPage : BaseContentPage<NewsViewModel>
 			refreshView.IsRefreshing = true;
 		}
 
-		ViewModel.RefreshCommand.Execute(null);
+		BindingContext.RefreshCommand.Execute(null);
 
 		static bool IsNullOrEmpty(in IEnumerable? enumerable) => !enumerable?.GetEnumerator().MoveNext() ?? true;
 	}
@@ -79,7 +88,7 @@ class NewsPage : BaseContentPage<NewsViewModel>
 					PreferredToolbarColor = ColorConstants.BrowserNavigationBarBackgroundColor
 				};
 
-				await Browser.OpenAsync(storyModel.Url, browserOptions);
+				await browser.OpenAsync(storyModel.Url, browserOptions);
 			}
 			else
 			{
@@ -88,11 +97,8 @@ class NewsPage : BaseContentPage<NewsViewModel>
 		}
 	}
 
-	void HandlePullToRefreshFailed(object? sender, string message) =>
-		MainThread.BeginInvokeOnMainThread(async () => await DisplayAlert("Refresh Failed", message, "OK"));
+	async void HandlePullToRefreshFailed(object? sender, string message) =>
+		await dispatcher.DispatchAsync(() => DisplayAlert("Refresh Failed", message, "OK"));
 
-	async Task ShowSettings()
-	{
-		await Navigation.PushAsync(settingsPage);
-	}
+	Task ShowSettings() => dispatcher.DispatchAsync(() => Navigation.PushAsync(settingsPage));
 }

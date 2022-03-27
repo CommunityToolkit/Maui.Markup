@@ -3,33 +3,39 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using AsyncAwaitBestPractices;
-using AsyncAwaitBestPractices.MVVM;
 using CommunityToolkit.Maui.Markup.Sample.Models;
 using CommunityToolkit.Maui.Markup.Sample.Services;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels.Base;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls;
-using Microsoft.Maui.Essentials;
+using Microsoft.Maui.Dispatching;
 
 namespace CommunityToolkit.Maui.Markup.Sample.ViewModels;
 
-class NewsViewModel : BaseViewModel
+partial class NewsViewModel : BaseViewModel
 {
-	readonly WeakEventManager<string> pullToRefreshEventManager = new();
+	readonly IDispatcher dispatcher;
+	readonly SettingsService settingsService;
 	readonly HackerNewsAPIService hackerNewsAPIService;
-	readonly ISettingsService settingsService;
+	readonly WeakEventManager pullToRefreshEventManager = new();
+	readonly SemaphoreSlim insertIntoSortedCollectionSemaphore = new(1, 1);
+
+	[ObservableProperty]
 	bool isListRefreshing;
 
-	public NewsViewModel(HackerNewsAPIService hackerNewsAPIService, ISettingsService settingsService)
+	public NewsViewModel(IDispatcher dispatcher,
+							SettingsService settingsService,
+							HackerNewsAPIService hackerNewsAPIService)
 	{
-		this.hackerNewsAPIService = hackerNewsAPIService;
+		this.dispatcher = dispatcher;
 		this.settingsService = settingsService;
-		RefreshCommand = new AsyncCommand(ExecuteRefreshCommand);
+		this.hackerNewsAPIService = hackerNewsAPIService;
 
-		//Ensure Observable Collection is thread-safe https://codetraveler.io/2019/09/11/using-observablecollection-in-a-multi-threaded-xamarin-forms-application/
-		BindingBase.EnableCollectionSynchronization(TopStoryCollection, null, ObservableCollectionCallback);
+		RefreshCommand = new AsyncRelayCommand(ExecuteRefreshCommand, false);
 	}
 
 	public event EventHandler<string> PullToRefreshFailed
@@ -42,36 +48,6 @@ class NewsViewModel : BaseViewModel
 
 	public ICommand RefreshCommand { get; }
 
-	public bool IsListRefreshing
-	{
-		get => isListRefreshing;
-		set => SetProperty(ref isListRefreshing, value);
-	}
-
-	static void InsertIntoSortedCollection<T>(ObservableCollection<T> collection, Comparison<T> comparison, T modelToInsert)
-	{
-		if (collection.Count is 0)
-		{
-			collection.Add(modelToInsert);
-		}
-		else
-		{
-			int index = 0;
-			foreach (var model in collection)
-			{
-				if (comparison(model, modelToInsert) >= 0)
-				{
-					collection.Insert(index, modelToInsert);
-					return;
-				}
-
-				index++;
-			}
-
-			collection.Insert(index, modelToInsert);
-		}
-	}
-
 	async Task ExecuteRefreshCommand()
 	{
 		TopStoryCollection.Clear();
@@ -80,10 +56,7 @@ class NewsViewModel : BaseViewModel
 		{
 			await foreach (var story in GetTopStories(settingsService.NumberOfTopStoriesToFetch).ConfigureAwait(false))
 			{
-				if (story is not null && !TopStoryCollection.Any(x => x.Title.Equals(story.Title)))
-				{
-					InsertIntoSortedCollection(TopStoryCollection, (a, b) => b.Score.CompareTo(a.Score), story);
-				}
+				await InsertIntoSortedCollection((a, b) => b.Score.CompareTo(a.Score), story).ConfigureAwait(false);
 			}
 		}
 		catch (Exception e)
@@ -96,7 +69,7 @@ class NewsViewModel : BaseViewModel
 		}
 	}
 
-	async IAsyncEnumerable<StoryModel> GetTopStories(int? storyCount = int.MaxValue)
+	async IAsyncEnumerable<StoryModel> GetTopStories(int storyCount)
 	{
 		var topStoryIds = await hackerNewsAPIService.GetTopStoryIDs().ConfigureAwait(false);
 		var getTopStoryTaskList = topStoryIds.Select(hackerNewsAPIService.GetStory).ToList();
@@ -111,11 +84,38 @@ class NewsViewModel : BaseViewModel
 		}
 	}
 
-	//Ensure Observable Collection is thread-safe https://codetraveler.io/2019/09/11/using-observablecollection-in-a-multi-threaded-xamarin-forms-application/
-	void ObservableCollectionCallback(IEnumerable collection, object context, Action accessMethod, bool writeAccess)
+	async Task InsertIntoSortedCollection(Comparison<StoryModel> comparison, StoryModel modelToInsert)
 	{
-		MainThread.BeginInvokeOnMainThread(accessMethod);
+		await insertIntoSortedCollectionSemaphore.WaitAsync().ConfigureAwait(false);
+
+		try
+		{
+			if (TopStoryCollection.Count is 0)
+			{
+				await dispatcher.DispatchAsync(() => TopStoryCollection.Add(modelToInsert)).ConfigureAwait(false);
+			}
+			else if (!TopStoryCollection.Any(x => x.Title == modelToInsert.Title))
+			{
+				int index = 0;
+				foreach (var model in TopStoryCollection)
+				{
+					if (comparison(model, modelToInsert) >= 0)
+					{
+						await dispatcher.DispatchAsync(() => TopStoryCollection.Insert(index, modelToInsert)).ConfigureAwait(false);
+						return;
+					}
+
+					index++;
+				}
+
+				await dispatcher.DispatchAsync(() => TopStoryCollection.Insert(index, modelToInsert)).ConfigureAwait(false);
+			}
+		}
+		finally
+		{
+			insertIntoSortedCollectionSemaphore.Release();
+		}
 	}
 
-	void OnPullToRefreshFailed(string message) => pullToRefreshEventManager.RaiseEvent(this, message, nameof(PullToRefreshFailed));
+	void OnPullToRefreshFailed(string message) => pullToRefreshEventManager.HandleEvent(this, message, nameof(PullToRefreshFailed));
 }

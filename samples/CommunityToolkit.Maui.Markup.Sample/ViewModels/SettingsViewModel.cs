@@ -5,9 +5,9 @@ namespace CommunityToolkit.Maui.Markup.Sample.ViewModels;
 
 class SettingsViewModel : BaseViewModel
 {
-	readonly ISettingsService settingsService;
+	readonly SettingsService settingsService;
 
-	public SettingsViewModel(ISettingsService settingsService)
+	public SettingsViewModel(SettingsService settingsService)
 	{
 		this.settingsService = settingsService;
 	}
