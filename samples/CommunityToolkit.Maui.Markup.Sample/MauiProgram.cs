@@ -12,8 +12,10 @@ public class MauiProgram
 {
 	public static MauiApp Create()
 	{
-		var builder = MauiApp.CreateBuilder();
-		builder.UseMauiApp<App>().UseMauiCommunityToolkitMarkup();
+		var builder = MauiApp.CreateBuilder()
+								.UseMauiApp<App>()
+								.UseMauiCommunityToolkit()
+								.UseMauiCommunityToolkitMarkup();
 
 		// Services
 		builder.Services.AddSingleton<App>();
