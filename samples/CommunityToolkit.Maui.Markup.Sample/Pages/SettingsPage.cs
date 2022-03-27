@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui.Behaviors;
 using CommunityToolkit.Maui.Markup.Sample.Constants;
 using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
+using CommunityToolkit.Maui.Markup.Sample.Services;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
@@ -25,8 +26,8 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 					.LayoutBounds(0.75,0,0.5,40)
 					.Behaviors(new NumericValidationBehavior
 					{
-						MinimumValue = 1,
-						MaximumValue = 50,
+						MinimumValue = SettingsService.MinimumStoriesToFetch,
+						MaximumValue = SettingsService.MaximumStoriesToFetch,
 						Flags = ValidationFlags.ValidateOnValueChanged,
 						InvalidStyle = new Style<Entry>((Entry.TextColorProperty, Colors.Red)),
 						ValidStyle = new Style<Entry>((Entry.TextColorProperty, ColorConstants.PrimaryTextColor)),

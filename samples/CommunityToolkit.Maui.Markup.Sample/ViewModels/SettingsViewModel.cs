@@ -7,14 +7,24 @@ class SettingsViewModel : BaseViewModel
 {
 	readonly SettingsService settingsService;
 
+	int numberOfTopStoriesToFetch;
+
 	public SettingsViewModel(SettingsService settingsService)
 	{
 		this.settingsService = settingsService;
+		NumberOfTopStoriesToFetch = settingsService.NumberOfTopStoriesToFetch;
 	}
 
 	public int NumberOfTopStoriesToFetch
 	{
-		get => settingsService.NumberOfTopStoriesToFetch;
-		set => settingsService.NumberOfTopStoriesToFetch = value;
+		get => numberOfTopStoriesToFetch;
+		set
+		{
+			if (numberOfTopStoriesToFetch != value)
+			{
+				settingsService.NumberOfTopStoriesToFetch = numberOfTopStoriesToFetch = value;
+				OnPropertyChanged(nameof(NumberOfTopStoriesToFetch));
+			}
+		}
 	}
 }
