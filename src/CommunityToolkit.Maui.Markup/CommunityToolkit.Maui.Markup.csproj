@@ -23,7 +23,7 @@
 		<UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
 		<Title>CommunityToolkit.Maui.Markup</Title>
 		<Description>CommunityToolkit.Maui.Markup is a set of fluent helper methods and classes to simplify building declarative .NET MAUI user interfaces in C#</Description>
-    <PackageIcon>icon.png</PackageIcon>
+    <PackageIcon>nuget.png</PackageIcon>
 		<Product>$(AssemblyName) ($(TargetFramework))</Product>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
@@ -35,7 +35,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="icon.png" Pack="true" PackagePath="" />
+    <None Include="../../build/nuget.png" Pack="true" PackagePath=""/>
 		<None Include="ReadMe.txt" pack="true" PackagePath="." />
 	</ItemGroup>
 </Project>
