@@ -9,6 +9,7 @@
 	<PropertyGroup>
 		<GitInfoReportImportance>high</GitInfoReportImportance>
 		<PackageId>CommunityToolkit.Maui.Markup</PackageId>
+    <PackageIcon>icon.png</PackageIcon>
 		<Summary>Community-created toolkit with C# Markup classes and fluent helper methods</Summary>
 		<Authors>Microsoft</Authors>
 		<Owners>Microsoft</Owners>
@@ -23,6 +24,7 @@
 		<UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
 		<Title>CommunityToolkit.Maui.Markup</Title>
 		<Description>CommunityToolkit.Maui.Markup is a set of fluent helper methods and classes to simplify building declarative .NET MAUI user interfaces in C#</Description>
+    <PackageIcon>icon.png</PackageIcon>
 		<Product>$(AssemblyName) ($(TargetFramework))</Product>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
