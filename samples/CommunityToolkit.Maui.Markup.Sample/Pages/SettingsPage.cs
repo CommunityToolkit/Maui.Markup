@@ -37,18 +37,17 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 					})
 					.Bind(Entry.TextProperty, nameof(SettingsViewModel.NumberOfTopStoriesToFetch)),
 
-				new Label
-				{
-					Text = $"Top Stories To Fetch", TextColor = ColorConstants.PrimaryTextColor, HorizontalTextAlignment = TextAlignment.Center,
-					FontAttributes = FontAttributes.Italic, FontSize = 12
-				}
+				new Label { TextColor = ColorConstants.PrimaryTextColor }
 					.Bind<Label, int, int, string>(
 						Label.TextProperty,
 						binding1: new Binding { Source = SettingsService.MinimumStoriesToFetch },
 						binding2: new Binding { Source = SettingsService.MaximumStoriesToFetch },
-						convert: ((int minimum, int maximum) values) => string.Format(CultureInfo.CurrentUICulture, "The number must be between {0} and {1}.", values.minimum, values.maximum))
+						convert: ((int minimum, int maximum) values,
+						mode: BindingMode.OneTime)) => string.Format(CultureInfo.CurrentUICulture, "The number must be between {0} and {1}.", values.minimum, values.maximum))
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
-					.LayoutBounds(0,90,1,40),
+					.LayoutBounds(0,90,1,40)
+					.TextCenter()
+					.Font(size: 12, italic: true)
 			}
 		};
 	}
