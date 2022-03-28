@@ -1,8 +1,11 @@
-﻿using CommunityToolkit.Maui.Behaviors;
+﻿using System.Collections.Generic;
+using System.Globalization;
+using CommunityToolkit.Maui.Behaviors;
 using CommunityToolkit.Maui.Markup.Sample.Constants;
 using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
 using CommunityToolkit.Maui.Markup.Sample.Services;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels;
+using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
@@ -17,13 +20,13 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 		{
 			Children =
 			{
-				new Label { Text = "Top Stories To Fetch", TextColor = ColorConstants.PrimaryTextColor }
-					.LayoutFlags(AbsoluteLayoutFlags.PositionProportional | AbsoluteLayoutFlags.WidthProportional)
-					.LayoutBounds(0.25,0,0.5,40),
+				new Label { Text = "Top Stories To Fetch", TextColor = ColorConstants.PrimaryTextColor, HorizontalTextAlignment = TextAlignment.Center }
+					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
+					.LayoutBounds(0,0,1,40),
 
-				new Entry { Keyboard = Microsoft.Maui.Keyboard.Numeric, BackgroundColor = Colors.White }
-					.LayoutFlags(AbsoluteLayoutFlags.PositionProportional | AbsoluteLayoutFlags.WidthProportional)
-					.LayoutBounds(0.75,0,0.5,40)
+				new Entry { Keyboard = Keyboard.Numeric, BackgroundColor = Colors.White }
+					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
+					.LayoutBounds(0.5,45,0.8,40)
 					.Behaviors(new NumericValidationBehavior
 					{
 						MinimumValue = SettingsService.MinimumStoriesToFetch,
@@ -32,7 +35,20 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 						InvalidStyle = new Style<Entry>((Entry.TextColorProperty, Colors.Red)),
 						ValidStyle = new Style<Entry>((Entry.TextColorProperty, ColorConstants.PrimaryTextColor)),
 					})
-					.Bind(Entry.TextProperty, nameof(SettingsViewModel.NumberOfTopStoriesToFetch))
+					.Bind(Entry.TextProperty, nameof(SettingsViewModel.NumberOfTopStoriesToFetch)),
+
+				new Label
+				{
+					Text = $"Top Stories To Fetch", TextColor = ColorConstants.PrimaryTextColor, HorizontalTextAlignment = TextAlignment.Center,
+					FontAttributes = FontAttributes.Italic, FontSize = 12
+				}
+					.Bind<Label, int, int, string>(
+						Label.TextProperty,
+						binding1: new Binding { Source = SettingsService.MinimumStoriesToFetch },
+						binding2: new Binding { Source = SettingsService.MaximumStoriesToFetch },
+						convert: ((int minimum, int maximum) values) => string.Format(CultureInfo.CurrentUICulture, "The number must be between {0} and {1}.", values.minimum, values.maximum))
+					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
+					.LayoutBounds(0,90,1,40),
 			}
 		};
 	}
