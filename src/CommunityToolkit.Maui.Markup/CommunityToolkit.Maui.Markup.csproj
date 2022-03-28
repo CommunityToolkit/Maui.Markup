@@ -9,7 +9,6 @@
 	<PropertyGroup>
 		<GitInfoReportImportance>high</GitInfoReportImportance>
 		<PackageId>CommunityToolkit.Maui.Markup</PackageId>
-    <PackageIcon>icon.png</PackageIcon>
 		<Summary>Community-created toolkit with C# Markup classes and fluent helper methods</Summary>
 		<Authors>Microsoft</Authors>
 		<Owners>Microsoft</Owners>
