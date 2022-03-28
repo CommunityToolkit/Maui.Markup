@@ -9,13 +9,10 @@ class App : Microsoft.Maui.Controls.Application
 {
 	public App(NewsPage newsPage)
 	{
-		var navigationPage = new Microsoft.Maui.Controls.NavigationPage(newsPage)
+		MainPage = new Microsoft.Maui.Controls.NavigationPage(newsPage)
 		{
 			BarBackgroundColor = ColorConstants.NavigationBarBackgroundColor,
 			BarTextColor = ColorConstants.NavigationBarTextColor
-		};
-		navigationPage.On<iOS>().SetPrefersLargeTitles(true);
-
-		MainPage = navigationPage;
+		}.Invoke(navigationPage => navigationPage.On<iOS>().SetPrefersLargeTitles(true));
 	}
 }

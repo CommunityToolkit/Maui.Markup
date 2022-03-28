@@ -39,7 +39,7 @@ class StoryDataTemplate : DataTemplate
 		public TitleLabel()
 		{
 			FontSize = 16;
-			TextColor = ColorConstants.TextCellTextColor;
+			TextColor = ColorConstants.PrimaryTextColor;
 
 			VerticalTextAlignment = TextAlignment.Start;
 
@@ -52,7 +52,7 @@ class StoryDataTemplate : DataTemplate
 		public DescriptionLabel()
 		{
 			FontSize = 13;
-			TextColor = ColorConstants.TextCellDetailColor;
+			TextColor = ColorConstants.SecondaryColor;
 
 			Padding = new Thickness(10, 0, 10, 5);
 		}

@@ -100,7 +100,20 @@ class VisualElementExtensionsTests : BaseMarkupTestFixture<BoxView>
 			.Style(new Style<DerivedFromBoxView>()));
 	}
 
+	[Test]
+	public void Behaviors()
+	{
+		var behavior = new BoxViewBehavior();
+		Bindable.Behaviors(behavior);
+		Assert.That(Bindable.Behaviors, Is.EquivalentTo(new[] { behavior }));
+	}
+
 	class DerivedFromBoxView : BoxView
 	{
+	}
+
+	class BoxViewBehavior : Behavior<BoxView>
+	{
+
 	}
 }
