@@ -20,9 +20,10 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 		{
 			Children =
 			{
-				new Label { Text = "Top Stories To Fetch", TextColor = ColorConstants.PrimaryTextColor, HorizontalTextAlignment = TextAlignment.Center }
+				new Label { Text = "Top Stories To Fetch", TextColor = ColorConstants.PrimaryTextColor }
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
-					.LayoutBounds(0,0,1,40),
+					.LayoutBounds(0,0,1,40)
+					.TextCenter(),
 
 				new Entry { Keyboard = Keyboard.Numeric, BackgroundColor = Colors.White }
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
@@ -37,7 +38,7 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 					})
 					.Bind(Entry.TextProperty, nameof(SettingsViewModel.NumberOfTopStoriesToFetch)),
 
-				new Label { TextColor = ColorConstants.PrimaryTextColor, HorizontalTextAlignment = TextAlignment.Center }
+				new Label { TextColor = ColorConstants.PrimaryTextColor }
 					.Bind<Label, int, int, string>(
 						Label.TextProperty,
 						binding1: new Binding { Source = SettingsService.MinimumStoriesToFetch },
