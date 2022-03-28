@@ -1,10 +1,8 @@
-[![Build Status](https://dev.azure.com/dotnet/CommunityToolkit/_apis/build/status/CommunityToolkit.Maui.Markup?branchName=main)](https://dev.azure.com/dotnet/CommunityToolkit/_build/latest?definitionId=173&branchName=main)
-
-<img src="./build/nuget.png" alt=".NET Foundation" width=125>  [<img src="https://raw.githubusercontent.com/dotnet-foundation/swag/master/logo/dotnetfoundation_v4.svg" alt=".NET Foundation" width=100>](https://dotnetfoundation.org) 
-
 # .NET MAUI Markup Community Toolkit
 
-[![NuGet](https://buildstats.info/nuget/CommunityToolkit.Maui.Markup?includePreReleases=true)](https://www.nuget.org/packages/CommunityToolkit.Maui.Markup/)
+<img src="https://user-images.githubusercontent.com/13558917/137551073-ac8958bf-83e3-4ae3-8623-4db6dce49d02.png" alt=".NET MAUI Community Toolkit bot" width=125 />  [<img src="https://raw.githubusercontent.com/dotnet-foundation/swag/master/logo/dotnetfoundation_v4.svg" alt=".NET Foundation" width=100>](https://dotnetfoundation.org) 
+
+[![Build Status](https://dev.azure.com/dotnet/CommunityToolkit/_apis/build/status/CommunityToolkit.Maui.Markup?branchName=main)](https://dev.azure.com/dotnet/CommunityToolkit/_build/latest?definitionId=173&branchName=main) [![NuGet](https://buildstats.info/nuget/CommunityToolkit.Maui.Markup?includePreReleases=true)](https://www.nuget.org/packages/CommunityToolkit.Maui.Markup/)
 
 The .NET MAUI Markup Community Toolkit is a collection of Fluent C# Extension Methods that allows developers to continue architecting their apps using MVVM, Bindings, Resource Dictionaries, etc., without the need for XAML
 
