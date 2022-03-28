@@ -22,12 +22,13 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 			{
 				new Label { Text = "Top Stories To Fetch", TextColor = ColorConstants.PrimaryTextColor }
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
-					.LayoutBounds(0,0,1,40)
-					.TextCenter(),
+					.LayoutBounds(0, 0, 1, 40)
+					.TextCenterHorizontal()
+					.TextBottom(),
 
 				new Entry { Keyboard = Keyboard.Numeric, BackgroundColor = Colors.White }
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
-					.LayoutBounds(0.5,45,0.8,40)
+					.LayoutBounds(0.5, 45, 0.8, 40)
 					.Behaviors(new NumericValidationBehavior
 					{
 						MinimumValue = SettingsService.MinimumStoriesToFetch,
@@ -36,7 +37,8 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 						InvalidStyle = new Style<Entry>((Entry.TextColorProperty, Colors.Red)),
 						ValidStyle = new Style<Entry>((Entry.TextColorProperty, ColorConstants.PrimaryTextColor)),
 					})
-					.Bind(Entry.TextProperty, nameof(SettingsViewModel.NumberOfTopStoriesToFetch)),
+					.Bind(Entry.TextProperty, nameof(SettingsViewModel.NumberOfTopStoriesToFetch))
+					.TextCenter(),
 
 				new Label { TextColor = ColorConstants.PrimaryTextColor }
 					.Bind<Label, int, int, string>(
@@ -46,7 +48,7 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 						convert: ((int minimum, int maximum) values) => string.Format(CultureInfo.CurrentUICulture, "The number must be between {0} and {1}.", values.minimum, values.maximum),
 						mode: BindingMode.OneTime)
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
-					.LayoutBounds(0,90,1,40)
+					.LayoutBounds(0, 90, 1, 40)
 					.TextCenter()
 					.Font(size: 12, italic: true)
 			}
