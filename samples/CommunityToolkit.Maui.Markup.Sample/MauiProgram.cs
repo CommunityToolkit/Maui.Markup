@@ -2,9 +2,9 @@
 using CommunityToolkit.Maui.Markup.Sample.Services;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Maui;
 using Microsoft.Maui.Controls.Hosting;
-using Microsoft.Maui.Controls.Xaml;
+using Microsoft.Maui.Essentials;
+using Microsoft.Maui.Essentials.Implementations;
 using Microsoft.Maui.Hosting;
 using Refit;
 
@@ -12,22 +12,31 @@ namespace CommunityToolkit.Maui.Markup.Sample;
 
 public class MauiProgram
 {
-    public static MauiApp Create()
-    {
-        var builder = MauiApp.CreateBuilder();
-        builder.UseMauiApp<App>();
+	public static MauiApp Create()
+	{
+		var builder = MauiApp.CreateBuilder()
+								.UseMauiApp<App>()
+								.UseMauiCommunityToolkit()
+								.UseMauiCommunityToolkitMarkup();
 
-        // Services
-        builder.Services.AddSingleton<App>();
-        builder.Services.AddSingleton(RestService.For<IHackerNewsApi>("https://hacker-news.firebaseio.com/v0"));
-        builder.Services.AddSingleton<HackerNewsAPIService>();
+		// Maui.Essentials
+		builder.Services.AddSingleton<IBrowser, BrowserImplementation>();
+		builder.Services.AddSingleton<IPreferences, PreferencesImplementation>();
 
-        // View Models
-        builder.Services.AddTransient<NewsViewModel>();
+		// Services
+		builder.Services.AddSingleton<App>();
+		builder.Services.AddSingleton<SettingsService>();
+		builder.Services.AddSingleton<HackerNewsAPIService>();
+		builder.Services.AddSingleton(RestService.For<IHackerNewsApi>("https://hacker-news.firebaseio.com/v0"));
 
-        // Pages
-        builder.Services.AddTransient<NewsPage>();
+		// View Models
+		builder.Services.AddTransient<NewsViewModel>();
+		builder.Services.AddTransient<SettingsViewModel>();
 
-        return builder.Build();
-    }
+		// Pages
+		builder.Services.AddTransient<NewsPage>();
+		builder.Services.AddTransient<SettingsPage>();
+
+		return builder.Build();
+	}
 }

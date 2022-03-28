@@ -1,135 +1,118 @@
-﻿using System;
-using Microsoft.Maui;
+﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using NUnit.Framework;
-using FontElement = Microsoft.Maui.Controls.Label; // TODO: Get rid of this after we have default interface implementation in Forms for IFontElement
 
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
-public class ElementExtensionsTests : MarkupBaseTestFixture<Label>
+class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 {
-    Label Label => Bindable ?? throw new NullReferenceException();
+	[Test]
+	public void RemoveDynamicResources()
+	{
+		var label = AssertDynamicResources();
 
-    [Test]
-    public void DynamicResource()
-    {
-        var label = new Label { Resources = new ResourceDictionary { { "TextKey", "TextValue" } } };
-        Assert.That(label.Text, Is.EqualTo(Label.TextProperty.DefaultValue));
+		label.RemoveDynamicResources(Label.TextProperty, Label.TextColorProperty);
+		label.Resources["TextKey"] = "ChangedTextValue";
+		label.Resources["ColorKey"] = Colors.Green;
 
-        label.DynamicResource(Label.TextProperty, "TextKey");
-        Assert.That(label.Text, Is.EqualTo("TextValue"));
-    }
+		Assert.That(label.Text, Is.EqualTo("TextValue"));
+		Assert.That(label.TextColor, Is.EqualTo(Colors.Green));
+	}
 
-    [Test]
-    public void DynamicResources() => AssertDynamicResources();
+	[Test]
+	public void EffectSingle()
+	{
+		Bindable.Effects.Clear();
+		Assume.That(Bindable.Effects.Count, Is.EqualTo(0));
 
-    [Test]
-    public void RemoveDynamicResources()
-    {
-        var label = AssertDynamicResources();
+		var effect1 = new NullEffect();
+		Bindable.Effects(effect1);
 
-        label.RemoveDynamicResources(Label.TextProperty, Label.TextColorProperty);
-        label.Resources["TextKey"] = "ChangedTextValue";
-        label.Resources["ColorKey"] = Colors.Green;
+		Assert.That(Bindable.Effects.Count, Is.EqualTo(1));
+		Assert.That(Bindable.Effects.Contains(effect1));
+	}
 
-        Assert.That(label.Text, Is.EqualTo("TextValue"));
-        Assert.That(label.TextColor, Is.EqualTo(Colors.Green));
-    }
+	[Test]
+	public void EffectsMultiple()
+	{
+		Bindable.Effects.Clear();
+		Assume.That(Bindable.Effects.Count, Is.EqualTo(0));
 
-    Label AssertDynamicResources()
-    {
-        var label = new Label { Resources = new ResourceDictionary { { "TextKey", "TextValue" }, { "ColorKey", Colors.Green } } };
+		NullEffect effect1 = new NullEffect(), effect2 = new NullEffect();
+		Bindable.Effects(effect1, effect2);
 
-        Assert.That(label.Text, Is.EqualTo(Label.TextProperty.DefaultValue));
-        Assert.That(label.TextColor, Is.EqualTo(Label.TextColorProperty.DefaultValue));
+		Assert.That(Bindable.Effects.Count, Is.EqualTo(2));
+		Assert.That(Bindable.Effects.Contains(effect1));
+		Assert.That(Bindable.Effects.Contains(effect2));
+	}
 
-        label.DynamicResources((Label.TextProperty, "TextKey"),
-                               (Label.TextColorProperty, "ColorKey"));
+	[Test]
+	public void FontSize()
+		=> TestPropertiesSet(l => l?.FontSize(8), (FontElement.FontSizeProperty, 6.0, 8.0));
 
-        Assert.That(label.Text, Is.EqualTo("TextValue"));
-        Assert.That(label.TextColor, Is.EqualTo(Colors.Green));
+	[Test]
+	public void Bold()
+		=> TestPropertiesSet(l => l?.Bold(), (FontElement.FontAttributesProperty, FontAttributes.None, FontAttributes.Bold));
 
-        return label;
-    }
+	[Test]
+	public void Italic()
+		=> TestPropertiesSet(l => l?.Italic(), (FontElement.FontAttributesProperty, FontAttributes.None, FontAttributes.Italic));
 
-    [Test]
-    public void EffectSingle()
-    {
-        Label.Effects.Clear();
-        Assume.That(Label.Effects.Count, Is.EqualTo(0));
+	[Test]
+	public void FontWithPositionalParameters()
+		=> TestPropertiesSet(
+				l => l?.Font("AFontName", 8, true, true),
+				(FontElement.FontSizeProperty, 6.0, 8.0),
+				(FontElement.FontAttributesProperty, FontAttributes.None, FontAttributes.Bold | FontAttributes.Italic),
+				(FontElement.FontFamilyProperty, string.Empty, "AFontName"));
 
-        var effect1 = new NullEffect();
-        Label.Effects(effect1);
+	[Test]
+	public void FontWithSizeNamedParameter()
+		=> TestPropertiesSet(l => l?.Font(size: 8), (FontElement.FontSizeProperty, 6.0, 8.0));
 
-        Assert.That(Label.Effects.Count, Is.EqualTo(1));
-        Assert.That(Label.Effects.Contains(effect1));
-    }
+	[Test]
+	public void FontWithBoldNamedParameter()
+		=> TestPropertiesSet(l => l?.Font(bold: true), (FontElement.FontAttributesProperty, FontAttributes.None, FontAttributes.Bold));
 
-    [Test]
-    public void EffectsMultiple()
-    {
-        Label.Effects.Clear();
-        Assume.That(Label.Effects.Count, Is.EqualTo(0));
+	[Test]
+	public void FontWithItalicNamedParameter()
+		=> TestPropertiesSet(l => l?.Font(italic: true), (FontElement.FontAttributesProperty, FontAttributes.None, FontAttributes.Italic));
 
-        NullEffect effect1 = new NullEffect(), effect2 = new NullEffect();
-        Label.Effects(effect1, effect2);
+	[Test]
+	public void FontWithFamilyNamedParameter()
+		=> TestPropertiesSet(l => l?.Font(family: "AFontName"), (FontElement.FontFamilyProperty, string.Empty, "AFontName"));
 
-        Assert.That(Label.Effects.Count, Is.EqualTo(2));
-        Assert.That(Label.Effects.Contains(effect1));
-        Assert.That(Label.Effects.Contains(effect2));
-    }
+	[Test]
+	public void SupportDerivedFromLabel()
+	{
+		Assert.IsInstanceOf<DerivedFromLabel>(
+			new DerivedFromLabel()
+			.Effects(new NullEffect())
+			.FontSize(8)
+			.Bold()
+			.Italic()
+			.Font("AFontName", 8, true, true));
+	}
 
-    [Test]
-    public void FontSize()
-        => TestPropertiesSet(l => l?.FontSize(8), (FontElement.FontSizeProperty, 6.0, 8.0));
+	static Label AssertDynamicResources()
+	{
+		var label = new Label { Resources = new ResourceDictionary { { "TextKey", "TextValue" }, { "ColorKey", Colors.Green } } };
 
-    [Test]
-    public void Bold()
-        => TestPropertiesSet(l => l?.Bold(), (FontElement.FontAttributesProperty, FontAttributes.None, FontAttributes.Bold));
+		Assert.That(label.Text, Is.EqualTo(Label.TextProperty.DefaultValue));
+		Assert.That(label.TextColor, Is.EqualTo(Label.TextColorProperty.DefaultValue));
 
-    [Test]
-    public void Italic()
-        => TestPropertiesSet(l => l?.Italic(), (FontElement.FontAttributesProperty, FontAttributes.None, FontAttributes.Italic));
+		label.DynamicResources((Label.TextProperty, "TextKey"),
+							   (Label.TextColorProperty, "ColorKey"));
 
-    [Test]
-    public void FontWithPositionalParameters()
-        => TestPropertiesSet(
-                l => l?.Font("AFontName", 8, true, true),
-                (FontElement.FontSizeProperty, 6.0, 8.0),
-                (FontElement.FontAttributesProperty, FontAttributes.None, FontAttributes.Bold | FontAttributes.Italic),
-                (FontElement.FontFamilyProperty, string.Empty, "AFontName"));
+		Assert.That(label.Text, Is.EqualTo("TextValue"));
+		Assert.That(label.TextColor, Is.EqualTo(Colors.Green));
 
-    [Test]
-    public void FontWithSizeNamedParameter()
-        => TestPropertiesSet(l => l?.Font(size: 8), (FontElement.FontSizeProperty, 6.0, 8.0));
+		return label;
+	}
 
-    [Test]
-    public void FontWithBoldNamedParameter()
-        => TestPropertiesSet(l => l?.Font(bold: true), (FontElement.FontAttributesProperty, FontAttributes.None, FontAttributes.Bold));
-
-    [Test]
-    public void FontWithItalicNamedParameter()
-        => TestPropertiesSet(l => l?.Font(italic: true), (FontElement.FontAttributesProperty, FontAttributes.None, FontAttributes.Italic));
-
-    [Test]
-    public void FontWithFamilyNamedParameter()
-        => TestPropertiesSet(l => l?.Font(family: "AFontName"), (FontElement.FontFamilyProperty, string.Empty, "AFontName"));
-
-    [Test]
-    public void SupportDerivedFromLabel()
-    {
-        Assert.IsInstanceOf<DerivedFromLabel>(
-            new DerivedFromLabel()
-            .Effects(new NullEffect())
-            .FontSize(8)
-            .Bold()
-            .Italic()
-            .Font("AFontName", 8, true, true));
-    }
-
-    class DerivedFromLabel : Label
-    {
-    }
+	class DerivedFromLabel : Label
+	{
+	}
 }

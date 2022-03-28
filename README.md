@@ -12,6 +12,22 @@ All features are contributed by you, our amazing .NET community, and maintained 
 
 And – the best part – the features you add to the .NET MAUI Toolkit may one day be included into the official .NET MAUI library! We leverage the Community Toolkits to debut new features and work closely with the .NET MAUI engineering team to nominate features for promotion.
 
+## Getting Started
+
+In order to use the .NET MAUI Community Toolkit you need to call the extension method in your `MauiProgram.cs` file as follows:
+
+```csharp
+using CommunityToolkit.Maui.Markup;
+
+public static MauiApp CreateMauiApp()
+{
+    var builder = MauiApp.CreateBuilder();
+    // Initialise the toolkit
+ 	builder.UseMauiApp<App>().UseMauiCommunityToolkitMarkup();
+    // the rest of your logic...
+}
+```
+
 ## Submitting A New Feature
 
 New features will follow the following steps:
@@ -46,7 +62,7 @@ After a Pull Request has been submitted, it will be reviewed and approved by the
 Every new feature also requires an associated sample to be added to the .NET MAUI Toolkit Sample app.
 
 ### 6. Documentation Complete 
-Before a Pull Request can be merged into the .NET MAUI Toolkit, the Pull Request Author must also submit the documentation to [Add link to Microsoft Docs GitHub Repo Here].
+Before a Pull Request can be merged into the .NET MAUI Toolkit, the Pull Request Author must also submit the documentation to our [documentation repository](https://github.com/MicrosoftDocs/CommunityToolkit).
 
 ### 7. Merged
 Once a Pull Request has been reviewed + approved AND the documentation has been written, submitted and approved, the new feature will be merged adding it to the .NET MAUI Toolkit

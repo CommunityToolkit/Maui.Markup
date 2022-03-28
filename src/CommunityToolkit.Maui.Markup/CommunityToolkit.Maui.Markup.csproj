@@ -5,6 +5,7 @@
 		<UseMaui>true</UseMaui>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
+
 	<PropertyGroup>
 		<GitInfoReportImportance>high</GitInfoReportImportance>
 		<PackageId>CommunityToolkit.Maui.Markup</PackageId>
@@ -31,10 +32,9 @@
 		<PackageTags>xamarin,xamarin.forms,net,maui,netmaui,toolkit,kit,communitytoolkit,netmauitoolkit,mauicommunitytoolkit,markup,csharpformarkup,csharp,csharpmarkup</PackageTags>
 		<Configurations>Debug;Release</Configurations>
 	</PropertyGroup>
+
 	<ItemGroup>
-		<PackageReference Include="mdoc" Version="5.8.3" PrivateAssets="all" />
-	</ItemGroup>
-	<ItemGroup>
-	  <None Include="../../build/nuget.png" Pack="true" PackagePath=""/>
+		<None Include="icon.png" Pack="true" PackagePath="" />
+		<None Include="ReadMe.txt" pack="true" PackagePath="." />
 	</ItemGroup>
 </Project>
