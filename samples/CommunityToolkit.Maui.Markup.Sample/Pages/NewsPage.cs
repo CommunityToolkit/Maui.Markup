@@ -66,7 +66,6 @@ class NewsPage : BaseContentPage<NewsViewModel>
 			refreshView.IsRefreshing = true;
 		}
 
-		BindingContext.RefreshCommand.Execute(null);
 
 		static bool IsNullOrEmpty(in IEnumerable? enumerable) => !enumerable?.GetEnumerator().MoveNext() ?? true;
 	}
