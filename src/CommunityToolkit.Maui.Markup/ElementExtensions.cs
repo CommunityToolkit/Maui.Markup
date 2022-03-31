@@ -177,13 +177,13 @@ public static class ElementExtensions
 	/// <summary>
 	/// Sets <see cref="ITextStyle.TextColor"/> Property
 	/// </summary>
-	/// <typeparam name="TElement"></typeparam>
-	/// <param name="element">Element</param>
+	/// <typeparam name="TBindable"></typeparam>
+	/// <param name="bindable">Element</param>
 	/// <param name="textColor">Text <see cref="Color"/></param>
 	/// <returns></returns>
-	public static TElement TextColor<TElement>(this TElement element, Color textColor) where TElement : BindableObject, ITextStyle
+	public static TBindable TextColor<TBindable>(this TBindable bindable, Color textColor) where TBindable : BindableObject, ITextStyle
 	{
-		element.SetValue(TextElement.TextColorProperty, textColor);
-		return element;
+		bindable.SetValue(TextElement.TextColorProperty, textColor);
+		return bindable;
 	}
 }
