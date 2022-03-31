@@ -93,6 +93,18 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 		=> TestPropertiesSet(l => l.TextColor(new Color(0.124f, 0.654f, 0.9234f, 0.100f)), (TextElement.TextColorProperty, new Color(0.124f, 0.654f, 0.9234f, 0.100f)));
 
 	[Test]
+	public void Text_NoColor()
+		=> TestPropertiesSet(l => l.Text("Hello World"), (Label.TextProperty, "Hello World"));
+
+	[Test]
+	public void Text_ProvidedColor()
+		=> TestPropertiesSet(l => l.Text("Hello World", Colors.Green), (Label.TextProperty, "Hello World"), (TextElement.TextColorProperty, Colors.Green));
+
+	[Test]
+	public void Text_CustomColor()
+		=> TestPropertiesSet(l => l.Text("Hello World", new Color(250, 5, 128, 1)), (Label.TextProperty, "Hello World"), (TextElement.TextColorProperty, new Color(250, 5, 128, 1)));
+
+	[Test]
 	public void SupportDerivedFromLabel()
 	{
 		Assert.IsInstanceOf<DerivedFromLabel>(
@@ -101,7 +113,7 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 			.FontSize(8)
 			.Bold()
 			.Italic()
-			.TextColor(Colors.Red)
+			.Text("Hello World", new Color(255, 255, 128, 1))
 			.Font("AFontName", 8, true, true));
 	}
 
