@@ -22,7 +22,7 @@ class NewsPage : BaseContentPage<NewsViewModel>
 	readonly SettingsPage settingsPage;
 
 	public NewsPage(IBrowser browser,
-					IDispatcher dispatcher,					
+					IDispatcher dispatcher,
 					SettingsPage settingsPage,
 					NewsViewModel newsViewModel) : base(newsViewModel, "Top Stories")
 	{
@@ -32,8 +32,11 @@ class NewsPage : BaseContentPage<NewsViewModel>
 
 		BindingContext.PullToRefreshFailed += HandlePullToRefreshFailed;
 
-		ToolbarItems.Add(new ToolbarItem { Command = new AsyncRelayCommand(ShowSettings, true) }
-							.Text("Settings"));
+		ToolbarItems.Add(new ToolbarItem
+		{
+			Command = new AsyncRelayCommand(ShowSettings, true),
+			Text = "Settings"
+		});
 
 		Content = new RefreshView
 		{
