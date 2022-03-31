@@ -14,6 +14,10 @@
 
 		<!-- App Identifier -->
 		<ApplicationId>com.CommunityToolkit.MarkupSample</ApplicationId>
+        <ApplicationId Condition="$(TargetFramework.Contains('-windows'))">1F9C3A44-059B-4FBC-9D92-476E59FB937A</ApplicationId>
+
+        <!-- Versions -->
+        <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 
 		<!-- Versions -->
 		<ApplicationVersion>1</ApplicationVersion>
