@@ -24,37 +24,17 @@ class StoryDataTemplate : DataTemplate
 
 		Children =
 		{
-			new TitleLabel().Row(Row.Title)
+			new Label().Row(Row.Title)
+				.Font(size: 16).TextColor(ColorConstants.PrimaryTextColor)
+				.Top().Padding(10, 0)
 				.Bind(Label.TextProperty, nameof(StoryModel.Title)),
 
-			new DescriptionLabel().Row(Row.Description)
+			new Label().Row(Row.Description)
+				.Font(size: 13).TextColor(ColorConstants.SecondaryColor)
+				.Paddings(10, 0, 10, 5)
 				.Bind(Label.TextProperty, nameof(StoryModel.Description))
 		}
 	};
 
 	enum Row { Title, Description, BottomPadding }
-
-	class TitleLabel : Label
-	{
-		public TitleLabel()
-		{
-			FontSize = 16;
-			TextColor = ColorConstants.PrimaryTextColor;
-
-			VerticalTextAlignment = TextAlignment.Start;
-
-			Padding = new Thickness(10, 0);
-		}
-	}
-
-	class DescriptionLabel : Label
-	{
-		public DescriptionLabel()
-		{
-			FontSize = 13;
-			TextColor = ColorConstants.SecondaryColor;
-
-			Padding = new Thickness(10, 0, 10, 5);
-		}
-	}
 }

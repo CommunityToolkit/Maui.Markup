@@ -32,11 +32,8 @@ class NewsPage : BaseContentPage<NewsViewModel>
 
 		BindingContext.PullToRefreshFailed += HandlePullToRefreshFailed;
 
-		ToolbarItems.Add(new ToolbarItem
-		{
-			Command = new AsyncRelayCommand(ShowSettings, true),
-			Text = "Settings"
-		});
+		ToolbarItems.Add(new ToolbarItem { Command = new AsyncRelayCommand(ShowSettings, true) }
+							.Text("Settings"));
 
 		Content = new RefreshView
 		{
