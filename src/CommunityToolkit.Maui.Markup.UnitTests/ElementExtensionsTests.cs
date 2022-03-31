@@ -105,6 +105,10 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 		=> TestPropertiesSet(l => l.Text("Hello World", new Color(250, 5, 128, 1)), (Label.TextProperty, "Hello World"), (TextElement.TextColorProperty, new Color(250, 5, 128, 1)));
 
 	[Test]
+	public void Text_NulValues()
+		=> TestPropertiesSet(l => l.Text(null, null), (Label.TextProperty, null), (TextElement.TextColorProperty, null));
+
+	[Test]
 	public void SupportDerivedFromLabel()
 	{
 		Assert.IsInstanceOf<DerivedFromLabel>(
