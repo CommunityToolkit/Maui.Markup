@@ -1,6 +1,7 @@
 ﻿using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Internals;
+using Microsoft.Maui.Graphics;
 
 namespace CommunityToolkit.Maui.Markup;
 
@@ -171,5 +172,18 @@ public static class ElementExtensions
 		}
 
 		return fontElement;
+	}
+
+	/// <summary>
+	/// Sets <see cref="ITextStyle.TextColor"/> Property
+	/// </summary>
+	/// <typeparam name="TElement"></typeparam>
+	/// <param name="element">Element</param>
+	/// <param name="textColor">Text <see cref="Color"/></param>
+	/// <returns></returns>
+	public static TElement TextColor<TElement>(this TElement element, Color textColor) where TElement : BindableObject, ITextStyle
+	{
+		element.SetValue(TextElement.TextColorProperty, textColor);
+		return element;
 	}
 }
