@@ -18,5 +18,20 @@ class PaceholderExtensionsTests : BaseMarkupTestFixture<Entry>
 	[Test]
 	public void SetPlaceholderColorTest()
 		=> TestPropertiesSet(e => e.PlaceholderColor(Colors.Red), (PlaceholderElement.PlaceholderColorProperty, Colors.Red));
+
+	[Test]
+	public void SupportDerivedFromLabel()
+	{
+		Assert.IsInstanceOf<DerivedFromEditor>(
+			new DerivedFromEditor()
+			.Placeholder("Hello World")
+			.PlaceholderColor(Colors.Blue)
+			.Placeholder("Hello World 2", Colors.Red));
+	}
+
+	class DerivedFromEditor : Editor
+	{
+
+	}
 }
 
