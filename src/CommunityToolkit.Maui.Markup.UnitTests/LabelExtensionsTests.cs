@@ -52,4 +52,3 @@ class LabelExtensionsTests : BaseMarkupTestFixture<Label>
 
 	class DerivedFromLabel : Label { }
 }
-
