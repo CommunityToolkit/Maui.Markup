@@ -20,7 +20,7 @@ class PaceholderExtensionsTests : BaseMarkupTestFixture<Entry>
 		=> TestPropertiesSet(e => e.PlaceholderColor(Colors.Red), (PlaceholderElement.PlaceholderColorProperty, Colors.Red));
 
 	[Test]
-	public void SupportDerivedFromLabel()
+	public void SupportDerivedFromEditor()
 	{
 		Assert.IsInstanceOf<DerivedFromEditor>(
 			new DerivedFromEditor()
