@@ -23,4 +23,10 @@
     <ProjectReference Include="..\CommunityToolkit.Maui.Markup\CommunityToolkit.Maui.Markup.csproj" />
   </ItemGroup>
   
+  <ItemGroup>
+    <None Remove="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
 </Project>
