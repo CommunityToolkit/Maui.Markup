@@ -1,6 +1,8 @@
 ﻿using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Internals;
+using Microsoft.Maui.Graphics;
+using ITextElement = Microsoft.Maui.Controls.Label; // ToDo Remove this once TextElement.TextProperty is added
 
 namespace CommunityToolkit.Maui.Markup;
 
@@ -171,5 +173,43 @@ public static class ElementExtensions
 		}
 
 		return fontElement;
+	}
+
+	/// <summary>
+	/// Sets <see cref="ITextStyle.TextColor"/> Property
+	/// </summary>
+	/// <typeparam name="TBindable"><see cref="BindableObject"/></typeparam>
+	/// <param name="bindable">Element</param>
+	/// <param name="textColor">Text <see cref="Color"/></param>
+	/// <returns></returns>
+	public static TBindable TextColor<TBindable>(this TBindable bindable, Color? textColor) where TBindable : BindableObject, ITextStyle
+	{
+		bindable.SetValue(TextElement.TextColorProperty, textColor);
+		return bindable;
+	}
+
+	/// <summary>
+	/// Sets <see cref="IText.Text"/> Property
+	/// </summary>
+	/// <typeparam name="TBindable"><see cref="BindableObject"/></typeparam>
+	/// <param name="bindable">Element</param>
+	/// <param name="text"></param>
+	/// <returns></returns>
+	public static TBindable Text<TBindable>(this TBindable bindable, string? text) where TBindable : BindableObject, IText
+	{
+		bindable.SetValue(ITextElement.TextProperty, text);
+		return bindable;
+	}
+
+	/// <summary>
+	/// Sets <see cref="IText.Text"/> Property
+	/// </summary>
+	/// <typeparam name="TBindable"><see cref="BindableObject"/></typeparam>
+	/// <param name="bindable">Element</param>
+	/// <param name="text"></param>
+	/// <param name="textColor">Text <see cref="Color"/></param>
+	public static TBindable Text<TBindable>(this TBindable bindable, string? text, Color? textColor) where TBindable : BindableObject, IText
+	{
+		return bindable.Text(text).TextColor(textColor);
 	}
 }

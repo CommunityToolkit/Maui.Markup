@@ -19,7 +19,8 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 		{
 			Children =
 			{
-				new Label { Text = "Top Stories To Fetch", TextColor = ColorConstants.PrimaryTextColor }
+				new Label()
+					.Text("Top Stories To Fetch", ColorConstants.PrimaryTextColor)
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
 					.LayoutBounds(0, 0, 1, 40)
 					.TextCenterHorizontal()
@@ -40,7 +41,7 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 					.Bind(Entry.TextProperty, nameof(SettingsViewModel.NumberOfTopStoriesToFetch))
 					.TextCenter(),
 
-				new Label { TextColor = ColorConstants.PrimaryTextColor }
+				new Label()
 					.Bind<Label, int, int, string>(
 						Label.TextProperty,
 						binding1: new Binding { Source = SettingsService.MinimumStoriesToFetch },
@@ -50,6 +51,7 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
 					.LayoutBounds(0, 90, 1, 40)
 					.TextCenter()
+					.TextColor(ColorConstants.PrimaryTextColor)
 					.Font(size: 12, italic: true)
 			}
 		};
