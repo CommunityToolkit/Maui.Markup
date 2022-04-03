@@ -27,6 +27,7 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 					.TextBottom(),
 
 				new Entry { Keyboard = Keyboard.Numeric, BackgroundColor = Colors.White }
+					.Placeholder($"Provide a value between {SettingsService.MinimumStoriesToFetch} and {SettingsService.MaximumStoriesToFetch}")
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
 					.LayoutBounds(0.5, 45, 0.8, 40)
 					.Behaviors(new NumericValidationBehavior
