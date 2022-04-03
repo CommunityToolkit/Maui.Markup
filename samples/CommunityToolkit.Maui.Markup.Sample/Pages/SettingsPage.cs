@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using CommunityToolkit.Maui.Behaviors;
 using CommunityToolkit.Maui.Markup.Sample.Constants;
 using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
@@ -27,7 +26,7 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 					.TextBottom(),
 
 				new Entry { Keyboard = Keyboard.Numeric, BackgroundColor = Colors.White }
-					.Placeholder($"Provide a value between {SettingsService.MinimumStoriesToFetch} and {SettingsService.MaximumStoriesToFetch}")
+					.Placeholder($"Provide a value between {SettingsService.MinimumStoriesToFetch} and {SettingsService.MaximumStoriesToFetch}", Colors.Grey)
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
 					.LayoutBounds(0.5, 45, 0.8, 40)
 					.Behaviors(new NumericValidationBehavior
