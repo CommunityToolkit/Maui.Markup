@@ -19,7 +19,7 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 		{
 			Children =
 			{
-				new Image { Opacity = 0.3 }.Source("dotnet_bot").IsOpaque(false)
+				new Image { Opacity = 0.25 }.Source("dotnet_bot").IsOpaque(false).Aspect(Aspect.AspectFill)
 					.LayoutFlags(AbsoluteLayoutFlags.SizeProportional | AbsoluteLayoutFlags.PositionProportional)
 					.LayoutBounds(0.5, 0.5, 0.5, 0.5),
 
