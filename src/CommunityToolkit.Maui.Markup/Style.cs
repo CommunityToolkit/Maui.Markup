@@ -15,9 +15,14 @@ public class Style<T> where T : BindableObject
 	public static implicit operator Style?(Style<T>? style) => style?.FormsStyle;
 
 	/// <summary>
-	/// Style(typeof(T))
+	/// Initialize Style
 	/// </summary>
-	public Style FormsStyle { get; }
+	/// <param name="property">"The <see cref="BindableProperty"/> to style </param>
+	/// <param name="value">"The value for the <see cref="BindableProperty"/> </param>
+	public Style(BindableProperty property, object value) : this((property, value))
+	{
+
+	}
 
 	/// <summary>
 	/// Initialize Style
@@ -28,6 +33,11 @@ public class Style<T> where T : BindableObject
 		FormsStyle = new Style(typeof(T));
 		Add(setters);
 	}
+
+	/// <summary>
+	/// Style(typeof(T))
+	/// </summary>
+	public Style FormsStyle { get; }
 
 	/// <summary>
 	/// Apply to derived types
@@ -54,13 +64,25 @@ public class Style<T> where T : BindableObject
 	/// <summary>
 	/// Add Setters
 	/// </summary>
+	/// <param name="property">"The <see cref="BindableProperty"/> to style </param>
+	/// <param name="value">"The value for the <see cref="BindableProperty"/> </param>
+	/// <returns>Style with added setters</returns>
+	public Style<T> Add(BindableProperty property, object value)
+	{
+		FormsStyle.Setters.Add(property, value);
+		return this;
+	}
+
+	/// <summary>
+	/// Add Setters
+	/// </summary>
 	/// <param name="setters"></param>
 	/// <returns>Style with added setters</returns>
 	public Style<T> Add(params (BindableProperty Property, object Value)[] setters)
 	{
-		foreach (var (Property, Value) in setters)
+		foreach (var (property, value) in setters)
 		{
-			FormsStyle.Setters.Add(Property, Value);
+			Add(property, value);
 		}
 
 		return this;

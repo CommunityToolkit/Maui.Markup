@@ -32,11 +32,11 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 					.LayoutBounds(0.5, 45, 0.8, 40)
 					.Behaviors(new NumericValidationBehavior
 					{
+						Flags = ValidationFlags.ValidateOnValueChanged,
 						MinimumValue = SettingsService.MinimumStoriesToFetch,
 						MaximumValue = SettingsService.MaximumStoriesToFetch,
-						Flags = ValidationFlags.ValidateOnValueChanged,
-						InvalidStyle = new Style<Entry>((Entry.TextColorProperty, Colors.Red)),
-						ValidStyle = new Style<Entry>((Entry.TextColorProperty, ColorConstants.PrimaryTextColor)),
+						InvalidStyle = new Style<Entry>(Entry.TextColorProperty, Colors.Red),
+						ValidStyle = new Style<Entry>(Entry.TextColorProperty, ColorConstants.PrimaryTextColor),
 					})
 					.Bind(Entry.TextProperty, nameof(SettingsViewModel.NumberOfTopStoriesToFetch))
 					.TextCenter(),
@@ -46,7 +46,7 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 						Label.TextProperty,
 						binding1: new Binding { Source = SettingsService.MinimumStoriesToFetch },
 						binding2: new Binding { Source = SettingsService.MaximumStoriesToFetch },
-						convert: ((int minimum, int maximum) values) => string.Format(CultureInfo.CurrentUICulture, "The number must be between {0} and {1}.", values.minimum, values.maximum),
+						convert: ((int minimum, int maximum) values) => string.Format(CultureInfo.CurrentUICulture, $"The number must be between {values.minimum} and {values.maximum}."),
 						mode: BindingMode.OneTime)
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
 					.LayoutBounds(0, 90, 1, 40)
