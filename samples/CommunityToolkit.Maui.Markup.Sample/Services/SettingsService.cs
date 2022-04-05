@@ -18,4 +18,3 @@ public class SettingsService
 		set => preferences.Set(nameof(NumberOfTopStoriesToFetch), Math.Clamp(value, MinimumStoriesToFetch, MaximumStoriesToFetch), nameof(CommunityToolkit.Maui.Markup.Sample));
 	}
 }
-	

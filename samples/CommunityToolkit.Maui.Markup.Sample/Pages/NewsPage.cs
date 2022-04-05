@@ -22,7 +22,7 @@ class NewsPage : BaseContentPage<NewsViewModel>
 	readonly SettingsPage settingsPage;
 
 	public NewsPage(IBrowser browser,
-					IDispatcher dispatcher,					
+					IDispatcher dispatcher,
 					SettingsPage settingsPage,
 					NewsViewModel newsViewModel) : base(newsViewModel, "Top Stories")
 	{
