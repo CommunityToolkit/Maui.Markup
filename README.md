@@ -28,7 +28,9 @@ public static MauiApp CreateMauiApp()
 
 ## Submitting A New Feature
 
-New features will follow the following steps:
+New features will follow this workflow, described in more detail in the steps below
+
+[![New Feature Workflow](https://user-images.githubusercontent.com/13558917/160910778-1e61f478-f1f6-48b4-8d37-8016eae1bd12.png)](./build/workflow.sketch)
 
 ### 1. Discussion Started
 
