@@ -36,7 +36,7 @@ class ImageExtensionTests : BaseMarkupTestFixture<Image>
 		=> TestPropertiesSet(i => i.IsOpaque(true), (ImageElement.IsOpaqueProperty, true));
 
 	[Test]
-	public void SupportDerivedFromLabel()
+	public void SupportDerivedFromImage()
 	{
 		Assert.IsInstanceOf<DerivedFromImage>(
 			new DerivedFromImage()
