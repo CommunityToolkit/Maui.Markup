@@ -50,9 +50,7 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 						mode: BindingMode.OneTime)
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
 					.LayoutBounds(0, 90, 1, 40)
-					.TextCenter()
-					.TextColor(ColorConstants.PrimaryTextColor)
-					.Font(size: 12, italic: true)
+					.TextCenter().TextColor(ColorConstants.PrimaryTextColor).Font(size: 12, italic: true)
 			}
 		};
 	}
