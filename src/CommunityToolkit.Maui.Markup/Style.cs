@@ -12,12 +12,17 @@ public class Style<T> where T : BindableObject
 	/// FormsStyle
 	/// </summary>
 	/// <param name="style"></param>
-	public static implicit operator Style?(Style<T>? style) => style?.FormsStyle;
+	public static implicit operator Style(Style<T> style) => style.MauiStyle;
 
 	/// <summary>
-	/// Style(typeof(T))
+	/// Initialize Style
 	/// </summary>
-	public Style FormsStyle { get; }
+	/// <param name="property">"The <see cref="BindableProperty"/> to style </param>
+	/// <param name="value">"The value for the <see cref="BindableProperty"/> </param>
+	public Style(BindableProperty property, object value) : this((property, value))
+	{
+
+	}
 
 	/// <summary>
 	/// Initialize Style
@@ -25,9 +30,14 @@ public class Style<T> where T : BindableObject
 	/// <param name="setters"></param>
 	public Style(params (BindableProperty Property, object Value)[] setters)
 	{
-		FormsStyle = new Style(typeof(T));
+		MauiStyle = new Style(typeof(T));
 		Add(setters);
 	}
+
+	/// <summary>
+	/// Style(typeof(T))
+	/// </summary>
+	public Style MauiStyle { get; }
 
 	/// <summary>
 	/// Apply to derived types
@@ -36,7 +46,7 @@ public class Style<T> where T : BindableObject
 	/// <returns>Style</returns>
 	public Style<T> ApplyToDerivedTypes(bool value)
 	{
-		FormsStyle.ApplyToDerivedTypes = value;
+		MauiStyle.ApplyToDerivedTypes = value;
 		return this;
 	}
 
@@ -47,7 +57,19 @@ public class Style<T> where T : BindableObject
 	/// <returns>Style with added BasedOn</returns>
 	public Style<T> BasedOn(Style value)
 	{
-		FormsStyle.BasedOn = value;
+		MauiStyle.BasedOn = value;
+		return this;
+	}
+
+	/// <summary>
+	/// Add Setters
+	/// </summary>
+	/// <param name="property">"The <see cref="BindableProperty"/> to style </param>
+	/// <param name="value">"The value for the <see cref="BindableProperty"/> </param>
+	/// <returns>Style with added setters</returns>
+	public Style<T> Add(BindableProperty property, object value)
+	{
+		MauiStyle.Setters.Add(property, value);
 		return this;
 	}
 
@@ -58,9 +80,9 @@ public class Style<T> where T : BindableObject
 	/// <returns>Style with added setters</returns>
 	public Style<T> Add(params (BindableProperty Property, object Value)[] setters)
 	{
-		foreach (var (Property, Value) in setters)
+		foreach (var (property, value) in setters)
 		{
-			FormsStyle.Setters.Add(Property, Value);
+			Add(property, value);
 		}
 
 		return this;
@@ -75,7 +97,7 @@ public class Style<T> where T : BindableObject
 	{
 		foreach (var behavior in behaviors)
 		{
-			FormsStyle.Behaviors.Add(behavior);
+			MauiStyle.Behaviors.Add(behavior);
 		}
 
 		return this;
@@ -90,7 +112,7 @@ public class Style<T> where T : BindableObject
 	{
 		foreach (var trigger in triggers)
 		{
-			FormsStyle.Triggers.Add(trigger);
+			MauiStyle.Triggers.Add(trigger);
 		}
 
 		return this;
@@ -103,7 +125,7 @@ public class Style<T> where T : BindableObject
 	/// <returns>Style with added CanCascade</returns>
 	public Style<T> CanCascade(bool value)
 	{
-		FormsStyle.CanCascade = value;
+		MauiStyle.CanCascade = value;
 		return this;
 	}
 }
