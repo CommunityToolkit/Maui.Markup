@@ -12,7 +12,7 @@ public class Style<T> where T : BindableObject
 	/// FormsStyle
 	/// </summary>
 	/// <param name="style"></param>
-	public static implicit operator Style?(Style<T>? style) => style?.FormsStyle;
+	public static implicit operator Style(Style<T> style) => style.FormsStyle;
 
 	/// <summary>
 	/// Initialize Style
