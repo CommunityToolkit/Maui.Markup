@@ -15,7 +15,7 @@ class StyleTests : BaseMarkupTestFixture
 		Style<Label> style = new();
 		Style formsStyle = style;
 
-		Assert.That(ReferenceEquals(style.FormsStyle, formsStyle));
+		Assert.That(ReferenceEquals(style.MauiStyle, formsStyle));
 	}
 
 	[Test]

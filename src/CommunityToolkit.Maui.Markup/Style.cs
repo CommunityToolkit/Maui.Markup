@@ -12,7 +12,7 @@ public class Style<T> where T : BindableObject
 	/// FormsStyle
 	/// </summary>
 	/// <param name="style"></param>
-	public static implicit operator Style(Style<T> style) => style.FormsStyle;
+	public static implicit operator Style(Style<T> style) => style.MauiStyle;
 
 	/// <summary>
 	/// Initialize Style
@@ -30,14 +30,14 @@ public class Style<T> where T : BindableObject
 	/// <param name="setters"></param>
 	public Style(params (BindableProperty Property, object Value)[] setters)
 	{
-		FormsStyle = new Style(typeof(T));
+		MauiStyle = new Style(typeof(T));
 		Add(setters);
 	}
 
 	/// <summary>
 	/// Style(typeof(T))
 	/// </summary>
-	public Style FormsStyle { get; }
+	public Style MauiStyle { get; }
 
 	/// <summary>
 	/// Apply to derived types
@@ -46,7 +46,7 @@ public class Style<T> where T : BindableObject
 	/// <returns>Style</returns>
 	public Style<T> ApplyToDerivedTypes(bool value)
 	{
-		FormsStyle.ApplyToDerivedTypes = value;
+		MauiStyle.ApplyToDerivedTypes = value;
 		return this;
 	}
 
@@ -57,7 +57,7 @@ public class Style<T> where T : BindableObject
 	/// <returns>Style with added BasedOn</returns>
 	public Style<T> BasedOn(Style value)
 	{
-		FormsStyle.BasedOn = value;
+		MauiStyle.BasedOn = value;
 		return this;
 	}
 
@@ -69,7 +69,7 @@ public class Style<T> where T : BindableObject
 	/// <returns>Style with added setters</returns>
 	public Style<T> Add(BindableProperty property, object value)
 	{
-		FormsStyle.Setters.Add(property, value);
+		MauiStyle.Setters.Add(property, value);
 		return this;
 	}
 
@@ -97,7 +97,7 @@ public class Style<T> where T : BindableObject
 	{
 		foreach (var behavior in behaviors)
 		{
-			FormsStyle.Behaviors.Add(behavior);
+			MauiStyle.Behaviors.Add(behavior);
 		}
 
 		return this;
@@ -112,7 +112,7 @@ public class Style<T> where T : BindableObject
 	{
 		foreach (var trigger in triggers)
 		{
-			FormsStyle.Triggers.Add(trigger);
+			MauiStyle.Triggers.Add(trigger);
 		}
 
 		return this;
@@ -125,7 +125,7 @@ public class Style<T> where T : BindableObject
 	/// <returns>Style with added CanCascade</returns>
 	public Style<T> CanCascade(bool value)
 	{
-		FormsStyle.CanCascade = value;
+		MauiStyle.CanCascade = value;
 		return this;
 	}
 }
