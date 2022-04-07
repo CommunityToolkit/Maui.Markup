@@ -48,7 +48,7 @@ public static class FlexLayoutExtensions
 	}
 
 	/// <summary>
-	/// Set the <see cref="FlexLayout.GrowProperty"/> that indicates how the child will apportion the leftover space of the <see cref="FlexLayout"/> 
+	/// Set the <see cref="FlexLayout.GrowProperty"/> that indicates the amount of available space a child should use on the main axis of the <see cref="FlexLayout"/>
 	/// </summary>
 	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="bindable"></param>
@@ -61,7 +61,7 @@ public static class FlexLayoutExtensions
 	}
 
 	/// <summary>
-	/// Set the <see cref="FlexLayout.OrderProperty"/> that indicates the order a child of the <see cref="FlexLayout"/> is arranged. This overrides the order that it appears in the <see cref="Layout.Children"/> collection
+	/// Set the <see cref="FlexLayout.OrderProperty"/> that indicates the order a child laid out in a <see cref="FlexLayout"/>. Setting this property overrides the order that it appears in the <see cref="Layout.Children"/> collection
 	/// </summary>
 	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="bindable"></param>
