@@ -9,7 +9,7 @@ namespace CommunityToolkit.Maui.Markup;
 public static class FlexLayoutExtensions
 {
 	/// <summary>
-	/// Set AlignSelf
+	/// Set the <see cref="FlexLayout.AlignSelfProperty"/> that indicates how the child is aligned on the cross axis. Setting this property overrides the <see cref="FlexLayout.AlignItems"/> property set on the <see cref="FlexLayout"/> itself
 	/// </summary>
 	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="bindable"></param>
@@ -22,7 +22,7 @@ public static class FlexLayoutExtensions
 	}
 
 	/// <summary>
-	/// Set Basis
+	/// Set the <see cref="FlexLayout.BasisProperty"/> that indicates the amount of space that is allocated to a child of the <see cref="FlexLayout"/> on the main axis. The size can be specified in device-independent units, as a percentage of the size of the <see cref="FlexLayout"/> or based on the child's requested width or height. 
 	/// </summary>
 	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="bindable"></param>
@@ -35,7 +35,7 @@ public static class FlexLayoutExtensions
 	}
 
 	/// <summary>
-	/// Set Basis
+	/// Set the <see cref="FlexLayout.BasisProperty"/> that indicates the amount of space that is allocated to a child of the <see cref="FlexLayout"/> on the main axis. The size can be specified in device-independent units when <paramref name="isRelative"/> is <see langword="false"/>, or as a percentage of the size of the <see cref="FlexLayout"/> when <paramref name="isRelative"/> is <see langword="true"/>. 
 	/// </summary>
 	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="bindable"></param>
@@ -48,7 +48,7 @@ public static class FlexLayoutExtensions
 	}
 
 	/// <summary>
-	/// Set Grow
+	/// Set the <see cref="FlexLayout.GrowProperty"/> that indicates how the child will apportion the leftover space of the <see cref="FlexLayout"/> 
 	/// </summary>
 	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="bindable"></param>
@@ -61,7 +61,7 @@ public static class FlexLayoutExtensions
 	}
 
 	/// <summary>
-	/// Set Order
+	/// Set the <see cref="FlexLayout.OrderProperty"/> that indicates the order a child of the <see cref="FlexLayout"/> is arranged. This overrides the order that it appears in the <see cref="Layout.Children"/> collection
 	/// </summary>
 	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="bindable"></param>
@@ -74,7 +74,7 @@ public static class FlexLayoutExtensions
 	}
 
 	/// <summary>
-	/// Set Shrink 
+	/// Set the <see cref="FlexLayout.ShrinkProperty"/> that indicates the priority a child is given in being displayed at its full size, when the total sizes of <see cref="Layout.Children"/> is greater than the size of <see cref="FlexLayout"/> on its main axis.
 	/// </summary>
 	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="bindable"></param>

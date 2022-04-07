@@ -33,6 +33,9 @@ class FlexLayoutExtensionsTests : BaseMarkupTestFixture<BoxView>
 		Bindable.Basis(0.5f, true);
 
 		Assert.That(FlexLayout.GetBasis(Bindable), Is.EqualTo(new FlexBasis(0.5f, true)));
+
+		Bindable.Basis(55, false);
+		Assert.That(FlexLayout.GetBasis(Bindable), Is.EqualTo(new FlexBasis(55, false)));
 	}
 
 	[Test]
