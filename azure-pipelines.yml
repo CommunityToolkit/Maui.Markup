@@ -9,7 +9,7 @@ variables:
   PathToSample: 'samples/CommunityToolkit.Maui.Markup.Sample/CommunityToolkit.Maui.Markup.Sample.csproj'
   PathToCommunityToolkitCsproj: 'src/CommunityToolkit.Maui.Markup/CommunityToolkit.Maui.Markup.csproj'
   PathToCommunityToolkitUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.UnitTests/CommunityToolkit.Maui.Markup.UnitTests.csproj'
-  XcodeVersion: '13.3'
+  XcodeVersion: '13.2'
   
 trigger:
   branches:
@@ -103,7 +103,7 @@ jobs:
       - task: CmdLine@2
         displayName: 'Build Community Toolkit Sample'
         inputs:
-          script: 'dotnet build $(PathToSample) -c Release'
+          script: 'dotnet build $(PathToSample) -c Release -f:net6.0-android'
       # pack
       - task: VSBuild@1
         displayName: 'Build and Pack CommunityToolkit.Maui.Markup'
@@ -184,7 +184,7 @@ jobs:
       - task: CmdLine@2 # Building iOS + macOS requires a signing certificate
         displayName: 'Build Community Toolkit Sample'
         inputs:
-          script: 'dotnet build $(PathToSample) -c Release'
+          script: 'dotnet build $(PathToSample) -c Release -f:net6.0-android'
       - task: CmdLine@2
         displayName: 'Run Unit Tests'
         inputs:
