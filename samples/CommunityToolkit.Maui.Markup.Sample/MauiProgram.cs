@@ -32,10 +32,12 @@ public class MauiProgram
 		// View Models
 		builder.Services.AddTransient<NewsViewModel>();
 		builder.Services.AddTransient<SettingsViewModel>();
+		builder.Services.AddTransient<NewsDetailViewModel>();
 
 		// Pages
 		builder.Services.AddTransient<NewsPage>();
 		builder.Services.AddTransient<SettingsPage>();
+		builder.Services.AddTransient<NewsDetailPage>();
 
 		return builder.Build();
 	}

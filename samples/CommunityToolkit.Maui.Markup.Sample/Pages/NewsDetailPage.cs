@@ -2,12 +2,13 @@
 using CommunityToolkit.Maui.Markup;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
+using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
 
 namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
-public class FlexLayoutSamplePage : ContentPage
+public class NewsDetailPage : BaseContentPage<NewsDetailViewModel>
 {
-	public FlexLayoutSamplePage()
+	public NewsDetailPage()
 	{
 		Content = new FlexLayout
 		{
