@@ -33,15 +33,15 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 					.Placeholder($"Provide a value between {SettingsService.MinimumStoriesToFetch} and {SettingsService.MaximumStoriesToFetch}", Colors.Grey)
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
 					.LayoutBounds(0.5, 45, 0.8, 40)
-					// Temporarily remove this until CommunityTookit.Maui v1.0.0-pre9 is released
-					//.Behaviors(new NumericValidationBehavior
-					//{
-					//	Flags = ValidationFlags.ValidateOnValueChanged,
-					//	MinimumValue = SettingsService.MinimumStoriesToFetch,
-					//	MaximumValue = SettingsService.MaximumStoriesToFetch,
-					//	InvalidStyle = new Style<Entry>(Entry.TextColorProperty, Colors.Red),
-					//	ValidStyle = new Style<Entry>(Entry.TextColorProperty, ColorConstants.PrimaryTextColor),
-					//})
+					/* Temporarily remove this until CommunityTookit.Maui v1.0.0-pre9 is released
+					.Behaviors(new NumericValidationBehavior
+					{
+						Flags = ValidationFlags.ValidateOnValueChanged,
+						MinimumValue = SettingsService.MinimumStoriesToFetch,
+						MaximumValue = SettingsService.MaximumStoriesToFetch,
+						InvalidStyle = new Style<Entry>(Entry.TextColorProperty, Colors.Red),
+						ValidStyle = new Style<Entry>(Entry.TextColorProperty, ColorConstants.PrimaryTextColor),
+					}) */
 					.Bind(Entry.TextProperty, nameof(SettingsViewModel.NumberOfTopStoriesToFetch))
 					.TextCenter(),
 
