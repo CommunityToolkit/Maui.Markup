@@ -2,10 +2,10 @@
 using CommunityToolkit.Maui.Markup.Sample.Services;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls.Hosting;
-using Microsoft.Maui.Essentials;
-using Microsoft.Maui.Essentials.Implementations;
 using Microsoft.Maui.Hosting;
+using Microsoft.Maui.Storage;
 using Refit;
 
 namespace CommunityToolkit.Maui.Markup.Sample;
@@ -16,12 +16,12 @@ public class MauiProgram
 	{
 		var builder = MauiApp.CreateBuilder()
 								.UseMauiApp<App>()
-								.UseMauiCommunityToolkit()
+								//.UseMauiCommunityToolkit() // Temporarily removed until CommunityToolkit.Maui v1.0.0-pre9 is available
 								.UseMauiCommunityToolkitMarkup();
 
 		// Maui.Essentials
-		builder.Services.AddSingleton<IBrowser, BrowserImplementation>();
-		builder.Services.AddSingleton<IPreferences, PreferencesImplementation>();
+		builder.Services.AddSingleton(Browser.Default);
+		builder.Services.AddSingleton(Preferences.Default);
 
 		// Services
 		builder.Services.AddSingleton<App>();
