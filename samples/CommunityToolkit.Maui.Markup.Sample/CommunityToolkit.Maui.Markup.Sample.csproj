@@ -7,7 +7,6 @@
 		<RootNamespace>CommunityToolkit.Maui.Markup.Sample</RootNamespace>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
-		<EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
 
 		<!-- Display name -->
 		<ApplicationTitle>Sample</ApplicationTitle>
