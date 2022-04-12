@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using CommunityToolkit.Maui.Behaviors;
 using CommunityToolkit.Maui.Markup.Sample.Constants;
 using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
 using CommunityToolkit.Maui.Markup.Sample.Services;
@@ -34,6 +33,7 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 					.Placeholder($"Provide a value between {SettingsService.MinimumStoriesToFetch} and {SettingsService.MaximumStoriesToFetch}", Colors.Grey)
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
 					.LayoutBounds(0.5, 45, 0.8, 40)
+					/* Temporarily remove this until CommunityTookit.Maui v1.0.0-pre9 is released
 					.Behaviors(new NumericValidationBehavior
 					{
 						Flags = ValidationFlags.ValidateOnValueChanged,
@@ -41,7 +41,7 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 						MaximumValue = SettingsService.MaximumStoriesToFetch,
 						InvalidStyle = new Style<Entry>(Entry.TextColorProperty, Colors.Red),
 						ValidStyle = new Style<Entry>(Entry.TextColorProperty, ColorConstants.PrimaryTextColor),
-					})
+					}) */
 					.Bind(Entry.TextProperty, nameof(SettingsViewModel.NumberOfTopStoriesToFetch))
 					.TextCenter(),
 
