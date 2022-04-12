@@ -9,7 +9,7 @@ variables:
   PathToSample: 'samples/CommunityToolkit.Maui.Markup.Sample/CommunityToolkit.Maui.Markup.Sample.csproj'
   PathToCommunityToolkitCsproj: 'src/CommunityToolkit.Maui.Markup/CommunityToolkit.Maui.Markup.csproj'
   PathToCommunityToolkitUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.UnitTests/CommunityToolkit.Maui.Markup.UnitTests.csproj'
-  XcodeVersion: '13.2'
+  XcodeVersion: '13.3.1'
   
 trigger:
   branches:
@@ -184,7 +184,7 @@ jobs:
       - task: CmdLine@2 # Building iOS + macOS requires a signing certificate
         displayName: 'Build Community Toolkit Sample'
         inputs:
-          script: 'dotnet build $(PathToSample) -c Release -f:net6.0-android'
+          script: 'dotnet build $(PathToSample) -c Release -f:net6.0-android' # Remove -f:net6.0-android once Xcode 13.3.1 is available on Azure Pipelines
       - task: CmdLine@2
         displayName: 'Run Unit Tests'
         inputs:
