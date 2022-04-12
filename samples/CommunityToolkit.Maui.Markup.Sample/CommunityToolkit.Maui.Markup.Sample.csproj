@@ -45,21 +45,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-        <PackageReference Include="Polly" Version="7.2.3" />
-        <PackageReference Include="Refit" Version="6.3.2" />
-				<PackageReference Include="CommunityToolkit.Maui" Version="1.0.0-pre8" />
-        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0-preview2" />
+    <PackageReference Include="Polly" Version="7.2.3" />
+    <PackageReference Include="Refit" Version="6.3.2" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="1.0.0-pre8" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0-preview3" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\CommunityToolkit.Maui.Markup\CommunityToolkit.Maui.Markup.csproj" />
     </ItemGroup>
-
-	<ItemGroup Condition="$(TargetFramework.Contains('-windows'))">
-		<!-- Required - WinUI does not yet have buildTransitive for everything -->
-		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0" />
-		<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.0.0.30" />
-	</ItemGroup>
 
 	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
 		<OutputType>WinExe</OutputType>
