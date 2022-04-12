@@ -103,7 +103,7 @@ jobs:
       - task: CmdLine@2
         displayName: 'Build Community Toolkit Sample'
         inputs:
-          script: 'dotnet build $(PathToSample) -c Release -f:net6.0-android'
+          script: 'dotnet build $(PathToSample) -c Release'
       # pack
       - task: VSBuild@1
         displayName: 'Build and Pack CommunityToolkit.Maui.Markup'

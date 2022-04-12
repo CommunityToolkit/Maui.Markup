@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>net6.0-ios;net6.0-android;net6.0-maccatalyst</TargetFrameworks>
@@ -46,7 +46,6 @@
 	<ItemGroup>
 		<PackageReference Include="Polly" Version="7.2.3" />
 		<PackageReference Include="Refit" Version="6.3.2" />
-		<PackageReference Include="CommunityToolkit.Maui" Version="1.0.0-pre8" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0-preview3" />
 	</ItemGroup>
 
