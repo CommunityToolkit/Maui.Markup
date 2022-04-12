@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>net6.0-ios;net6.0-android;net6.0-maccatalyst</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) and '$(MSBuildRuntimeType)' == 'Full'">$(TargetFrameworks);net6.0-windows10.0.19041</TargetFrameworks> 
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) and '$(MSBuildRuntimeType)' == 'Full'">$(TargetFrameworks);net6.0-windows10.0.19041</TargetFrameworks>
 		<OutputType>Exe</OutputType>
 		<RootNamespace>CommunityToolkit.Maui.Markup.Sample</RootNamespace>
 		<UseMaui>true</UseMaui>
@@ -14,15 +14,14 @@
 
 		<!-- App Identifier -->
 		<ApplicationId>com.CommunityToolkit.MarkupSample</ApplicationId>
-        <ApplicationId Condition="$(TargetFramework.Contains('-windows'))">1F9C3A44-059B-4FBC-9D92-476E59FB937A</ApplicationId>
+		<ApplicationId Condition="$(TargetFramework.Contains('-windows'))">1F9C3A44-059B-4FBC-9D92-476E59FB937A</ApplicationId>
 
-        <!-- Versions -->
-        <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
 		<!-- Required for C# Hot Reload -->
 		<UseInterpreter Condition="'$(Configuration)' == 'Debug'">True</UseInterpreter>
-
 		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-maccatalyst'">14.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-android'">21.0</SupportedOSPlatformVersion>
@@ -45,19 +44,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
-    <PackageReference Include="Polly" Version="7.2.3" />
-    <PackageReference Include="Refit" Version="6.3.2" />
+		<PackageReference Include="Polly" Version="7.2.3" />
+		<PackageReference Include="Refit" Version="6.3.2" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="1.0.0-pre8" />
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0-preview3" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0-preview3" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\CommunityToolkit.Maui.Markup\CommunityToolkit.Maui.Markup.csproj" />
-    </ItemGroup>
+	</ItemGroup>
 
 	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
 		<OutputType>WinExe</OutputType>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 	</PropertyGroup>
-
 </Project>
