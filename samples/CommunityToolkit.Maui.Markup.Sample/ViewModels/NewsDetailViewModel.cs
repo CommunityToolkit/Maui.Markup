@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels.Base;
 
 namespace CommunityToolkit.Maui.Markup.Sample.ViewModels;
+
 class NewsDetailViewModel:BaseViewModel
 {
 
