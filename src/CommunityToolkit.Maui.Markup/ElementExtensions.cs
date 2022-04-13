@@ -184,7 +184,13 @@ public static class ElementExtensions
 	/// <returns></returns>
 	public static TBindable TextColor<TBindable>(this TBindable bindable, Color? textColor) where TBindable : BindableObject, ITextStyle
 	{
+		if (bindable is MenuItem)
+		{
+			throw new NotSupportedException($"{typeof(MenuItem)} is not supported");
+		}
+
 		bindable.SetValue(TextElement.TextColorProperty, textColor);
+
 		return bindable;
 	}
 
