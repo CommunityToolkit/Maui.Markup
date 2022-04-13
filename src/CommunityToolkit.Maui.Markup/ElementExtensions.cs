@@ -1,8 +1,8 @@
-﻿using Microsoft.Maui;
+﻿using System;
+using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Internals;
 using Microsoft.Maui.Graphics;
-using ITextElement = Microsoft.Maui.Controls.Label; // ToDo Remove this once TextElement.TextProperty is added
 
 namespace CommunityToolkit.Maui.Markup;
 
@@ -184,7 +184,13 @@ public static class ElementExtensions
 	/// <returns></returns>
 	public static TBindable TextColor<TBindable>(this TBindable bindable, Color? textColor) where TBindable : BindableObject, ITextStyle
 	{
+		if (bindable is MenuItem)
+		{
+			throw new NotSupportedException($"{typeof(MenuItem)} is not supported");
+		}
+
 		bindable.SetValue(TextElement.TextColorProperty, textColor);
+
 		return bindable;
 	}
 
@@ -197,7 +203,36 @@ public static class ElementExtensions
 	/// <returns></returns>
 	public static TBindable Text<TBindable>(this TBindable bindable, string? text) where TBindable : BindableObject, IText
 	{
-		bindable.SetValue(ITextElement.TextProperty, text);
+		switch (bindable)
+		{
+			case ILabel:
+				bindable.SetValue(Label.TextProperty, text);
+				break;
+
+			case IButton:
+				bindable.SetValue(Button.TextProperty, text);
+				break;
+
+			case MenuItem:
+				bindable.SetValue(MenuItem.TextProperty, text);
+				break;
+
+			case IEditor:
+				bindable.SetValue(Editor.TextProperty, text);
+				break;
+
+			case IEntry:
+				bindable.SetValue(Entry.TextProperty, text);
+				break;
+
+			case ISearchBar:
+				bindable.SetValue(SearchBar.TextProperty, text);
+				break;
+
+			default:
+				throw new NotSupportedException($"{typeof(TBindable)} is not supported");
+		};
+
 		return bindable;
 	}
 
