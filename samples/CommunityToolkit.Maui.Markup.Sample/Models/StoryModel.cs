@@ -6,6 +6,12 @@ record StoryModel(long Id, string By, long Score, long Time, string Title, strin
 {
 	public string Description => ToString();
 
+	public string Title = Title;
+
+	public string Author = By;
+
+	public long Score = Score;
+
 	public DateTimeOffset CreatedAt => UnixTimeStampToDateTimeOffset(Time);
 
 	public override string ToString() => $"{Score} Points by {By}, {GetAgeOfStory(CreatedAt)} ago";
