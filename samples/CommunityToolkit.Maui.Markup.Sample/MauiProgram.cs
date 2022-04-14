@@ -16,7 +16,7 @@ public class MauiProgram
 	{
 		var builder = MauiApp.CreateBuilder()
 								.UseMauiApp<App>()
-								//.UseMauiCommunityToolkit() // Temporarily removed until CommunityToolkit.Maui v1.0.0-pre9 is available
+								.UseMauiCommunityToolkit()
 								.UseMauiCommunityToolkitMarkup();
 
 		// Maui.Essentials
