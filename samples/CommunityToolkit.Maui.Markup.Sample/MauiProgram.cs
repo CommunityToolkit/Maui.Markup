@@ -19,6 +19,9 @@ public class MauiProgram
 								.UseMauiCommunityToolkit()
 								.UseMauiCommunityToolkitMarkup();
 
+		// Fonts
+		builder.ConfigureFonts(fonts => fonts.AddFont("FontAwesome.otf", "FontAwesome"));
+
 		// Maui.Essentials
 		builder.Services.AddSingleton(Browser.Default);
 		builder.Services.AddSingleton(Preferences.Default);
