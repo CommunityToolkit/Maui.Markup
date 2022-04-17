@@ -32,7 +32,7 @@ class NewsPage : BaseContentPage<NewsViewModel>
 
 		BindingContext.PullToRefreshFailed += HandlePullToRefreshFailed;
 
-		ToolbarItems.Add(new ToolbarItem { Command = new AsyncRelayCommand(ShowSettings, true) }.Text("Settings"));
+		ToolbarItems.Add(new ToolbarItem { Command = new AsyncRelayCommand(NavigateToSettingsPage, true) }.Text("Settings"));
 
 		Content = new RefreshView
 		{
@@ -77,13 +77,7 @@ class NewsPage : BaseContentPage<NewsViewModel>
 		{
 			if (!string.IsNullOrEmpty(storyModel.Url))
 			{
-				var browserOptions = new BrowserLaunchOptions
-				{
-					PreferredControlColor = ColorConstants.BrowserNavigationBarTextColor,
-					PreferredToolbarColor = ColorConstants.BrowserNavigationBarBackgroundColor
-				};
-
-				await browser.OpenAsync(storyModel.Url, browserOptions);
+				await NavigateToNewsDetailPage(storyModel);
 			}
 			else
 			{
@@ -95,5 +89,6 @@ class NewsPage : BaseContentPage<NewsViewModel>
 	async void HandlePullToRefreshFailed(object? sender, string message) =>
 		await dispatcher.DispatchAsync(() => DisplayAlert("Refresh Failed", message, "OK"));
 
-	Task ShowSettings() => dispatcher.DispatchAsync(() => Navigation.PushAsync(settingsPage));
+	Task NavigateToSettingsPage() => dispatcher.DispatchAsync(() => Navigation.PushAsync(settingsPage));
+	Task NavigateToNewsDetailPage(StoryModel storyModel) => dispatcher.DispatchAsync(() => Navigation.PushAsync(new NewsDetailPage(new NewsDetailViewModel(storyModel, browser))));
 }

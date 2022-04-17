@@ -19,6 +19,9 @@ public class MauiProgram
 								.UseMauiCommunityToolkit()
 								.UseMauiCommunityToolkitMarkup();
 
+		// Fonts
+		builder.ConfigureFonts(fonts => fonts.AddFont("FontAwesome.otf", "FontAwesome"));
+
 		// Maui.Essentials
 		builder.Services.AddSingleton(Browser.Default);
 		builder.Services.AddSingleton(Preferences.Default);
@@ -32,10 +35,12 @@ public class MauiProgram
 		// View Models
 		builder.Services.AddTransient<NewsViewModel>();
 		builder.Services.AddTransient<SettingsViewModel>();
+		builder.Services.AddTransient<NewsDetailViewModel>();
 
 		// Pages
 		builder.Services.AddTransient<NewsPage>();
 		builder.Services.AddTransient<SettingsPage>();
+		builder.Services.AddTransient<NewsDetailPage>();
 
 		return builder.Build();
 	}

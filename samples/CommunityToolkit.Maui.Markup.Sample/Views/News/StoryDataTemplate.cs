@@ -30,7 +30,7 @@ class StoryDataTemplate : DataTemplate
 				.Bind(Label.TextProperty, nameof(StoryModel.Title)),
 
 			new Label().Row(Row.Description)
-				.Font(size: 13).TextColor(ColorConstants.SecondaryColor)
+				.Font(size: 13).TextColor(ColorConstants.SecondaryTextColor)
 				.Paddings(10, 0, 10, 5)
 				.Bind(Label.TextProperty, nameof(StoryModel.Description))
 		}
