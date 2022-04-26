@@ -16,7 +16,7 @@ public class MauiProgram
 	{
 		var builder = MauiApp.CreateBuilder()
 								.UseMauiApp<App>()
-								.UseMauiCommunityToolkit()
+								// .UseMauiCommunityToolkit() // Temporarily remove CommunityToolkit.Maui-rc1 until CommunityToolkit.Maui-rc2 is available
 								.UseMauiCommunityToolkitMarkup();
 
 		// Fonts
