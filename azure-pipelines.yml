@@ -97,7 +97,7 @@ jobs:
           failIfCoverageEmpty: true
       # build sample
       - task: VSBuild@1
-        displayName: 'Build Markup Community Toolkit Sample'
+        displayName: 'Build Markup CommunityToolkit.Maui.Markup.Sample'
         inputs:
           solution: '$(PathToCommunityToolkitSampleCsproj)'
           configuration: 'Release'
