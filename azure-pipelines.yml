@@ -6,8 +6,8 @@ variables:
   NET_VERSION: '6.0.x'
   RunPoliCheck: 'false'
   PathToSolution: 'src/CommunityToolkit.Maui.Markup.sln'
-  PathToSample: 'samples/CommunityToolkit.Maui.Markup.Sample/CommunityToolkit.Maui.Markup.Sample.csproj'
   PathToCommunityToolkitCsproj: 'src/CommunityToolkit.Maui.Markup/CommunityToolkit.Maui.Markup.csproj'
+  PathToCommunityToolkitSampleCsproj: 'samples/CommunityToolkit.Maui.Markup.Sample/CommunityToolkit.Maui.Markup.Sample.csproj'
   PathToCommunityToolkitUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.UnitTests/CommunityToolkit.Maui.Markup.UnitTests.csproj'
   XcodeVersion: '13.3.1'
   
@@ -96,14 +96,12 @@ jobs:
           summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
           failIfCoverageEmpty: true
       # build sample
-      - task: CmdLine@2
-        displayName: 'Build Community Toolkit'
+      - task: VSBuild@1
+        displayName: 'Build Markup CommunityToolkit.Maui.Markup.Sample'
         inputs:
-          script: 'dotnet build $(PathToCommunityToolkitCsproj) -c Release'
-      - task: CmdLine@2
-        displayName: 'Build Community Toolkit Sample'
-        inputs:
-          script: 'dotnet build $(PathToSample) -c Release'
+          solution: '$(PathToCommunityToolkitSampleCsproj)'
+          configuration: 'Release'
+          msbuildArgs: '/restore'
       # pack
       - task: VSBuild@1
         displayName: 'Build and Pack CommunityToolkit.Maui.Markup'
@@ -185,7 +183,7 @@ jobs:
       - task: CmdLine@2 # Building iOS + macOS requires a signing certificate
         displayName: 'Build Community Toolkit Sample'
         inputs:
-          script: 'dotnet build $(PathToSample) -c Release -f:net6.0-android' # Remove -f:net6.0-android once Xcode 13.3.1 is available on Azure Pipelines (required for .NET MAUI RC)
+          script: 'dotnet build $(PathToCommunityToolkitSampleCsproj) -c Release -f:net6.0-android' # Remove -f:net6.0-android once Xcode 13.3.1 is available on Azure Pipelines (required for .NET MAUI RC)
       - task: CmdLine@2
         displayName: 'Run Unit Tests'
         inputs:
