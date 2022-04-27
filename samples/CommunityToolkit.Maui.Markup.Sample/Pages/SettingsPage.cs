@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Behaviors;
 using CommunityToolkit.Maui.Markup.Sample.Constants;
 using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
 using CommunityToolkit.Maui.Markup.Sample.Services;
