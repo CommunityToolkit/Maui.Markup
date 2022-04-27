@@ -12,11 +12,11 @@ namespace CommunityToolkit.Maui.Markup.Sample;
 
 public class MauiProgram
 {
-	public static MauiApp Create()
+	public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder()
 								.UseMauiApp<App>()
-								// .UseMauiCommunityToolkit() // Temporarily remove CommunityToolkit.Maui-rc1 until CommunityToolkit.Maui-rc2 is available
+								.UseMauiCommunityToolkit()
 								.UseMauiCommunityToolkitMarkup();
 
 		// Fonts
