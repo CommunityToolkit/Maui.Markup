@@ -32,7 +32,7 @@ class NewsPage : BaseContentPage<NewsViewModel>
 
 		BindingContext.PullToRefreshFailed += HandlePullToRefreshFailed;
 
-		ToolbarItems.Add(new ToolbarItem { Command = new AsyncRelayCommand(NavigateToSettingsPage, true) }.Text("Settings"));
+		ToolbarItems.Add(new ToolbarItem { Command = new AsyncRelayCommand(NavigateToSettingsPage) }.Text("Settings"));
 
 		Content = new RefreshView
 		{
@@ -48,7 +48,7 @@ class NewsPage : BaseContentPage<NewsViewModel>
 			 .Bind(CollectionView.ItemsSourceProperty, nameof(NewsViewModel.TopStoryCollection))
 
 		}.Bind(RefreshView.IsRefreshingProperty, nameof(NewsViewModel.IsListRefreshing))
-		 .Bind(RefreshView.CommandProperty, nameof(NewsViewModel.RefreshCommand));
+		 .Bind(RefreshView.CommandProperty, nameof(NewsViewModel.PullToRefreshCommand));
 	}
 
 	protected override void OnAppearing()

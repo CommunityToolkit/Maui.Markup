@@ -13,7 +13,7 @@ using Microsoft.Maui.Controls;
 
 namespace CommunityToolkit.Maui.Markup.Sample.ViewModels;
 
-class NewsDetailViewModel : BaseViewModel
+partial class NewsDetailViewModel : BaseViewModel
 {
 	readonly IBrowser browser;
 
@@ -24,17 +24,14 @@ class NewsDetailViewModel : BaseViewModel
 		Uri = new Uri(storyModel.Url);
 		Title = storyModel.Title;
 		ScoreDescription = storyModel.ToString();
-
-		OpenBrowserCommand = new AsyncRelayCommand(ExecuteOpenBrowserCommand);
 	}
 
 	public Uri Uri { get; }
 	public string Title { get; }
 	public string ScoreDescription { get; }
 
-	public ICommand OpenBrowserCommand { get; }
-
-	Task ExecuteOpenBrowserCommand()
+	[ICommand]
+	Task OpenBrowser()
 	{
 		var browserOptions = new BrowserLaunchOptions
 		{

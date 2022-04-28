@@ -35,8 +35,6 @@ partial class NewsViewModel : BaseViewModel
 		this.dispatcher = dispatcher;
 		this.settingsService = settingsService;
 		this.hackerNewsAPIService = hackerNewsAPIService;
-
-		RefreshCommand = new AsyncRelayCommand(ExecuteRefreshCommand, false);
 	}
 
 	public event EventHandler<string> PullToRefreshFailed
@@ -47,9 +45,8 @@ partial class NewsViewModel : BaseViewModel
 
 	public ObservableCollection<StoryModel> TopStoryCollection { get; } = new();
 
-	public ICommand RefreshCommand { get; }
-
-	async Task ExecuteRefreshCommand()
+	[ICommand]
+	async Task PullToRefresh()
 	{
 		TopStoryCollection.Clear();
 
