@@ -182,7 +182,7 @@ jobs:
       - task: CmdLine@2 # Building iOS + macOS requires a signing certificate
         displayName: 'Build Community Toolkit Sample'
         inputs:
-          script: 'dotnet build $(PathToCommunityToolkitSampleCsproj) -c Release`
+          script: 'dotnet build $(PathToCommunityToolkitSampleCsproj) -c Release'
       - task: CmdLine@2
         displayName: 'Run Unit Tests'
         inputs:
