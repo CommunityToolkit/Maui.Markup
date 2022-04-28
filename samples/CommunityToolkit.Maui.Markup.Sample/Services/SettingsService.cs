@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.Maui.Storage;
-
-namespace CommunityToolkit.Maui.Markup.Sample.Services;
+﻿namespace CommunityToolkit.Maui.Markup.Sample.Services;
 
 public class SettingsService
 {

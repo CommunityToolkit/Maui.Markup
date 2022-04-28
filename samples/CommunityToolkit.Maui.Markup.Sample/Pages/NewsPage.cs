@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Linq;
-using System.Threading.Tasks;
-using CommunityToolkit.Maui.Markup.Sample.Constants;
+﻿using System.Collections;
 using CommunityToolkit.Maui.Markup.Sample.Models;
 using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels;
 using CommunityToolkit.Maui.Markup.Sample.Views.News;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Maui.ApplicationModel;
-using Microsoft.Maui.Controls;
 using Microsoft.Maui.Dispatching;
-using Microsoft.Maui.Graphics;
 
 namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 

@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Maui.Markup.Sample.Constants;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels.Base;
-using Microsoft.Maui.Controls;
 
 namespace CommunityToolkit.Maui.Markup.Sample.Pages.Base;
 
