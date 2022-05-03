@@ -1,49 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>net6.0;net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net6.0-windows10.0.19041.0</TargetFrameworks>
-    <UseMaui>true</UseMaui>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<UseMaui>true</UseMaui>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
 
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
-    <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+	<PropertyGroup>
+		<GitInfoReportImportance>high</GitInfoReportImportance>
+		<PackageId>CommunityToolkit.Maui.Markup</PackageId>
+		<Summary>Community-created toolkit with C# Markup classes and fluent helper methods</Summary>
+		<Authors>Microsoft</Authors>
+		<Owners>Microsoft</Owners>
+		<NeutralLanguage>en</NeutralLanguage>
+		<Product>CommunityToolkit.Maui.Markup (net6.0)</Product>
+		<Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/communitytoolkit/Maui.Markup</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/communitytoolkit/Maui.Markup</RepositoryUrl>
+		<PackageReleaseNotes>First release of CommunityToolki.Maui.Markup</PackageReleaseNotes>
+		<DefineConstants>$(DefineConstants);</DefineConstants>
+		<UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
+		<Title>CommunityToolkit.Maui.Markup</Title>
+		<Description>CommunityToolkit.Maui.Markup is a set of fluent helper methods and classes to simplify building declarative .NET MAUI user interfaces in C#</Description>
+		<PackageIcon>nuget.png</PackageIcon>
+		<Product>$(AssemblyName) ($(TargetFramework))</Product>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
+		<Version>1.0.0-pre1</Version>
+		<PackageVersion>$(Version)$(VersionSuffix)</PackageVersion>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<PackageTags>xamarin,xamarin.forms,net,maui,netmaui,toolkit,kit,communitytoolkit,netmauitoolkit,mauicommunitytoolkit,markup,csharpformarkup,csharp,csharpmarkup</PackageTags>
+		<Configurations>Debug;Release</Configurations>
+	</PropertyGroup>
 
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <GitInfoReportImportance>high</GitInfoReportImportance>
-    <PackageId>CommunityToolkit.Maui.Markup</PackageId>
-    <Summary>Community-created toolkit with C# Markup classes and fluent helper methods</Summary>
-    <Authors>Microsoft</Authors>
-    <Owners>Microsoft</Owners>
-    <NeutralLanguage>en</NeutralLanguage>
-    <Product>CommunityToolkit.Maui.Markup (net6.0)</Product>
-    <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/communitytoolkit/Maui.Markup</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/communitytoolkit/Maui.Markup</RepositoryUrl>
-    <PackageReleaseNotes>First release of CommunityToolki.Maui.Markup</PackageReleaseNotes>
-    <DefineConstants>$(DefineConstants);</DefineConstants>
-    <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
-    <Title>CommunityToolkit.Maui.Markup</Title>
-    <Description>CommunityToolkit.Maui.Markup is a set of fluent helper methods and classes to simplify building declarative .NET MAUI user interfaces in C#</Description>
-    <PackageIcon>nuget.png</PackageIcon>
-    <Product>$(AssemblyName) ($(TargetFramework))</Product>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
-    <Version>1.0.0-pre1</Version>
-    <PackageVersion>$(Version)$(VersionSuffix)</PackageVersion>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageTags>xamarin,xamarin.forms,net,maui,netmaui,toolkit,kit,communitytoolkit,netmauitoolkit,mauicommunitytoolkit,markup,csharpformarkup,csharp,csharpmarkup</PackageTags>
-    <Configurations>Debug;Release</Configurations>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="../../build/nuget.png" Pack="true" PackagePath="" />
-    <None Include="ReadMe.txt" pack="true" PackagePath="." />
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="../../build/nuget.png" Pack="true" PackagePath="" />
+		<None Include="ReadMe.txt" pack="true" PackagePath="." />
+	</ItemGroup>
 </Project>
