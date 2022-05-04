@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.Maui.Markup.Sample.Constants;
 using CommunityToolkit.Maui.Markup.Sample.Models;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
 using static CommunityToolkit.Maui.Markup.GridRowsColumns;
 
 namespace CommunityToolkit.Maui.Markup.Sample.Views.News;

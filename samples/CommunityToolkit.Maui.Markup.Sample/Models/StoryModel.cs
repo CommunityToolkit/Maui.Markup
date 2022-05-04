@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CommunityToolkit.Maui.Markup.Sample.Models;
+﻿namespace CommunityToolkit.Maui.Markup.Sample.Models;
 
 record StoryModel(long Id, string By, long Score, long Time, string Title, string Url)
 {

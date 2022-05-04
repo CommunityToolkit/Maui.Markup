@@ -1,11 +1,6 @@
 ﻿using CommunityToolkit.Maui.Markup.Sample.Pages;
 using CommunityToolkit.Maui.Markup.Sample.Services;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Maui.ApplicationModel;
-using Microsoft.Maui.Controls.Hosting;
-using Microsoft.Maui.Hosting;
-using Microsoft.Maui.Storage;
 using Refit;
 
 namespace CommunityToolkit.Maui.Markup.Sample;

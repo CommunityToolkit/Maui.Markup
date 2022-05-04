@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using CommunityToolkit.Maui.Markup.Sample.Models;
+﻿using CommunityToolkit.Maui.Markup.Sample.Models;
 using Polly;
 
 namespace CommunityToolkit.Maui.Markup.Sample.Services;

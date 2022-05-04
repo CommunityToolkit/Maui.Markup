@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Maui.Markup.Sample.Models;
 using CommunityToolkit.Maui.Markup.Sample.Services;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
 using Microsoft.Maui.Dispatching;
 
 namespace CommunityToolkit.Maui.Markup.Sample.ViewModels;
@@ -35,8 +26,6 @@ partial class NewsViewModel : BaseViewModel
 		this.dispatcher = dispatcher;
 		this.settingsService = settingsService;
 		this.hackerNewsAPIService = hackerNewsAPIService;
-
-		RefreshCommand = new AsyncRelayCommand(ExecuteRefreshCommand, false);
 	}
 
 	public event EventHandler<string> PullToRefreshFailed
@@ -47,9 +36,8 @@ partial class NewsViewModel : BaseViewModel
 
 	public ObservableCollection<StoryModel> TopStoryCollection { get; } = new();
 
-	public ICommand RefreshCommand { get; }
-
-	async Task ExecuteRefreshCommand()
+	[ICommand]
+	async Task PullToRefresh()
 	{
 		TopStoryCollection.Clear();
 

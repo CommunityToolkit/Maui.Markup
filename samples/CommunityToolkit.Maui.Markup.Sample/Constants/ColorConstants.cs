@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Graphics;
-
-namespace CommunityToolkit.Maui.Markup.Sample.Constants;
+﻿namespace CommunityToolkit.Maui.Markup.Sample.Constants;
 
 static class ColorConstants
 {

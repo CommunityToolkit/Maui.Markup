@@ -1,7 +1,4 @@
 ﻿using Microsoft.Maui.Layouts;
-using CommunityToolkit.Maui.Markup;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
 using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels;
 using CommunityToolkit.Maui.Markup.Sample.Constants;
