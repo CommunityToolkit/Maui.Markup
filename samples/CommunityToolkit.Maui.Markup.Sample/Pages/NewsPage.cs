@@ -55,7 +55,6 @@ class NewsPage : BaseContentPage<NewsViewModel>
 			refreshView.IsRefreshing = true;
 		}
 
-
 		static bool IsNullOrEmpty(in IEnumerable? enumerable) => !enumerable?.GetEnumerator().MoveNext() ?? true;
 	}
 
