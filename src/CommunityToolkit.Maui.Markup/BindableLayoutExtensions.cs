@@ -41,11 +41,8 @@ public static class BindableLayoutExtensions
 	/// <param name="layout"></param>
 	/// <param name="loadTemplate"></param>
 	/// <returns>Layout with Empty View Tempalte</returns>
-	public static TLayout EmptyViewTemplate<TLayout>(this TLayout layout, Func<object> loadTemplate) where TLayout : BindableObject, Microsoft.Maui.ILayout
-	{
-		BindableLayout.SetEmptyViewTemplate(layout, new DataTemplate(loadTemplate));
-		return layout;
-	}
+	public static TLayout EmptyViewTemplate<TLayout>(this TLayout layout, Func<object> loadTemplate) where TLayout : BindableObject, Microsoft.Maui.ILayout =>
+		layout.EmptyViewTemplate(new DataTemplate(loadTemplate));
 
 	/// <summary>
 	/// Set Item Source
@@ -80,11 +77,8 @@ public static class BindableLayoutExtensions
 	/// <param name="layout"></param>
 	/// <param name="loadTemplate"></param>
 	/// <returns>Layout with Item Template</returns>
-	public static TLayout ItemTemplate<TLayout>(this TLayout layout, Func<object> loadTemplate) where TLayout : BindableObject, Microsoft.Maui.ILayout
-	{
-		BindableLayout.SetItemTemplate(layout, new DataTemplate(loadTemplate));
-		return layout;
-	}
+	public static TLayout ItemTemplate<TLayout>(this TLayout layout, Func<object> loadTemplate) where TLayout : BindableObject, Microsoft.Maui.ILayout =>
+		layout.ItemTemplate(new DataTemplate(loadTemplate));
 
 	/// <summary>
 	/// Sets Item Template Selector
