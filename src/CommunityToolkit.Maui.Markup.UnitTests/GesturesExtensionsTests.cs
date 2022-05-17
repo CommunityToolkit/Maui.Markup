@@ -9,7 +9,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture(typeof(Label))] // Derived from View
 [TestFixture(typeof(Span))] // Derived from GestureElement
-class ElementGesturesExtensionsTests<TGestureElement> : ElementGesturesBaseTestFixture where TGestureElement : IGestureRecognizers, new()
+class GesturesExtensionsTests<TGestureElement> : GesturesBaseTestFixture where TGestureElement : IGestureRecognizers, new()
 {
 	[Test]
 	public void BindClickGestureDefaults()
@@ -68,36 +68,40 @@ class ElementGesturesExtensionsTests<TGestureElement> : ElementGesturesBaseTestF
 	[Test]
 	public void ClickGesture()
 	{
+		const int numberOfClicks = 2;
 		int clicks = 0;
 
 		var gestureElement = new TGestureElement();
 
-		gestureElement.ClickGesture(() => clicks++);
+		gestureElement.ClickGesture(() => clicks++, 2);
 		((ClickGestureRecognizer)gestureElement.GestureRecognizers[0]).SendClicked(null, ButtonsMask.Primary);
 
-		Assert.Greater(0, clicks);
+		Assert.Greater(clicks, 0);
 		Assert.AreEqual(1, gestureElement.GestureRecognizers.Count);
-		Assert.IsInstanceOf<TapGestureRecognizer>(gestureElement.GestureRecognizers[0]);
+		Assert.IsInstanceOf<ClickGestureRecognizer>(gestureElement.GestureRecognizers[0]);
+		Assert.AreEqual(numberOfClicks, ((ClickGestureRecognizer)gestureElement.GestureRecognizers[0]).NumberOfClicksRequired);
 	}
 
 	[Test]
 	public void TapGesture()
 	{
+		const int numberOfTaps = 2;
 		int taps = 0;
 
 		var gestureElement = new TGestureElement();
 
-		gestureElement.TapGesture(() => taps++);
+		gestureElement.TapGesture(() => taps++, numberOfTaps);
 		((TapGestureRecognizer)gestureElement.GestureRecognizers[0]).SendTapped(null);
 
-		Assert.Greater(0, taps);
+		Assert.Greater(taps, 0);
 		Assert.AreEqual(1, gestureElement.GestureRecognizers.Count);
 		Assert.IsInstanceOf<TapGestureRecognizer>(gestureElement.GestureRecognizers[0]);
+		Assert.AreEqual(numberOfTaps, ((TapGestureRecognizer)gestureElement.GestureRecognizers[0]).NumberOfTapsRequired);
 	}
 }
 
 //[TestFixture]
-//class ElementGesturesExtensionsTests : ElementGesturesBaseTestFixture
+//class GesturesExtensionsTests : ElementGesturesBaseTestFixture
 //{
 //	[Test]
 //	public void BindSwipeGestureDefaults()
@@ -200,7 +204,7 @@ class ElementGesturesExtensionsTests<TGestureElement> : ElementGesturesBaseTestF
 //	}
 //}
 
-class ElementGesturesBaseTestFixture : BaseMarkupTestFixture
+class GesturesBaseTestFixture : BaseMarkupTestFixture
 {
 	protected class DerivedFromLabel : Label { }
 

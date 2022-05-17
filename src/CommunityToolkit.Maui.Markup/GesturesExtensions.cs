@@ -103,8 +103,10 @@ public static class GesturesExtensions
 																	Action onClicked,
 																	int? numberOfClicksRequired = null) where TGestureElement : IGestureRecognizers
 	{
-		var gestureRecognizer = new ClickGestureRecognizer();
-		gestureRecognizer.Command = new Command(onClicked);
+		var gestureRecognizer = new ClickGestureRecognizer
+		{
+			Command = new Command(onClicked)
+		};
 
 		if (numberOfClicksRequired is not null)
 		{
@@ -211,8 +213,10 @@ public static class GesturesExtensions
 																Action onTapped,
 																int? numberOfTapsRequired = null) where TGestureElement : IGestureRecognizers
 	{
-		var gestureRecognizer = new TapGestureRecognizer();
-		gestureRecognizer.Command = new Command(onTapped);
+		var gestureRecognizer = new TapGestureRecognizer
+		{
+			Command = new Command(onTapped)
+		};
 
 		if (numberOfTapsRequired is not null)
 		{
