@@ -16,10 +16,11 @@ class ElementGesturesExtensionsTests<TGestureElement> : ElementGesturesBaseTestF
 	{
 		var gestureElement = new TGestureElement();
 
-		gestureElement.BindClickGesture(commandPath);
+		gestureElement.BindClickGesture(CommandPath);
 
-		var gestureRecognizer = AssertHasGestureRecognizer<ClickGestureRecognizer>(gestureElement);
-		BindingHelpers.AssertBindingExists(gestureRecognizer, ClickGestureRecognizer.CommandProperty, commandPath);
+		Assert.AreEqual(1, gestureElement.GestureRecognizers.Count);
+		Assert.IsInstanceOf<ClickGestureRecognizer>(gestureElement.GestureRecognizers[0]);
+		BindingHelpers.AssertBindingExists((ClickGestureRecognizer)gestureElement.GestureRecognizers[0], ClickGestureRecognizer.CommandProperty, CommandPath);
 	}
 
 	[Test]
@@ -29,11 +30,12 @@ class ElementGesturesExtensionsTests<TGestureElement> : ElementGesturesBaseTestF
 		object commandSource = new ViewModel();
 		object parameterSource = new ViewModel();
 
-		gestureElement.BindClickGesture(commandPath, commandSource, parameterPath, parameterSource);
+		gestureElement.BindClickGesture(CommandPath, commandSource, ParameterPath, parameterSource);
 
-		var gestureRecognizer = AssertHasGestureRecognizer<ClickGestureRecognizer>(gestureElement);
-		BindingHelpers.AssertBindingExists(gestureRecognizer, ClickGestureRecognizer.CommandProperty, commandPath, source: commandSource);
-		BindingHelpers.AssertBindingExists(gestureRecognizer, ClickGestureRecognizer.CommandParameterProperty, parameterPath, source: parameterSource);
+		Assert.AreEqual(1, gestureElement.GestureRecognizers.Count);
+		Assert.IsInstanceOf<ClickGestureRecognizer>(gestureElement.GestureRecognizers[0]);
+		BindingHelpers.AssertBindingExists((ClickGestureRecognizer)gestureElement.GestureRecognizers[0], ClickGestureRecognizer.CommandProperty, CommandPath, source: commandSource);
+		BindingHelpers.AssertBindingExists((ClickGestureRecognizer)gestureElement.GestureRecognizers[0], ClickGestureRecognizer.CommandParameterProperty, ParameterPath, source: parameterSource);
 	}
 
 	[Test]
@@ -41,10 +43,11 @@ class ElementGesturesExtensionsTests<TGestureElement> : ElementGesturesBaseTestF
 	{
 		var gestureElement = new TGestureElement();
 
-		gestureElement.BindTapGesture(commandPath);
+		gestureElement.BindTapGesture(CommandPath);
 
-		var gestureRecognizer = AssertHasGestureRecognizer<TapGestureRecognizer>(gestureElement);
-		BindingHelpers.AssertBindingExists(gestureRecognizer, TapGestureRecognizer.CommandProperty, commandPath);
+		Assert.AreEqual(1, gestureElement.GestureRecognizers.Count);
+		Assert.IsInstanceOf<TapGestureRecognizer>(gestureElement.GestureRecognizers[0]);
+		BindingHelpers.AssertBindingExists((TapGestureRecognizer)gestureElement.GestureRecognizers[0], TapGestureRecognizer.CommandProperty, CommandPath);
 	}
 
 	[Test]
@@ -54,22 +57,27 @@ class ElementGesturesExtensionsTests<TGestureElement> : ElementGesturesBaseTestF
 		object commandSource = new ViewModel();
 		object parameterSource = new ViewModel();
 
-		gestureElement.BindTapGesture(commandPath, commandSource, parameterPath, parameterSource);
+		gestureElement.BindTapGesture(CommandPath, commandSource, ParameterPath, parameterSource);
 
-		var gestureRecognizer = AssertHasGestureRecognizer<TapGestureRecognizer>(gestureElement);
-		BindingHelpers.AssertBindingExists(gestureRecognizer, TapGestureRecognizer.CommandProperty, commandPath, source: commandSource);
-		BindingHelpers.AssertBindingExists(gestureRecognizer, TapGestureRecognizer.CommandParameterProperty, parameterPath, source: parameterSource);
+		Assert.AreEqual(1, gestureElement.GestureRecognizers.Count);
+		Assert.IsInstanceOf<TapGestureRecognizer>(gestureElement.GestureRecognizers[0]);
+		BindingHelpers.AssertBindingExists((TapGestureRecognizer)gestureElement.GestureRecognizers[0], TapGestureRecognizer.CommandProperty, CommandPath, source: commandSource);
+		BindingHelpers.AssertBindingExists((TapGestureRecognizer)gestureElement.GestureRecognizers[0], TapGestureRecognizer.CommandParameterProperty, ParameterPath, source: parameterSource);
 	}
 
 	[Test]
 	public void ClickGesture()
 	{
+		int clicks = 0;
+
 		var gestureElement = new TGestureElement();
-		ClickGestureRecognizer? gestureRecognizer = null;
 
-		gestureElement.ClickGesture(g => gestureRecognizer = g);
+		gestureElement.ClickGesture(() => clicks++);
+		((ClickGestureRecognizer)gestureElement.GestureRecognizers[0]).SendClicked(null, ButtonsMask.Primary);
 
-		AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
+		Assert.Greater(0, clicks);
+		Assert.AreEqual(1, gestureElement.GestureRecognizers.Count);
+		Assert.IsInstanceOf<TapGestureRecognizer>(gestureElement.GestureRecognizers[0]);
 	}
 
 	[Test]
@@ -190,37 +198,8 @@ class ElementGesturesExtensionsTests : ElementGesturesBaseTestFixture
 
 class ElementGesturesBaseTestFixture : BaseMarkupTestFixture
 {
-	protected const string commandPath = nameof(ViewModel.Command), parameterPath = nameof(ViewModel.Id);
-
-	protected static TGestureRecognizer AssertHasGestureRecognizer<TGestureRecognizer>(IGestureRecognizers element)
-		where TGestureRecognizer : GestureRecognizer
-		=> AssertHasGestureRecognizers<TGestureRecognizer>(element, 1)[0];
-
-	protected static TGestureRecognizer AssertHasGestureRecognizer<TGestureRecognizer>(IGestureRecognizers element, TGestureRecognizer gestureRecognizer)
-		where TGestureRecognizer : GestureRecognizer
-		=> AssertHasGestureRecognizers(element, 1, gestureRecognizer)[0];
-
-	protected static TGestureRecognizer[] AssertHasGestureRecognizers<TGestureRecognizer>(IGestureRecognizers element, params TGestureRecognizer[] gestureRecognizers)
-		where TGestureRecognizer : GestureRecognizer
-		=> AssertHasGestureRecognizers(element, gestureRecognizers.Length, gestureRecognizers: gestureRecognizers);
-
-	protected static TGestureRecognizer[] AssertHasGestureRecognizers<TGestureRecognizer>(IGestureRecognizers element, int count, params TGestureRecognizer[] gestureRecognizers)
-		where TGestureRecognizer : GestureRecognizer
-	{
-		if (gestureRecognizers.Length == 0)
-		{
-			gestureRecognizers = element.GestureRecognizers.Where(g => g is TGestureRecognizer).Cast<TGestureRecognizer>().ToArray();
-		}
-
-		Assert.That(gestureRecognizers.Length, Is.EqualTo(count));
-
-		foreach (var gestureRecognizer in gestureRecognizers)
-		{
-			Assert.That(element?.GestureRecognizers?.Count(g => ReferenceEquals(g, gestureRecognizer)) ?? 0, Is.EqualTo(1));
-		}
-
-		return gestureRecognizers;
-	}
+	protected const string CommandPath = nameof(ViewModel.Command);
+	protected const string ParameterPath = nameof(ViewModel.Id);
 
 	protected class DerivedFromLabel : Label { }
 
