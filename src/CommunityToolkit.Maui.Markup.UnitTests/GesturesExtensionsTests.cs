@@ -32,7 +32,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 		object commandSource = new ViewModel();
 		object parameterSource = new ViewModel();
 
-		gestureElement.BindClickGesture(nameof(ViewModel.Command), commandSource, nameof(ViewModel.Id), parameterSource, 2);
+		gestureElement.BindClickGesture(nameof(ViewModel.Command), commandSource, nameof(ViewModel.Id), parameterSource, numberOfClicks);
 
 		Assert.AreEqual(1, gestureElement.GestureRecognizers.Count);
 		Assert.IsInstanceOf<ClickGestureRecognizer>(gestureElement.GestureRecognizers[0]);
