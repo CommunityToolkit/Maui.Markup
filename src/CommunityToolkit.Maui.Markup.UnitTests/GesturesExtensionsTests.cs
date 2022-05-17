@@ -9,7 +9,6 @@ using NUnit.Framework;
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture(typeof(Label))] // Derived from View
-[TestFixture(typeof(Span))] // Derived from GestureElement
 class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGestureElement : IGestureRecognizers, new()
 {
 	[Test]
@@ -180,11 +179,11 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 		var gestureElement = new TGestureElement();
 
 		gestureElement.SwipeGesture(eventArgs => swipeCount++, direction, threshold);
-		((ISwipeGestureController)gestureElement.GestureRecognizers[0]).SendSwipe(null, 2, 2);
+		((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0]).SendSwiped(null, direction);
 
 		Assert.AreEqual(swipeCount, 1);
 		Assert.AreEqual(1, gestureElement.GestureRecognizers.Count);
-		Assert.IsInstanceOf<PinchGestureRecognizer>(gestureElement.GestureRecognizers[0]);
+		Assert.IsInstanceOf<SwipeGestureRecognizer>(gestureElement.GestureRecognizers[0]);
 		Assert.AreEqual(direction, ((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0]).Direction);
 		Assert.AreEqual(threshold, ((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0]).Threshold);
 	}
@@ -209,23 +208,12 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 			new DerivedFromLabel()
 			.PanGesture());
 	}
-
-	[Test]
-	public void SupportDerivedFromSpan() // A GestureElement
-	{
-		Assert.IsInstanceOf<DerivedFromSpan>(
-			new DerivedFromSpan()
-			.PinchGesture());
-	}
 }
 
 class DerivedFromLabel : Label
 {
 }
 
-class DerivedFromSpan : Span
-{
-}
 
 class DerivedFromGestureRecognizer : GestureRecognizer
 {
