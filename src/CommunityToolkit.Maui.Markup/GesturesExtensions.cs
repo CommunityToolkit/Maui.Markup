@@ -133,7 +133,7 @@ public static class GesturesExtensions
 
 		if (onPanUpdated is not null)
 		{
-			gestureRecognizer.PanUpdated += (sender, e) => onPanUpdated?.Invoke(e); ;
+			gestureRecognizer.PanUpdated += (sender, e) => onPanUpdated?.Invoke(e);
 		}
 
 		if (touchPoints is not null)
