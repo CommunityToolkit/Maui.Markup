@@ -79,7 +79,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 
 		var gestureElement = new TGestureElement();
 
-		gestureElement.ClickGesture(() => clicks++, 2);
+		gestureElement.ClickGesture(() => clicks++, numberOfClicks);
 		((ClickGestureRecognizer)gestureElement.GestureRecognizers[0]).SendClicked(null, ButtonsMask.Primary);
 
 		Assert.Greater(clicks, 0);
