@@ -16,11 +16,11 @@ class ElementGesturesExtensionsTests<TGestureElement> : ElementGesturesBaseTestF
 	{
 		var gestureElement = new TGestureElement();
 
-		gestureElement.BindClickGesture(CommandPath);
+		gestureElement.BindClickGesture(nameof(ViewModel.Command));
 
 		Assert.AreEqual(1, gestureElement.GestureRecognizers.Count);
 		Assert.IsInstanceOf<ClickGestureRecognizer>(gestureElement.GestureRecognizers[0]);
-		BindingHelpers.AssertBindingExists((ClickGestureRecognizer)gestureElement.GestureRecognizers[0], ClickGestureRecognizer.CommandProperty, CommandPath);
+		BindingHelpers.AssertBindingExists((ClickGestureRecognizer)gestureElement.GestureRecognizers[0], ClickGestureRecognizer.CommandProperty, nameof(ViewModel.Command));
 	}
 
 	[Test]
@@ -30,12 +30,12 @@ class ElementGesturesExtensionsTests<TGestureElement> : ElementGesturesBaseTestF
 		object commandSource = new ViewModel();
 		object parameterSource = new ViewModel();
 
-		gestureElement.BindClickGesture(CommandPath, commandSource, ParameterPath, parameterSource);
+		gestureElement.BindClickGesture(nameof(ViewModel.Command), commandSource, nameof(ViewModel.Id), parameterSource);
 
 		Assert.AreEqual(1, gestureElement.GestureRecognizers.Count);
 		Assert.IsInstanceOf<ClickGestureRecognizer>(gestureElement.GestureRecognizers[0]);
-		BindingHelpers.AssertBindingExists((ClickGestureRecognizer)gestureElement.GestureRecognizers[0], ClickGestureRecognizer.CommandProperty, CommandPath, source: commandSource);
-		BindingHelpers.AssertBindingExists((ClickGestureRecognizer)gestureElement.GestureRecognizers[0], ClickGestureRecognizer.CommandParameterProperty, ParameterPath, source: parameterSource);
+		BindingHelpers.AssertBindingExists((ClickGestureRecognizer)gestureElement.GestureRecognizers[0], ClickGestureRecognizer.CommandProperty, nameof(ViewModel.Command), source: commandSource);
+		BindingHelpers.AssertBindingExists((ClickGestureRecognizer)gestureElement.GestureRecognizers[0], ClickGestureRecognizer.CommandParameterProperty, nameof(ViewModel.Id), source: parameterSource);
 	}
 
 	[Test]
@@ -43,11 +43,11 @@ class ElementGesturesExtensionsTests<TGestureElement> : ElementGesturesBaseTestF
 	{
 		var gestureElement = new TGestureElement();
 
-		gestureElement.BindTapGesture(CommandPath);
+		gestureElement.BindTapGesture(nameof(ViewModel.Command));
 
 		Assert.AreEqual(1, gestureElement.GestureRecognizers.Count);
 		Assert.IsInstanceOf<TapGestureRecognizer>(gestureElement.GestureRecognizers[0]);
-		BindingHelpers.AssertBindingExists((TapGestureRecognizer)gestureElement.GestureRecognizers[0], TapGestureRecognizer.CommandProperty, CommandPath);
+		BindingHelpers.AssertBindingExists((TapGestureRecognizer)gestureElement.GestureRecognizers[0], TapGestureRecognizer.CommandProperty, nameof(ViewModel.Command));
 	}
 
 	[Test]
@@ -57,12 +57,12 @@ class ElementGesturesExtensionsTests<TGestureElement> : ElementGesturesBaseTestF
 		object commandSource = new ViewModel();
 		object parameterSource = new ViewModel();
 
-		gestureElement.BindTapGesture(CommandPath, commandSource, ParameterPath, parameterSource);
+		gestureElement.BindTapGesture(nameof(ViewModel.Command), commandSource, nameof(ViewModel.Id), parameterSource);
 
 		Assert.AreEqual(1, gestureElement.GestureRecognizers.Count);
 		Assert.IsInstanceOf<TapGestureRecognizer>(gestureElement.GestureRecognizers[0]);
-		BindingHelpers.AssertBindingExists((TapGestureRecognizer)gestureElement.GestureRecognizers[0], TapGestureRecognizer.CommandProperty, CommandPath, source: commandSource);
-		BindingHelpers.AssertBindingExists((TapGestureRecognizer)gestureElement.GestureRecognizers[0], TapGestureRecognizer.CommandParameterProperty, ParameterPath, source: parameterSource);
+		BindingHelpers.AssertBindingExists((TapGestureRecognizer)gestureElement.GestureRecognizers[0], TapGestureRecognizer.CommandProperty, nameof(ViewModel.Command), source: commandSource);
+		BindingHelpers.AssertBindingExists((TapGestureRecognizer)gestureElement.GestureRecognizers[0], TapGestureRecognizer.CommandParameterProperty, nameof(ViewModel.Id), source: parameterSource);
 	}
 
 	[Test]
@@ -83,134 +83,135 @@ class ElementGesturesExtensionsTests<TGestureElement> : ElementGesturesBaseTestF
 	[Test]
 	public void TapGesture()
 	{
+		int taps = 0;
+
 		var gestureElement = new TGestureElement();
-		TapGestureRecognizer? gestureRecognizer = null;
 
-		gestureElement.TapGesture(g => gestureRecognizer = g);
+		gestureElement.TapGesture(() => taps++);
+		((TapGestureRecognizer)gestureElement.GestureRecognizers[0]).SendTapped(null);
 
-		AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
+		Assert.Greater(0, taps);
+		Assert.AreEqual(1, gestureElement.GestureRecognizers.Count);
+		Assert.IsInstanceOf<TapGestureRecognizer>(gestureElement.GestureRecognizers[0]);
 	}
 }
 
-[TestFixture]
-class ElementGesturesExtensionsTests : ElementGesturesBaseTestFixture
-{
-	[Test]
-	public void BindSwipeGestureDefaults()
-	{
-		var gestureElement = new Label();
+//[TestFixture]
+//class ElementGesturesExtensionsTests : ElementGesturesBaseTestFixture
+//{
+//	[Test]
+//	public void BindSwipeGestureDefaults()
+//	{
+//		var gestureElement = new Label();
 
-		gestureElement.BindSwipeGesture(commandPath);
+//		gestureElement.BindSwipeGesture(nameof(ViewModel.Command));
 
-		var gestureRecognizer = AssertHasGestureRecognizer<SwipeGestureRecognizer>(gestureElement);
-		BindingHelpers.AssertBindingExists(gestureRecognizer, SwipeGestureRecognizer.CommandProperty, commandPath);
-	}
+//		var gestureRecognizer = AssertHasGestureRecognizer<SwipeGestureRecognizer>(gestureElement);
+//		BindingHelpers.AssertBindingExists(gestureRecognizer, SwipeGestureRecognizer.CommandProperty, nameof(ViewModel.Command));
+//	}
 
-	[Test]
-	public void BindSwipeGesturePositionalParameters()
-	{
-		var gestureElement = new Label();
-		object commandSource = new ViewModel();
-		object parameterSource = new ViewModel();
+//	[Test]
+//	public void BindSwipeGesturePositionalParameters()
+//	{
+//		var gestureElement = new Label();
+//		object commandSource = new ViewModel();
+//		object parameterSource = new ViewModel();
 
-		gestureElement.BindSwipeGesture(commandPath, commandSource, parameterPath, parameterSource);
+//		gestureElement.BindSwipeGesture(nameof(ViewModel.Command), commandSource, nameof(ViewModel.Id), parameterSource);
 
-		var gestureRecognizer = AssertHasGestureRecognizer<SwipeGestureRecognizer>(gestureElement);
-		BindingHelpers.AssertBindingExists(gestureRecognizer, SwipeGestureRecognizer.CommandProperty, commandPath, source: commandSource);
-		BindingHelpers.AssertBindingExists(gestureRecognizer, SwipeGestureRecognizer.CommandParameterProperty, parameterPath, source: parameterSource);
-	}
+//		var gestureRecognizer = AssertHasGestureRecognizer<SwipeGestureRecognizer>(gestureElement);
+//		BindingHelpers.AssertBindingExists(gestureRecognizer, SwipeGestureRecognizer.CommandProperty, nameof(ViewModel.Command), source: commandSource);
+//		BindingHelpers.AssertBindingExists(gestureRecognizer, SwipeGestureRecognizer.CommandParameterProperty, nameof(ViewModel.Id), source: parameterSource);
+//	}
 
-	[Test]
-	public void PanGesture()
-	{
-		var gestureElement = new Label();
-		PanGestureRecognizer? gestureRecognizer = null;
+//	[Test]
+//	public void PanGesture()
+//	{
+//		var gestureElement = new Label();
+//		PanGestureRecognizer? gestureRecognizer = null;
 
-		gestureElement.PanGesture(g => gestureRecognizer = g);
+//		gestureElement.PanGesture(g => gestureRecognizer = g);
 
-		AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
-	}
+//		AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
+//	}
 
-	[Test]
-	public void PinchGesture()
-	{
-		var gestureElement = new Label();
-		PinchGestureRecognizer? gestureRecognizer = null;
+//	[Test]
+//	public void PinchGesture()
+//	{
+//		var gestureElement = new Label();
+//		PinchGestureRecognizer? gestureRecognizer = null;
 
-		gestureElement.PinchGesture(g => gestureRecognizer = g);
+//		gestureElement.PinchGesture(g => gestureRecognizer = g);
 
-		AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
-	}
+//		AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
+//	}
 
-	[Test]
-	public void SwipeGesture()
-	{
-		var gestureElement = new Label();
-		SwipeGestureRecognizer? gestureRecognizer = null;
+//	[Test]
+//	public void SwipeGesture()
+//	{
+//		var gestureElement = new Label();
+//		SwipeGestureRecognizer? gestureRecognizer = null;
 
-		gestureElement.SwipeGesture(g => gestureRecognizer = g);
+//		gestureElement.SwipeGesture(g => gestureRecognizer = g);
 
-		AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
-	}
+//		AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
+//	}
 
-	[Test]
-	public void MultipleGestures()
-	{
-		var gestureElement = new Label();
-		TapGestureRecognizer? gestureRecognizer1 = null, gestureRecognizer2 = null;
-		SwipeGestureRecognizer? gestureRecognizer3 = null;
+//	[Test]
+//	public void MultipleGestures()
+//	{
+//		var gestureElement = new Label();
+//		TapGestureRecognizer? gestureRecognizer1 = null, gestureRecognizer2 = null;
+//		SwipeGestureRecognizer? gestureRecognizer3 = null;
 
-		gestureElement.TapGesture(g => gestureRecognizer1 = g);
-		gestureElement.TapGesture(g => gestureRecognizer2 = g);
-		gestureElement.SwipeGesture(g => gestureRecognizer3 = g);
+//		gestureElement.TapGesture(g => gestureRecognizer1 = g);
+//		gestureElement.TapGesture(g => gestureRecognizer2 = g);
+//		gestureElement.SwipeGesture(g => gestureRecognizer3 = g);
 
-		AssertHasGestureRecognizers(gestureElement, gestureRecognizer1 ?? throw new NullReferenceException(), gestureRecognizer2 ?? throw new NullReferenceException());
-		AssertHasGestureRecognizer(gestureElement, gestureRecognizer3 ?? throw new NullReferenceException());
-	}
+//		AssertHasGestureRecognizers(gestureElement, gestureRecognizer1 ?? throw new NullReferenceException(), gestureRecognizer2 ?? throw new NullReferenceException());
+//		AssertHasGestureRecognizer(gestureElement, gestureRecognizer3 ?? throw new NullReferenceException());
+//	}
 
-	[Test]
-	public void Gesture()
-	{
-		var gestureElement = new Label();
-		DerivedFromGestureRecognizer? gestureRecognizer = null;
+//	[Test]
+//	public void Gesture()
+//	{
+//		var gestureElement = new Label();
+//		DerivedFromGestureRecognizer? gestureRecognizer = null;
 
-		gestureElement.Gesture((DerivedFromGestureRecognizer g) => gestureRecognizer = g);
+//		gestureElement.Gesture((DerivedFromGestureRecognizer g) => gestureRecognizer = g);
 
-		AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
-	}
+//		AssertHasGestureRecognizer(gestureElement, gestureRecognizer ?? throw new NullReferenceException());
+//	}
 
-	[Test]
-	public void SupportDerivedFromLabel() // A View
-	{
-		Assert.IsInstanceOf<DerivedFromLabel>(
-			new DerivedFromLabel()
-			.Gesture((TapGestureRecognizer g) => g.Bind(nameof(ViewModel.Command))));
-	}
+//	[Test]
+//	public void SupportDerivedFromLabel() // A View
+//	{
+//		Assert.IsInstanceOf<DerivedFromLabel>(
+//			new DerivedFromLabel()
+//			.Gesture((TapGestureRecognizer g) => g.Bind(nameof(ViewModel.Command))));
+//	}
 
-	[Test]
-	public void SupportDerivedFromSpan() // A GestureElement
-	{
-		Assert.IsInstanceOf<DerivedFromSpan>(
-			new DerivedFromSpan()
-			.Gesture((TapGestureRecognizer g) => g.Bind(nameof(ViewModel.Command))));
-	}
-}
+//	[Test]
+//	public void SupportDerivedFromSpan() // A GestureElement
+//	{
+//		Assert.IsInstanceOf<DerivedFromSpan>(
+//			new DerivedFromSpan()
+//			.Gesture((TapGestureRecognizer g) => g.Bind(nameof(ViewModel.Command))));
+//	}
+//}
 
 class ElementGesturesBaseTestFixture : BaseMarkupTestFixture
 {
-	protected const string CommandPath = nameof(ViewModel.Command);
-	protected const string ParameterPath = nameof(ViewModel.Id);
-
 	protected class DerivedFromLabel : Label { }
 
 	protected class DerivedFromSpan : Span { }
 
 	protected class DerivedFromGestureRecognizer : GestureRecognizer { }
+}
 
-	protected class ViewModel
-	{
-		public Guid Id { get; set; }
+class ViewModel
+{
+	public Guid Id { get; set; }
 
-		public ICommand? Command { get; set; }
-	}
+	public ICommand? Command { get; set; }
 }
