@@ -126,14 +126,14 @@ public static class GesturesExtensions
 	/// <param name="touchPoints">Number of touch points in the gesture</param>
 	/// <returns><paramref name="gestureElement"/></returns>
 	public static TGestureElement PanGesture<TGestureElement>(this TGestureElement gestureElement,
-																Action<PanUpdatedEventArgs>? onPanUpdated = null,
+																EventHandler<PanUpdatedEventArgs>? onPanUpdated = null,
 																int? touchPoints = null) where TGestureElement : IGestureRecognizers
 	{
 		var gestureRecognizer = new PanGestureRecognizer();
 
 		if (onPanUpdated is not null)
 		{
-			gestureRecognizer.PanUpdated += (sender, e) => onPanUpdated?.Invoke(e);
+			gestureRecognizer.PanUpdated += onPanUpdated;
 		}
 
 		if (touchPoints is not null)
@@ -153,13 +153,13 @@ public static class GesturesExtensions
 	/// <param name="onPinchGestureUpdated"><see cref="Action"/> that invokes when the <see cref="PinchGestureRecognizer.PinchUpdated"/> event is invoked</param>
 	/// <returns><paramref name="gestureElement"/></returns>
 	public static TGestureElement PinchGesture<TGestureElement>(this TGestureElement gestureElement,
-																Action<PinchGestureUpdatedEventArgs>? onPinchGestureUpdated = null) where TGestureElement : IGestureRecognizers
+																EventHandler<PinchGestureUpdatedEventArgs>? onPinchGestureUpdated = null) where TGestureElement : IGestureRecognizers
 	{
 		var gestureRecognizer = new PinchGestureRecognizer();
 
 		if (onPinchGestureUpdated is not null)
 		{
-			gestureRecognizer.PinchUpdated += (sender, e) => onPinchGestureUpdated?.Invoke(e);
+			gestureRecognizer.PinchUpdated += onPinchGestureUpdated;
 		}
 
 		gestureElement.GestureRecognizers.Add(gestureRecognizer);
@@ -176,7 +176,7 @@ public static class GesturesExtensions
 	/// <param name="threshold">Minimum swipe distance that will cause the gesture to be recognized</param>
 	/// <returns><paramref name="gestureElement"/></returns>
 	public static TGestureElement SwipeGesture<TGestureElement>(this TGestureElement gestureElement,
-																Action<SwipedEventArgs>? onSwiped = null,
+																EventHandler<SwipedEventArgs>? onSwiped = null,
 																Microsoft.Maui.SwipeDirection? direction = null,
 																uint? threshold = null) where TGestureElement : IGestureRecognizers
 	{
@@ -184,7 +184,7 @@ public static class GesturesExtensions
 
 		if (onSwiped is not null)
 		{
-			gestureRecognizer.Swiped += (sender, e) => onSwiped?.Invoke(e);
+			gestureRecognizer.Swiped += onSwiped;
 		}
 
 		if (direction is not null)

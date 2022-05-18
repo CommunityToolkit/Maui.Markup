@@ -145,13 +145,15 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 
 		var gestureElement = new TGestureElement();
 
-		gestureElement.PanGesture(eventArgs => panCount++, touchPoints);
+		gestureElement.PanGesture(OnPan, touchPoints);
 		((IPanGestureController)gestureElement.GestureRecognizers[0]).SendPan(null, 1, 2, 1);
 
 		Assert.AreEqual(panCount, 1);
 		Assert.AreEqual(1, gestureElement.GestureRecognizers.Count);
 		Assert.IsInstanceOf<PanGestureRecognizer>(gestureElement.GestureRecognizers[0]);
 		Assert.AreEqual(touchPoints, ((PanGestureRecognizer)gestureElement.GestureRecognizers[0]).TouchPoints);
+
+		void OnPan(object? sender, PanUpdatedEventArgs e) => panCount++;
 	}
 
 	[Test]
@@ -161,12 +163,14 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 
 		var gestureElement = new TGestureElement();
 
-		gestureElement.PinchGesture(eventArgs => pinchCount++);
+		gestureElement.PinchGesture(OnPinch);
 		((IPinchGestureController)gestureElement.GestureRecognizers[0]).SendPinch(null, 2, new Microsoft.Maui.Graphics.Point());
 
 		Assert.AreEqual(pinchCount, 1);
 		Assert.AreEqual(1, gestureElement.GestureRecognizers.Count);
 		Assert.IsInstanceOf<PinchGestureRecognizer>(gestureElement.GestureRecognizers[0]);
+
+		void OnPinch(object? sender, PinchGestureUpdatedEventArgs e) => pinchCount++;
 	}
 
 	[Test]
@@ -178,7 +182,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 
 		var gestureElement = new TGestureElement();
 
-		gestureElement.SwipeGesture(eventArgs => swipeCount++, direction, threshold);
+		gestureElement.SwipeGesture(OnSwipe, direction, threshold);
 		((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0]).SendSwiped(null, direction);
 
 		Assert.AreEqual(swipeCount, 1);
@@ -186,6 +190,8 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 		Assert.IsInstanceOf<SwipeGestureRecognizer>(gestureElement.GestureRecognizers[0]);
 		Assert.AreEqual(direction, ((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0]).Direction);
 		Assert.AreEqual(threshold, ((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0]).Threshold);
+
+		void OnSwipe(object? sender, SwipedEventArgs e) => swipeCount++;
 	}
 
 	[Test]
