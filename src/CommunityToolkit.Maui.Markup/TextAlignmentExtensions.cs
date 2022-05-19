@@ -9,7 +9,7 @@ namespace CommunityToolkit.Maui.Markup
 	public static class TextAlignmentExtensions
 	{
 		/// <summary>
-		/// HorizontalTextAlignment = TextAlignment.Start
+		/// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.Start"/>
 		/// </summary>
 		/// <typeparam name="TBindable"></typeparam>
 		/// <param name="bindable"></param>
@@ -21,7 +21,7 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// HorizontalTextAlignment = TextAlignment.Center
+		/// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.Center"/>
 		/// </summary>
 		/// <typeparam name="TBindable"></typeparam>
 		/// <param name="bindable"></param>
@@ -33,7 +33,7 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// HorizontalTextAlignment = TextAlignment.End
+		/// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.End"/>
 		/// </summary>
 		/// <typeparam name="TBindable"></typeparam>
 		/// <param name="bindable"></param>
@@ -45,7 +45,7 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// VerticalTextAlignment = TextAlignment.Start
+		/// <see cref="ITextAlignment.VerticalTextAlignment"/> = <see cref="TextAlignment.Start"/>
 		/// </summary>
 		/// <typeparam name="TBindable"></typeparam>
 		/// <param name="bindable"></param>
@@ -57,7 +57,7 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// VerticalTextAlignment = TextAlignment.Center
+		/// <see cref="ITextAlignment.VerticalTextAlignment"/> = <see cref="TextAlignment.Center"/>
 		/// </summary>
 		/// <typeparam name="TBindable"></typeparam>
 		/// <param name="bindable"></param>
@@ -69,7 +69,7 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// VerticalTextAlignment = TextAlignment.End
+		/// <see cref="ITextAlignment.VerticalTextAlignment"/> = <see cref="TextAlignment.End"/>
 		/// </summary>
 		/// <typeparam name="TBindable"></typeparam>
 		/// <param name="bindable"></param>
@@ -81,7 +81,7 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// VerticalTextAlignment = HorizontalTextAlignment = TextAlignment.Center
+		/// <see cref="ITextAlignment.VerticalTextAlignment"/> = <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.Center"/>
 		/// </summary>
 		/// <typeparam name="TBindable"></typeparam>
 		/// <param name="bindable"></param>
@@ -93,6 +93,10 @@ namespace CommunityToolkit.Maui.Markup
 
 	// The extensions in these sub-namespaces are designed to be used together with the extensions in the parent namespace.
 	// Keep them in a single file for better maintainability
+
+	/// <summary>
+	/// Extension Methods for Left-to-Right Text
+	/// </summary>
 	namespace LeftToRight
 	{
 		/// <summary>
@@ -101,7 +105,7 @@ namespace CommunityToolkit.Maui.Markup
 		public static class TextAlignmentExtensions
 		{
 			/// <summary>
-			/// HorizontalTextAlignment = TextAlignment.Start
+			/// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.Start"/>
 			/// </summary>
 			/// <typeparam name="TBindable"></typeparam>
 			/// <param name="bindable"></param>
@@ -113,7 +117,7 @@ namespace CommunityToolkit.Maui.Markup
 			}
 
 			/// <summary>
-			/// HorizontalTextAlignment = TextAlignment.End
+			/// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.End"/>
 			/// </summary>
 			/// <typeparam name="TBindable"></typeparam>
 			/// <param name="bindable"></param>
@@ -126,15 +130,21 @@ namespace CommunityToolkit.Maui.Markup
 		}
 	}
 
+	// The extensions in these sub-namespaces are designed to be used together with the extensions in the parent namespace.
+	// Keep them in a single file for better maintainability
+
+	/// <summary>
+	/// Extension Methods for Right-to-Left Text
+	/// </summary>
 	namespace RightToLeft
 	{
 		/// <summary>
-		/// Extension methods for Label
+		/// Extension methods for ITextAlignment
 		/// </summary>
-		public static class LabelExtensions
+		public static class TextAlignmentExtensions
 		{
 			/// <summary>
-			/// HorizontalTextAlignment = TextAlignment.End
+			/// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.End"/>
 			/// </summary>
 			/// <typeparam name="TBindable"></typeparam>
 			/// <param name="bindable"></param>
@@ -146,7 +156,7 @@ namespace CommunityToolkit.Maui.Markup
 			}
 
 			/// <summary>
-			/// HorizontalTextAlignment = TextAlignment.Start
+			/// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.Start"/>
 			/// </summary>
 			/// <typeparam name="TBindable"></typeparam>
 			/// <param name="bindable"></param>
