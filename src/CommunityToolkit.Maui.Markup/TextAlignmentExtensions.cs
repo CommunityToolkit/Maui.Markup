@@ -96,9 +96,9 @@ namespace CommunityToolkit.Maui.Markup
 	namespace LeftToRight
 	{
 		/// <summary>
-		/// Extension methods for Labels
+		/// Extension Methods for ITextAlignment
 		/// </summary>
-		public static class LabelExtensions
+		public static class TextAlignmentExtensions
 		{
 			/// <summary>
 			/// HorizontalTextAlignment = TextAlignment.Start
