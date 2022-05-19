@@ -5,7 +5,6 @@ using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
-
 	[TestFixture]
 	class TextAlignmentExtensionsTests : BaseMarkupTestFixture<Picker>
 	{
