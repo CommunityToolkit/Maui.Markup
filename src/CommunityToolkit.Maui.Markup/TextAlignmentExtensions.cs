@@ -4,7 +4,7 @@ using Microsoft.Maui.Controls;
 namespace CommunityToolkit.Maui.Markup
 {
 	/// <summary>
-	/// Extension Methods for ITextAlignment
+	/// Extension Methods for <see cref="ITextAlignment"/>
 	/// </summary>
 	public static class TextAlignmentExtensions
 	{
@@ -13,7 +13,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <typeparam name="TBindable"></typeparam>
 		/// <param name="bindable"></param>
-		/// <returns>Label with added TextAlignment.Start</returns>
+		/// <returns><typeparam name="TBindable"/> with added <see cref="TextAlignment.Start"/></returns>
 		public static TBindable TextStart<TBindable>(this TBindable bindable) where TBindable : BindableObject, ITextAlignment
 		{
 			bindable.SetValue(TextAlignmentElement.HorizontalTextAlignmentProperty, TextAlignment.Start);
@@ -25,7 +25,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <typeparam name="TBindable"></typeparam>
 		/// <param name="bindable"></param>
-		/// <returns>Label with added TextAlignment.Center</returns>
+		/// <returns><typeparam name="TBindable"/> with added <see cref="TextAlignment.Center"/></returns>
 		public static TBindable TextCenterHorizontal<TBindable>(this TBindable bindable) where TBindable : BindableObject, ITextAlignment
 		{
 			bindable.SetValue(TextAlignmentElement.HorizontalTextAlignmentProperty, TextAlignment.Center);
@@ -37,7 +37,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <typeparam name="TBindable"></typeparam>
 		/// <param name="bindable"></param>
-		/// <returns>Label with added TextAlignment.End</returns>
+		/// <returns><typeparam name="TBindable"/> with added <see cref="TextAlignment.End"/></returns>
 		public static TBindable TextEnd<TBindable>(this TBindable bindable) where TBindable : BindableObject, ITextAlignment
 		{
 			bindable.SetValue(TextAlignmentElement.HorizontalTextAlignmentProperty, TextAlignment.End);
@@ -49,7 +49,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <typeparam name="TBindable"></typeparam>
 		/// <param name="bindable"></param>
-		/// <returns>Label with added TextAlignment.Start</returns>
+		/// <returns><typeparam name="TBindable"/> with added <see cref="TextAlignment.Start"/></returns>
 		public static TBindable TextTop<TBindable>(this TBindable bindable) where TBindable : BindableObject, ITextAlignment
 		{
 			bindable.SetValue(TextAlignmentElement.VerticalTextAlignmentProperty, TextAlignment.Start);
@@ -61,7 +61,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <typeparam name="TBindable"></typeparam>
 		/// <param name="bindable"></param>
-		/// <returns>Label with added TextAlignment.Center</returns>
+		/// <returns><typeparam name="TBindable"/> with added <see cref="TextAlignment.Center"/></returns>
 		public static TBindable TextCenterVertical<TBindable>(this TBindable bindable) where TBindable : BindableObject, ITextAlignment
 		{
 			bindable.SetValue(TextAlignmentElement.VerticalTextAlignmentProperty, TextAlignment.Center);
@@ -73,7 +73,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <typeparam name="TBindable"></typeparam>
 		/// <param name="bindable"></param>
-		/// <returns>Label with added TextAlignment.End</returns>
+		/// <returns><typeparam name="TBindable"/> with added <see cref="TextAlignment.End"/></returns>
 		public static TBindable TextBottom<TBindable>(this TBindable bindable) where TBindable : BindableObject, ITextAlignment
 		{
 			bindable.SetValue(TextAlignmentElement.VerticalTextAlignmentProperty, TextAlignment.End);
@@ -85,7 +85,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <typeparam name="TBindable"></typeparam>
 		/// <param name="bindable"></param>
-		/// <returns></returns>
+		/// <returns><typeparam name="TBindable"/> with added <see cref="TextAlignment.Center"/></returns>
 		public static TBindable TextCenter<TBindable>(this TBindable bindable) where TBindable : BindableObject, ITextAlignment
 			=> bindable.TextCenterHorizontal().TextCenterVertical();
 	}
@@ -100,7 +100,7 @@ namespace CommunityToolkit.Maui.Markup
 	namespace LeftToRight
 	{
 		/// <summary>
-		/// Extension Methods for ITextAlignment
+		/// Extension Methods for <see cref="ITextAlignment"/>
 		/// </summary>
 		public static class TextAlignmentExtensions
 		{
@@ -109,7 +109,7 @@ namespace CommunityToolkit.Maui.Markup
 			/// </summary>
 			/// <typeparam name="TBindable"></typeparam>
 			/// <param name="bindable"></param>
-			/// <returns>Label with TextAlignment.Start</returns>
+			/// <returns><typeparam name="TBindable"/> with <see cref="TextAlignment.Start"/></returns>
 			public static TBindable TextLeft<TBindable>(this TBindable bindable) where TBindable : BindableObject, ITextAlignment
 			{
 				bindable.SetValue(TextAlignmentElement.HorizontalTextAlignmentProperty, TextAlignment.Start);
@@ -121,7 +121,7 @@ namespace CommunityToolkit.Maui.Markup
 			/// </summary>
 			/// <typeparam name="TBindable"></typeparam>
 			/// <param name="bindable"></param>
-			/// <returns>Label with TextAligment.End</returns>
+			/// <returns><typeparam name="TBindable"/> with <see cref="TextAlignment.End"/></returns>
 			public static TBindable TextRight<TBindable>(this TBindable bindable) where TBindable : BindableObject, ITextAlignment
 			{
 				bindable.SetValue(TextAlignmentElement.HorizontalTextAlignmentProperty, TextAlignment.End);
@@ -139,7 +139,7 @@ namespace CommunityToolkit.Maui.Markup
 	namespace RightToLeft
 	{
 		/// <summary>
-		/// Extension methods for ITextAlignment
+		/// Extension methods for <see cref="ITextAlignment"/>
 		/// </summary>
 		public static class TextAlignmentExtensions
 		{
@@ -148,7 +148,7 @@ namespace CommunityToolkit.Maui.Markup
 			/// </summary>
 			/// <typeparam name="TBindable"></typeparam>
 			/// <param name="bindable"></param>
-			/// <returns>Label with TextAlignment.End</returns>
+			/// <returns><typeparam name="TBindable"/> with <see cref="TextAlignment.End"/></returns>
 			public static TBindable TextLeft<TBindable>(this TBindable bindable) where TBindable : BindableObject, ITextAlignment
 			{
 				bindable.SetValue(TextAlignmentElement.HorizontalTextAlignmentProperty, TextAlignment.End);
@@ -160,7 +160,7 @@ namespace CommunityToolkit.Maui.Markup
 			/// </summary>
 			/// <typeparam name="TBindable"></typeparam>
 			/// <param name="bindable"></param>
-			/// <returns>Label with TextAlignment.Start</returns>
+			/// <returns><typeparam name="TBindable"/> with <see cref="TextAlignment.Start"/></returns>
 			public static TBindable TextRight<TBindable>(this TBindable bindable) where TBindable : BindableObject, ITextAlignment
 			{
 				bindable.SetValue(TextAlignmentElement.HorizontalTextAlignmentProperty, TextAlignment.Start);
