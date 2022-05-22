@@ -9,11 +9,11 @@ namespace CommunityToolkit.Maui.Markup
 	public static class ViewExtensions
 	{
 		/// <summary>
-		/// HorizontalOptions = LayoutOptions.Start
+		/// <see cref="View.HorizontalOptions"/> = <see cref="LayoutOptions.Start"/>
 		/// </summary>
 		/// <typeparam name="TView"></typeparam>
 		/// <param name="view"></param>
-		/// <returns>View with LayoutOptions.Start</returns>
+		/// <returns><typeparam name="TView"/> with <see cref="LayoutOptions.Start"/></returns>
 		public static TView Start<TView>(this TView view) where TView : View
 		{
 			view.HorizontalOptions = LayoutOptions.Start;
@@ -21,11 +21,11 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// HorizontalOptions = LayoutOptions.Center
+		/// <see cref="View.HorizontalOptions"/> = <see cref="LayoutOptions.Center"/>
 		/// </summary>
 		/// <typeparam name="TView"></typeparam>
 		/// <param name="view"></param>
-		/// <returns>View with LayoutOptions.Center</returns>
+		/// <returns><typeparam name="TView"/> with <see cref="LayoutOptions.Center"/></returns>
 		public static TView CenterHorizontal<TView>(this TView view) where TView : View
 		{
 			view.HorizontalOptions = LayoutOptions.Center;
@@ -33,11 +33,11 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// HorizontalOptions = LayoutOptions.Fill
+		/// <see cref="View.HorizontalOptions"/> = <see cref="LayoutOptions.Fill"/>
 		/// </summary>
 		/// <typeparam name="TView"></typeparam>
 		/// <param name="view"></param>
-		/// <returns>View with LayoutOptions.Fill</returns>
+		/// <returns><typeparam name="TView"/> with <see cref="LayoutOptions.Fill"/></returns>
 		public static TView FillHorizontal<TView>(this TView view) where TView : View
 		{
 			view.HorizontalOptions = LayoutOptions.Fill;
@@ -45,11 +45,11 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// HorizontalOptions = LayoutOptions.End
+		/// <see cref="View.HorizontalOptions"/> = <see cref="LayoutOptions.End"/>
 		/// </summary>
 		/// <typeparam name="TView"></typeparam>
 		/// <param name="view"></param>
-		/// <returns>View with LayoutOptions.End</returns>
+		/// <returns><typeparam name="TView"/> with <see cref="LayoutOptions.End"/></returns>
 		public static TView End<TView>(this TView view) where TView : View
 		{
 			view.HorizontalOptions = LayoutOptions.End;
@@ -57,11 +57,11 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// VerticalOptions = LayoutOptions.Start
+		/// <see cref="View.VerticalOptions"/> = <see cref="LayoutOptions.Start"/>
 		/// </summary>
 		/// <typeparam name="TView"></typeparam>
 		/// <param name="view"></param>
-		/// <returns>View with LayoutOptions.Start</returns>
+		/// <returns><typeparam name="TView"/> with <see cref="LayoutOptions.Start"/></returns>
 		public static TView Top<TView>(this TView view) where TView : View
 		{
 			view.VerticalOptions = LayoutOptions.Start;
@@ -69,11 +69,11 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// VerticalOptions = LayoutOptions.End
+		/// <see cref="View.VerticalOptions"/> = <see cref="LayoutOptions.End"/>
 		/// </summary>
 		/// <typeparam name="TView"></typeparam>
 		/// <param name="view"></param>
-		/// <returns>View with LayoutOptions.End</returns>
+		/// <returns><typeparam name="TView"/> with <see cref="LayoutOptions.End"/></returns>
 		public static TView Bottom<TView>(this TView view) where TView : View
 		{
 			view.VerticalOptions = LayoutOptions.End;
@@ -81,11 +81,11 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// VerticalOptions = LayoutOptions.Center
+		/// <see cref="View.VerticalOptions"/> = <see cref="LayoutOptions.Center"/>
 		/// </summary>
 		/// <typeparam name="TView"></typeparam>
 		/// <param name="view"></param>
-		/// <returns>View with LayoutOptions.Center</returns>
+		/// <returns><typeparam name="TView"/> with <see cref="LayoutOptions.Center"/></returns>
 		public static TView CenterVertical<TView>(this TView view) where TView : View
 		{
 			view.VerticalOptions = LayoutOptions.Center;
@@ -93,11 +93,11 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// VerticalOptions = LayoutOptions.Fill
+		/// <see cref="View.VerticalOptions"/> = <see cref="LayoutOptions.Fill"/>
 		/// </summary>
 		/// <typeparam name="TView"></typeparam>
 		/// <param name="view"></param>
-		/// <returns>View with LayoutOptions.Fill</returns>
+		/// <returns><typeparam name="TView"/> with <see cref="LayoutOptions.Fill"/></returns>
 		public static TView FillVertical<TView>(this TView view) where TView : View
 		{
 			view.VerticalOptions = LayoutOptions.Fill;
@@ -105,30 +105,30 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// VerticalOptions = HorizontalOptions = LayoutOptions.Center
+		/// <see cref="View.VerticalOptions"/> = <see cref="View.HorizontalOptions"/> = <see cref="LayoutOptions.Center"/>
 		/// </summary>
 		/// <typeparam name="TView"></typeparam>
 		/// <param name="view"></param>
-		/// <returns>View with LayoutOptions.Center</returns>
+		/// <returns><typeparam name="TView"/> with <see cref="LayoutOptions.Center"/></returns>
 		public static TView Center<TView>(this TView view) where TView : View
 			=> view.CenterHorizontal().CenterVertical();
 
 		/// <summary>
-		/// VerticalOptions = HorizontalOptions = LayoutOptions.Fill
+		/// <see cref="View.VerticalOptions"/> = <see cref="View.HorizontalOptions"/> = <see cref="LayoutOptions.Fill"/>
 		/// </summary>
 		/// <typeparam name="TView"></typeparam>
 		/// <param name="view"></param>
-		/// <returns>View with LayoutOptions.FillAndExpand</returns>
+		/// <returns><typeparam name="TView"/> with <see cref="LayoutOptions.Fill"/></returns>
 		public static TView Fill<TView>(this TView view) where TView : View
 			=> view.FillHorizontal().FillVertical();
 
 		/// <summary>
-		/// Set Margin
+		/// Set <see cref="View.Margin"/>
 		/// </summary>
 		/// <typeparam name="TView"></typeparam>
 		/// <param name="view"></param>
 		/// <param name="margin"></param>
-		/// <returns>View with added margin</returns>
+		/// <returns><typeparam name="TView"/> with added <see cref="View.Margin"/></returns>
 		public static TView Margin<TView>(this TView view, Thickness margin) where TView : View
 		{
 			view.Margin = margin;
@@ -136,13 +136,13 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// Set Margin
+		/// Set <see cref="View.Margin"/>
 		/// </summary>
 		/// <typeparam name="TView"></typeparam>
 		/// <param name="view"></param>
 		/// <param name="horizontal"></param>
 		/// <param name="vertical"></param>
-		/// <returns>View with added margin</returns>
+		/// <returns><typeparam name="TView"/> with added <see cref="View.Margin"/></returns>
 		public static TView Margin<TView>(this TView view, double horizontal, double vertical) where TView : View
 		{
 			view.Margin = new Thickness(horizontal, vertical);
@@ -150,7 +150,7 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// Set Margin
+		/// Set <see cref="View.Margin"/>
 		/// </summary>
 		/// <typeparam name="TView"></typeparam>
 		/// <param name="view"></param>
@@ -158,7 +158,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// <param name="top"></param>
 		/// <param name="right"></param>
 		/// <param name="bottom"></param>
-		/// <returns>View with added margin</returns>
+		/// <returns><typeparam name="TView"/> with added <see cref="View.Margin"/></returns>
 		public static TView Margins<TView>(this TView view, double left = 0, double top = 0, double right = 0, double bottom = 0) where TView : View
 		{
 			view.Margin = new Thickness(left, top, right, bottom);
@@ -176,11 +176,11 @@ namespace CommunityToolkit.Maui.Markup
 		public static class ViewExtensions
 		{
 			/// <summary>
-			/// HorizontalOptions = LayoutOptions.Start
+			/// <see cref="View.HorizontalOptions"/> = <see cref="LayoutOptions.Start"/>
 			/// </summary>
 			/// <typeparam name="TView"></typeparam>
 			/// <param name="view"></param>
-			/// <returns>View with LayoutOptions.Start</returns>
+			/// <returns><typeparam name="TView"/> with <see cref="LayoutOptions.Start"/></returns>
 			public static TView Left<TView>(this TView view) where TView : View
 			{
 				view.HorizontalOptions = LayoutOptions.Start;
@@ -188,11 +188,11 @@ namespace CommunityToolkit.Maui.Markup
 			}
 
 			/// <summary>
-			/// HorizontalOptions = LayoutOptions.End
+			/// <see cref="View.HorizontalOptions"/> = <see cref="LayoutOptions.End"/>
 			/// </summary>
 			/// <typeparam name="TView"></typeparam>
 			/// <param name="view"></param>
-			/// <returns>View with LayoutOptions.End</returns>
+			/// <returns><typeparam name="TView"/> with <see cref="LayoutOptions.End"/></returns>
 			public static TView Right<TView>(this TView view) where TView : View
 			{
 				view.HorizontalOptions = LayoutOptions.End;
@@ -209,11 +209,11 @@ namespace CommunityToolkit.Maui.Markup
 		public static class ViewExtensions
 		{
 			/// <summary>
-			/// HorizontalOptions = LayoutOptions.End
+			/// <see cref="View.HorizontalOptions"/> = <see cref="LayoutOptions.End"/>
 			/// </summary>
 			/// <typeparam name="TView"></typeparam>
 			/// <param name="view"></param>
-			/// <returns>View with LayoutOptions.End</returns>
+			/// <returns><typeparam name="TView"/> with <see cref="LayoutOptions.End"/></returns>
 			public static TView Left<TView>(this TView view) where TView : View
 			{
 				view.HorizontalOptions = LayoutOptions.End;
@@ -221,11 +221,11 @@ namespace CommunityToolkit.Maui.Markup
 			}
 
 			/// <summary>
-			/// HorizontalOptions = LayoutOptions.Start
+			/// <see cref="View.HorizontalOptions"/> = <see cref="LayoutOptions.Start"/>
 			/// </summary>
 			/// <typeparam name="TView"></typeparam>
 			/// <param name="view"></param>
-			/// <returns>View with LayoutOptions.Start</returns>
+			/// <returns><typeparam name="TView"/> with <see cref="LayoutOptions.Start"/></returns>
 			public static TView Right<TView>(this TView view) where TView : View
 			{
 				view.HorizontalOptions = LayoutOptions.Start;
