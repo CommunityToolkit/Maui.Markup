@@ -5,10 +5,10 @@ using Microsoft.Maui.Controls;
 namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>
-/// IMultiValueConverter for Multiple Func
+/// An <see cref="IMultiValueConverter" /> implementation that provides the ability to define type safe <c>Func</c> implementations that will be used in the conversion process.
 /// </summary>
-/// <typeparam name="TDest"></typeparam>
-/// <typeparam name="TParam"></typeparam>
+/// <typeparam name="TDest">The type of the value going to the target of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TParam">The type of the <c>ConverterParameter</c>.</typeparam>
 public class FuncMultiConverter<TDest, TParam> : IMultiValueConverter
 {
 	readonly Func<object[], TDest>? convert;
@@ -21,10 +21,14 @@ public class FuncMultiConverter<TDest, TParam> : IMultiValueConverter
 	readonly Func<TDest?, TParam?, CultureInfo, object[]>? convertBackWithParamAndCulture;
 
 	/// <summary>
-	/// Initialize FuncMultiComverter
+	/// Initializes a new instance of <see cref="FuncMultiConverter{TDest, TParam}" /> that allows support for acessing the <c>parameter</c> and <see cref="CultureInfo" /> in the conversion.
 	/// </summary>
-	/// <param name="convertWithParamAndCulture"></param>
-	/// <param name="convertBackWithParamAndCulture"></param>
+	/// <param name="convertWithParamAndCulture">
+	/// The <see cref="Func{Array, TParam, CultureInfo, TDest}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.Convert" /> method.
+	/// </param>
+	/// <param name="convertBackWithParamAndCulture">
+	/// The <see cref="Func{TDest, TParam, CultureInfo, Array}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.ConvertBack" /> method.
+	/// </param>
 	public FuncMultiConverter(Func<object[], TParam?, CultureInfo, TDest>? convertWithParamAndCulture = null, Func<TDest?, TParam?, CultureInfo, object[]>? convertBackWithParamAndCulture = null)
 	{
 		this.convertWithParamAndCulture = convertWithParamAndCulture;
@@ -32,10 +36,14 @@ public class FuncMultiConverter<TDest, TParam> : IMultiValueConverter
 	}
 
 	/// <summary>
-	/// Initialize FuncMultiComverter
+	/// Initializes a new instance of <see cref="FuncMultiConverter{TDest, TParam}" /> that allows support for acessing the <c>parameter</c> in the conversion.
 	/// </summary>
-	/// <param name="convertWithParam"></param>
-	/// <param name="convertBackWithParam"></param>
+	/// <param name="convertWithParam">
+	/// The <see cref="Func{Array, TParam, TDest}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.Convert" /> method.
+	/// </param>
+	/// <param name="convertBackWithParam">
+	/// The <see cref="Func{TDest, TParam, Array}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.ConvertBack" /> method.
+	/// </param>
 	public FuncMultiConverter(Func<object[], TParam?, TDest>? convertWithParam = null, Func<TDest?, TParam?, object?[]>? convertBackWithParam = null)
 	{
 		this.convertWithParam = convertWithParam;
@@ -43,24 +51,21 @@ public class FuncMultiConverter<TDest, TParam> : IMultiValueConverter
 	}
 
 	/// <summary>
-	/// Initialize FuncMultiComverter
+	/// Initializes a new instance of <see cref="FuncMultiConverter{TDest, TParam}" />.
 	/// </summary>
-	/// <param name="convert"></param>
-	/// <param name="convertBack"></param>
+	/// <param name="convert">
+	/// The <see cref="Func{Array, TDest}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.Convert" /> method.
+	/// </param>
+	/// <param name="convertBack">
+	/// The <see cref="Func{TDest, Array}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.ConvertBack" /> method.
+	/// </param>
 	public FuncMultiConverter(Func<object[], TDest>? convert = null, Func<TDest?, object?[]>? convertBack = null)
 	{
 		this.convert = convert;
 		this.convertBack = convertBack;
 	}
 
-	/// <summary>
-	/// Execute FuncMultiConverter
-	/// </summary>
-	/// <param name="values"></param>
-	/// <param name="targetType"></param>
-	/// <param name="parameter"></param>
-	/// <param name="culture"></param>
-	/// <returns></returns>
+	/// <inheritdoc />
 	public object? Convert(object[] values, Type targetType, object? parameter, CultureInfo culture)
 	{
 		if (convert is not null)
@@ -86,14 +91,7 @@ public class FuncMultiConverter<TDest, TParam> : IMultiValueConverter
 		return BindableProperty.UnsetValue;
 	}
 
-	/// <summary>
-	/// Reverse Execute FuncMultiConverter
-	/// </summary>
-	/// <param name="value"></param>
-	/// <param name="targetTypes"></param>
-	/// <param name="parameter"></param>
-	/// <param name="culture"></param>
-	/// <returns></returns>
+	/// <inheritdoc />
 	public object?[]? ConvertBack(object? value, Type[] targetTypes, object? parameter, CultureInfo culture)
 	{
 		if (convertBack != null)
@@ -122,11 +120,11 @@ public class FuncMultiConverter<TDest, TParam> : IMultiValueConverter
 }
 
 /// <summary>
-/// IMultiValueConverter for Multiple Func
+/// An <see cref="IMultiValueConverter" /> implementation that expects 2 known input values.
 /// </summary>
-/// <typeparam name="TSource1"></typeparam>
-/// <typeparam name="TSource2"></typeparam>
-/// <typeparam name="TDest"></typeparam>
+/// <typeparam name="TSource1">The type of the <b>first</b> value coming from the source of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TSource2">The type of the <b>second</b> value coming from the source of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TDest">The type of the value going to the target of the <see cref="MultiBinding" />.</typeparam>
 public class FuncMultiConverter<TSource1, TSource2, TDest> : FuncMultiConverter<TDest, object>
 {
 	static T? To<T>(object? value) => value != null ? (T)value : default;
@@ -134,26 +132,29 @@ public class FuncMultiConverter<TSource1, TSource2, TDest> : FuncMultiConverter<
 	static object?[] ToObjects(ValueTuple<TSource1, TSource2> values) => new object?[] { values.Item1, values.Item2 };
 
 	/// <summary>
-	/// Initialize FuncMultiConverter
+	/// Initializes a new instance of <see cref="FuncMultiConverter{TSource1, TSource2, TDest}" />.
 	/// </summary>
-	/// <param name="convert"></param>
-	/// <param name="convertBack"></param>
+	/// <param name="convert">
+	/// The <see cref="Func{ValueTuple, TDest}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.Convert" /> method.
+	/// </param>
+	/// <param name="convertBack">
+	/// The <see cref="Func{TDest, ValueTuple}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.ConvertBack" /> method.
+	/// </param>
 	public FuncMultiConverter(Func<ValueTuple<TSource1?, TSource2?>, TDest>? convert = null,
 								Func<TDest?, ValueTuple<TSource1, TSource2>>? convertBack = null)
 	: base(convert is null ? default(Func<object[], TDest>) : (object[] values) => convert((To<TSource1>(values[0]), To<TSource2>(values[1]))),
 			convertBack is null ? default(Func<TDest?, object?[]>) : (TDest? value) => ToObjects(convertBack(value)))
 	{
-
 	}
 }
 
 /// <summary>
-/// IMultiValueConverter for Multiple Func
+/// An <see cref="IMultiValueConverter" /> implementation that expects 3 known input values.
 /// </summary>
-/// <typeparam name="TSource1"></typeparam>
-/// <typeparam name="TSource2"></typeparam>
-/// <typeparam name="TSource3"></typeparam>
-/// <typeparam name="TDest"></typeparam>
+/// <typeparam name="TSource1">The type of the <b>first</b> value coming from the source of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TSource2">The type of the <b>second</b> value coming from the source of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TSource3">The type of the <b>third</b> value coming from the source of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TDest">The type of the value going to the target of the <see cref="MultiBinding" />.</typeparam>
 public class FuncMultiConverter<TSource1, TSource2, TSource3, TDest> : FuncMultiConverter<TDest, object>
 {
 	static T? To<T>(object? value) => value != null ? (T)value : default;
@@ -161,10 +162,14 @@ public class FuncMultiConverter<TSource1, TSource2, TSource3, TDest> : FuncMulti
 	static object?[] ToObjects(ValueTuple<TSource1, TSource2, TSource3> values) => new object?[] { values.Item1, values.Item2, values.Item3 };
 
 	/// <summary>
-	/// Initialize FuncMultiConverter
+	/// Initializes a new instance of <see cref="FuncMultiConverter{TSource1, TSource2, TSource3, TDest}" />.
 	/// </summary>
-	/// <param name="convert"></param>
-	/// <param name="convertBack"></param>
+	/// <param name="convert">
+	/// The <see cref="Func{ValueTuple, TDest}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.Convert" /> method.
+	/// </param>
+	/// <param name="convertBack">
+	/// The <see cref="Func{TDest, ValueTuple}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.ConvertBack" /> method.
+	/// </param>
 	public FuncMultiConverter(Func<ValueTuple<TSource1?, TSource2?, TSource3?>, TDest>? convert = null,
 								Func<TDest?, ValueTuple<TSource1, TSource2, TSource3>>? convertBack = null)
 	: base(convert is null ? default(Func<object[], TDest>) : (object[] values) => convert((To<TSource1>(values[0]), To<TSource2>(values[1]), To<TSource3>(values[2]))),
@@ -175,13 +180,13 @@ public class FuncMultiConverter<TSource1, TSource2, TSource3, TDest> : FuncMulti
 }
 
 /// <summary>
-/// IMultiValueConverter for Multiple Func
+/// An <see cref="IMultiValueConverter" /> implementation that expects 4 known input values.
 /// </summary>
-/// <typeparam name="TSource1"></typeparam>
-/// <typeparam name="TSource2"></typeparam>
-/// <typeparam name="TSource3"></typeparam>
-/// <typeparam name="TSource4"></typeparam>
-/// <typeparam name="TDest"></typeparam>
+/// <typeparam name="TSource1">The type of the <b>first</b> value coming from the source of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TSource2">The type of the <b>second</b> value coming from the source of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TSource3">The type of the <b>third</b> value coming from the source of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TSource4">The type of the <b>fourth</b> value coming from the source of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TDest">The type of the value going to the target of the <see cref="MultiBinding" />.</typeparam>
 public class FuncMultiConverter<TSource1, TSource2, TSource3, TSource4, TDest> : FuncMultiConverter<TDest, object>
 {
 	static T? To<T>(object? value) => value != null ? (T)value : default;
@@ -189,10 +194,14 @@ public class FuncMultiConverter<TSource1, TSource2, TSource3, TSource4, TDest> :
 	static object?[] ToObjects(ValueTuple<TSource1, TSource2, TSource3, TSource4> values) => new object?[] { values.Item1, values.Item2, values.Item3, values.Item4 };
 
 	/// <summary>
-	/// Initialize FuncMultiConverter
+	/// Initializes a new instance of <see cref="FuncMultiConverter{TSource1, TSource2, TSource3, TSource4, TDest}" />.
 	/// </summary>
-	/// <param name="convert"></param>
-	/// <param name="convertBack"></param>
+	/// <param name="convert">
+	/// The <see cref="Func{ValueTuple, TDest}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.Convert" /> method.
+	/// </param>
+	/// <param name="convertBack">
+	/// The <see cref="Func{TDest, ValueTuple}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.ConvertBack" /> method.
+	/// </param>
 	public FuncMultiConverter(Func<ValueTuple<TSource1?, TSource2?, TSource3?, TSource4?>, TDest>? convert = null,
 								Func<TDest?, ValueTuple<TSource1, TSource2, TSource3, TSource4>>? convertBack = null)
 	: base(convert is null ? default(Func<object[], TDest>) : (object[] values) => convert((To<TSource1>(values[0]), To<TSource2>(values[1]), To<TSource3>(values[2]), To<TSource4>(values[3]))),
@@ -203,12 +212,12 @@ public class FuncMultiConverter<TSource1, TSource2, TSource3, TSource4, TDest> :
 }
 
 /// <summary>
-/// IMultiValueConverter for Multiple Func
+/// An <see cref="IMultiValueConverter" /> implementation that expects 2 known input values and a <c>ConverterParameter</c>.
 /// </summary>
-/// <typeparam name="TSource1"></typeparam>
-/// <typeparam name="TSource2"></typeparam>
-/// <typeparam name="TDest"></typeparam>
-/// <typeparam name="TParam"></typeparam>
+/// <typeparam name="TSource1">The type of the <b>first</b> value coming from the source of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TSource2">The type of the <b>second</b> value coming from the source of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TDest">The type of the value going to the target of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TParam">The type of the <c>ConverterParameter</c>.</typeparam>
 public class FuncMultiConverterWithParam<TSource1, TSource2, TDest, TParam> : FuncMultiConverter<TDest, TParam>
 {
 	static T? To<T>(object? value) => value != null ? (T)value : default;
@@ -216,10 +225,14 @@ public class FuncMultiConverterWithParam<TSource1, TSource2, TDest, TParam> : Fu
 	static object?[] ToObjects(ValueTuple<TSource1, TSource2> values) => new object?[] { values.Item1, values.Item2 };
 
 	/// <summary>
-	/// Initialize FuncMultiConverterWithParam
+	/// Initializes a new instance of <see cref="FuncMultiConverter{TSource1, TSource2, TDest, TParam}" />.
 	/// </summary>
-	/// <param name="convert"></param>
-	/// <param name="convertBack"></param>
+	/// <param name="convert">
+	/// The <see cref="Func{ValueTuple, TParam, TDest}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.Convert" /> method.
+	/// </param>
+	/// <param name="convertBack">
+	/// The <see cref="Func{TDest, TParam, ValueTuple}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.ConvertBack" /> method.
+	/// </param>
 	public FuncMultiConverterWithParam(Func<ValueTuple<TSource1?, TSource2?>, TParam?, TDest>? convert = null,
 										Func<TDest?, TParam?, ValueTuple<TSource1, TSource2>>? convertBack = null)
 	: base(convert is null ? default(Func<object[], TParam?, TDest>) : (object[] values, TParam? param) => convert((To<TSource1>(values[0]), To<TSource2>(values[1])), param),
@@ -229,13 +242,13 @@ public class FuncMultiConverterWithParam<TSource1, TSource2, TDest, TParam> : Fu
 }
 
 /// <summary>
-/// IMultiValueConverter for Multiple Func
+/// An <see cref="IMultiValueConverter" /> implementation that expects 3 known input values and a <c>ConverterParameter</c>.
 /// </summary>
-/// <typeparam name="TSource1"></typeparam>
-/// <typeparam name="TSource2"></typeparam>
-/// <typeparam name="TSource3"></typeparam>
-/// <typeparam name="TDest"></typeparam>
-/// <typeparam name="TParam"></typeparam>
+/// <typeparam name="TSource1">The type of the <b>first</b> value coming from the source of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TSource2">The type of the <b>second</b> value coming from the source of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TSource3">The type of the <b>third</b> value coming from the source of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TDest">The type of the value going to the target of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TParam">The type of the <c>ConverterParameter</c>.</typeparam>
 public class FuncMultiConverterWithParam<TSource1, TSource2, TSource3, TDest, TParam> : FuncMultiConverter<TDest, TParam>
 {
 	static T? To<T>(object value) => value != null ? (T)value : default;
@@ -243,10 +256,14 @@ public class FuncMultiConverterWithParam<TSource1, TSource2, TSource3, TDest, TP
 	static object?[] ToObjects(ValueTuple<TSource1, TSource2, TSource3> values) => new object?[] { values.Item1, values.Item2, values.Item3 };
 
 	/// <summary>
-	/// Initialize FuncMultiConverterWithParam
+	/// Initializes a new instance of <see cref="FuncMultiConverter{TSource1, TSource2, TSource3, TDest, TParam}" />.
 	/// </summary>
-	/// <param name="convert"></param>
-	/// <param name="convertBack"></param>
+	/// <param name="convert">
+	/// The <see cref="Func{ValueTuple, TParam, TDest}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.Convert" /> method.
+	/// </param>
+	/// <param name="convertBack">
+	/// The <see cref="Func{TDest, TParam, ValueTuple}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.ConvertBack" /> method.
+	/// </param>
 	public FuncMultiConverterWithParam(Func<ValueTuple<TSource1?, TSource2?, TSource3?>, TParam?, TDest>? convert = null,
 										Func<TDest?, TParam?, ValueTuple<TSource1, TSource2, TSource3>>? convertBack = null)
 	: base(convert is null ? default(Func<object[], TParam?, TDest>) : (object[] values, TParam? param) => convert((To<TSource1>(values[0]), To<TSource2>(values[1]), To<TSource3>(values[2])), param),
@@ -257,14 +274,14 @@ public class FuncMultiConverterWithParam<TSource1, TSource2, TSource3, TDest, TP
 }
 
 /// <summary>
-/// IMultiValueConverter for Multiple Func
+/// An <see cref="IMultiValueConverter" /> implementation that expects 4 known input values and a <c>ConverterParameter</c>.
 /// </summary>
-/// <typeparam name="TSource1"></typeparam>
-/// <typeparam name="TSource2"></typeparam>
-/// <typeparam name="TSource3"></typeparam>
-/// <typeparam name="TSource4"></typeparam>
-/// <typeparam name="TDest"></typeparam>
-/// <typeparam name="TParam"></typeparam>
+/// <typeparam name="TSource1">The type of the <b>first</b> value coming from the source of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TSource2">The type of the <b>second</b> value coming from the source of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TSource3">The type of the <b>third</b> value coming from the source of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TSource4">The type of the <b>fourth</b> value coming from the source of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TDest">The type of the value going to the target of the <see cref="MultiBinding" />.</typeparam>
+/// <typeparam name="TParam">The type of the <c>ConverterParameter</c>.</typeparam>
 public class FuncMultiConverterWithParam<TSource1, TSource2, TSource3, TSource4, TDest, TParam> : FuncMultiConverter<TDest, TParam>
 {
 	static T? To<T>(object? value) => value != null ? (T)value : default;
@@ -272,10 +289,14 @@ public class FuncMultiConverterWithParam<TSource1, TSource2, TSource3, TSource4,
 	static object?[] ToObjects(ValueTuple<TSource1, TSource2, TSource3, TSource4> values) => new object?[] { values.Item1, values.Item2, values.Item3, values.Item4 };
 
 	/// <summary>
-	/// Initialize FuncMultiConverterWithParam
+	/// Initializes a new instance of <see cref="FuncMultiConverterWithParam{TSource1, TSource2, TSource3, TSource4, TDest, TParam}" />.
 	/// </summary>
-	/// <param name="convert"></param>
-	/// <param name="convertBack"></param>
+	/// <param name="convert">
+	/// The <see cref="Func{ValueTuple, TParam, TDest}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.Convert" /> method.
+	/// </param>
+	/// <param name="convertBack">
+	/// The <see cref="Func{TDest, TParam, ValueTuple}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.ConvertBack" /> method.
+	/// </param>
 	public FuncMultiConverterWithParam(Func<ValueTuple<TSource1?, TSource2?, TSource3?, TSource4?>, TParam?, TDest>? convert = null,
 										Func<TDest?, TParam?, ValueTuple<TSource1, TSource2, TSource3, TSource4>>? convertBack = null)
 	: base(convert is null ? default(Func<object[], TParam?, TDest>) : (object[] values, TParam? param) => convert((To<TSource1>(values[0]), To<TSource2>(values[1]), To<TSource3>(values[2]), To<TSource4>(values[3])), param),
