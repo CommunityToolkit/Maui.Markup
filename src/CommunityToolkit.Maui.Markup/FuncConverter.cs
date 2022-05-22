@@ -5,11 +5,11 @@ using Microsoft.Maui.Controls;
 namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>
-/// IValueConverter Function
+/// An <see cref="IValueConverter" /> implementation that provides the ability to define type safe <c>Func</c> implementations that will be used in the conversion process.
 /// </summary>
-/// <typeparam name="TSource"></typeparam>
-/// <typeparam name="TDest"></typeparam>
-/// <typeparam name="TParam"></typeparam>
+/// <typeparam name="TSource">The type of the value coming from the source of the <see cref="Binding" />.</typeparam>
+/// <typeparam name="TDest">The type of the value going to the target of the <see cref="Binding" />.</typeparam>
+/// <typeparam name="TParam">The type of the <c>ConverterParameter</c>.</typeparam>
 public class FuncConverter<TSource, TDest, TParam> : IValueConverter
 {
 	readonly Func<TSource?, TDest?>? convert;
@@ -22,10 +22,14 @@ public class FuncConverter<TSource, TDest, TParam> : IValueConverter
 	readonly Func<TDest?, TParam?, CultureInfo?, TSource?>? convertBackWithParamAndCulture;
 
 	/// <summary>
-	/// Initialize FuncConverter
+	/// Initializes a new instance of <see cref="FuncConverter{TSource, TDest, TParam}" /> that allows support for acessing the <c>parameter</c> and <see cref="CultureInfo" /> in the conversion.
 	/// </summary>
-	/// <param name="convertWithParamAndCulture"></param>
-	/// <param name="convertBackWithParamAndCulture"></param>
+	/// <param name="convertWithParamAndCulture">
+	/// The <see cref="Func{TSource, TParam, CultureInfo, TDest}" /> implementation that will provide the conversion for the underlying <see cref="IValueConverter.Convert" /> method.
+	/// </param>
+	/// <param name="convertBackWithParamAndCulture">
+	/// The <see cref="Func{TDest, TParam, CultureInfo, TSource}" /> implementation that will provide the conversion for the underlying <see cref="IValueConverter.ConvertBack" /> method.
+	/// </param>
 	public FuncConverter(Func<TSource?, TParam?, CultureInfo?, TDest>? convertWithParamAndCulture = null, Func<TDest?, TParam?, CultureInfo?, TSource>? convertBackWithParamAndCulture = null)
 	{
 		this.convertWithParamAndCulture = convertWithParamAndCulture;
@@ -33,10 +37,14 @@ public class FuncConverter<TSource, TDest, TParam> : IValueConverter
 	}
 
 	/// <summary>
-	/// Initialize FuncConverter
+	/// Initializes a new instance of <see cref="FuncConverter{TSource, TDest, TParam}" /> that allows support for acessing the <c>parameter</c> in the conversion.
 	/// </summary>
-	/// <param name="convertWithParam"></param>
-	/// <param name="convertBackWithParam"></param>
+	/// <param name="convertWithParam">
+	/// The <see cref="Func{TSource, TParam, TDest}" /> implementation that will provide the conversion for the underlying <see cref="IValueConverter.Convert" /> method.
+	/// </param>
+	/// <param name="convertBackWithParam">
+	/// The <see cref="Func{TDest, TParam, TSource}" /> implementation that will provide the conversion for the underlying <see cref="IValueConverter.ConvertBack" /> method.
+	/// </param>
 	public FuncConverter(Func<TSource?, TParam?, TDest>? convertWithParam = null, Func<TDest?, TParam?, TSource>? convertBackWithParam = null)
 	{
 		this.convertWithParam = convertWithParam;
@@ -44,24 +52,21 @@ public class FuncConverter<TSource, TDest, TParam> : IValueConverter
 	}
 
 	/// <summary>
-	/// Initialize FuncConverter
+	/// Initializes a new instance of <see cref="FuncConverter{TSource, TDest, TParam}" />.
 	/// </summary>
-	/// <param name="convert"></param>
-	/// <param name="convertBack"></param>
+	/// <param name="convert">
+	/// The <see cref="Func{TSource, TDest}" /> implementation that will provide the conversion for the underlying <see cref="IValueConverter.Convert" /> method.
+	/// </param>
+	/// <param name="convertBack">
+	/// The <see cref="Func{TDest, TSource}" /> implementation that will provide the conversion for the underlying <see cref="IValueConverter.ConvertBack" /> method.
+	/// </param>
 	public FuncConverter(Func<TSource?, TDest?>? convert = null, Func<TDest?, TSource?>? convertBack = null)
 	{
 		this.convert = convert;
 		this.convertBack = convertBack;
 	}
 
-	/// <summary>
-	/// Execute FuncConverter
-	/// </summary>
-	/// <param name="value"></param>
-	/// <param name="targetType"></param>
-	/// <param name="parameter"></param>
-	/// <param name="culture"></param>
-	/// <returns></returns>
+	/// <inheritdoc />
 	public object? Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
 	{
 		if (convert != null)
@@ -88,14 +93,7 @@ public class FuncConverter<TSource, TDest, TParam> : IValueConverter
 		return default(TDest);
 	}
 
-	/// <summary>
-	/// Execute FuncConverter
-	/// </summary>
-	/// <param name="value"></param>
-	/// <param name="targetType"></param>
-	/// <param name="parameter"></param>
-	/// <param name="culture"></param>
-	/// <returns></returns>
+	/// <inheritdoc />
 	public object? ConvertBack(object? value, Type? targetType, object? parameter, CultureInfo? culture)
 	{
 		if (convertBack != null)
@@ -124,17 +122,21 @@ public class FuncConverter<TSource, TDest, TParam> : IValueConverter
 }
 
 /// <summary>
-/// IValueConverter Function
+/// An <see cref="IValueConverter" /> implementation that provides the ability to define type safe <c>Func</c> implementations that will be used in the conversion process.
 /// </summary>
-/// <typeparam name="TSource"></typeparam>
-/// <typeparam name="TDest"></typeparam>
+/// <typeparam name="TSource">The type of the value coming from the source of the <see cref="Binding" />.</typeparam>
+/// <typeparam name="TDest">The type of the value going to the target of the <see cref="Binding" />.</typeparam>
 public class FuncConverter<TSource, TDest> : FuncConverter<TSource, TDest, object>
 {
 	/// <summary>
-	/// Initialize FuncConverter
+	/// Initializes a new instance of <see cref="FuncConverter{TSource, TDest}" />.
 	/// </summary>
-	/// <param name="convert"></param>
-	/// <param name="convertBack"></param>
+	/// <param name="convert">
+	/// The <see cref="Func{TSource, TDest}" /> implementation that will provide the conversion for the underlying <see cref="IValueConverter.Convert" /> method.
+	/// </param>
+	/// <param name="convertBack">
+	/// The <see cref="Func{TDest, TSource}" /> implementation that will provide the conversion for the underlying <see cref="IValueConverter.ConvertBack" /> method.
+	/// </param>
 	public FuncConverter(Func<TSource?, TDest>? convert = null, Func<TDest?, TSource>? convertBack = null)
 		: base(convert, convertBack)
 	{
@@ -142,16 +144,20 @@ public class FuncConverter<TSource, TDest> : FuncConverter<TSource, TDest, objec
 }
 
 /// <summary>
-/// IValueConverter Function
+/// An <see cref="IValueConverter" /> implementation that provides the ability to define type safe <c>Func</c> implementations that will be used in the conversion process.
 /// </summary>
-/// <typeparam name="TSource"></typeparam>
+/// <typeparam name="TSource">The type of the value coming from the source of the <see cref="Binding" />.</typeparam>
 public class FuncConverter<TSource> : FuncConverter<TSource, object, object>
 {
 	/// <summary>
-	/// Initialize FuncConverter
+	/// Initializes a new instance of <see cref="FuncConverter{TSource}" />.
 	/// </summary>
-	/// <param name="convert"></param>
-	/// <param name="convertBack"></param>
+	/// <param name="convert">
+	/// The <see cref="Func{TSource, Object}" /> implementation that will provide the conversion for the underlying <see cref="IValueConverter.Convert" /> method.
+	/// </param>
+	/// <param name="convertBack">
+	/// The <see cref="Func{Object, TSource}" /> implementation that will provide the conversion for the underlying <see cref="IValueConverter.ConvertBack" /> method.
+	/// </param>
 	public FuncConverter(Func<TSource?, object>? convert = null, Func<object?, TSource>? convertBack = null)
 		: base(convert, convertBack)
 	{
@@ -159,15 +165,19 @@ public class FuncConverter<TSource> : FuncConverter<TSource, object, object>
 }
 
 /// <summary>
-/// IValueConverter Function
+/// An <see cref="IValueConverter" /> implementation that provides the ability to define type safe <c>Func</c> implementations that will be used in the conversion process.
 /// </summary>
 public class FuncConverter : FuncConverter<object, object, object>
 {
 	/// <summary>
-	/// Initialize FuncConverter
+	/// Initializes a new instance of <see cref="FuncConverter" />.
 	/// </summary>
-	/// <param name="convert"></param>
-	/// <param name="convertBack"></param>
+	/// <param name="convert">
+	/// The <see cref="Func{Object, Object}" /> implementation that will provide the conversion for the underlying <see cref="IValueConverter.Convert" /> method.
+	/// </param>
+	/// <param name="convertBack">
+	/// The <see cref="Func{Object, Object}" /> implementation that will provide the conversion for the underlying <see cref="IValueConverter.ConvertBack" /> method.
+	/// </param>
 	public FuncConverter(Func<object?, object>? convert = null, Func<object?, object>? convertBack = null)
 		: base(convert, convertBack)
 	{
@@ -175,14 +185,14 @@ public class FuncConverter : FuncConverter<object, object, object>
 }
 
 /// <summary>
-/// String Converter
+/// An <see cref="IValueConverter" /> implementation that performs a <see cref="Object.ToString()" /> on the incoming value.
 /// </summary>
 public class ToStringConverter : FuncConverter<object, string>
 {
 	/// <summary>
-	/// Initialize ToString Converter
+	/// Initializes a new instance of <see cref="ToStringConverter" />.
 	/// </summary>
-	/// <param name="format"></param>
+	/// <param name="format">The format to apply when performing the <see cref="Object.ToString()" /> method call.</param>
 	public ToStringConverter(string format = "{0}")
 		: base(o => string.Format(CultureInfo.InvariantCulture, format, o))
 	{
@@ -190,19 +200,19 @@ public class ToStringConverter : FuncConverter<object, string>
 }
 
 /// <summary>
-/// Not Converter
+/// An <see cref="IValueConverter" /> implementation that performs a logical NOT operation on the incoming value.
 /// </summary>
 public class NotConverter : FuncConverter<bool, bool>
 {
 	static readonly Lazy<NotConverter> instance = new(() => new NotConverter());
 
 	/// <summary>
-	/// Singleton Instance
+	/// Gets a singleton instance of the <see cref="NotConverter" />.
 	/// </summary>
 	public static NotConverter Instance => instance.Value;
 
 	/// <summary>
-	/// Initialize NotConverter
+	/// Initializes a new instance of <see cref="NotConverter" />.
 	/// </summary>
 	public NotConverter() : base(t => !t, t => !t)
 	{
