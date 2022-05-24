@@ -2,8 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
-    <!-- Temporarily remove Windows Target until WinUI Bug is Fixed: https://github.com/dotnet/maui/issues/6529#issuecomment-1115548585 -->
-    <!-- <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net6.0-windows10.0.19041.0</TargetFrameworks>-->
+     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net6.0-windows10.0.19041.0</TargetFrameworks>
     <OutputType>Exe</OutputType>
     <RootNamespace>CommunityToolkit.Maui.Markup.Sample</RootNamespace>
     <UseMaui>true</UseMaui>
