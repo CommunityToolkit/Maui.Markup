@@ -1,8 +1,4 @@
-﻿using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
-
-namespace CommunityToolkit.Maui.Markup;
+﻿namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>
 /// Extension Methods for <see cref="IPlaceholder"/>
@@ -48,4 +44,3 @@ public static class PlaceholderExtensions
 		return bindable.Placeholder(text).PlaceholderColor(textColor);
 	}
 }
-

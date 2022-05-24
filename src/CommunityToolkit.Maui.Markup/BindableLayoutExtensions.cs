@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using Microsoft.Maui.Controls;
+﻿using System.Collections;
 
 namespace CommunityToolkit.Maui.Markup;
 

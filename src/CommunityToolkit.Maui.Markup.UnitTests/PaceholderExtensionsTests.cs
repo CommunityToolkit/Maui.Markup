@@ -34,4 +34,3 @@ class PaceholderExtensionsTests : BaseMarkupTestFixture<Entry>
 
 	}
 }
-
