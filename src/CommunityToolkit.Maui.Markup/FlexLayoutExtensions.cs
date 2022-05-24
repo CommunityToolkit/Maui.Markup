@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.Maui.Layouts;
+﻿using Microsoft.Maui.Layouts;
 
 namespace CommunityToolkit.Maui.Markup;
 

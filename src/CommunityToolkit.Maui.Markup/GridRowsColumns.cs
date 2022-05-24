@@ -1,7 +1,4 @@
-﻿using System;
-using System.Globalization;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
+﻿using System.Globalization;
 
 namespace CommunityToolkit.Maui.Markup;
 

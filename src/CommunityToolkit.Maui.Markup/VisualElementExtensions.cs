@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-
-namespace CommunityToolkit.Maui.Markup;
+﻿namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>
 /// Extension methods that apply to all implementations inheriting from a <see cref="VisualElement"/>.

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Input;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Platform;
+﻿using System.Windows.Input;
 
 namespace CommunityToolkit.Maui.Markup;
 
