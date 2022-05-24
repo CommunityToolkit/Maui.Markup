@@ -22,29 +22,28 @@ public static class ImageExtensions
 	}
 
 	/// <summary>
-	/// Sets the <see cref="IImage.Aspect" /> Property/>
+	/// Sets the <see cref="Microsoft.Maui.IImage.Aspect" /> Property/>
 	/// </summary>
-	/// <typeparam name="TBindable"><see cref="BindableObject"/> : <see cref="IImage"/></typeparam>
-	/// <param name="bindable">The <see cref="BindableObject"/> on which to set the <see cref="IImage.Aspect"/> Property</param>
+	/// <typeparam name="TBindable"><see cref="BindableObject"/> : <see cref="Microsoft.Maui.IImage"/></typeparam>
+	/// <param name="bindable">The <see cref="BindableObject"/> on which to set the <see cref="Microsoft.Maui.IImage.Aspect"/> Property</param>
 	/// <param name="aspect">The <see cref="Microsoft.Maui.Aspect"/> vaue</param>
 	/// <returns></returns>
-	public static TBindable Aspect<TBindable>(this TBindable bindable, Aspect aspect) where TBindable : BindableObject, IImage
+	public static TBindable Aspect<TBindable>(this TBindable bindable, Aspect aspect) where TBindable : BindableObject, Microsoft.Maui.IImage
 	{
 		bindable.SetValue(ImageElement.AspectProperty, aspect);
 		return bindable;
 	}
 
 	/// <summary>
-	/// Sets the <see cref="IImage.IsOpaque" /> Property/>
+	/// Sets the <see cref="Microsoft.Maui.IImage.IsOpaque" /> Property/>
 	/// </summary>
-	/// <typeparam name="TBindable"><see cref="BindableObject"/> : <see cref="IImage"/></typeparam>
-	/// <param name="bindable">The <see cref="BindableObject"/> on which to set the <see cref="IImage.IsOpaque"/> Property</param>
+	/// <typeparam name="TBindable"><see cref="BindableObject"/> : <see cref="Microsoft.Maui.IImage"/></typeparam>
+	/// <param name="bindable">The <see cref="BindableObject"/> on which to set the <see cref="Microsoft.Maui.IImage.IsOpaque"/> Property</param>
 	/// <param name="isOpaque">The <see cref="bool"/> vaue</param>
 	/// <returns></returns>
-	public static TBindable IsOpaque<TBindable>(this TBindable bindable, bool isOpaque) where TBindable : BindableObject, IImage
+	public static TBindable IsOpaque<TBindable>(this TBindable bindable, bool isOpaque) where TBindable : BindableObject, Microsoft.Maui.IImage
 	{
 		bindable.SetValue(ImageElement.IsOpaqueProperty, isOpaque);
 		return bindable;
 	}
 }
-

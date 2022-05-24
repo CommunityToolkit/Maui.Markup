@@ -48,4 +48,3 @@ public static class PlaceholderExtensions
 		return bindable.Placeholder(text).PlaceholderColor(textColor);
 	}
 }
-
