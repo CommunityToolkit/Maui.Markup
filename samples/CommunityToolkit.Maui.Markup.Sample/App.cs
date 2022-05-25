@@ -7,12 +7,13 @@ namespace CommunityToolkit.Maui.Markup.Sample;
 
 class App : Microsoft.Maui.Controls.Application
 {
-	public App(NewsPage newsPage)
+	public App(AppShell shell)
 	{
-		MainPage = new Microsoft.Maui.Controls.NavigationPage(newsPage)
-		{
-			BarBackgroundColor = ColorConstants.NavigationBarBackgroundColor,
-			BarTextColor = ColorConstants.NavigationBarTextColor
-		}.Invoke(navigationPage => navigationPage.On<iOS>().SetPrefersLargeTitles(true));
+		MainPage = shell;
+		//MainPage = new Microsoft.Maui.Controls.NavigationPage(newsPage)
+		//{
+		//	BarBackgroundColor = ColorConstants.NavigationBarBackgroundColor,
+		//	BarTextColor = ColorConstants.NavigationBarTextColor
+		//}.Invoke(navigationPage => navigationPage.On<iOS>().SetPrefersLargeTitles(true));
 	}
 }

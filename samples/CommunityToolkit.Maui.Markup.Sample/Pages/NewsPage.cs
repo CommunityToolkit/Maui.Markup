@@ -1,9 +1,12 @@
 ﻿using System.Collections;
+using System.Text.Json;
+using System.Web;
 using CommunityToolkit.Maui.Markup.Sample.Models;
 using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels;
 using CommunityToolkit.Maui.Markup.Sample.Views.News;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Maui.Dispatching;
 
 namespace CommunityToolkit.Maui.Markup.Sample.Pages;
@@ -81,6 +84,20 @@ class NewsPage : BaseContentPage<NewsViewModel>
 	async void HandlePullToRefreshFailed(object? sender, string message) =>
 		await dispatcher.DispatchAsync(() => DisplayAlert("Refresh Failed", message, "OK"));
 
-	Task NavigateToSettingsPage() => dispatcher.DispatchAsync(() => Navigation.PushAsync(settingsPage));
-	Task NavigateToNewsDetailPage(StoryModel storyModel) => dispatcher.DispatchAsync(() => Navigation.PushAsync(new NewsDetailPage(new NewsDetailViewModel(storyModel, browser))));
+	Task NavigateToSettingsPage() => dispatcher.DispatchAsync(() => Shell.Current.GoToAsync(AppShell.GetRoute<SettingsPage, SettingsViewModel>()));
+	Task NavigateToNewsDetailPage(StoryModel storyModel) => dispatcher.DispatchAsync(() =>
+	{
+		var route = AppShell.GetRoute<NewsDetailPage, NewsDetailViewModel>();
+
+		var queries = new Dictionary<string, string>
+		{
+			{ nameof(NewsDetailViewModel.Uri), HttpUtility.UrlEncode(storyModel.Url) },
+			{ nameof(NewsDetailViewModel.Title), HttpUtility.UrlEncode(storyModel.Title) },
+			{ nameof(NewsDetailViewModel.ScoreDescription), HttpUtility.UrlEncode(storyModel.Description)}
+		};
+
+		var shellRoute = QueryHelpers.AddQueryString(route, queries);
+
+		return Shell.Current.GoToAsync(shellRoute);
+	});
 }

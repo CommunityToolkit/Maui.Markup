@@ -14,16 +14,17 @@ public class MauiProgram
 								.UseMauiCommunityToolkit()
 								.UseMauiCommunityToolkitMarkup();
 
+		// App Shell
+		builder.Services.AddTransient<AppShell>();
+
 		// Fonts
 		builder.ConfigureFonts(fonts => fonts.AddFont("FontAwesome.otf", "FontAwesome"));
 
-		// Maui.Essentials
-		builder.Services.AddSingleton(Browser.Default);
-		builder.Services.AddSingleton(Preferences.Default);
-
 		// Services
 		builder.Services.AddSingleton<App>();
+		builder.Services.AddSingleton(Browser.Default);
 		builder.Services.AddSingleton<SettingsService>();
+		builder.Services.AddSingleton(Preferences.Default);
 		builder.Services.AddSingleton<HackerNewsAPIService>();
 		builder.Services.AddSingleton(RestService.For<IHackerNewsApi>("https://hacker-news.firebaseio.com/v0"));
 
