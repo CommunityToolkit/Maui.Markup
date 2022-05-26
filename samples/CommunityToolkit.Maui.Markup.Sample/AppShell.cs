@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using CommunityToolkit.Maui.Markup.Sample.Constants;
-using CommunityToolkit.Maui.Markup.Sample.Pages;
+﻿using CommunityToolkit.Maui.Markup.Sample.Pages;
 using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels.Base;
@@ -24,9 +21,6 @@ class AppShell : Shell
 			Title = newsPage.Title,
 			Content = newsPage
 		});
-
-		//  BarBackgroundColor = ColorConstants.NavigationBarBackgroundColor;
-		//	BarTextColor = ColorConstants.NavigationBarTextColor
 	}
 
 	public static string GetRoute<TPage, TViewModel>() where TPage : BaseContentPage<TViewModel>

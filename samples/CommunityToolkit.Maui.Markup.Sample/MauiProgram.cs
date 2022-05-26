@@ -14,11 +14,11 @@ public class MauiProgram
 								.UseMauiCommunityToolkit()
 								.UseMauiCommunityToolkitMarkup();
 
-		// App Shell
-		builder.Services.AddTransient<AppShell>();
-
 		// Fonts
 		builder.ConfigureFonts(fonts => fonts.AddFont("FontAwesome.otf", "FontAwesome"));
+
+		// App Shell
+		builder.Services.AddTransient<AppShell>();
 
 		// Services
 		builder.Services.AddSingleton<App>();
