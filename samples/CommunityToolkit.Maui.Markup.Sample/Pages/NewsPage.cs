@@ -13,18 +13,12 @@ namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
 class NewsPage : BaseContentPage<NewsViewModel>
 {
-	readonly IBrowser browser;
 	readonly IDispatcher dispatcher;
-	readonly SettingsPage settingsPage;
 
-	public NewsPage(IBrowser browser,
-					IDispatcher dispatcher,
-					SettingsPage settingsPage,
+	public NewsPage(IDispatcher dispatcher,
 					NewsViewModel newsViewModel) : base(newsViewModel, "Top Stories")
 	{
-		this.browser = browser;
 		this.dispatcher = dispatcher;
-		this.settingsPage = settingsPage;
 
 		BindingContext.PullToRefreshFailed += HandlePullToRefreshFailed;
 
@@ -89,15 +83,13 @@ class NewsPage : BaseContentPage<NewsViewModel>
 	{
 		var route = AppShell.GetRoute<NewsDetailPage, NewsDetailViewModel>();
 
-		var queries = new Dictionary<string, string>
+		var queries = new Dictionary<string, object>
 		{
-			{ nameof(NewsDetailViewModel.Uri), HttpUtility.UrlEncode(storyModel.Url) },
-			{ nameof(NewsDetailViewModel.Title), HttpUtility.UrlEncode(storyModel.Title) },
-			{ nameof(NewsDetailViewModel.ScoreDescription), HttpUtility.UrlEncode(storyModel.Description)}
+			{ nameof(NewsDetailViewModel.Uri), storyModel.Url },
+			{ nameof(NewsDetailViewModel.Title), storyModel.Title },
+			{ nameof(NewsDetailViewModel.ScoreDescription), storyModel.Description}
 		};
 
-		var shellRoute = QueryHelpers.AddQueryString(route, queries);
-
-		return Shell.Current.GoToAsync(shellRoute);
+		return Shell.Current.GoToAsync(route, queries);
 	});
 }

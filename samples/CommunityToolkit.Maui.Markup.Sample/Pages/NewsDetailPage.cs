@@ -9,6 +9,8 @@ class NewsDetailPage : BaseContentPage<NewsDetailViewModel>
 {
 	public NewsDetailPage(NewsDetailViewModel newsDetailViewModel) : base(newsDetailViewModel, newsDetailViewModel.Title)
 	{
+		this.Bind(TitleProperty, nameof(NewsDetailViewModel.Title));
+
 		Content = new FlexLayout
 		{
 			Direction = FlexDirection.Column,
