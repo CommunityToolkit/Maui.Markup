@@ -10,20 +10,8 @@ namespace CommunityToolkit.Maui.Markup.Sample
 {
 	public class LargeTitleShellRenderer : ShellRenderer
 	{
-		protected override IShellNavBarAppearanceTracker CreateNavBarAppearanceTracker()
-		{
-			return new Test();
-		}
-
-		class Test : ShellNavBarAppearanceTracker
-		{
-			public new void SetAppearance(UINavigationController controller, ShellAppearance appearance)
-			{
-				var navBar = controller.NavigationBar;
-				navBar.PrefersLargeTitles = true;
-				base.SetAppearance(controller, appearance);
-			}
-		}
+		protected override IShellNavBarAppearanceTracker CreateNavBarAppearanceTracker() =>
+			new LargeTitleShellNavBarAppearanceTracker();
 
 		class LargeTitleShellNavBarAppearanceTracker : IShellNavBarAppearanceTracker
 		{
