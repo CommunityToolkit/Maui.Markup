@@ -1,12 +1,9 @@
 ﻿using System.Collections;
-using System.Text.Json;
-using System.Web;
 using CommunityToolkit.Maui.Markup.Sample.Models;
 using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels;
 using CommunityToolkit.Maui.Markup.Sample.Views.News;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Maui.Dispatching;
 
 namespace CommunityToolkit.Maui.Markup.Sample.Pages;
