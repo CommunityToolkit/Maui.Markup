@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui.Markup.Sample.Pages;
 using CommunityToolkit.Maui.Markup.Sample.Services;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels;
+using Microsoft.Maui.Controls.Handlers.Compatibility;
 using Refit;
 
 namespace CommunityToolkit.Maui.Markup.Sample;
@@ -11,6 +12,12 @@ public class MauiProgram
 	{
 		var builder = MauiApp.CreateBuilder()
 								.UseMauiApp<App>()
+								.ConfigureMauiHandlers(handlers =>
+								{
+#if IOS
+									handlers.AddHandler<Shell, LargeTitleShellRenderer>();
+#endif
+								})
 								.UseMauiCommunityToolkit()
 								.UseMauiCommunityToolkitMarkup();
 
