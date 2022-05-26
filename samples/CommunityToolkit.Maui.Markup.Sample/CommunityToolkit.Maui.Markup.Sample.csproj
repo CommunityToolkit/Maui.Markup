@@ -52,7 +52,4 @@
     <ProjectReference Include="..\..\src\CommunityToolkit.Maui.Markup\CommunityToolkit.Maui.Markup.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Microsoft.AspNetCore.WebUtilities" />
-  </ItemGroup>
 </Project>
