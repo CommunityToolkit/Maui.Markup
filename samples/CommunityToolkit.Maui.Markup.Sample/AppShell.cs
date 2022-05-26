@@ -2,6 +2,7 @@
 using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels.Base;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 
 namespace CommunityToolkit.Maui.Markup.Sample;
 
@@ -16,11 +17,7 @@ class AppShell : Shell
 
 	public AppShell(NewsPage newsPage)
 	{
-		Items.Add(new ShellContent
-		{
-			Title = newsPage.Title,
-			Content = newsPage
-		});
+		Items.Add(newsPage);
 	}
 
 	public static string GetRoute<TPage, TViewModel>() where TPage : BaseContentPage<TViewModel>

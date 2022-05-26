@@ -75,18 +75,24 @@ class NewsPage : BaseContentPage<NewsViewModel>
 	async void HandlePullToRefreshFailed(object? sender, string message) =>
 		await dispatcher.DispatchAsync(() => DisplayAlert("Refresh Failed", message, "OK"));
 
-	Task NavigateToSettingsPage() => dispatcher.DispatchAsync(() => Shell.Current.GoToAsync(AppShell.GetRoute<SettingsPage, SettingsViewModel>()));
+	Task NavigateToSettingsPage() => dispatcher.DispatchAsync(() =>
+	{
+		var route = AppShell.GetRoute<SettingsPage, SettingsViewModel>();
+		return Shell.Current.GoToAsync(route);
+	});
+
 	Task NavigateToNewsDetailPage(StoryModel storyModel) => dispatcher.DispatchAsync(() =>
 	{
 		var route = AppShell.GetRoute<NewsDetailPage, NewsDetailViewModel>();
 
-		var queries = new Dictionary<string, object>
+		// Shell passes these parameters to NewsDetailViewModel.ApplyQueryAttributes
+		var parameters = new Dictionary<string, object>
 		{
 			{ nameof(NewsDetailViewModel.Uri), storyModel.Url },
 			{ nameof(NewsDetailViewModel.Title), storyModel.Title },
 			{ nameof(NewsDetailViewModel.ScoreDescription), storyModel.Description}
 		};
 
-		return Shell.Current.GoToAsync(route, queries);
+		return Shell.Current.GoToAsync(route, parameters);
 	});
 }
