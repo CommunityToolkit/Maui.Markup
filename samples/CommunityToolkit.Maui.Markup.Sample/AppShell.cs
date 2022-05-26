@@ -2,7 +2,6 @@
 using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels.Base;
-using Microsoft.Maui.Controls.PlatformConfiguration;
 
 namespace CommunityToolkit.Maui.Markup.Sample;
 
