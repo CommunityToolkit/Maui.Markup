@@ -25,17 +25,6 @@ partial class NewsDetailViewModel : BaseViewModel, IQueryAttributable
 		this.browser = browser;
 	}
 
-	public void ApplyQueryAttributes(IDictionary<string, object> query)
-	{
-		var url = (string)query[nameof(Uri)];
-		var title = (string)query[nameof(Title)];
-		var scoreDescription = (string)query[nameof(ScoreDescription)];
-
-		Uri = new Uri(url);
-		Title = title;
-		ScoreDescription = scoreDescription;
-	}
-
 	[ICommand]
 	Task OpenBrowser()
 	{
@@ -48,5 +37,16 @@ partial class NewsDetailViewModel : BaseViewModel, IQueryAttributable
 		};
 
 		return browser.OpenAsync(Uri, browserOptions);
+	}
+
+	void IQueryAttributable.ApplyQueryAttributes(IDictionary<string, object> query)
+	{
+		var url = (string)query[nameof(Uri)];
+		var title = (string)query[nameof(Title)];
+		var scoreDescription = (string)query[nameof(ScoreDescription)];
+
+		Uri = new Uri(url);
+		Title = title;
+		ScoreDescription = scoreDescription;
 	}
 }
