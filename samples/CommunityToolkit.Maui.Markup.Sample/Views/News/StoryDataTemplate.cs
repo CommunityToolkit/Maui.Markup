@@ -22,7 +22,8 @@ class StoryDataTemplate : DataTemplate
 
 		Children =
 		{
-			new Label().Row(Row.Title)
+			new Label { LineBreakMode = LineBreakMode.TailTruncation, MaxLines = 1 }
+				.Row(Row.Title)
 				.Font(size: 16).TextColor(ColorConstants.PrimaryTextColor)
 				.Top().Padding(10, 0)
 				.Bind(Label.TextProperty, nameof(StoryModel.Title)),
