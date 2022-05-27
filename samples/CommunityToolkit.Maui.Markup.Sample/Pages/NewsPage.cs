@@ -10,18 +10,12 @@ namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
 class NewsPage : BaseContentPage<NewsViewModel>
 {
-	readonly IBrowser browser;
 	readonly IDispatcher dispatcher;
-	readonly SettingsPage settingsPage;
 
-	public NewsPage(IBrowser browser,
-					IDispatcher dispatcher,
-					SettingsPage settingsPage,
+	public NewsPage(IDispatcher dispatcher,
 					NewsViewModel newsViewModel) : base(newsViewModel, "Top Stories")
 	{
-		this.browser = browser;
 		this.dispatcher = dispatcher;
-		this.settingsPage = settingsPage;
 
 		BindingContext.PullToRefreshFailed += HandlePullToRefreshFailed;
 
@@ -81,6 +75,24 @@ class NewsPage : BaseContentPage<NewsViewModel>
 	async void HandlePullToRefreshFailed(object? sender, string message) =>
 		await dispatcher.DispatchAsync(() => DisplayAlert("Refresh Failed", message, "OK"));
 
-	Task NavigateToSettingsPage() => dispatcher.DispatchAsync(() => Navigation.PushAsync(settingsPage));
-	Task NavigateToNewsDetailPage(StoryModel storyModel) => dispatcher.DispatchAsync(() => Navigation.PushAsync(new NewsDetailPage(new NewsDetailViewModel(storyModel, browser))));
+	Task NavigateToSettingsPage() => dispatcher.DispatchAsync(() =>
+	{
+		var route = AppShell.GetRoute<SettingsPage, SettingsViewModel>();
+		return Shell.Current.GoToAsync(route);
+	});
+
+	Task NavigateToNewsDetailPage(StoryModel storyModel) => dispatcher.DispatchAsync(() =>
+	{
+		var route = AppShell.GetRoute<NewsDetailPage, NewsDetailViewModel>();
+
+		// Shell passes these parameters to NewsDetailViewModel.ApplyQueryAttributes
+		var parameters = new Dictionary<string, object>
+		{
+			{ nameof(NewsDetailViewModel.Uri), storyModel.Url },
+			{ nameof(NewsDetailViewModel.Title), storyModel.Title },
+			{ nameof(NewsDetailViewModel.ScoreDescription), storyModel.Description}
+		};
+
+		return Shell.Current.GoToAsync(route, parameters);
+	});
 }
