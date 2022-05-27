@@ -22,12 +22,12 @@ class AppShell : Shell
 	public static string GetRoute<TPage, TViewModel>() where TPage : BaseContentPage<TViewModel>
 														where TViewModel : BaseViewModel
 	{
-		if (!pageRouteMappingDictionary.ContainsKey(typeof(TPage)))
+		if (!pageRouteMappingDictionary.TryGetValue(typeof(TPage), out var route))
 		{
 			throw new KeyNotFoundException($"No map for ${typeof(TPage)} was found on navigation mappings. Please register your ViewModel in {nameof(AppShell)}.{nameof(pageRouteMappingDictionary)}");
 		}
 
-		return pageRouteMappingDictionary[typeof(TPage)];
+		return route;
 	}
 
 	static KeyValuePair<Type, string> CreateRoutePageMapping<TPage, TViewModel>() where TPage : BaseContentPage<TViewModel>
