@@ -38,14 +38,11 @@
 
     <!-- Images -->
     <MauiImage Include="Resources\Images\*" />
-    <MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
-
-    <!-- Custom Fonts -->
     <MauiFont Include="Resources\Fonts\*" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Maui" Version="1.0.0-rc3" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="1.0.0" />
     <PackageReference Include="Polly" Version="7.2.3" />
     <PackageReference Include="Refit" Version="6.3.2" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0-preview3" />
