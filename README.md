@@ -45,7 +45,7 @@ Markup allows us to define the binding fluently and therefore chain multiple met
 new Entry().Bind(Entry.TextProperty, nameof(ViewModel.RegistrationCode))
 ```
 
-For further details on the possible options for the `Bind` method refer to the [`BindableObject` extensions documentation](extensions/bindable-object-extensions.md).
+For further details on the possible options for the `Bind` method refer to the [`BindableObject` extensions documentation](https://docs.microsoft.com/dotnet/communitytoolkit/maui/markup/extensions/bindable-object-extensions).
 
 ### Sizing
 
