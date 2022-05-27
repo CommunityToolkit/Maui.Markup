@@ -63,7 +63,7 @@ Markup allows us to define the sizing fluently and therefore chain multiple meth
 new Entry().Size(200, 40);
 ```
 
-For further details on the possible options for the `Size` method refer to the [`VisualElement` extensions documentation](extensions/visual-element-extensions.md).
+For further details on the possible options for the `Size` method refer to the [`VisualElement` extensions documentation](https://docs.microsoft.com/dotnet/communitytoolkit/maui/markup/extensions/visual-element-extensions).
 
 ### In-depth example
 
