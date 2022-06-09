@@ -26,6 +26,143 @@ public static MauiApp CreateMauiApp()
 }
 ```
 
+## Examples
+
+Here are some brief examples showing how common tasks can be achieved through the use of the Markup package.
+
+### Bindings
+
+First let's take a look at how a Binding could be defined without the Markup package:
+
+```csharp
+var entry = new Entry();
+entry.SetBinding(Entry.TextProperty, new Binding(nameof(ViewModel.RegistrationCode));
+```
+
+Markup allows us to define the binding fluently and therefore chain multiple methods together to reduce the verbosity of our code:
+
+```csharp
+new Entry().Bind(Entry.TextProperty, nameof(ViewModel.RegistrationCode))
+```
+
+For further details on the possible options for the `Bind` method refer to the [`BindableObject` extensions documentation](https://docs.microsoft.com/dotnet/communitytoolkit/maui/markup/extensions/bindable-object-extensions).
+
+### Sizing
+
+First let's take a look at how an `Entry` could be sized without the Markup package:
+
+```csharp
+var entry = new Entry();
+entry.WidthRequest = 200;
+entry.HeightRequest = 40;
+```
+
+Markup allows us to define the sizing fluently and therefore chain multiple methods together to reduce the verbosity of our code:
+
+```csharp
+new Entry().Size(200, 40);
+```
+
+For further details on the possible options for the `Size` method refer to the [`VisualElement` extensions documentation](https://docs.microsoft.com/dotnet/communitytoolkit/maui/markup/extensions/visual-element-extensions).
+
+### In-depth example
+
+The following example shows setting the page content to a new `Grid` containing a `Label` and an `Entry`, in C#:
+
+```csharp
+class SampleContentPage : ContentPage
+{
+    public SampleContentPage()
+    {
+        Grid grid = new Grid
+        {
+            RowDefinitions =
+            {
+                new RowDefinition { Height = new GridLength(36, GridUnitType.Absolute) }
+            },
+
+            ColumnDefinitions =
+            {
+                new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
+                new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) }
+            }
+        }
+
+        Label label = new Label { Text = "Code: " };
+        grid.Children.Add(label);
+        GridLayout.SetColumn(label, 0);
+        GridLayout.SetRow(label, 0);
+
+        Entry entry = new Entry
+        {
+            Placeholder = "Enter number",
+            Keyboard = Keyboard.Numeric,
+            BackgroundColor = Colors.AliceBlue,
+            TextColor = Colors.Black,
+            FontSize = 15,
+            HeightRequest = 44,
+            Margin = new Thickness(5)
+        };
+        grid.Children.Add(entry);
+        GridLayout.SetColumn(label, 1);
+        GridLayout.SetRow(label, 0);
+        entry.SetBinding(Entry.TextProperty, new Binding(nameof(ViewModel.RegistrationCode));
+
+        Content = grid;
+    }
+}
+```
+
+This example creates a `Grid` object, with child `Label` and `Entry` objects. The `Label` displays text, and the `Entry` data binds to the `RegistrationCode` property of the viewmodel. Each child view is set to appear in a specific row in the `Grid`, and the `Entry` spans all the columns in the `Grid`. In addition, the height of the `Entry` is set, along with its keyboard, colors, the font size of its text, and its `Margin`. Finally, the `Page.Content` property is set to the `Grid` object.
+
+C# Markup enables this code to be re-written using its fluent API:
+
+```csharp
+using static CommunityToolkit.Maui.Markup.GridRowsColumns;
+
+class SampleContentPage : ContentPage
+{
+    public SampleContentPage()
+    {
+        Content = new Grid
+        {
+            RowDefinitions = Rows.Define(
+                (Row.TextEntry, 36)),
+
+            ColumnDefinitions = Columns.Define(
+                (Column.Description, Star),
+                (Column.Input, Stars(2))),
+
+            Children =
+            {
+                new Label()
+                    .Text("Code:")
+                    .Row(Row.TextEntry).Column(Column.Description),
+
+                new Entry
+                {
+                    Keyboard = Keyboard.Numeric,
+                    BackgroundColor = Colors.AliceBlue,
+                }.Row(Row.TextEntry).Column(Column.Input)
+                 .FontSize(15)
+                 .Placeholder("Enter number")
+                 .TextColor(Colors.Black)
+                 .Height(44)
+                 .Margin(5, 5)
+                 .Bind(Entry.TextProperty, nameof(ViewModel.RegistrationCode))
+            }
+        };
+    }
+
+    enum Row { TextEntry }
+    enum Column { Description, Input }
+}
+```
+
+This example is identical to the previous example, but the C# Markup fluent API simplifies the process of building the UI in C#.
+
+C# Markup extensions also allow developers to use an `enum` to define names for Columns and Rows (e.g. `Column.Input`).
+
 ## Submitting A New Feature
 
 New features will follow this workflow, described in more detail in the steps below
