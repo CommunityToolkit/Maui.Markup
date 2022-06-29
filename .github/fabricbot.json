@@ -1,0 +1,482 @@
+{
+  "version": "1.0",
+  "tasks": [
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssuesOnlyResponder",
+      "version": "1.0",
+      "id": "KeGp5gGZUPn_eEvoL-o_2",
+      "config": {
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "isOpen",
+              "parameters": {}
+            },
+            {
+              "operator": "or",
+              "operands": [
+                {
+                  "name": "hasLabel",
+                  "parameters": {
+                    "label": "proposal"
+                  }
+                },
+                {
+                  "name": "titleContains",
+                  "parameters": {
+                    "titlePattern": "[Proposal]"
+                  }
+                }
+              ]
+            },
+            {
+              "operator": "not",
+              "operands": [
+                {
+                  "name": "isInProject",
+                  "parameters": {
+                    "projectName": "New Feature Proposals"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "eventType": "issue",
+        "eventNames": [
+          "issues",
+          "project_card"
+        ],
+        "taskName": "Add Proposal to Project Board",
+        "actions": [
+          {
+            "name": "addToProject",
+            "parameters": {
+              "projectName": "New Feature Proposals",
+              "columnName": "Proposal Submitted"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssuesOnlyResponder",
+      "version": "1.0",
+      "id": "XAVVBZ_My3gmLoTczgHhR",
+      "config": {
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "addedToProjectColumn",
+              "parameters": {
+                "projectName": "New Feature Proposals",
+                "columnName": "Proposal Championed"
+              }
+            }
+          ]
+        },
+        "eventType": "issue",
+        "eventNames": [
+          "issues",
+          "project_card"
+        ],
+        "taskName": "Add Champion Label",
+        "actions": [
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "champion"
+            }
+          },
+          {
+            "name": "removeLabel",
+            "parameters": {
+              "label": "new"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssuesOnlyResponder",
+      "version": "1.0",
+      "id": "uNCo_JT1jZDqA1EFwf5QU",
+      "config": {
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "addedToProjectColumn",
+              "parameters": {
+                "projectName": "New Feature Proposals",
+                "columnName": "Proposal Approved"
+              }
+            }
+          ]
+        },
+        "eventType": "issue",
+        "eventNames": [
+          "issues",
+          "project_card"
+        ],
+        "taskName": "Add Approved Label",
+        "actions": [
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "approved"
+            }
+          },
+          {
+            "name": "removeLabel",
+            "parameters": {
+              "label": "new"
+            }
+          },
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "help wanted"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssuesOnlyResponder",
+      "version": "1.0",
+      "id": "AsSZ2N3Y72QHMtnkMQ4A_",
+      "config": {
+        "conditions": {
+          "operator": "or",
+          "operands": [
+            {
+              "name": "addedToProjectColumn",
+              "parameters": {
+                "projectName": "New Feature Proposals",
+                "columnName": "Proposal Championed"
+              }
+            },
+            {
+              "name": "addedToProjectColumn",
+              "parameters": {
+                "projectName": "New Feature Proposals",
+                "columnName": "Proposal Approved"
+              }
+            },
+            {
+              "name": "addedToProjectColumn",
+              "parameters": {
+                "projectName": "New Feature Proposals",
+                "columnName": "Pull Request Approved (Pending Documentation)"
+              }
+            }
+          ]
+        },
+        "eventType": "issue",
+        "eventNames": [
+          "issues",
+          "project_card"
+        ],
+        "taskName": "Add Pending Documentation Label",
+        "actions": [
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "pending documentation"
+            }
+          },
+          {
+            "name": "removeLabel",
+            "parameters": {
+              "label": "new"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssuesOnlyResponder",
+      "version": "1.0",
+      "id": "wQikvTGmQMc1V-7vlIVuA",
+      "config": {
+        "conditions": {
+          "operator": "or",
+          "operands": [
+            {
+              "name": "addedToProjectColumn",
+              "parameters": {
+                "projectName": "New Feature Proposals",
+                "columnName": "Documentation Approved"
+              }
+            },
+            {
+              "name": "addedToProjectColumn",
+              "parameters": {
+                "projectName": "New Feature Proposals",
+                "columnName": "Completed"
+              }
+            }
+          ]
+        },
+        "eventType": "issue",
+        "eventNames": [
+          "issues",
+          "project_card"
+        ],
+        "taskName": "Add Documentation Approved Label",
+        "actions": [
+          {
+            "name": "removeLabel",
+            "parameters": {
+              "label": "pending documentation"
+            }
+          },
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "documentation approved"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssuesOnlyResponder",
+      "version": "1.0",
+      "id": "QG2u94lDwC-meokg6OK6W",
+      "config": {
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "operator": "or",
+              "operands": [
+                {
+                  "name": "titleContains",
+                  "parameters": {
+                    "titlePattern": "[Proposal]"
+                  }
+                },
+                {
+                  "name": "hasLabel",
+                  "parameters": {
+                    "label": "proposal"
+                  }
+                },
+                {
+                  "name": "isInProject",
+                  "parameters": {
+                    "projectName": "New Feature Proposals"
+                  }
+                }
+              ]
+            },
+            {
+              "operator": "not",
+              "operands": [
+                {
+                  "name": "isOpen",
+                  "parameters": {}
+                }
+              ]
+            },
+            {
+              "operator": "or",
+              "operands": [
+                {
+                  "operator": "not",
+                  "operands": [
+                    {
+                      "name": "isInProjectColumn",
+                      "parameters": {
+                        "projectName": "New Feature Proposals",
+                        "columnName": "Completed"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "operator": "not",
+                  "operands": [
+                    {
+                      "name": "isInProjectColumn",
+                      "parameters": {
+                        "projectName": "New Feature Proposals",
+                        "columnName": "Closed"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "eventType": "issue",
+        "eventNames": [
+          "issues",
+          "project_card"
+        ],
+        "taskName": "Reopen Closed Proposals Not In Closed Column",
+        "actions": [
+          {
+            "name": "reopenIssue",
+            "parameters": {}
+          },
+          {
+            "name": "addReply",
+            "parameters": {
+              "comment": "Reopening Proposal. \n\nOnly Proposals moved to the [`Closed` Project Column](https://github.com/CommunityToolkit/Maui.Markup/projects/1) and [`Completed` Project Column](https://github.com/CommunityToolkit/Maui.Markup/projects/1) can be closed."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssuesOnlyResponder",
+      "version": "1.0",
+      "id": "pNBtbh2D8DwEolRHiW0Ab",
+      "config": {
+        "conditions": {
+          "operator": "or",
+          "operands": [
+            {
+              "name": "addedToProjectColumn",
+              "parameters": {
+                "projectName": "New Feature Proposals",
+                "columnName": "Completed"
+              }
+            },
+            {
+              "name": "addedToProjectColumn",
+              "parameters": {
+                "projectName": "New Feature Proposals",
+                "columnName": "Closed"
+              }
+            }
+          ]
+        },
+        "eventType": "issue",
+        "eventNames": [
+          "issues",
+          "project_card"
+        ],
+        "taskName": "Automatically Close Proposals when Added to `Completed` or `Closed`",
+        "actions": [
+          {
+            "name": "closeIssue",
+            "parameters": {}
+          }
+        ]
+      }
+    },
+    {
+      "taskType": "scheduled",
+      "capabilityId": "ScheduledSearch",
+      "subCapability": "ScheduledSearch",
+      "version": "1.1",
+      "id": "zxrET9i1c6KzXAp8s0k8a",
+      "config": {
+        "frequency": [
+          {
+            "weekDay": 0,
+            "hours": [
+              16
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 1,
+            "hours": [
+              16
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 2,
+            "hours": [
+              16
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 3,
+            "hours": [
+              16
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 4,
+            "hours": [
+              16
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 5,
+            "hours": [
+              16
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 6,
+            "hours": [
+              16
+            ],
+            "timezoneOffset": -8
+          }
+        ],
+        "searchTerms": [
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "name": "isPr",
+            "parameters": {}
+          },
+          {
+            "name": "noActivitySince",
+            "parameters": {
+              "days": 30
+            }
+          }
+        ],
+        "taskName": "Add Stale Label",
+        "actions": [
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "stale"
+            }
+          },
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "help wanted"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "userGroups": []
+}
