@@ -1,12 +1,14 @@
 ﻿using CommunityToolkit.Maui.Markup.Sample.Services;
 using CommunityToolkit.Maui.Markup.Sample.ViewModels.Base;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace CommunityToolkit.Maui.Markup.Sample.ViewModels;
 
-class SettingsViewModel : BaseViewModel
+partial class SettingsViewModel : BaseViewModel
 {
 	readonly SettingsService settingsService;
 
+	[ObservableProperty]
 	int numberOfTopStoriesToFetch;
 
 	public SettingsViewModel(SettingsService settingsService)
@@ -15,16 +17,8 @@ class SettingsViewModel : BaseViewModel
 		NumberOfTopStoriesToFetch = settingsService.NumberOfTopStoriesToFetch;
 	}
 
-	public int NumberOfTopStoriesToFetch
+	partial void OnNumberOfTopStoriesToFetchChanged(int value)
 	{
-		get => numberOfTopStoriesToFetch;
-		set
-		{
-			if (numberOfTopStoriesToFetch != value)
-			{
-				settingsService.NumberOfTopStoriesToFetch = numberOfTopStoriesToFetch = value;
-				OnPropertyChanged(nameof(NumberOfTopStoriesToFetch));
-			}
-		}
+		settingsService.NumberOfTopStoriesToFetch = value;
 	}
 }
