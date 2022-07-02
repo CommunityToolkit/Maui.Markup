@@ -36,7 +36,7 @@ partial class NewsViewModel : BaseViewModel
 
 	public ObservableCollection<StoryModel> TopStoryCollection { get; } = new();
 
-	[ICommand]
+	[RelayCommand]
 	async Task PullToRefresh()
 	{
 		TopStoryCollection.Clear();

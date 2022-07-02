@@ -1,5 +1,8 @@
-﻿namespace CommunityToolkit.Maui.Markup.Sample.ViewModels.Base;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-abstract class BaseViewModel : Mvvm.ComponentModel.ObservableObject
+namespace CommunityToolkit.Maui.Markup.Sample.ViewModels.Base;
+
+[INotifyPropertyChanged]
+abstract partial class BaseViewModel
 {
 }

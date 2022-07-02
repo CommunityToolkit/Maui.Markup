@@ -23,7 +23,7 @@ partial class NewsDetailViewModel : BaseViewModel, IQueryAttributable
 		this.browser = browser;
 	}
 
-	[ICommand]
+	[RelayCommand]
 	Task OpenBrowser()
 	{
 		ArgumentNullException.ThrowIfNull(Uri);
