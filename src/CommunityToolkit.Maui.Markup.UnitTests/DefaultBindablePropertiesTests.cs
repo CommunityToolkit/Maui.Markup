@@ -40,16 +40,28 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		}
 
 		[Test]
+		public void GetDefaultBindablePropertiesForBuiltInType()
+			=> Assert.That(DefaultBindableProperties.GetDefaultProperty<Button>(), Is.Not.Null);
+
+		[Test]
+		public void GetDefaultBindablePropertiesForDerivedType()
+			=> Assert.That(DefaultBindableProperties.GetDefaultProperty<DerivedFromButton>(), Is.Not.Null);
+
+		[Test]
+		public void GetDefaultBindablePropertiesForMauiDerivedType()
+			=> Assert.That(DefaultBindableProperties.GetDefaultProperty<MenuFlyoutItem>(), Is.Not.Null);
+
+		[Test]
 		public void GetDefaultBindableCommandPropertiesForBuiltInType()
 			=> Assert.That(DefaultBindableProperties.GetCommandAndCommandParameterProperty<Button>(), Is.Not.Null);
 
 		[Test]
 		public void GetDefaultBindableCommandPropertiesForDerivedType()
-			=> Assert.That(DefaultBindableProperties.GetDefaultProperty<DerivedFromButton>(), Is.Not.Null);
+			=> Assert.That(DefaultBindableProperties.GetCommandAndCommandParameterProperty<DerivedFromButton>(), Is.Not.Null);
 
 		[Test]
 		public void GetDefaultBindableCommandPropertiesForMauiDerivedType()
-			=> Assert.That(DefaultBindableProperties.GetDefaultProperty<MenuFlyoutItem>(), Is.Not.Null);
+			=> Assert.That(DefaultBindableProperties.GetCommandAndCommandParameterProperty<MenuFlyoutItem>(), Is.Not.Null);
 
 		[Test]
 		public void GetDefaultBindableCommandPropertiesForUnsupportedType()
