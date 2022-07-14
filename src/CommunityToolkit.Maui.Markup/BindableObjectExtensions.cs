@@ -92,7 +92,7 @@ public static class BindableObjectExtensions
 		object? fallbackValue = null) where TBindable : BindableObject
 	{
 		bindable.Bind(
-			DefaultBindableProperties.GetFor(bindable),
+			DefaultBindableProperties.GetDefaultProperty<TBindable>(),
 			path, mode, converter, converterParameter, stringFormat, source, targetNullValue, fallbackValue);
 
 		return bindable;
@@ -112,7 +112,7 @@ public static class BindableObjectExtensions
 	{
 		var converter = new FuncConverter<TSource, TDest, object>(convert, convertBack);
 		bindable.Bind(
-			DefaultBindableProperties.GetFor(bindable),
+			DefaultBindableProperties.GetDefaultProperty<TBindable>(),
 			path, mode, converter, null, stringFormat, source, targetNullValue, fallbackValue);
 
 		return bindable;
@@ -133,7 +133,7 @@ public static class BindableObjectExtensions
 	{
 		var converter = new FuncConverter<TSource, TDest, TParam>(convert, convertBack);
 		bindable.Bind(
-			DefaultBindableProperties.GetFor(bindable),
+			DefaultBindableProperties.GetDefaultProperty<TBindable>(),
 			path, mode, converter, converterParameter, stringFormat, source, targetNullValue, fallbackValue);
 
 		return bindable;
@@ -152,7 +152,7 @@ public static class BindableObjectExtensions
 		string? parameterPath = bindingContextPath,
 		object? parameterSource = null) where TBindable : BindableObject
 	{
-		(var commandProperty, var parameterProperty) = DefaultBindableProperties.GetForCommand(bindable);
+		(var commandProperty, var parameterProperty) = DefaultBindableProperties.GetCommandAndCommandParameterProperty<TBindable>();
 
 		bindable.SetBinding(commandProperty, new Binding(path: path, source: source));
 
