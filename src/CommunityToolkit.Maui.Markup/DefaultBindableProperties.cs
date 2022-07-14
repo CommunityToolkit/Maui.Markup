@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 
 namespace CommunityToolkit.Maui.Markup;
 
@@ -133,43 +134,36 @@ public static class DefaultBindableProperties
 		bindableObjectTypeDefaultProperty.Remove(property.DeclaringType.FullName);
 	}
 
-	internal static BindableProperty GetFor(BindableObject bindableObject)
+	internal static BindableProperty GetDefaultProperty<T>() where T : BindableObject
 	{
-		var type = bindableObject.GetType();
-		var defaultProperty = GetFor(type);
-
-		if (defaultProperty is null)
+		if (!TryGetDefaultProperty<T>(out var defaultProperty))
 		{
 			throw new ArgumentException(
-				"No default bindable property is registered for BindableObject type " + type.FullName +
+				"No default bindable property is registered for BindableObject type " + typeof(T).FullName +
 				"\r\nEither specify a property when calling Bind() or register a default bindable property for this BindableObject type");
 		}
 
 		return defaultProperty;
 	}
 
-	internal static BindableProperty? GetFor(Type? bindableObjectType)
+	internal static bool TryGetDefaultProperty<T>([NotNullWhen(true)] out BindableProperty? defaultBindableProperty) where T : BindableObject
 	{
-		BindableProperty? defaultProperty = null;
+		defaultBindableProperty = null;
+		var bindableObjectType = typeof(T);
 
 		do
 		{
 			var bindableObjectTypeName = bindableObjectType?.FullName;
-			if (bindableObjectTypeName is not null && bindableObjectTypeDefaultProperty.TryGetValue(bindableObjectTypeName, out defaultProperty))
+			if (bindableObjectTypeName is not null && bindableObjectTypeDefaultProperty.TryGetValue(bindableObjectTypeName, out defaultBindableProperty))
 			{
-				break;
-			}
-
-			if (bindableObjectTypeName?.StartsWith($"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.", StringComparison.Ordinal) is true)
-			{
-				break;
+				return true;
 			}
 
 			bindableObjectType = bindableObjectType?.GetTypeInfo().BaseType;
 		}
-		while (bindableObjectType != null);
+		while (bindableObjectType is not null && bindableObjectType.GetType() != typeof(BindableObject));
 
-		return defaultProperty;
+		return false;
 	}
 
 	internal static void UnregisterForCommand(BindableProperty commandProperty)
@@ -182,43 +176,38 @@ public static class DefaultBindableProperties
 		bindableObjectTypeDefaultCommandAndParameterProperties.Remove(commandProperty.DeclaringType.FullName);
 	}
 
-	internal static (BindableProperty, BindableProperty) GetForCommand(BindableObject bindableObject)
+	internal static (BindableProperty CommandProperty, BindableProperty CommandParameterProperty) GetCommandAndCommandParameterProperty<T>() where T : BindableObject
 	{
-		var type = bindableObject.GetType();
-		(var commandProperty, var parameterProperty) = GetForCommand(type);
-		if (commandProperty is null || parameterProperty is null)
+		if (!TryGetCommandAndCommandParameterProperty<T>(out var commandProperty, out var parameterProperty))
 		{
 			throw new ArgumentException(
-				"No command + command parameter properties are registered for BindableObject type " + type.FullName +
+				"No command + command parameter properties are registered for BindableObject type " + typeof(T).FullName +
 				"\r\nRegister command + command parameter properties for this BindableObject type");
 		}
 
 		return (commandProperty, parameterProperty);
 	}
 
-	internal static (BindableProperty?, BindableProperty?) GetForCommand(Type? bindableObjectType)
+	internal static bool TryGetCommandAndCommandParameterProperty<T>([NotNullWhen(true)] out BindableProperty? commandProperty, [NotNullWhen(true)] out BindableProperty? commandParameterProperty) where T : BindableObject
 	{
-		(BindableProperty?, BindableProperty?) commandAndParameterProperties = (null, null);
+		commandProperty = commandParameterProperty = null;
+		var bindableObjectType = typeof(T);
 
 		do
 		{
-			var bindableObjectTypeName = bindableObjectType?.FullName;
+			var bindableObjectTypeName = bindableObjectType.FullName;
 			if (bindableObjectTypeName is not null && bindableObjectTypeDefaultCommandAndParameterProperties.TryGetValue(bindableObjectTypeName, out var dictionaryResult))
 			{
-				commandAndParameterProperties.Item1 = dictionaryResult.Item1;
-				commandAndParameterProperties.Item2 = dictionaryResult.Item2;
-				break;
-			}
+				commandProperty = dictionaryResult.Item1;
+				commandParameterProperty = dictionaryResult.Item2;
 
-			if (bindableObjectTypeName?.StartsWith($"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.", StringComparison.Ordinal) is true)
-			{
-				break;
+				return true;
 			}
 
 			bindableObjectType = bindableObjectType?.GetTypeInfo().BaseType;
 		}
-		while (bindableObjectType != null);
+		while (bindableObjectType is not null && bindableObjectType.GetType() != typeof(BindableObject));
 
-		return commandAndParameterProperties;
+		return false;
 	}
 }
