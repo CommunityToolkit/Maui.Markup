@@ -48,7 +48,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			=> Assert.That(DefaultBindableProperties.GetDefaultProperty<DerivedFromButton>(), Is.Not.Null);
 
 		[Test]
-		public void GetDefaultBindableCommandPropertiesForMenuFlyoutItem()
+		public void GetDefaultBindableCommandPropertiesForMauiDerivedType()
 			=> Assert.That(DefaultBindableProperties.GetDefaultProperty<MenuFlyoutItem>(), Is.Not.Null);
 
 		[Test]
