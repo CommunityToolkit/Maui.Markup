@@ -4,12 +4,13 @@ variables:
   CurrentSemanticVersion: '$(CurrentSemanticVersionBase)-preview$(PreviewNumber)'
   NugetPackageVersion: '$(CurrentSemanticVersion)'
   NET_VERSION: '6.0.x'
-  RunPoliCheck: 'false'
+  RunPoliCheck: false
   PathToSolution: 'src/CommunityToolkit.Maui.Markup.sln'
   PathToCommunityToolkitCsproj: 'src/CommunityToolkit.Maui.Markup/CommunityToolkit.Maui.Markup.csproj'
   PathToCommunityToolkitSampleCsproj: 'samples/CommunityToolkit.Maui.Markup.Sample/CommunityToolkit.Maui.Markup.Sample.csproj'
   PathToCommunityToolkitUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.UnitTests/CommunityToolkit.Maui.Markup.UnitTests.csproj'
   XcodeVersion: '13.3.1'
+  ShouldCheckDependencies: true
   
 trigger:
   branches:
@@ -49,12 +50,14 @@ jobs:
         inputs:
           packageType: 'sdk'
           version: '$(NET_VERSION)'
+
       - task: CmdLine@2
         displayName: 'Install .NET MAUI Workload'
         inputs:
             script : |
               dotnet --info
               dotnet workload install maui
+
       # if this is a tagged build, then update the version number
       - powershell: |
           $buildSourceBranch = "$(Build.SourceBranch)"
@@ -63,6 +66,7 @@ jobs:
           Write-Host ("##vso[task.setvariable variable=NugetPackageVersion;]$tagVersion")
         displayName: Set NuGet Version to Tag Number
         condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')
+
       # if this is a PR build, then update the version number
       - powershell: |
           $prNumber = $env:System_PullRequest_PullRequestNumber
@@ -73,6 +77,7 @@ jobs:
           Write-Host "##vso[build.updatebuildnumber]$fullVersionString"
         displayName: Set NuGet Version to PR Version
         condition: and(succeeded(), eq(variables['build.reason'], 'PullRequest'))
+
       # test
       - task: DotNetCoreCLI@2
         displayName: 'Run Unit Tests'
@@ -81,6 +86,7 @@ jobs:
           projects: '$(PathToCommunityToolkitUnitTestCsproj)'
           arguments: '--configuration Release --settings ".runsettings" --collect "XPlat code coverage" --logger trx --results-directory $(Agent.TempDirectory)'
           publishTestResults: false    
+
       - task: PublishTestResults@2
         displayName: 'Publish Test Results'
         inputs:
@@ -93,6 +99,7 @@ jobs:
           codeCoverageTool: 'Cobertura'
           summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
           failIfCoverageEmpty: true
+
       # build sample
       - task: VSBuild@1
         displayName: 'Build Markup CommunityToolkit.Maui.Markup.Sample'
@@ -100,6 +107,7 @@ jobs:
           solution: '$(PathToCommunityToolkitSampleCsproj)'
           configuration: 'Release'
           msbuildArgs: '/restore'
+
       # pack
       - task: VSBuild@1
         displayName: 'Build and Pack CommunityToolkit.Maui.Markup'
@@ -107,14 +115,19 @@ jobs:
           solution: '$(PathToCommunityToolkitCsproj)'
           configuration: 'Release'
           msbuildArgs: '/restore -t:pack -p:PackageVersion=$(NugetPackageVersion) -p:Version=$(NugetPackageVersion) -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg'
+
       # check vulnerabilities
-      - task: DotNetCoreCLI@2
+      - powershell: |
+          dotnet list $(PathToSolution) package --vulnerable --include-transitive | findstr /S /c:"has the following vulnerable packages";
+          if ($LastExitCode -ne 1)
+          {
+            dotnet list $(PathToSolution) package --vulnerable --include-transitive;
+            exit 1;
+          }
+
+          exit 0;
         displayName: 'Check Dependencies'
-        inputs:
-          command: 'custom'
-          custom: 'list'
-          arguments: 'package --vulnerable --include-transitive'
-          projects: $(PathToSolution)
+        condition: eq(variables.ShouldCheckDependencies, true)
       # publish
       - task: PowerShell@2
         displayName: 'Copy NuGet Packages to Staging Directory'
@@ -125,6 +138,7 @@ jobs:
             $filter = "nupkg"
             Get-ChildItem -Path $source -Recurse | Where-Object { $_.Extension -match $filter } | Copy-Item -Destination "$(Build.ArtifactStagingDirectory)"
           pwsh: true
+
       # Sign NuGet Packages
       - task: PowerShell@2
         displayName: Authenticode Sign Packages
@@ -135,6 +149,7 @@ jobs:
           SignClientSecret: $(SignClientSecret)
           ArtifactDirectory: $(Build.ArtifactStagingDirectory)
         condition: and(succeeded(), not(eq(variables['build.reason'], 'PullRequest')), not(eq(variables['SignClientSecret'], '')), not(eq(variables['SignClientUser'], '')))
+
       # publish the packages
       - task: PublishBuildArtifacts@1
         displayName: 'Publish Unsigned NuGets'
@@ -155,10 +170,12 @@ jobs:
           Write-Host ("##vso[task.setvariable variable=NugetPackageVersion;]$tagVersion")
         displayName: Set NuGet Version to Tag Number
         condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')
+        
       - task: CmdLine@2
         displayName: 'Set Xcode Version'
         inputs:
           script: echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(XcodeVersion).app;sudo xcode-select --switch /Applications/Xcode_$(XcodeVersion).app/Contents/Developer
+
       - task: UseDotNet@2
         displayName: 'Install .NET SDK'
         inputs:
@@ -166,24 +183,29 @@ jobs:
           version: '$(NET_VERSION)'
       - task: CmdLine@2
         displayName: 'Install .NET MAUI workload'
+
         inputs:
           script: 'dotnet workload install maui'
       - task: CmdLine@2
         displayName: 'Restore NuGet Packages'
         inputs:
           script: 'dotnet restore $(PathToCommunityToolkitCsproj)'
+
       - task: CmdLine@2
         displayName: 'Build Community Toolkit'
         inputs:
-          script: 'dotnet build $(PathToCommunityToolkitCsproj) -c Release'
-      - task: CmdLine@2 # Building iOS + macOS requires a signing certificate
+          script: dotnet build $(PathToCommunityToolkitCsproj) -c Release
+
+      - task: CmdLine@2
         displayName: 'Build Community Toolkit Sample'
         inputs:
-          script: 'dotnet build $(PathToCommunityToolkitSampleCsproj) -c Release'
+          script: dotnet build $(PathToCommunityToolkitSampleCsproj) -c Release
+
       - task: CmdLine@2
         displayName: 'Run Unit Tests'
         inputs:
           script: dotnet test $(PathToCommunityToolkitUnitTestCsproj) -c Release
+
       - task: CmdLine@2
         displayName: 'Pack CommunityToolkit NuGets'
         inputs:

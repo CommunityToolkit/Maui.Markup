@@ -17,10 +17,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CommunityToolkit.Maui.Markup\CommunityToolkit.Maui.Markup.csproj" />
   </ItemGroup>
-  
+
 </Project>
