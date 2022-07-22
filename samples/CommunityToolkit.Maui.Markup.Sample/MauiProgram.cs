@@ -28,15 +28,10 @@ public class MauiProgram
 		builder.Services.AddSingleton<HackerNewsAPIService>();
 		builder.Services.AddSingleton(RestService.For<IHackerNewsApi>("https://hacker-news.firebaseio.com/v0"));
 
-		// View Models
-		builder.Services.AddTransient<NewsViewModel>();
-		builder.Services.AddTransient<SettingsViewModel>();
-		builder.Services.AddTransient<NewsDetailViewModel>();
-
-		// Pages
-		builder.Services.AddTransient<NewsPage>();
-		builder.Services.AddTransient<SettingsPage>();
-		builder.Services.AddTransient<NewsDetailPage>();
+		// Pages + View Models
+		builder.Services.AddTransient<NewsPage, NewsViewModel>();
+		builder.Services.AddTransient<SettingsPage, SettingsViewModel>();
+		builder.Services.AddTransient<NewsDetailPage, NewsDetailViewModel>();
 
 		return builder.Build();
 	}
