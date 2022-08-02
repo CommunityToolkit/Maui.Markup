@@ -18,14 +18,18 @@ class NewsDetailPage : BaseContentPage<NewsDetailViewModel>
 					.Grow(1).AlignSelf(FlexAlignSelf.Stretch)
 					.Bind(WebView.SourceProperty, nameof(NewsDetailViewModel.Uri), BindingMode.OneWay),
 
-				new Button { BackgroundColor = ColorConstants.NavigationBarBackgroundColor }
-					.Text("Launch in Browser \uf35d", ColorConstants.PrimaryTextColor)
+				new Button {  }
+				.DynamicResource(Button.BackgroundColorProperty,nameof(BaseTheme.NavigationBarBackgroundColor))
+					.Text("Launch in Browser \uf35d")
+					.DynamicResource(Button.TextColorProperty,nameof(BaseTheme.PrimaryTextColor))
 					.Font(size: 20, family: "FontAwesome")
 					.Basis(50)
 					.Bind(Button.CommandProperty, nameof(NewsDetailViewModel.OpenBrowserCommand), BindingMode.OneWay),
 
-				new Label { BackgroundColor = ColorConstants.NavigationBarBackgroundColor }
-					.TextColor(ColorConstants.PrimaryTextColor).TextCenter()
+				new Label { }
+				.DynamicResource(Label.BackgroundColorProperty,nameof(BaseTheme.NavigationBarBackgroundColor))
+				.DynamicResource(Label.TextColorProperty,nameof(BaseTheme.PrimaryTextColor)).TextCenter()
+					.TextCenter()
 					.AlignSelf(FlexAlignSelf.Stretch)
 					.Paddings(bottom: 20)
 					.Bind(Label.TextProperty, nameof(NewsDetailViewModel.ScoreDescription), BindingMode.OneWay),

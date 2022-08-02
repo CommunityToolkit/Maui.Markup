@@ -13,6 +13,11 @@ class AppShell : Shell
 
 	public AppShell(NewsPage newsPage)
 	{
+		//this.DynamicResource(Shell.TitleColorProperty, nameof(BaseTheme.NavigationBarTextColor));
+		//this.DynamicResource(Shell.DisabledColorProperty, nameof(BaseTheme.NavigationBarTextColor));
+		//this.DynamicResource(Shell.UnselectedColorProperty, nameof(BaseTheme.NavigationBarTextColor));
+		//this.DynamicResource(Shell.ForegroundColorProperty, nameof(BaseTheme.NavigationBarTextColor));
+		//this.DynamicResource(Shell.BackgroundColorProperty, nameof(BaseTheme.NavigationBarBackgroundColor));
 		Items.Add(newsPage);
 	}
 

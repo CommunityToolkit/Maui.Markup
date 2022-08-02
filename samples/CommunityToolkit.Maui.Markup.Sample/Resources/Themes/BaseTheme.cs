@@ -12,6 +12,8 @@ public abstract class BaseTheme : ResourceDictionary
 		Add(nameof(SecondaryTextColor), SecondaryTextColor);
 		Add(nameof(BrowserNavigationBarBackgroundColor), BrowserNavigationBarBackgroundColor);
 		Add(nameof(BrowserNavigationBarTextColor), BrowserNavigationBarTextColor);
+		Add(NavigationPageStyle);
+		Add(ShellStyle);
 	}
 
 	public abstract Color PageBackgroundColor { get; }
@@ -24,4 +26,8 @@ public abstract class BaseTheme : ResourceDictionary
 
 	public abstract Color BrowserNavigationBarBackgroundColor { get; }
 	public abstract Color BrowserNavigationBarTextColor { get; }
+
+	public abstract Style NavigationPageStyle { get; }
+
+	public abstract Style ShellStyle { get; }
 }

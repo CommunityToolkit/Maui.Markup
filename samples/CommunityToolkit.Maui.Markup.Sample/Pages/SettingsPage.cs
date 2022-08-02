@@ -9,12 +9,13 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 		{
 			Children =
 			{
-				new Image { Opacity = 0.25 }.Source("dotnet_bot").IsOpaque(false).Aspect(Aspect.AspectFit)
+				new Image { }.Source("dotnet_bot").IsOpaque(false).Aspect(Aspect.AspectFit)
 					.LayoutFlags(AbsoluteLayoutFlags.SizeProportional | AbsoluteLayoutFlags.PositionProportional)
 					.LayoutBounds(0.5, 0.5, 0.5, 0.5),
 
 				new Label()
-					.Text("Top Stories To Fetch", ColorConstants.PrimaryTextColor)
+					.Text("Top Stories To Fetch")
+					.DynamicResource(Label.TextColorProperty, nameof(BaseTheme.PrimaryTextColor))
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
 					.LayoutBounds(0, 0, 1, 40)
 					.TextCenterHorizontal()
@@ -30,7 +31,7 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 						MinimumValue = SettingsService.MinimumStoriesToFetch,
 						MaximumValue = SettingsService.MaximumStoriesToFetch,
 						InvalidStyle = new Style<Entry>(Entry.TextColorProperty, Colors.Red),
-						ValidStyle = new Style<Entry>(Entry.TextColorProperty, ColorConstants.PrimaryTextColor),
+						ValidStyle = new Style<Entry>(Entry.TextColorProperty, Colors.Black),
 					})
 					.Bind(Entry.TextProperty, nameof(SettingsViewModel.NumberOfTopStoriesToFetch))
 					.TextCenter(),
@@ -44,7 +45,7 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 						mode: BindingMode.OneTime)
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
 					.LayoutBounds(0, 90, 1, 40)
-					.TextCenter().TextColor(ColorConstants.PrimaryTextColor).Font(size: 12, italic: true)
+					.TextCenter().DynamicResource(Label.TextColorProperty, nameof(BaseTheme.PrimaryTextColor)).Font(size: 12, italic: true)
 			}
 		};
 	}
