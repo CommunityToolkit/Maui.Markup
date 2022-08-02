@@ -1,11 +1,4 @@
-﻿using System.Globalization;
-using CommunityToolkit.Maui.Behaviors;
-using CommunityToolkit.Maui.Markup.Sample.Constants;
-using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
-using CommunityToolkit.Maui.Markup.Sample.Services;
-using CommunityToolkit.Maui.Markup.Sample.ViewModels;
-using Microsoft.Maui.Layouts;
-
+﻿
 namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
 class SettingsPage : BaseContentPage<SettingsViewModel>

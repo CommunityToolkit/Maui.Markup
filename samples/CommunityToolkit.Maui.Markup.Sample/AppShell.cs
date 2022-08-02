@@ -1,7 +1,4 @@
-﻿using CommunityToolkit.Maui.Markup.Sample.Pages;
-using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
-using CommunityToolkit.Maui.Markup.Sample.ViewModels;
-using CommunityToolkit.Maui.Markup.Sample.ViewModels.Base;
+﻿
 
 namespace CommunityToolkit.Maui.Markup.Sample;
 

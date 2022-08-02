@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Maui.Markup.Sample.Services;
-using CommunityToolkit.Maui.Markup.Sample.ViewModels.Base;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿
 
 namespace CommunityToolkit.Maui.Markup.Sample.ViewModels;
 

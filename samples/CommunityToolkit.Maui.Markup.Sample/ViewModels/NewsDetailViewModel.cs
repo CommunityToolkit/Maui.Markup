@@ -1,8 +1,4 @@
-﻿using CommunityToolkit.Maui.Markup.Sample.Constants;
-using CommunityToolkit.Maui.Markup.Sample.ViewModels.Base;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-
+﻿
 namespace CommunityToolkit.Maui.Markup.Sample.ViewModels;
 
 partial class NewsDetailViewModel : BaseViewModel, IQueryAttributable

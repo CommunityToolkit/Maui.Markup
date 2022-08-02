@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Maui.Markup.Sample.Constants;
+﻿
 
 namespace CommunityToolkit.Maui.Markup.Sample;
 
@@ -6,6 +6,8 @@ class App : Application
 {
 	public App(AppShell shell)
 	{
+
+
 		Resources = new ResourceDictionary()
 		{
 			new Style<Shell>(
@@ -20,6 +22,15 @@ class App : Application
 				(NavigationPage.BarTextColorProperty, ColorConstants.NavigationBarTextColor),
 				(NavigationPage.BarBackgroundColorProperty, ColorConstants.NavigationBarBackgroundColor)).ApplyToDerivedTypes(true)
 		};
+
+		if (Current?.RequestedTheme == AppTheme.Dark)
+		{
+			Current.Resources = new DarkTheme();
+		}
+		else if (Current?.RequestedTheme == AppTheme.Light)
+		{
+			Current.Resources = new LightTheme();
+		}
 
 		MainPage = shell;
 	}

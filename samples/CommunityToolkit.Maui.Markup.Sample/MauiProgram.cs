@@ -1,7 +1,4 @@
-﻿using CommunityToolkit.Maui.Markup.Sample.Pages;
-using CommunityToolkit.Maui.Markup.Sample.Services;
-using CommunityToolkit.Maui.Markup.Sample.ViewModels;
-using Refit;
+﻿
 
 namespace CommunityToolkit.Maui.Markup.Sample;
 

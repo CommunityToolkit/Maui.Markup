@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Maui.Markup.Sample.Constants;
-using CommunityToolkit.Maui.Markup.Sample.ViewModels.Base;
-
+﻿
 namespace CommunityToolkit.Maui.Markup.Sample.Pages.Base;
 
 abstract class BaseContentPage<T> : ContentPage where T : BaseViewModel

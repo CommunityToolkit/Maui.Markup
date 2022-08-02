@@ -1,8 +1,4 @@
-﻿using CommunityToolkit.Maui.Markup.Sample.Constants;
-using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
-using CommunityToolkit.Maui.Markup.Sample.ViewModels;
-using Microsoft.Maui.Layouts;
-
+﻿
 namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
 class NewsDetailPage : BaseContentPage<NewsDetailViewModel>
