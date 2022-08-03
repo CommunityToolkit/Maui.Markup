@@ -19,7 +19,7 @@ public class DarkTheme : BaseTheme
 
 	public override Style NavigationPageStyle => new Style<NavigationPage>(
 				(NavigationPage.BarTextColorProperty, Colors.White),
-				(NavigationPage.BarBackgroundColorProperty, NavigationBarBackgroundColor)).ApplyToDerivedTypes(true);
+				(NavigationPage.BarBackgroundColorProperty, Color.FromArgb("ff6600"))).ApplyToDerivedTypes(true);
 
 	public override Style ShellStyle => new Style<Shell>(
 				(Shell.NavBarHasShadowProperty, true),

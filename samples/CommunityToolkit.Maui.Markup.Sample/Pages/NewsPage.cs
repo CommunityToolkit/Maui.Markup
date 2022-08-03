@@ -11,8 +11,25 @@ class NewsPage : BaseContentPage<NewsViewModel>
 		this.dispatcher = dispatcher;
 
 		BindingContext.PullToRefreshFailed += HandlePullToRefreshFailed;
+		Grid titleLayout = new Grid
+		{
+			Children =
+			{
+				new Label{Text="Top Stories", VerticalOptions=LayoutOptions.Center}.DynamicResource(Label.TextColorProperty, nameof(BaseTheme.PrimaryTextColor)),
+		new Button
+		{
+			HorizontalOptions=LayoutOptions.End,
+			BackgroundColor = Colors.Transparent,
+			Text = "Settings",
+			Command = new AsyncRelayCommand(NavigateToSettingsPage)
+		}.DynamicResource(Button.TextColorProperty, nameof(BaseTheme.PrimaryTextColor)),
 
-		ToolbarItems.Add(new ToolbarItem { Command = new AsyncRelayCommand(NavigateToSettingsPage) }.Text("Settings"));
+	}
+		};
+
+		Shell.SetTitleView(this, titleLayout);
+
+		//ToolbarItems.Add(new ToolbarItem { Command = new AsyncRelayCommand(NavigateToSettingsPage) }.Text("Settings"));
 
 		Content = new RefreshView
 		{

@@ -3,22 +3,27 @@ namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
 class NewsDetailPage : BaseContentPage<NewsDetailViewModel>
 {
+	enum BodyRow { first, second, third }
 	public NewsDetailPage(NewsDetailViewModel newsDetailViewModel) : base(newsDetailViewModel, newsDetailViewModel.Title)
 	{
 		this.Bind(TitleProperty, nameof(NewsDetailViewModel.Title));
 
-		Content = new FlexLayout
+		Content = new Grid
 		{
-			Direction = FlexDirection.Column,
-			AlignContent = FlexAlignContent.Center,
+			RowDefinitions = Rows.Define(
+				(BodyRow.first, Star),
+				(BodyRow.second, Auto),
+				(BodyRow.third, Auto)
+				),
 
 			Children =
 			{
 				new WebView()
-					.Grow(1).AlignSelf(FlexAlignSelf.Stretch)
+					 .Row(BodyRow.first)
 					.Bind(WebView.SourceProperty, nameof(NewsDetailViewModel.Uri), BindingMode.OneWay),
 
-				new Button {  }
+				new Button()
+				.Row(BodyRow.second)
 				.DynamicResource(Button.BackgroundColorProperty,nameof(BaseTheme.NavigationBarBackgroundColor))
 					.Text("Launch in Browser \uf35d")
 					.DynamicResource(Button.TextColorProperty,nameof(BaseTheme.PrimaryTextColor))
@@ -26,7 +31,8 @@ class NewsDetailPage : BaseContentPage<NewsDetailViewModel>
 					.Basis(50)
 					.Bind(Button.CommandProperty, nameof(NewsDetailViewModel.OpenBrowserCommand), BindingMode.OneWay),
 
-				new Label { }
+				new Label()
+				.Row(BodyRow.third)
 				.DynamicResource(Label.BackgroundColorProperty,nameof(BaseTheme.NavigationBarBackgroundColor))
 				.DynamicResource(Label.TextColorProperty,nameof(BaseTheme.PrimaryTextColor)).TextCenter()
 					.TextCenter()
