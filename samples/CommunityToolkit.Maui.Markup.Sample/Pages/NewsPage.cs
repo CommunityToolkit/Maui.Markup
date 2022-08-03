@@ -15,7 +15,7 @@ class NewsPage : BaseContentPage<NewsViewModel>
 		{
 			Children =
 			{
-				new Label{Text="Top Stories", VerticalOptions=LayoutOptions.Center}.DynamicResource(Label.TextColorProperty, nameof(BaseTheme.PrimaryTextColor)),
+				new Label{Text="Top Stories", VerticalOptions=LayoutOptions.Center, FontSize=20}.DynamicResource(Label.TextColorProperty, nameof(BaseTheme.PrimaryTextColor)),
 		new Button
 		{
 			HorizontalOptions=LayoutOptions.End,
@@ -29,7 +29,7 @@ class NewsPage : BaseContentPage<NewsViewModel>
 
 		Shell.SetTitleView(this, titleLayout);
 
-		//ToolbarItems.Add(new ToolbarItem { Command = new AsyncRelayCommand(NavigateToSettingsPage) }.Text("Settings"));
+
 
 		Content = new RefreshView
 		{
