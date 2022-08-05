@@ -167,7 +167,7 @@ jobs:
         displayName: 'Install Latest .NET SDK'
         inputs:
           packageType: 'sdk'
-          version: '$(LATEST_NET6_VERSION)'
+          version: '$(NET_VERSION)'
 
       - powershell: dotnet workload install maui
         displayName: Install Latest .NET MAUI Workload
@@ -253,7 +253,7 @@ jobs:
         displayName: Install Latest .NET SDK
         inputs:
           packageType: 'sdk'
-          version: '$(LATEST_NET6_VERSION)'
+          version: '$(NET_VERSION)'
 
       - task: CmdLine@2
         displayName: 'Install Latest .NET MAUI Workload'
