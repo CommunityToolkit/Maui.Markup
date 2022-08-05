@@ -44,7 +44,7 @@
     <PackageReference Include="CommunityToolkit.Maui" Version="1.2.0" />
     <PackageReference Include="Polly" Version="7.2.3" />
     <PackageReference Include="Refit" Version="6.3.2" />
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0-preview4" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
