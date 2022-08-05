@@ -1,35 +1,26 @@
-﻿
-
-namespace CommunityToolkit.Maui.Markup.Sample;
+﻿namespace CommunityToolkit.Maui.Markup.Sample;
 
 class App : Application
 {
 	public App(AppShell shell)
 	{
-
-		if (Current?.RequestedTheme == AppTheme.Dark)
+		Resources = RequestedTheme switch
 		{
-			Current.Resources = new DarkTheme();
-		}
-		else if (Current?.RequestedTheme == AppTheme.Light)
-		{
-			Current.Resources = new LightTheme();
-		}
+			AppTheme.Dark => new DarkTheme(),
+			_ => new LightTheme()
+		};
 
-		Current.RequestedThemeChanged += Current_RequestedThemeChanged;
+		RequestedThemeChanged += HandleRequestedThemeChanged;
 
 		MainPage = shell;
 	}
 
-	private void Current_RequestedThemeChanged(object? sender, AppThemeChangedEventArgs e)
+	void HandleRequestedThemeChanged(object? sender, AppThemeChangedEventArgs e)
 	{
-		if (Current?.RequestedTheme == AppTheme.Dark)
+		Resources = RequestedTheme switch
 		{
-			Current.Resources = new DarkTheme();
-		}
-		else if (Current?.RequestedTheme == AppTheme.Light)
-		{
-			Current.Resources = new LightTheme();
-		}
+			AppTheme.Dark => new DarkTheme(),
+			_ => new LightTheme()
+		};
 	}
 }
