@@ -182,7 +182,7 @@ jobs:
             dotnet format $PathToSamplesSolution --verify-no-changes --exclude-diagnostics CA1416
             status=$?
             [ $status -eq 0 ] && echo "No errors found"
-            [ $status -ne 0 ] && echo "Formatting errors found. In the command line, please run \`dotnet format $PathToSamplesSolution\`, then commit + push the newly formatted code"
+            [ $status -ne 0 ] && echo "Formatting errors found. In the Windows Command Line, please run \`dotnet format $PathToSamplesSolution\`, then commit + push the newly formatted code"
             exit $status
 
   - job: build_macos
