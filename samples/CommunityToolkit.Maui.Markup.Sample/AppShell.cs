@@ -7,7 +7,7 @@ namespace CommunityToolkit.Maui.Markup.Sample;
 
 class AppShell : Shell
 {
-	readonly static IReadOnlyDictionary<Type, string> pageRouteMappingDictionary = new Dictionary<Type, string>(new[]
+	static readonly IReadOnlyDictionary<Type, string> pageRouteMappingDictionary = new Dictionary<Type, string>(new[]
 	{
 		CreateRoutePageMapping<NewsPage, NewsViewModel>(),
 		CreateRoutePageMapping<SettingsPage, SettingsViewModel>(),
