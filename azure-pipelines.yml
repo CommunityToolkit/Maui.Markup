@@ -5,7 +5,8 @@ variables:
   NugetPackageVersion: '$(CurrentSemanticVersion)'
   NET_VERSION: '6.0.x'
   RunPoliCheck: false
-  PathToSolution: 'src/CommunityToolkit.Maui.Markup.sln'
+  PathToLibrarySolution: 'src/CommunityToolkit.Maui.Markup.sln'
+  PathToSamplesSolution: 'samples/CommunityToolkit.Maui.Markup.Sample.sln'
   PathToCommunityToolkitCsproj: 'src/CommunityToolkit.Maui.Markup/CommunityToolkit.Maui.Markup.csproj'
   PathToCommunityToolkitSampleCsproj: 'samples/CommunityToolkit.Maui.Markup.Sample/CommunityToolkit.Maui.Markup.Sample.csproj'
   PathToCommunityToolkitUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.UnitTests/CommunityToolkit.Maui.Markup.UnitTests.csproj'
@@ -118,10 +119,10 @@ jobs:
 
       # check vulnerabilities
       - powershell: |
-          dotnet list $(PathToSolution) package --vulnerable --include-transitive | findstr /S /c:"has the following vulnerable packages";
+          dotnet list $(PathToLibrarySolution) package --vulnerable --include-transitive | findstr /S /c:"has the following vulnerable packages";
           if ($LastExitCode -ne 1)
           {
-            dotnet list $(PathToSolution) package --vulnerable --include-transitive;
+            dotnet list $(PathToLibrarySolution) package --vulnerable --include-transitive;
             exit 1;
           }
 
@@ -156,6 +157,33 @@ jobs:
         inputs:
           artifactName: nuget
           pathToPublish: '$(Build.ArtifactStagingDirectory)'
+
+  - job: verify_formatting_windows
+    displayName: Verify Code Formatting on Windows
+    pool:
+      vmImage: windows-latest
+    steps:
+      - task: UseDotNet@2
+        displayName: 'Install Latest .NET SDK'
+        inputs:
+          packageType: 'sdk'
+          version: '$(NET_VERSION)'
+
+      - powershell: dotnet workload install maui
+        displayName: Install Latest .NET MAUI Workload
+
+      - task: Bash@3
+        displayName: 'Verify Formatting'
+        env:
+          PathToSamplesSolution: $(PathToSamplesSolution)
+        inputs:
+          targetType: 'inline'
+          script: |
+            dotnet format $PathToSamplesSolution --verify-no-changes --exclude-diagnostics CA1416
+            status=$?
+            [ $status -eq 0 ] && echo "No errors found"
+            [ $status -ne 0 ] && echo "Formatting errors found. In the Windows Command Line, please run \`dotnet format $PathToSamplesSolution\`, then commit + push the newly formatted code"
+            exit $status
 
   - job: build_macos
     displayName: Build macOS Library
