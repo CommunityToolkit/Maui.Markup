@@ -27,4 +27,8 @@ public class DarkTheme : BaseTheme
 				(Shell.UnselectedColorProperty, Colors.White),
 				(Shell.ForegroundColorProperty, Colors.White),
 				(Shell.BackgroundColorProperty, Color.FromArgb("C3560E"))).ApplyToDerivedTypes(true);
+
+	public override Style ValidEntryNumericValidationBehaviorStyle { get; } = new Style<Entry>(Entry.TextColorProperty, Color.FromArgb("1B1B1B"));
+
+	public override Style InvalidEntryNumericValidationBehaviorStyle { get; } = new Style<Entry>(Entry.TextColorProperty, Colors.DarkRed);
 }

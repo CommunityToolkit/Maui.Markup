@@ -31,8 +31,8 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 						Flags = ValidationFlags.ValidateOnValueChanged,
 						MinimumValue = SettingsService.MinimumStoriesToFetch,
 						MaximumValue = SettingsService.MaximumStoriesToFetch,
-						InvalidStyle = new Style<Entry>(Entry.TextColorProperty, Colors.Red),
-						ValidStyle = new Style<Entry>(Entry.TextColorProperty, Colors.Black),
+						ValidStyle = (Style?)Application.Current?.Resources[nameof(BaseTheme.ValidEntryNumericValidationBehaviorStyle)],
+						InvalidStyle = (Style?)Application.Current?.Resources[nameof(BaseTheme.InvalidEntryNumericValidationBehaviorStyle)],
 					})
 					.Bind(Entry.TextProperty, nameof(SettingsViewModel.NumberOfTopStoriesToFetch))
 					.TextCenter(),

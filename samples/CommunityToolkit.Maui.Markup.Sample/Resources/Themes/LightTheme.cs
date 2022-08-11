@@ -24,4 +24,8 @@ public class LightTheme : BaseTheme
 				(Shell.UnselectedColorProperty, Colors.Black),
 				(Shell.ForegroundColorProperty, Colors.Black),
 				(Shell.BackgroundColorProperty, Color.FromArgb("FF6601"))).ApplyToDerivedTypes(true);
+
+	public override Style ValidEntryNumericValidationBehaviorStyle { get; } = new Style<Entry>(Entry.TextColorProperty, Colors.Black);
+
+	public override Style InvalidEntryNumericValidationBehaviorStyle { get; } = new Style<Entry>(Entry.TextColorProperty, Colors.Red);
 }

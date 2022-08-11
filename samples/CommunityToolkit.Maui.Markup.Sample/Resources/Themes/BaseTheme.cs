@@ -11,6 +11,8 @@ public abstract class BaseTheme : ResourceDictionary
 		Add(nameof(SecondaryTextColor), SecondaryTextColor);
 		Add(nameof(BrowserNavigationBarBackgroundColor), BrowserNavigationBarBackgroundColor);
 		Add(nameof(BrowserNavigationBarTextColor), BrowserNavigationBarTextColor);
+		Add(nameof(ValidEntryNumericValidationBehaviorStyle), ValidEntryNumericValidationBehaviorStyle);
+		Add(nameof(InvalidEntryNumericValidationBehaviorStyle), InvalidEntryNumericValidationBehaviorStyle);
 		Add(NavigationPageStyle);
 		Add(ShellStyle);
 	}
@@ -29,4 +31,7 @@ public abstract class BaseTheme : ResourceDictionary
 	public abstract Style NavigationPageStyle { get; }
 
 	public abstract Style ShellStyle { get; }
+
+	public abstract Style ValidEntryNumericValidationBehaviorStyle { get; }
+	public abstract Style InvalidEntryNumericValidationBehaviorStyle { get; }
 }
