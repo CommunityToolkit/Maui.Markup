@@ -1,7 +1,4 @@
-﻿using CommunityToolkit.Maui.Markup.Sample.Constants;
-using CommunityToolkit.Maui.Markup.Sample.ViewModels.Base;
-
-namespace CommunityToolkit.Maui.Markup.Sample.Pages.Base;
+﻿namespace CommunityToolkit.Maui.Markup.Sample.Pages.Base;
 
 abstract class BaseContentPage<T> : ContentPage where T : BaseViewModel
 {
@@ -10,7 +7,7 @@ abstract class BaseContentPage<T> : ContentPage where T : BaseViewModel
 		base.BindingContext = viewModel;
 
 		Title = pageTitle;
-		BackgroundColor = ColorConstants.PageBackgroundColor;
+		this.DynamicResource(ContentPage.BackgroundColorProperty, nameof(BaseTheme.PageBackgroundColor));
 	}
 
 	protected new T BindingContext => (T)base.BindingContext;

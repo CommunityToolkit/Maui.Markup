@@ -1,7 +1,4 @@
-﻿using CommunityToolkit.Maui.Markup.Sample.Constants;
-using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
-using CommunityToolkit.Maui.Markup.Sample.ViewModels;
-using Microsoft.Maui.Layouts;
+﻿using Microsoft.Maui.Layouts;
 
 namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
@@ -22,16 +19,20 @@ class NewsDetailPage : BaseContentPage<NewsDetailViewModel>
 					.Grow(1).AlignSelf(FlexAlignSelf.Stretch)
 					.Bind(WebView.SourceProperty, nameof(NewsDetailViewModel.Uri), BindingMode.OneWay),
 
-				new Button { BackgroundColor = ColorConstants.NavigationBarBackgroundColor }
-					.Text("Launch in Browser \uf35d", ColorConstants.PrimaryTextColor)
+				new Button()
+					.Text("Launch in Browser \uf35d")
 					.Font(size: 20, family: "FontAwesome")
 					.Basis(50)
+					.DynamicResource(Button.TextColorProperty, nameof(BaseTheme.PrimaryTextColor))
+					.DynamicResource(Button.BackgroundColorProperty, nameof(BaseTheme.NavigationBarBackgroundColor))
 					.Bind(Button.CommandProperty, nameof(NewsDetailViewModel.OpenBrowserCommand), BindingMode.OneWay),
 
-				new Label { BackgroundColor = ColorConstants.NavigationBarBackgroundColor }
-					.TextColor(ColorConstants.PrimaryTextColor).TextCenter()
+				new Label()
+					.TextCenter()
 					.AlignSelf(FlexAlignSelf.Stretch)
 					.Paddings(bottom: 20)
+					.DynamicResource(Label.TextColorProperty, nameof(BaseTheme.PrimaryTextColor))
+					.DynamicResource(Label.BackgroundColorProperty, nameof(BaseTheme.NavigationBarBackgroundColor))
 					.Bind(Label.TextProperty, nameof(NewsDetailViewModel.ScoreDescription), BindingMode.OneWay),
 			}
 		};

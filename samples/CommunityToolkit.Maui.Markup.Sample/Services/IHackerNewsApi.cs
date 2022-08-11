@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Maui.Markup.Sample.Models;
-using Refit;
+﻿using Refit;
 
 namespace CommunityToolkit.Maui.Markup.Sample.Services;
 

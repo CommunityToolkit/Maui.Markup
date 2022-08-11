@@ -1,9 +1,4 @@
-﻿using CommunityToolkit.Maui.Markup.Sample.Constants;
-using CommunityToolkit.Maui.Markup.Sample.ViewModels.Base;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-
-namespace CommunityToolkit.Maui.Markup.Sample.ViewModels;
+﻿namespace CommunityToolkit.Maui.Markup.Sample.ViewModels;
 
 partial class NewsDetailViewModel : BaseViewModel, IQueryAttributable
 {
@@ -27,11 +22,10 @@ partial class NewsDetailViewModel : BaseViewModel, IQueryAttributable
 	Task OpenBrowser()
 	{
 		ArgumentNullException.ThrowIfNull(Uri);
-
 		var browserOptions = new BrowserLaunchOptions
 		{
-			PreferredControlColor = ColorConstants.BrowserNavigationBarTextColor,
-			PreferredToolbarColor = ColorConstants.BrowserNavigationBarBackgroundColor
+			PreferredControlColor = (Color?)Application.Current?.Resources[nameof(BaseTheme.BrowserNavigationBarTextColor)],
+			PreferredToolbarColor = (Color?)Application.Current?.Resources[nameof(BaseTheme.BrowserNavigationBarBackgroundColor)],
 		};
 
 		return browser.OpenAsync(Uri, browserOptions);
