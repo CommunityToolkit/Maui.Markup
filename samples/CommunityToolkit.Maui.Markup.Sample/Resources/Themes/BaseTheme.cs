@@ -1,6 +1,5 @@
-﻿
+﻿namespace CommunityToolkit.Maui.Markup.Sample.Resources.Themes;
 
-namespace CommunityToolkit.Maui.Markup.Sample.Resources.Themes;
 public abstract class BaseTheme : ResourceDictionary
 {
 	protected BaseTheme()

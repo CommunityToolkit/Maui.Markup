@@ -23,11 +23,13 @@ partial class NewsDetailViewModel : BaseViewModel, IQueryAttributable
 	Task OpenBrowser()
 	{
 		ArgumentNullException.ThrowIfNull(Uri);
-		var browserOptions = new BrowserLaunchOptions();
-		browserOptions.PreferredControlColor = Color.FromArgb("3F3F3F");
-		browserOptions.PreferredToolbarColor = Color.FromArgb("FFE6D5");
-		return browser.OpenAsync(Uri, browserOptions);
+		var browserOptions = new BrowserLaunchOptions
+		{
+			PreferredControlColor = (Color?)Application.Current?.Resources[nameof(BaseTheme.BrowserNavigationBarTextColor)],
+			PreferredToolbarColor = (Color?)Application.Current?.Resources[nameof(BaseTheme.BrowserNavigationBarBackgroundColor)],
+		};
 
+		return browser.OpenAsync(Uri, browserOptions);
 	}
 
 	void IQueryAttributable.ApplyQueryAttributes(IDictionary<string, object> query)

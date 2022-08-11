@@ -4,23 +4,25 @@ class App : Application
 {
 	public App(AppShell shell)
 	{
-		Resources = RequestedTheme switch
-		{
-			AppTheme.Dark => new DarkTheme(),
-			_ => new LightTheme()
-		};
+		SetAppTheme(RequestedTheme);
 
 		RequestedThemeChanged += HandleRequestedThemeChanged;
 
 		MainPage = shell;
 	}
 
-	void HandleRequestedThemeChanged(object? sender, AppThemeChangedEventArgs e)
+	protected override void OnResume()
 	{
-		Resources = RequestedTheme switch
-		{
-			AppTheme.Dark => new DarkTheme(),
-			_ => new LightTheme()
-		};
+		base.OnResume();
+		SetAppTheme(RequestedTheme);
 	}
+
+	void HandleRequestedThemeChanged(object? sender, AppThemeChangedEventArgs e) =>
+		SetAppTheme(e.RequestedTheme);
+
+	void SetAppTheme(in AppTheme appTheme) => Resources = appTheme switch
+	{
+		AppTheme.Dark => new DarkTheme(),
+		_ => new LightTheme()
+	};
 }
