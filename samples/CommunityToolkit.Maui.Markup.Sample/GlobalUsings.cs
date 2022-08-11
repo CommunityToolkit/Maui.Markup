@@ -13,7 +13,3 @@ global using CommunityToolkit.Maui.Markup.Sample.ViewModels.Base;
 global using CommunityToolkit.Maui.Markup.Sample.Views.News;
 global using CommunityToolkit.Mvvm.ComponentModel;
 global using CommunityToolkit.Mvvm.Input;
-global using Microsoft.Maui.Layouts;
-global using Polly;
-global using Refit;
-global using static CommunityToolkit.Maui.Markup.GridRowsColumns;

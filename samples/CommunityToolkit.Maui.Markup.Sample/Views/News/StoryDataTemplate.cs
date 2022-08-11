@@ -1,4 +1,4 @@
-﻿
+﻿using static CommunityToolkit.Maui.Markup.GridRowsColumns;
 
 namespace CommunityToolkit.Maui.Markup.Sample.Views.News;
 

@@ -1,4 +1,4 @@
-﻿
+﻿using Polly;
 
 namespace CommunityToolkit.Maui.Markup.Sample.Services;
 

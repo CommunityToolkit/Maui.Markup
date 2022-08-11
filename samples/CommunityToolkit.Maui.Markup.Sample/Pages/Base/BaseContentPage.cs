@@ -1,5 +1,4 @@
-﻿
-namespace CommunityToolkit.Maui.Markup.Sample.Pages.Base;
+﻿namespace CommunityToolkit.Maui.Markup.Sample.Pages.Base;
 
 abstract class BaseContentPage<T> : ContentPage where T : BaseViewModel
 {
