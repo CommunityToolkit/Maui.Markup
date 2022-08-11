@@ -1,10 +1,4 @@
-﻿using System.Globalization;
-using CommunityToolkit.Maui.Behaviors;
-using CommunityToolkit.Maui.Markup.Sample.Constants;
-using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
-using CommunityToolkit.Maui.Markup.Sample.Services;
-using CommunityToolkit.Maui.Markup.Sample.ViewModels;
-using Microsoft.Maui.Layouts;
+﻿using Microsoft.Maui.Layouts;
 
 namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
@@ -21,7 +15,8 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 					.LayoutBounds(0.5, 0.5, 0.5, 0.5),
 
 				new Label()
-					.Text("Top Stories To Fetch", ColorConstants.PrimaryTextColor)
+					.Text("Top Stories To Fetch")
+					.DynamicResource(Label.TextColorProperty, nameof(BaseTheme.PrimaryTextColor))
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
 					.LayoutBounds(0, 0, 1, 40)
 					.TextCenterHorizontal()
@@ -36,8 +31,8 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 						Flags = ValidationFlags.ValidateOnValueChanged,
 						MinimumValue = SettingsService.MinimumStoriesToFetch,
 						MaximumValue = SettingsService.MaximumStoriesToFetch,
-						InvalidStyle = new Style<Entry>(Entry.TextColorProperty, Colors.Red),
-						ValidStyle = new Style<Entry>(Entry.TextColorProperty, ColorConstants.PrimaryTextColor),
+						ValidStyle = (Style?)Application.Current?.Resources[nameof(BaseTheme.ValidEntryNumericValidationBehaviorStyle)],
+						InvalidStyle = (Style?)Application.Current?.Resources[nameof(BaseTheme.InvalidEntryNumericValidationBehaviorStyle)],
 					})
 					.Bind(Entry.TextProperty, nameof(SettingsViewModel.NumberOfTopStoriesToFetch))
 					.TextCenter(),
@@ -51,7 +46,7 @@ class SettingsPage : BaseContentPage<SettingsViewModel>
 						mode: BindingMode.OneTime)
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
 					.LayoutBounds(0, 90, 1, 40)
-					.TextCenter().TextColor(ColorConstants.PrimaryTextColor).Font(size: 12, italic: true)
+					.TextCenter().DynamicResource(Label.TextColorProperty, nameof(BaseTheme.PrimaryTextColor)).Font(size: 12, italic: true)
 			}
 		};
 	}

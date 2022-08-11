@@ -1,26 +1,28 @@
-﻿using CommunityToolkit.Maui.Markup.Sample.Constants;
-
-namespace CommunityToolkit.Maui.Markup.Sample;
+﻿namespace CommunityToolkit.Maui.Markup.Sample;
 
 class App : Application
 {
 	public App(AppShell shell)
 	{
-		Resources = new ResourceDictionary()
-		{
-			new Style<Shell>(
-				(Shell.NavBarHasShadowProperty, true),
-				(Shell.TitleColorProperty, ColorConstants.NavigationBarTextColor),
-				(Shell.DisabledColorProperty, ColorConstants.NavigationBarTextColor),
-				(Shell.UnselectedColorProperty, ColorConstants.NavigationBarTextColor),
-				(Shell.ForegroundColorProperty, ColorConstants.NavigationBarTextColor),
-				(Shell.BackgroundColorProperty, ColorConstants.NavigationBarBackgroundColor)).ApplyToDerivedTypes(true),
+		SetAppTheme(RequestedTheme);
 
-			new Style<NavigationPage>(
-				(NavigationPage.BarTextColorProperty, ColorConstants.NavigationBarTextColor),
-				(NavigationPage.BarBackgroundColorProperty, ColorConstants.NavigationBarBackgroundColor)).ApplyToDerivedTypes(true)
-		};
+		RequestedThemeChanged += HandleRequestedThemeChanged;
 
 		MainPage = shell;
 	}
+
+	protected override void OnResume()
+	{
+		base.OnResume();
+		SetAppTheme(RequestedTheme);
+	}
+
+	void HandleRequestedThemeChanged(object? sender, AppThemeChangedEventArgs e) =>
+		SetAppTheme(e.RequestedTheme);
+
+	void SetAppTheme(in AppTheme appTheme) => Resources = appTheme switch
+	{
+		AppTheme.Dark => new DarkTheme(),
+		_ => new LightTheme()
+	};
 }

@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Maui.Markup.Sample.Models;
-using Polly;
+﻿using Polly;
 
 namespace CommunityToolkit.Maui.Markup.Sample.Services;
 

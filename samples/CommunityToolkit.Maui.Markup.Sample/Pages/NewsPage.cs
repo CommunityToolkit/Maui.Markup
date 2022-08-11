@@ -1,11 +1,4 @@
-﻿using System.Collections;
-using CommunityToolkit.Maui.Markup.Sample.Models;
-using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
-using CommunityToolkit.Maui.Markup.Sample.ViewModels;
-using CommunityToolkit.Maui.Markup.Sample.Views.News;
-using CommunityToolkit.Mvvm.Input;
-using Microsoft.Maui.Dispatching;
-
+﻿
 namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
 class NewsPage : BaseContentPage<NewsViewModel>

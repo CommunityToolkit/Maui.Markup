@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Maui.Markup.Sample.Constants;
-using CommunityToolkit.Maui.Markup.Sample.Models;
-using static CommunityToolkit.Maui.Markup.GridRowsColumns;
+﻿using static CommunityToolkit.Maui.Markup.GridRowsColumns;
 
 namespace CommunityToolkit.Maui.Markup.Sample.Views.News;
 
@@ -24,12 +22,12 @@ class StoryDataTemplate : DataTemplate
 		{
 			new Label { LineBreakMode = LineBreakMode.TailTruncation, MaxLines = 1 }
 				.Row(Row.Title)
-				.Font(size: 16).TextColor(ColorConstants.PrimaryTextColor)
+				.Font(size: 16).DynamicResource(Label.TextColorProperty, nameof(BaseTheme.PrimaryTextColor))
 				.Top().Padding(10, 0)
 				.Bind(Label.TextProperty, nameof(StoryModel.Title)),
 
 			new Label().Row(Row.Description)
-				.Font(size: 13).TextColor(ColorConstants.SecondaryTextColor)
+				.Font(size: 13).DynamicResource(Label.TextColorProperty, nameof(BaseTheme.SecondaryTextColor))
 				.Paddings(10, 0, 10, 5)
 				.Bind(Label.TextProperty, nameof(StoryModel.Description))
 		}
