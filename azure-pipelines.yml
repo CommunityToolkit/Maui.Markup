@@ -211,7 +211,7 @@ jobs:
           packageType: 'sdk'
           version: '$(NET_VERSION)'
           includePreviewVersions: true
-          
+
       - task: CmdLine@2
         displayName: 'Install .NET MAUI workload'
 
@@ -240,8 +240,4 @@ jobs:
       - task: CmdLine@2
         displayName: 'Pack CommunityToolkit NuGets'
         inputs:
-          script: |
-            echo PathToCommunityToolkitCsproj: $(PathToCommunityToolkitCsproj)
-            echo NugetPackageVersion: $(NugetPackageVersion)
-            echo Build.ArtifactStagingDirectory/nuget $(Build.ArtifactStagingDirectory)/nuget
-            dotnet pack -c Release $(PathToCommunityToolkitCsproj) -p:PackageVersion=$(NugetPackageVersion) --output $(Build.ArtifactStagingDirectory)/nuget -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
+          script: 'dotnet pack -c Release $(PathToCommunityToolkitCsproj) -p:PackageVersion=$(NugetPackageVersion) --output $(Build.ArtifactStagingDirectory)/nuget -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg'
