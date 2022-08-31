@@ -3,7 +3,8 @@ variables:
   PreviewNumber: $[counter(variables['CurrentSemanticVersionBase'], 1001)]
   CurrentSemanticVersion: '$(CurrentSemanticVersionBase)-preview$(PreviewNumber)'
   NugetPackageVersion: '$(CurrentSemanticVersion)'
-  NET_VERSION: '7.0.x'
+  NET6_VERSION: '6.0.x' 
+  NET7_VERSION: '7.0.x'
   RunPoliCheck: false
   PathToLibrarySolution: 'src/CommunityToolkit.Maui.Markup.sln'
   PathToSamplesSolution: 'samples/CommunityToolkit.Maui.Markup.Sample.sln'
@@ -47,11 +48,10 @@ jobs:
       vmImage: windows-latest
     steps:
       - task: UseDotNet@2
-        displayName: 'Install .NET SDK'
+        displayName: 'Install .NET 6 SDK'
         inputs:
           packageType: 'sdk'
-          version: '$(NET_VERSION)'
-          includePreviewVersions: true
+          version: '$(NET6_VERSION)'
 
       - task: CmdLine@2
         displayName: 'Install .NET MAUI Workload'
@@ -59,6 +59,14 @@ jobs:
             script : |
               dotnet --info
               dotnet workload install maui
+
+      # .NET 7 is required to create the NuGet Package for CommunityToolkit.Maui.Markup
+      - task: UseDotNet@2
+        displayName: 'Install .NET 7 SDK'
+        inputs:
+          packageType: 'sdk'
+          version: '$(NET7_VERSION)'
+          includePreviewVersions: true
 
       # if this is a tagged build, then update the version number
       - powershell: |
@@ -165,14 +173,21 @@ jobs:
       vmImage: windows-latest
     steps:
       - task: UseDotNet@2
-        displayName: 'Install Latest .NET SDK'
+        displayName: 'Install .NET 6 SDK'
         inputs:
           packageType: 'sdk'
-          version: '$(NET_VERSION)'
-          includePreviewVersions: true
+          version: '$(NET6_VERSION)'
 
       - powershell: dotnet workload install maui
         displayName: Install Latest .NET MAUI Workload
+
+      # .NET 7 is required to create the NuGet Package for CommunityToolkit.Maui.Markup
+      - task: UseDotNet@2
+        displayName: 'Install .NET 7 SDK'
+        inputs:
+          packageType: 'sdk'
+          version: '$(NET7_VERSION)'
+          includePreviewVersions: true
 
       - task: Bash@3
         displayName: 'Verify Formatting'
@@ -207,17 +222,26 @@ jobs:
           script: echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(XcodeVersion).app;sudo xcode-select --switch /Applications/Xcode_$(XcodeVersion).app/Contents/Developer
 
       - task: UseDotNet@2
-        displayName: 'Install .NET SDK'
+        displayName: 'Install .NET 6 SDK'
         inputs:
           packageType: 'sdk'
-          version: '$(NET_VERSION)'
-          includePreviewVersions: true
+          version: '$(NET6_VERSION)'
 
       - task: CmdLine@2
-        displayName: 'Install .NET MAUI workload'
-
+        displayName: 'Install .NET MAUI Workload'
         inputs:
-          script: 'dotnet workload install maui'
+            script : |
+              dotnet --info
+              dotnet workload install maui
+
+      # .NET 7 is required to create the NuGet Package for CommunityToolkit.Maui.Markup
+      - task: UseDotNet@2
+        displayName: 'Install .NET 7 SDK'
+        inputs:
+          packageType: 'sdk'
+          version: '$(NET7_VERSION)'
+          includePreviewVersions: true
+          
       - task: CmdLine@2
         displayName: 'Restore NuGet Packages'
         inputs:
