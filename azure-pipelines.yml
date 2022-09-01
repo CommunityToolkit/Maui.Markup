@@ -60,14 +60,6 @@ jobs:
               dotnet --info
               dotnet workload install maui
 
-      # .NET 7 is required to create the NuGet Package for CommunityToolkit.Maui.Markup
-      - task: UseDotNet@2
-        displayName: 'Install .NET 7 SDK'
-        inputs:
-          packageType: 'sdk'
-          version: '$(NET7_VERSION)'
-          includePreviewVersions: true
-
       # if this is a tagged build, then update the version number
       - powershell: |
           $buildSourceBranch = "$(Build.SourceBranch)"
@@ -103,12 +95,21 @@ jobs:
           testResultsFormat: VSTest
           testResultsFiles: '**/*.trx'
           searchFolder: $(Agent.TempDirectory)
+
       - task: PublishCodeCoverageResults@1
         displayName: 'Publish Code Coverage Results'
         inputs:
           codeCoverageTool: 'Cobertura'
           summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
           failIfCoverageEmpty: true
+
+      # .NET 7 is required to create the NuGet Package for CommunityToolkit.Maui.Markup
+      - task: UseDotNet@2
+        displayName: 'Install .NET 7 SDK'
+        inputs:
+          packageType: 'sdk'
+          version: '$(NET7_VERSION)'
+          includePreviewVersions: true
 
       # build sample
       - task: VSBuild@1
@@ -225,14 +226,6 @@ jobs:
             script : |
               dotnet --info
               dotnet workload install maui
-
-      # .NET 7 is required to create the NuGet Package for CommunityToolkit.Maui.Markup
-      - task: UseDotNet@2
-        displayName: 'Install .NET 7 SDK'
-        inputs:
-          packageType: 'sdk'
-          version: '$(NET7_VERSION)'
-          includePreviewVersions: true
 
       - task: CmdLine@2
         displayName: 'Restore NuGet Packages'
