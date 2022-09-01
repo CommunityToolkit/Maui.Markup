@@ -181,14 +181,6 @@ jobs:
       - powershell: dotnet workload install maui
         displayName: Install Latest .NET MAUI Workload
 
-      # .NET 7 is required to create the NuGet Package for CommunityToolkit.Maui.Markup
-      - task: UseDotNet@2
-        displayName: 'Install .NET 7 SDK'
-        inputs:
-          packageType: 'sdk'
-          version: '$(NET7_VERSION)'
-          includePreviewVersions: true
-
       - task: Bash@3
         displayName: 'Verify Formatting'
         env:
@@ -241,7 +233,7 @@ jobs:
           packageType: 'sdk'
           version: '$(NET7_VERSION)'
           includePreviewVersions: true
-          
+
       - task: CmdLine@2
         displayName: 'Restore NuGet Packages'
         inputs:
