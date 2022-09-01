@@ -121,12 +121,10 @@ jobs:
           includePreviewVersions: true
 
       # pack
-      - task: VSBuild@1
+      - task: CmdLine@2
         displayName: 'Pack CommunityToolkit.Maui.Markup'
         inputs:
-          solution: '$(PathToCommunityToolkitCsproj)'
-          configuration: 'Release'
-          msbuildArgs: '/restore -t:pack -p:PackageVersion=$(NugetPackageVersion) -p:Version=$(NugetPackageVersion) -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg'
+          script: 'dotnet pack -c Release $(PathToCommunityToolkitCsproj) -p:PackageVersion=$(NugetPackageVersion) --output $(Build.ArtifactStagingDirectory)/nuget -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg'
 
       # check vulnerabilities
       - powershell: |
