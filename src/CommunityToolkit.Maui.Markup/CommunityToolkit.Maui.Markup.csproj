@@ -42,7 +42,5 @@
 
 	<ItemGroup>
 	  <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1" PrivateAssets="all" />
-		<PackageReference Include="Microsoft.Maui.Dependencies" Version="$(MauiVersion)" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.Maui.Extensions" Version="$(MauiVersion)" PrivateAssets="all" />
 	</ItemGroup>
 </Project>
