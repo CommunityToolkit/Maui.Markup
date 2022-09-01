@@ -3,8 +3,7 @@ variables:
   PreviewNumber: $[counter(variables['CurrentSemanticVersionBase'], 1001)]
   CurrentSemanticVersion: '$(CurrentSemanticVersionBase)-preview$(PreviewNumber)'
   NugetPackageVersion: '$(CurrentSemanticVersion)'
-  NET6_VERSION: '6.0.x' 
-  NET7_VERSION: '7.0.x'
+  NET_VERSION: '6.0.x'
   RunPoliCheck: false
   PathToLibrarySolution: 'src/CommunityToolkit.Maui.Markup.sln'
   PathToSamplesSolution: 'samples/CommunityToolkit.Maui.Markup.Sample.sln'
@@ -48,10 +47,10 @@ jobs:
       vmImage: windows-latest
     steps:
       - task: UseDotNet@2
-        displayName: 'Install .NET 6 SDK'
+        displayName: 'Install .NET SDK'
         inputs:
           packageType: 'sdk'
-          version: '$(NET6_VERSION)'
+          version: '$(NET_VERSION)'
 
       - task: CmdLine@2
         displayName: 'Install .NET MAUI Workload'
@@ -95,7 +94,6 @@ jobs:
           testResultsFormat: VSTest
           testResultsFiles: '**/*.trx'
           searchFolder: $(Agent.TempDirectory)
-
       - task: PublishCodeCoverageResults@1
         displayName: 'Publish Code Coverage Results'
         inputs:
@@ -111,22 +109,13 @@ jobs:
           configuration: 'Release'
           msbuildArgs: '/restore'
 
-      # .NET 7 is required to create the NuGet Package for CommunityToolkit.Maui.Markup
-      # Work-around to avoid 'error NU5017: Cannot create a package that has no dependencies nor content'
-      - task: UseDotNet@2
-        displayName: 'Install .NET 7 SDK'
-        inputs:
-          packageType: 'sdk'
-          version: '$(NET7_VERSION)'
-          includePreviewVersions: true
-
       # pack
-      - task: CmdLine@2
-        displayName: 'Pack CommunityToolkit.Maui.Markup'
+      - task: VSBuild@1
+        displayName: 'Build and Pack CommunityToolkit.Maui.Markup'
         inputs:
-          script: |
-            dotnet workload install maui-tizen
-            dotnet pack -c Release $(PathToCommunityToolkitCsproj) -p:PackageVersion=$(NugetPackageVersion) --output $(Build.ArtifactStagingDirectory)/nuget -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
+          solution: '$(PathToCommunityToolkitCsproj)'
+          configuration: 'Release'
+          msbuildArgs: '/restore -t:pack -p:PackageVersion=$(NugetPackageVersion) -p:Version=$(NugetPackageVersion) -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg'
 
       # check vulnerabilities
       - powershell: |
@@ -175,10 +164,10 @@ jobs:
       vmImage: windows-latest
     steps:
       - task: UseDotNet@2
-        displayName: 'Install .NET 6 SDK'
+        displayName: 'Install Latest .NET SDK'
         inputs:
           packageType: 'sdk'
-          version: '$(NET6_VERSION)'
+          version: '$(NET_VERSION)'
 
       - powershell: dotnet workload install maui
         displayName: Install Latest .NET MAUI Workload
@@ -216,18 +205,15 @@ jobs:
           script: echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(XcodeVersion).app;sudo xcode-select --switch /Applications/Xcode_$(XcodeVersion).app/Contents/Developer
 
       - task: UseDotNet@2
-        displayName: 'Install .NET 6 SDK'
+        displayName: 'Install .NET SDK'
         inputs:
           packageType: 'sdk'
-          version: '$(NET6_VERSION)'
-
+          version: '$(NET_VERSION)'
       - task: CmdLine@2
-        displayName: 'Install .NET MAUI Workload'
-        inputs:
-          script : |
-            dotnet --info
-            dotnet workload install maui
+        displayName: 'Install .NET MAUI workload'
 
+        inputs:
+          script: 'dotnet workload install maui'
       - task: CmdLine@2
         displayName: 'Restore NuGet Packages'
         inputs:
@@ -247,3 +233,8 @@ jobs:
         displayName: 'Run Unit Tests'
         inputs:
           script: dotnet test $(PathToCommunityToolkitUnitTestCsproj) -c Release
+
+      - task: CmdLine@2
+        displayName: 'Pack CommunityToolkit NuGets'
+        inputs:
+          script: 'dotnet pack -c Release $(PathToCommunityToolkitCsproj) -p:PackageVersion=$(NugetPackageVersion) --output $(Build.ArtifactStagingDirectory)/nuget -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg'
