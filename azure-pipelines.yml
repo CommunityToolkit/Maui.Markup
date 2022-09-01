@@ -257,9 +257,7 @@ jobs:
           version: '$(NET7_VERSION)'
           includePreviewVersions: true
 
-      - task: CmdLine@2
-        displayName: 'Pack CommunityToolkit.Maui.Markup'
-        inputs:
-          script: |
+      - bash: |
             dotnet workload install maui-tizen
             dotnet pack -c Release $(PathToCommunityToolkitCsproj) -p:PackageVersion=$(NugetPackageVersion) --output $(Build.ArtifactStagingDirectory)/nuget -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
+        displayName: 'Pack CommunityToolkit.Maui.Markup'
