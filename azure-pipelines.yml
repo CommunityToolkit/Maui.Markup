@@ -124,7 +124,9 @@ jobs:
       - task: CmdLine@2
         displayName: 'Pack CommunityToolkit.Maui.Markup'
         inputs:
-          script: 'dotnet pack -c Release $(PathToCommunityToolkitCsproj) -p:PackageVersion=$(NugetPackageVersion) --output $(Build.ArtifactStagingDirectory)/nuget -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg'
+          script: |
+            dotnet workload install maui-tizen
+            dotnet pack -c Release $(PathToCommunityToolkitCsproj) -p:PackageVersion=$(NugetPackageVersion) --output $(Build.ArtifactStagingDirectory)/nuget -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
 
       # check vulnerabilities
       - powershell: |
@@ -222,9 +224,9 @@ jobs:
       - task: CmdLine@2
         displayName: 'Install .NET MAUI Workload'
         inputs:
-            script : |
-              dotnet --info
-              dotnet workload install maui
+          script : |
+            dotnet --info
+            dotnet workload install maui
 
       - task: CmdLine@2
         displayName: 'Restore NuGet Packages'
@@ -258,7 +260,6 @@ jobs:
       - task: CmdLine@2
         displayName: 'Pack CommunityToolkit.Maui.Markup'
         inputs:
-          script: | 
-            dotnet --info
-            dotnet msbuild -version
+          script: |
+            dotnet workload install maui-tizen
             dotnet pack -c Release $(PathToCommunityToolkitCsproj) -p:PackageVersion=$(NugetPackageVersion) --output $(Build.ArtifactStagingDirectory)/nuget -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
