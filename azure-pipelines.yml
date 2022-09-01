@@ -103,14 +103,6 @@ jobs:
           summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
           failIfCoverageEmpty: true
 
-      # .NET 7 is required to create the NuGet Package for CommunityToolkit.Maui.Markup
-      - task: UseDotNet@2
-        displayName: 'Install .NET 7 SDK'
-        inputs:
-          packageType: 'sdk'
-          version: '$(NET7_VERSION)'
-          includePreviewVersions: true
-
       # build sample
       - task: VSBuild@1
         displayName: 'Build Markup CommunityToolkit.Maui.Markup.Sample'
@@ -119,9 +111,18 @@ jobs:
           configuration: 'Release'
           msbuildArgs: '/restore'
 
+      # .NET 7 is required to create the NuGet Package for CommunityToolkit.Maui.Markup
+      # Work-around to avoid 'error NU5017: Cannot create a package that has no dependencies nor content'
+      - task: UseDotNet@2
+        displayName: 'Install .NET 7 SDK'
+        inputs:
+          packageType: 'sdk'
+          version: '$(NET7_VERSION)'
+          includePreviewVersions: true
+
       # pack
       - task: VSBuild@1
-        displayName: 'Build and Pack CommunityToolkit.Maui.Markup'
+        displayName: 'Pack CommunityToolkit.Maui.Markup'
         inputs:
           solution: '$(PathToCommunityToolkitCsproj)'
           configuration: 'Release'
@@ -247,7 +248,16 @@ jobs:
         inputs:
           script: dotnet test $(PathToCommunityToolkitUnitTestCsproj) -c Release
 
+      # .NET 7 is required to create the NuGet Package for CommunityToolkit.Maui.Markup
+      # Work-around to avoid 'error NU5017: Cannot create a package that has no dependencies nor content'
+      - task: UseDotNet@2
+        displayName: 'Install .NET 7 SDK'
+        inputs:
+          packageType: 'sdk'
+          version: '$(NET7_VERSION)'
+          includePreviewVersions: true
+
       - task: CmdLine@2
-        displayName: 'Pack CommunityToolkit NuGets'
+        displayName: 'Pack CommunityToolkit.Maui.Markup'
         inputs:
           script: 'dotnet pack -c Release $(PathToCommunityToolkitCsproj) -p:PackageVersion=$(NugetPackageVersion) --output $(Build.ArtifactStagingDirectory)/nuget -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg'
