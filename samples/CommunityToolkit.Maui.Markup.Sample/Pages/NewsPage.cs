@@ -4,6 +4,7 @@ namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 class NewsPage : BaseContentPage<NewsViewModel>
 {
 	readonly IDispatcher dispatcher;
+	readonly RefreshView refreshView;
 
 	public NewsPage(IDispatcher dispatcher,
 					NewsViewModel newsViewModel) : base(newsViewModel, "Top Stories")
@@ -11,6 +12,7 @@ class NewsPage : BaseContentPage<NewsViewModel>
 		this.dispatcher = dispatcher;
 
 		BindingContext.PullToRefreshFailed += HandlePullToRefreshFailed;
+		SettingsService.NumberOfTopStoriesToFetchChanged += HandleNumberOfTopStoriesToFetchChanged;
 
 		ToolbarItems.Add(new ToolbarItem { Command = new AsyncRelayCommand(NavigateToSettingsPage) }.Text("Settings"));
 
@@ -28,21 +30,19 @@ class NewsPage : BaseContentPage<NewsViewModel>
 			 .Bind(CollectionView.ItemsSourceProperty, nameof(NewsViewModel.TopStoryCollection))
 
 		}.Bind(RefreshView.IsRefreshingProperty, nameof(NewsViewModel.IsListRefreshing))
-		 .Bind(RefreshView.CommandProperty, nameof(NewsViewModel.PullToRefreshCommand));
+		 .Bind(RefreshView.CommandProperty, nameof(NewsViewModel.PullToRefreshCommand))
+		 .Assign(out refreshView);
 	}
 
 	protected override void OnAppearing()
 	{
 		base.OnAppearing();
 
-		if (Content is RefreshView refreshView
-			&& refreshView.Content is CollectionView collectionView
-			&& IsNullOrEmpty(collectionView.ItemsSource))
+		if (refreshView.Content is CollectionView collectionView
+			&& collectionView.ItemsSource.IsNullOrEmpty())
 		{
-			refreshView.IsRefreshing = true;
+			TryRefreshCollectionView();
 		}
-
-		static bool IsNullOrEmpty(in IEnumerable? enumerable) => !enumerable?.GetEnumerator().MoveNext() ?? true;
 	}
 
 	async void HandleSelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -68,6 +68,19 @@ class NewsPage : BaseContentPage<NewsViewModel>
 	async void HandlePullToRefreshFailed(object? sender, string message) =>
 		await dispatcher.DispatchAsync(() => DisplayAlert("Refresh Failed", message, "OK"));
 
+	bool TryRefreshCollectionView()
+	{
+		if (!refreshView.IsRefreshing)
+		{
+			refreshView.IsRefreshing = true;
+			return true;
+		}
+
+		return false;
+	}
+
+	void HandleNumberOfTopStoriesToFetchChanged(object? sender, int e) => TryRefreshCollectionView();
+
 	Task NavigateToSettingsPage() => dispatcher.DispatchAsync(() =>
 	{
 		var route = AppShell.GetRoute<SettingsPage, SettingsViewModel>();
@@ -88,4 +101,9 @@ class NewsPage : BaseContentPage<NewsViewModel>
 
 		return Shell.Current.GoToAsync(route, parameters);
 	});
+}
+
+static class EnumerableExtensions
+{
+	public static bool IsNullOrEmpty(this IEnumerable? enumerable) => !enumerable?.GetEnumerator().MoveNext() ?? true;
 }
