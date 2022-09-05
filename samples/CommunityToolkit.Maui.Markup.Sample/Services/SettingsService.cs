@@ -22,9 +22,11 @@ public class SettingsService
 		get => preferences.Get(nameof(NumberOfTopStoriesToFetch), 25, nameof(CommunityToolkit.Maui.Markup.Sample));
 		set
 		{
-			if (NumberOfTopStoriesToFetch != value)
+			var clampedValue = Math.Clamp(value, MinimumStoriesToFetch, MaximumStoriesToFetch);
+
+			if (NumberOfTopStoriesToFetch != clampedValue)
 			{
-				preferences.Set(nameof(NumberOfTopStoriesToFetch), Math.Clamp(value, MinimumStoriesToFetch, MaximumStoriesToFetch), nameof(CommunityToolkit.Maui.Markup.Sample));
+				preferences.Set(nameof(NumberOfTopStoriesToFetch), clampedValue, nameof(CommunityToolkit.Maui.Markup.Sample));
 				numberOfTopStoriesToFetchChangedEventManager.HandleEvent(this, value, nameof(NumberOfTopStoriesToFetchChanged));
 			}
 		}

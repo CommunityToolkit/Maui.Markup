@@ -14,7 +14,7 @@ class NewsPage : BaseContentPage<NewsViewModel>
 		BindingContext.PullToRefreshFailed += HandlePullToRefreshFailed;
 		SettingsService.NumberOfTopStoriesToFetchChanged += HandleNumberOfTopStoriesToFetchChanged;
 
- 		ToolbarItems.Add(new ToolbarItem { Command = new AsyncRelayCommand(NavigateToSettingsPage) }.Text("Settings"));
+		ToolbarItems.Add(new ToolbarItem { Command = new AsyncRelayCommand(NavigateToSettingsPage) }.Text("Settings"));
 
 		Content = new RefreshView
 		{
@@ -27,7 +27,7 @@ class NewsPage : BaseContentPage<NewsViewModel>
 				SelectionMode = SelectionMode.Single
 
 			}.ItemTemplate(new StoryDataTemplate())
-			 .Invoke(collectionView => collectionView.SelectionChanged += HandleSelectionChanged)			 
+			 .Invoke(collectionView => collectionView.SelectionChanged += HandleSelectionChanged)
 			 .Bind(CollectionView.ItemsSourceProperty, nameof(NewsViewModel.TopStoryCollection))
 
 		}.Bind(RefreshView.IsRefreshingProperty, nameof(NewsViewModel.IsListRefreshing))
