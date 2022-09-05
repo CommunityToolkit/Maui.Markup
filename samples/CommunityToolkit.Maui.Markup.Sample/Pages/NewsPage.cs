@@ -1,5 +1,4 @@
-﻿
-namespace CommunityToolkit.Maui.Markup.Sample.Pages;
+﻿namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
 class NewsPage : BaseContentPage<NewsViewModel>
 {
