@@ -19,12 +19,11 @@ class NewsPage : BaseContentPage<NewsViewModel>
 		Content = new RefreshView
 		{
 			RefreshColor = Colors.Black,
-			BackgroundColor = Colors.Green,
 
 			Content = new CollectionView
 			{
-				BackgroundColor = Colors.Red,
-				SelectionMode = SelectionMode.Single
+				BackgroundColor = Colors.Transparent,
+				SelectionMode = SelectionMode.Single,
 
 			}.ItemTemplate(new StoryDataTemplate())
 			 .Invoke(collectionView => collectionView.SelectionChanged += HandleSelectionChanged)
