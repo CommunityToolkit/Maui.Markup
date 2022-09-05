@@ -14,19 +14,20 @@ class NewsPage : BaseContentPage<NewsViewModel>
 		BindingContext.PullToRefreshFailed += HandlePullToRefreshFailed;
 		SettingsService.NumberOfTopStoriesToFetchChanged += HandleNumberOfTopStoriesToFetchChanged;
 
-		ToolbarItems.Add(new ToolbarItem { Command = new AsyncRelayCommand(NavigateToSettingsPage) }.Text("Settings"));
+ 		ToolbarItems.Add(new ToolbarItem { Command = new AsyncRelayCommand(NavigateToSettingsPage) }.Text("Settings"));
 
 		Content = new RefreshView
 		{
 			RefreshColor = Colors.Black,
+			BackgroundColor = Colors.Green,
 
 			Content = new CollectionView
 			{
-				BackgroundColor = Colors.Transparent,
-				SelectionMode = SelectionMode.Single,
+				BackgroundColor = Colors.Red,
+				SelectionMode = SelectionMode.Single
 
 			}.ItemTemplate(new StoryDataTemplate())
-			 .Invoke(collectionView => collectionView.SelectionChanged += HandleSelectionChanged)
+			 .Invoke(collectionView => collectionView.SelectionChanged += HandleSelectionChanged)			 
 			 .Bind(CollectionView.ItemsSourceProperty, nameof(NewsViewModel.TopStoryCollection))
 
 		}.Bind(RefreshView.IsRefreshingProperty, nameof(NewsViewModel.IsListRefreshing))
@@ -39,10 +40,12 @@ class NewsPage : BaseContentPage<NewsViewModel>
 		base.OnAppearing();
 
 		if (refreshView.Content is CollectionView collectionView
-			&& collectionView.ItemsSource.IsNullOrEmpty())
+			&& IsNullOrEmpty(collectionView.ItemsSource))
 		{
 			TryRefreshCollectionView();
 		}
+
+		static bool IsNullOrEmpty(in IEnumerable? enumerable) => !enumerable?.GetEnumerator().MoveNext() ?? true;
 	}
 
 	async void HandleSelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -101,9 +104,4 @@ class NewsPage : BaseContentPage<NewsViewModel>
 
 		return Shell.Current.GoToAsync(route, parameters);
 	});
-}
-
-static class EnumerableExtensions
-{
-	public static bool IsNullOrEmpty(this IEnumerable? enumerable) => !enumerable?.GetEnumerator().MoveNext() ?? true;
 }
