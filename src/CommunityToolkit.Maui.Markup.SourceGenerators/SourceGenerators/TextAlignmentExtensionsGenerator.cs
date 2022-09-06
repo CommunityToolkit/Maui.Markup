@@ -59,20 +59,21 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 #nullable enable
 
 using Microsoft.Maui;
+using Microsoft.Maui.Controls;
 
 namespace CommunityToolkit.Maui.Markup
 {
 	/// <summary>
 	/// Extension Methods for <see cref=""ITextAlignment""/>
 	/// </summary>
-	public partial static class TextAlignmentExtensions
+	public static partial class TextAlignmentExtensions
 	{
 		/// <summary>
 		/// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.Start""/>
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Start""/></returns>
-		public static " + textAlignmentClass.ClassName + @" TextStart(this" + textAlignmentClass.ClassName + @"textAlignmentControl)
+		public static " + textAlignmentClass.ClassName + @" TextStart(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
 		{
 			textAlignmentControl.HorizontalTextAlignment = TextAlignment.Start;
 			return textAlignmentControl;
@@ -83,7 +84,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Center""/></returns>
-		public static " + textAlignmentClass.ClassName + @" TextCenterHorizontal(this" + textAlignmentClass.ClassName + @"textAlignmentControl)
+		public static " + textAlignmentClass.ClassName + @" TextCenterHorizontal(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
 		{
 			textAlignmentControl.HorizontalTextAlignment = TextAlignment.Center;
 			return textAlignmentControl;
@@ -94,7 +95,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.End""/></returns>
-		public static " + textAlignmentClass.ClassName + @" TextEnd(this" + textAlignmentClass.ClassName + @"textAlignmentControl)
+		public static " + textAlignmentClass.ClassName + @" TextEnd(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
 		{
 			textAlignmentControl.HorizontalTextAlignment = TextAlignment.End;
 			return textAlignmentControl;
@@ -105,7 +106,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Start""/></returns>
-		public static " + textAlignmentClass.ClassName + @" TextTop(this" + textAlignmentClass.ClassName + @"textAlignmentControl)
+		public static " + textAlignmentClass.ClassName + @" TextTop(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
 		{
 			textAlignmentControl.VerticalTextAlignment = TextAlignment.Start;
 			return textAlignmentControl;
@@ -116,7 +117,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Center""/></returns>
-		public static " + textAlignmentClass.ClassName + @" TextCenterVertical(this" + textAlignmentClass.ClassName + @"textAlignmentControl)
+		public static " + textAlignmentClass.ClassName + @" TextCenterVertical(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
 		{
 			textAlignmentControl.VerticalTextAlignment = TextAlignment.Center;
 			return textAlignmentControl;
@@ -127,7 +128,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.End""/></returns>
-		public static " + textAlignmentClass.ClassName + @" TextBottom(this" + textAlignmentClass.ClassName + @"textAlignmentControl)
+		public static " + textAlignmentClass.ClassName + @" TextBottom(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
 		{
 			textAlignmentControl.VerticalTextAlignment = TextAlignment.End;
 			return textAlignmentControl;
@@ -138,7 +139,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Center""/></returns>
-		public static " + textAlignmentClass.ClassName + @" TextCenter(this" + textAlignmentClass.ClassName + @"textAlignmentControl)
+		public static " + textAlignmentClass.ClassName + @" TextCenter(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
 			=> textAlignmentControl.TextCenterHorizontal().TextCenterVertical();
 	}
 
@@ -151,14 +152,14 @@ namespace CommunityToolkit.Maui.Markup
 	    /// <summary>
 	    /// Extension Methods for <see cref=""ITextAlignment""/>
 	    /// </summary>
-	    public static class TextAlignmentExtensions
+	    public static partial class TextAlignmentExtensions
 	    {
 		    /// <summary>
 		    /// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.Start""/>
 		    /// </summary>
 		    /// <param name=""textAlignmentControl""></param>
 		    /// <returns>" + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.Start""/></returns>
-		    public static " + textAlignmentClass.ClassName + @" TextLeft(this" + textAlignmentClass.ClassName + @"textAlignmentControl)
+		    public static " + textAlignmentClass.ClassName + @" TextLeft(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
 		    {
 			    textAlignmentControl.HorizontalTextAlignment = TextAlignment.Start;
 			    return textAlignmentControl;
@@ -169,7 +170,7 @@ namespace CommunityToolkit.Maui.Markup
 		    /// </summary>
 		    /// <param name=""textAlignmentControl""></param>
 		    /// <returns>" + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.End""/></returns>
-		    public static " + textAlignmentClass.ClassName + @" TextRight(this" + textAlignmentClass.ClassName + @"textAlignmentControl)
+		    public static " + textAlignmentClass.ClassName + @" TextRight(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
 		    {
 			    textAlignmentControl.HorizontalTextAlignment = TextAlignment.End;
 			    return textAlignmentControl;
@@ -184,14 +185,14 @@ namespace CommunityToolkit.Maui.Markup
 	    /// <summary>
 	    /// Extension methods for <see cref=""ITextAlignment""/>
 	    /// </summary>
-	    public static class TextAlignmentExtensions
+	    public static partial class TextAlignmentExtensions
 	    {
 		    /// <summary>
 		    /// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.End""/>
 		    /// </summary>
 		    /// <param name=""textAlignmentControl""></param>
 		    /// <returns>" + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.End""/></returns>
-		    public static " + textAlignmentClass.ClassName + @" TextLeft(this" + textAlignmentClass.ClassName + @"textAlignmentControl)
+		    public static " + textAlignmentClass.ClassName + @" TextLeft(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
 		    {
 			    textAlignmentControl.HorizontalTextAlignment = TextAlignment.End;
 			    return textAlignmentControl;
@@ -202,7 +203,7 @@ namespace CommunityToolkit.Maui.Markup
 		    /// </summary>
 		    /// <param name=""textAlignmentControl""></param>
 		    /// <returns>" + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.Start""/></returns>
-		    public static " + textAlignmentClass.ClassName + @" TextRight(this" + textAlignmentClass.ClassName + @"textAlignmentControl)
+		    public static " + textAlignmentClass.ClassName + @" TextRight(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
 		    {
 			    textAlignmentControl.HorizontalTextAlignment = TextAlignment.Start;
 			    return textAlignmentControl;
