@@ -16,7 +16,7 @@ class TextAlignmentDiagnostics
 
 	public static readonly DiagnosticDescriptor MauiReferenceIsMissing = new(
 		   "MMCT002",
-		   "Was not possible to find Microsoft.Maui.ITextStyle and or Microsoft.Maui.IAnimatable",
+		   "Was not possible to find Microsoft.Maui.ITextAlignment",
 		   "Please make sure that your project is referencing Microsoft.Maui",
 		   category,
 		   DiagnosticSeverity.Error,
