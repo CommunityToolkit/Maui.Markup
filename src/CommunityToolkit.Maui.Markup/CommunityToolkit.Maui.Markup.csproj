@@ -39,4 +39,8 @@
 		<None Include="../../build/nuget.png" Pack="true" PackagePath="" />
 		<None Include="ReadMe.txt" pack="true" PackagePath="." />
 	</ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\CommunityToolkit.Maui.Markup.SourceGenerators\bin\$(Configuration)\netstandard2.0\CommunityToolkit.Maui.Markup.SourceGenerators.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+  </ItemGroup>
 </Project>
