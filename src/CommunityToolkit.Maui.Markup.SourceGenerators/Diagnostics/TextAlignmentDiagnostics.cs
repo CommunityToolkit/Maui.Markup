@@ -4,7 +4,7 @@ namespace CommunityToolkit.Maui.Markup.SourceGenerators;
 
 class TextAlignmentDiagnostics
 {
-	const string category = "TextColorTo";
+	const string category = "TextAlignmentExtensions";
 
 	public static readonly DiagnosticDescriptor GlobalNamespace = new(
 		   "MMCT001",
