@@ -39,4 +39,8 @@
 		<None Include="../../build/nuget.png" Pack="true" PackagePath="" />
 		<None Include="ReadMe.txt" pack="true" PackagePath="." />
 	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CommunityToolkit.Maui.Markup.SourceGenerators\CommunityToolkit.Maui.Markup.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+  </ItemGroup>
 </Project>
