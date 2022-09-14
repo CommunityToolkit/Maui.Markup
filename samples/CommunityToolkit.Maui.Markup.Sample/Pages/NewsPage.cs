@@ -27,6 +27,7 @@ class NewsPage : BaseContentPage<NewsViewModel>
 			}.ItemTemplate(new StoryDataTemplate())
 			 .Invoke(collectionView => collectionView.SelectionChanged += HandleSelectionChanged)
 			 .Bind(CollectionView.ItemsSourceProperty, nameof(NewsViewModel.TopStoryCollection))
+			 .AutomationId("NewsCollectionView")
 
 		}.Bind(RefreshView.IsRefreshingProperty, nameof(NewsViewModel.IsListRefreshing))
 		 .Bind(RefreshView.CommandProperty, nameof(NewsViewModel.PullToRefreshCommand))

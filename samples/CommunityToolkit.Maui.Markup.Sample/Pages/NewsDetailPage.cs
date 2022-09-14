@@ -25,7 +25,8 @@ class NewsDetailPage : BaseContentPage<NewsDetailViewModel>
 					.Basis(50)
 					.DynamicResource(Button.TextColorProperty, nameof(BaseTheme.PrimaryTextColor))
 					.DynamicResource(Button.BackgroundColorProperty, nameof(BaseTheme.NavigationBarBackgroundColor))
-					.Bind(Button.CommandProperty, nameof(NewsDetailViewModel.OpenBrowserCommand), BindingMode.OneWay),
+					.Bind(Button.CommandProperty, nameof(NewsDetailViewModel.OpenBrowserCommand), BindingMode.OneWay)
+					.SemanticHint("Launches the news article in the devices browser."),
 
 				new Label()
 					.TextCenter()
@@ -33,7 +34,8 @@ class NewsDetailPage : BaseContentPage<NewsDetailViewModel>
 					.Paddings(bottom: 20)
 					.DynamicResource(Label.TextColorProperty, nameof(BaseTheme.PrimaryTextColor))
 					.DynamicResource(Label.BackgroundColorProperty, nameof(BaseTheme.NavigationBarBackgroundColor))
-					.Bind(Label.TextProperty, nameof(NewsDetailViewModel.ScoreDescription), BindingMode.OneWay),
+					.Bind(Label.TextProperty, nameof(NewsDetailViewModel.ScoreDescription), BindingMode.OneWay)
+					.SemanticHint("Displays the score of the news article."),
 			}
 		};
 	}
