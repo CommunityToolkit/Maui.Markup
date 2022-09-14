@@ -4,7 +4,7 @@
 /// Extension methods for setting <see cref="SemanticProperties"/> on <see cref="BindableObject"/>s.
 /// These methods provide helpful ways of fluently setting properties.
 /// </summary>
-public static class SemanticPropertiesExtension
+public static class SemanticPropertiesExtensions
 {
 	/// <summary>
 	/// Sets a short, descriptive string that the platforms screen reader uses to announce the <paramref name="bindable"/>.
