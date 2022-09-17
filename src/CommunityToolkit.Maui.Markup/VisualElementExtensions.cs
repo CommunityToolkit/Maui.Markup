@@ -7,6 +7,25 @@
 public static class VisualElementExtensions
 {
 	/// <summary>
+	/// Sets the <see cref="VisualElement"/>s AutomationId property for the supplied <paramref name="element"/>.
+	/// </summary>
+	/// <typeparam name="TElement">The type of visual element being updated.</typeparam>
+	/// <param name="element">This element to apply the <paramref name="automationId"/> to.</param>
+	/// <param name="automationId">The value that the automation framework can use to find and interact with.</param>
+	/// <returns>
+	/// The supplied <paramref name="element"/> with the AutomationId property set
+	/// to the supplied <paramref name="automationId"/>.
+	/// </returns>
+	public static TElement AutomationId<TElement>(
+		this TElement element,
+		string automationId)
+		where TElement : VisualElement
+	{
+		element.AutomationId = automationId;
+		return element;
+	}
+
+	/// <summary>
 	/// Sets the <see cref="VisualElement.HeightRequest"/> property to the supplied <paramref name="heightRequest"/>
 	/// on this <paramref name="element"/>.
 	/// </summary>
