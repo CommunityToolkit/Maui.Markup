@@ -191,4 +191,37 @@ public static class BindableObjectExtensions
 		action?.Invoke(bindable);
 		return bindable;
 	}
+
+	/// <summary>
+	/// Set the property value for light and dark theme
+	/// </summary>
+	/// <typeparam name="TBindable"></typeparam>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="bindable"></param>
+	/// <param name="bindableProperty"></param>
+	/// <param name="light"></param>
+	/// <param name="dark"></param>
+	/// <returns></returns>
+	public static TBindable AppThemeBinding<TBindable, T>(this TBindable bindable, BindableProperty bindableProperty, T light, T dark) where TBindable : BindableObject
+	{
+		bindable.SetAppTheme(bindableProperty, light, dark);
+
+		return bindable;
+	}
+
+	/// <summary>
+	/// Set the app theme color for light and dark theme
+	/// </summary>
+	/// <typeparam name="TBindable"></typeparam>
+	/// <param name="bindable"></param>
+	/// <param name="bindableProperty"></param>
+	/// <param name="light"></param>
+	/// <param name="dark"></param>
+	/// <returns></returns>
+	public static TBindable AppThemeColorBinding<TBindable>(this TBindable bindable, BindableProperty bindableProperty, Color light, Color dark) where TBindable : BindableObject
+	{
+		bindable.SetAppThemeColor(bindableProperty, light, dark);
+
+		return bindable;
+	}
 }
