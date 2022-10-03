@@ -1,4 +1,5 @@
-﻿using Refit;
+﻿using Polly;
+using Refit;
 
 namespace CommunityToolkit.Maui.Markup.Sample;
 
@@ -23,7 +24,9 @@ public class MauiProgram
 		builder.Services.AddSingleton<SettingsService>();
 		builder.Services.AddSingleton(Preferences.Default);
 		builder.Services.AddSingleton<HackerNewsAPIService>();
-		builder.Services.AddSingleton(RestService.For<IHackerNewsApi>("https://hacker-news.firebaseio.com/v0"));
+		builder.Services.AddRefitClient<IHackerNewsApi>()
+							.ConfigureHttpClient(client => client.BaseAddress = new Uri("https://hacker-news.firebaseio.com/v0"))
+							.AddTransientHttpErrorPolicy(builder => builder.WaitAndRetryAsync(3, sleepDurationProvider));
 
 		// Pages + View Models
 		builder.Services.AddTransient<NewsPage, NewsViewModel>();
@@ -31,5 +34,7 @@ public class MauiProgram
 		builder.Services.AddTransient<NewsDetailPage, NewsDetailViewModel>();
 
 		return builder.Build();
+
+		static TimeSpan sleepDurationProvider(int attemptNumber) => TimeSpan.FromSeconds(Math.Pow(2, attemptNumber));
 	}
 }
