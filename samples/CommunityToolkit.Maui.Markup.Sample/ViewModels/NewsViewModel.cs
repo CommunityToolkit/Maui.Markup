@@ -1,6 +1,6 @@
 ﻿namespace CommunityToolkit.Maui.Markup.Sample.ViewModels;
 
-partial class NewsViewModel : BaseViewModel
+sealed partial class NewsViewModel : BaseViewModel, IDisposable
 {
 	readonly IDispatcher dispatcher;
 	readonly SettingsService settingsService;
@@ -27,6 +27,11 @@ partial class NewsViewModel : BaseViewModel
 	}
 
 	public ObservableCollection<StoryModel> TopStoryCollection { get; } = new();
+
+	public void Dispose()
+	{
+		insertIntoSortedCollectionSemaphore.Dispose();
+	}
 
 	[RelayCommand]
 	async Task PullToRefresh()

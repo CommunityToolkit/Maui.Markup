@@ -1,6 +1,6 @@
 ﻿namespace CommunityToolkit.Maui.Markup.Sample.ViewModels;
 
-partial class NewsDetailViewModel : BaseViewModel, IQueryAttributable
+sealed partial class NewsDetailViewModel : BaseViewModel, IQueryAttributable
 {
 	readonly IBrowser browser;
 
