@@ -2,7 +2,7 @@
 
 namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
-class NewsDetailPage : BaseContentPage<NewsDetailViewModel>
+sealed class NewsDetailPage : BaseContentPage<NewsDetailViewModel>
 {
 	public NewsDetailPage(NewsDetailViewModel newsDetailViewModel) : base(newsDetailViewModel, newsDetailViewModel.Title)
 	{
