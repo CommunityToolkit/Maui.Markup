@@ -109,7 +109,7 @@ using System;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 
-namespace " + textStyleClass.Namespace + @"
+namespace " + textAlignmentClass.Namespace + @"
 {
 	/// <summary>
 	/// Extension Methods for <see cref=""ITextAlignment""/>
