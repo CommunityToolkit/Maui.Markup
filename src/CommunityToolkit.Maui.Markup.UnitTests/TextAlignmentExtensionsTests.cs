@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
+﻿using System.Threading.Tasks;
+using CommunityToolkit.Maui.Markup.UnitTests.Base;
+using CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
@@ -39,6 +41,97 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 					l => l.TextCenter(),
 					(TextAlignmentElement.HorizontalTextAlignmentProperty, TextAlignment.Start, TextAlignment.Center),
 					(TextAlignmentElement.VerticalTextAlignmentProperty, TextAlignment.Start, TextAlignment.Center));
+
+		[Test]
+		public void PublicTextAlignmentView()
+		{
+			Assert.IsInstanceOf<PublicTextAlignmentView>(
+				new PublicTextAlignmentView()
+				.TextStart()
+				.TextCenterHorizontal()
+				.TextEnd()
+				.TextTop()
+				.TextCenterVertical()
+				.TextBottom()
+				.TextCenter());
+		}
+
+		[Test]
+		public void InternalTextAlignmentView()
+		{
+			Assert.IsInstanceOf<InternalTextAlignmentView>(
+				new InternalTextAlignmentView()
+				.TextStart()
+				.TextCenterHorizontal()
+				.TextEnd()
+				.TextTop()
+				.TextCenterVertical()
+				.TextBottom()
+				.TextCenter());
+		}
+
+		[Test]
+		public void Extensions_For_Generic_Class()
+		{
+			var textAlignmentView = new GenericPicker<
+				ClassConstraintWithInterface,
+				ClassConstraint,
+				StructConstraint,
+				ClassConstraintWithInterface,
+				string,
+				int,
+				bool,
+				ClassConstraintWithInterface?,
+				ClassConstraint[],
+				ClassConstraintWithInterface,
+				RecordClassContstraint,
+				RecordClassContstraint[],
+				RecordStructContstraint>
+			{
+				HorizontalTextAlignment = TextAlignment.Center
+			};
+
+			Assert.AreEqual(TextAlignment.Center, textAlignmentView.HorizontalTextAlignment);
+
+			textAlignmentView.TextEnd();
+
+			Assert.AreEqual(TextAlignment.End, textAlignmentView.HorizontalTextAlignment);
+		}
+
+		[Test]
+		public void GenericPickerShouldUseThePickerExtension()
+		{
+			var genericPicker = new MyGenericPicker<string>();
+
+			Assert.AreEqual(TextAlignment.Start, genericPicker.HorizontalTextAlignment);
+
+			genericPicker.TextEnd();
+
+			Assert.AreEqual(TextAlignment.End, genericPicker.HorizontalTextAlignment);
+		}
+
+		[Test]
+		public void MoreGenericPickerShouldUseThePickerExtension()
+		{
+			var genericPicker = new MoreGenericPicker<string>();
+
+			Assert.AreEqual(TextAlignment.Start, genericPicker.HorizontalTextAlignment);
+
+			genericPicker.TextEnd();
+
+			Assert.AreEqual(TextAlignment.End, genericPicker.HorizontalTextAlignment);
+		}
+
+		[Test]
+		public void BrandNewControlShouldHaveHisOwnExtensionMethod()
+		{
+			var brandNewControl = new BrandNewControl();
+			Assert.AreEqual(TextAlignment.Start, brandNewControl.HorizontalTextAlignment);
+
+			brandNewControl.TextEnd();
+
+			Assert.AreEqual(TextAlignment.End, brandNewControl.HorizontalTextAlignment);
+		}
 
 		[Test]
 		public void SupportDerivedFromBindable()
@@ -143,6 +236,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
 	using CommunityToolkit.Maui.Markup.RightToLeft;
+	using CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions;
 
 	[TestFixture]
 	class RightToLeftTextAlignmentExtensionsTests : BaseMarkupTestFixture<Picker>
@@ -200,14 +294,14 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 namespace CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions
 {
-	public class PublicTextStyleView : View, ICustomTextAlignment
+	public class PublicTextAlignmentView : View, ICustomTextAlignment
 	{
 		public TextAlignment HorizontalTextAlignment { get; set; }
 
 		public TextAlignment VerticalTextAlignment { get; set; }
 	}
 
-	class InternalTextStyleView : View, ICustomTextAlignment
+	class InternalTextAlignmentView : View, ICustomTextAlignment
 	{
 		public TextAlignment HorizontalTextAlignment { get; set; }
 
