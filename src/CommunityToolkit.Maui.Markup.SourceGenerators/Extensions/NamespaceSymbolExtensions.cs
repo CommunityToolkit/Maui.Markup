@@ -103,7 +103,7 @@ static class NamespaceSymbolExtensions
 			{
 				constraints.Append("class");
 
-				if (typeParameterSymbol.ReferenceTypeConstraintNullableAnnotation == NullableAnnotation.Annotated)
+				if (typeParameterSymbol.ReferenceTypeConstraintNullableAnnotation is NullableAnnotation.Annotated)
 				{
 					constraints.Append("?");
 				}
@@ -120,7 +120,8 @@ static class NamespaceSymbolExtensions
 					constraints.Append(", ");
 				}
 
-				constraints.Append(contstraintType.GetFullTypeString());
+				var symbolDisplayFormat = new SymbolDisplayFormat(typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces);
+				constraints.Append(contstraintType.ToDisplayString(symbolDisplayFormat));
 			}
 
 			if (typeParameterSymbol.HasConstructorConstraint)
