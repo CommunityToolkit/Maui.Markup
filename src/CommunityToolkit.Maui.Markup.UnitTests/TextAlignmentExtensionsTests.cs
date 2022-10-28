@@ -126,10 +126,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				.TextTop()
 				.TextCenterVertical()
 				.TextBottom()
-				.TextCenter()
-				.FontSize(8.0)
-				.Bold()
-				.Italic());
+				.TextCenter());
 		}
 
 		class DerivedFromEntry : Entry { }
