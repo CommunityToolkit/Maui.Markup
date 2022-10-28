@@ -285,7 +285,9 @@ namespace CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions
 		where TL : class
 		where TM : struct
 	{
+		public TextAlignment HorizontalTextAlignment { get; set; }
 
+		public TextAlignment VerticalTextAlignment { get; set; }
 	}
 
 	class BrandNewControl : View, ITextAlignment
