@@ -109,7 +109,7 @@ using System;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 
-namespace "+ textAlignmentClass.Namespace + @"
+namespace CommunityToolkit.Maui.Markup
 {
 	/// <summary>
 	/// Extension Methods for <see cref=""ITextAlignment""/>
@@ -120,8 +120,8 @@ namespace "+ textAlignmentClass.Namespace + @"
 		/// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.Start""/>
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
-		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Start""/></returns>
-		public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextStart" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Start""/></returns>
+		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextStart" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
@@ -136,8 +136,8 @@ namespace "+ textAlignmentClass.Namespace + @"
 		/// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.Center""/>
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
-		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Center""/></returns>
-		public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextCenterHorizontal" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Center""/></returns>
+		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextCenterHorizontal" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
@@ -152,8 +152,8 @@ namespace "+ textAlignmentClass.Namespace + @"
 		/// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.End""/>
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
-		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.End""/></returns>
-		public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextEnd" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.End""/></returns>
+		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextEnd" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
@@ -168,8 +168,8 @@ namespace "+ textAlignmentClass.Namespace + @"
 		/// <see cref=""ITextAlignment.VerticalTextAlignment""/> = <see cref=""TextAlignment.Start""/>
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
-		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Start""/></returns>
-		public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextTop" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Start""/></returns>
+		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextTop" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
@@ -184,8 +184,8 @@ namespace "+ textAlignmentClass.Namespace + @"
 		/// <see cref=""ITextAlignment.VerticalTextAlignment""/> = <see cref=""TextAlignment.Center""/>
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
-		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Center""/></returns>
-		public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextCenterVertical" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Center""/></returns>
+		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextCenterVertical" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
@@ -200,8 +200,8 @@ namespace "+ textAlignmentClass.Namespace + @"
 		/// <see cref=""ITextAlignment.VerticalTextAlignment""/> = <see cref=""TextAlignment.End""/>
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
-		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.End""/></returns>
-		public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextBottom" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.End""/></returns>
+		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextBottom" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
@@ -216,8 +216,8 @@ namespace "+ textAlignmentClass.Namespace + @"
 		/// <see cref=""ITextAlignment.VerticalTextAlignment""/> = <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.Center""/>
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
-		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Center""/></returns>
-		public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextCenter" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Center""/></returns>
+		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextCenter" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 			=> textAlignmentControl.TextCenterHorizontal().TextCenterVertical();
 	}
 
@@ -236,8 +236,8 @@ namespace "+ textAlignmentClass.Namespace + @"
 		    /// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.Start""/>
 		    /// </summary>
 		    /// <param name=""textAlignmentControl""></param>
-		    /// <returns>" + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.Start""/></returns>
-		    public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextLeft" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		    /// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.Start""/></returns>
+		    public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextLeft" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 		    {
 				ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
@@ -252,8 +252,8 @@ namespace "+ textAlignmentClass.Namespace + @"
 		    /// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.End""/>
 		    /// </summary>
 		    /// <param name=""textAlignmentControl""></param>
-		    /// <returns>" + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.End""/></returns>
-		    public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextRight" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		    /// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.End""/></returns>
+		    public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextRight" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 		    {
 				ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
@@ -279,8 +279,8 @@ namespace "+ textAlignmentClass.Namespace + @"
 		    /// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.End""/>
 		    /// </summary>
 		    /// <param name=""textAlignmentControl""></param>
-		    /// <returns>" + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.End""/></returns>
-		    public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextLeft" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		    /// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.End""/></returns>
+		    public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextLeft" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 		    {
 				ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
@@ -295,8 +295,8 @@ namespace "+ textAlignmentClass.Namespace + @"
 		    /// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.Start""/>
 		    /// </summary>
 		    /// <param name=""textAlignmentControl""></param>
-		    /// <returns>" + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.Start""/></returns>
-		    public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextRight" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		    /// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.Start""/></returns>
+		    public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextRight" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 		    {
 				ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
