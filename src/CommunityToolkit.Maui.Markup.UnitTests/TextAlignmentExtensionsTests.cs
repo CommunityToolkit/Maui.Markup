@@ -119,7 +119,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		public void SupportCustomTextAlignment()
 		{
 			Assert.IsInstanceOf<LeftToRightCustomTextAlignmentControl>(
-				new CustomTextAlignmentControl()
+				new LeftToRightCustomTextAlignmentControl()
 				.TextStart()
 				.TextCenterHorizontal()
 				.TextEnd()
@@ -177,7 +177,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		public void SupportCustomTextAlignment()
 		{
 			Assert.IsInstanceOf<RightToLeftCustomTextAlignmentControl>(
-				new CustomTextAlignmentControl()
+				new RightToLeftCustomTextAlignmentControl()
 				.TextStart()
 				.TextCenterHorizontal()
 				.TextEnd()
