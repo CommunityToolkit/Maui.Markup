@@ -68,10 +68,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				.TextTop()
 				.TextCenterVertical()
 				.TextBottom()
-				.TextCenter()
-				.FontSize(8.0)
-				.Bold()
-				.Italic());
+				.TextCenter());
 		}
 
 		class DerivedFromSearchBar : SearchBar { }
@@ -190,10 +187,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				.TextTop()
 				.TextCenterVertical()
 				.TextBottom()
-				.TextCenter()
-				.FontSize(8.0)
-				.Bold()
-				.Italic());
+				.TextCenter());
 		}
 
 		class DerivedFromEditor : Editor { }
