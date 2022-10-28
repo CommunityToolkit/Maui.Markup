@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
 using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
@@ -56,7 +57,31 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				.Italic());
 		}
 
+		[Test]
+		public void SupportCustomTextAlignment()
+		{
+			Assert.IsInstanceOf<CustomTextAlignmentControl>(
+				new CustomTextAlignmentControl()
+				.TextStart()
+				.TextCenterHorizontal()
+				.TextEnd()
+				.TextTop()
+				.TextCenterVertical()
+				.TextBottom()
+				.TextCenter()
+				.FontSize(8.0)
+				.Bold()
+				.Italic());
+		}
+
 		class DerivedFromSearchBar : SearchBar { }
+	}
+
+	class CustomTextAlignmentControl : ITextAlignment
+	{
+		public TextAlignment HorizontalTextAlignment { get; set; } = TextAlignment.Center;
+
+		public TextAlignment VerticalTextAlignment { get; set; } = TextAlignment.Center;
 	}
 }
 
@@ -75,6 +100,49 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		[Test]
 		public void TextRight()
 			=> TestPropertiesSet(l => l.TextRight(), (TextAlignmentElement.HorizontalTextAlignmentProperty, TextAlignment.End));
+
+		[Test]
+		public void SupportDerivedFromBindable()
+		{
+			Assert.IsInstanceOf<DerivedFromEntry>(
+				new DerivedFromEntry()
+				.TextStart()
+				.TextCenterHorizontal()
+				.TextEnd()
+				.TextTop()
+				.TextCenterVertical()
+				.TextBottom()
+				.TextCenter()
+				.FontSize(8.0)
+				.Bold()
+				.Italic());
+		}
+
+		[Test]
+		public void SupportCustomTextAlignment()
+		{
+			Assert.IsInstanceOf<LeftToRightCustomTextAlignmentControl>(
+				new CustomTextAlignmentControl()
+				.TextStart()
+				.TextCenterHorizontal()
+				.TextEnd()
+				.TextTop()
+				.TextCenterVertical()
+				.TextBottom()
+				.TextCenter()
+				.FontSize(8.0)
+				.Bold()
+				.Italic());
+		}
+
+		class DerivedFromEntry : Entry { }
+	}
+
+	class LeftToRightCustomTextAlignmentControl : ITextAlignment
+	{
+		public TextAlignment HorizontalTextAlignment { get; set; } = TextAlignment.Center;
+
+		public TextAlignment VerticalTextAlignment { get; set; } = TextAlignment.Center;
 	}
 }
 
@@ -93,5 +161,137 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		[Test]
 		public void TextRight()
 			=> TestPropertiesSet(l => l.TextRight(), (TextAlignmentElement.HorizontalTextAlignmentProperty, TextAlignment.Start));
+
+		[Test]
+		public void SupportDerivedFromBindable()
+		{
+			Assert.IsInstanceOf<DerivedFromEditor>(
+				new DerivedFromEditor()
+				.TextStart()
+				.TextCenterHorizontal()
+				.TextEnd()
+				.TextTop()
+				.TextCenterVertical()
+				.TextBottom()
+				.TextCenter()
+				.FontSize(8.0)
+				.Bold()
+				.Italic());
+		}
+
+		[Test]
+		public void SupportCustomTextAlignment()
+		{
+			Assert.IsInstanceOf<RightToLeftCustomTextAlignmentControl>(
+				new CustomTextAlignmentControl()
+				.TextStart()
+				.TextCenterHorizontal()
+				.TextEnd()
+				.TextTop()
+				.TextCenterVertical()
+				.TextBottom()
+				.TextCenter()
+				.FontSize(8.0)
+				.Bold()
+				.Italic());
+		}
+
+		class DerivedFromEditor : Editor { }
+	}
+
+	class RightToLeftCustomTextAlignmentControl : ITextAlignment
+	{
+		public TextAlignment HorizontalTextAlignment { get; set; } = TextAlignment.Center;
+
+		public TextAlignment VerticalTextAlignment { get; set; } = TextAlignment.Center;
+	}
+}
+
+namespace CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions
+{
+	public class PublicTextStyleView : View, ICustomTextAlignment
+	{
+		public TextAlignment HorizontalTextAlignment { get; set; }
+
+		public TextAlignment VerticalTextAlignment { get; set; }
+	}
+
+	class InternalTextStyleView : View, ICustomTextAlignment
+	{
+		public TextAlignment HorizontalTextAlignment { get; set; }
+
+		public TextAlignment VerticalTextAlignment { get; set; }
+	}
+
+	// Ensures custom ITextAlignment interfaces are supported
+	interface ICustomTextAlignment : ITextAlignment
+	{
+
+	}
+
+	public interface ISomeInterface
+	{
+
+	}
+
+	public class ClassConstraintWithInterface : ISomeInterface
+	{
+
+	}
+
+	public class ClassConstraint
+	{
+
+	}
+
+	class MyGenericPicker<T> : Picker
+	{
+
+	}
+
+	public record RecordClassContstraint
+	{
+
+	}
+
+
+	public readonly record struct RecordStructContstraint
+	{
+
+	}
+
+	class MoreGenericPicker<T> : MyGenericPicker<T>
+	{
+
+	}
+
+	public struct StructConstraint
+	{
+
+	}
+
+	public class GenericPicker<TA, TB, TC, TD, TE, TF, TG, TH, TI, TJ, TK, TL, TM> : View, ITextAlignment
+		where TA : notnull, ISomeInterface
+		where TB : class
+		where TC : struct
+		where TD : class, ISomeInterface, new()
+		//TE has no constraints 
+		where TF : notnull
+		where TG : unmanaged
+		where TH : ISomeInterface?
+		where TI : class?
+		where TJ : ISomeInterface
+		where TK : new()
+		where TL : class
+		where TM : struct
+	{
+
+	}
+
+	class BrandNewControl : View, ITextAlignment
+	{
+		public TextAlignment HorizontalTextAlignment { get; set; }
+
+		public TextAlignment VerticalTextAlignment { get; set; }
 	}
 }

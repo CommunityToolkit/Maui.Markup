@@ -17,19 +17,26 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 
 	public void Initialize(IncrementalGeneratorInitializationContext context)
 	{
+		// Get All Classes in User Library
+		var userGeneratedClassesProvider = context.SyntaxProvider.CreateSyntaxProvider(
+			static (syntaxNode, cancellationToken) => syntaxNode is ClassDeclarationSyntax { BaseList: not null },
+			static (context, cancellationToken) => (ClassDeclarationSyntax)context.Node);
+
 		// Get Microsoft.Maui.Controls Assembly Symbol
 		var mauiControlsAssemblySymbolProvider = context.CompilationProvider.Select(
 			static (compilation, token) => compilation.SourceModule.ReferencedAssemblySymbols.Single(q => q.Name == mauiControlsAssembly));
 
-		var inputs = mauiControlsAssemblySymbolProvider
+		var inputs = userGeneratedClassesProvider.Collect()
+						.Combine(mauiControlsAssemblySymbolProvider)
+						.Select(static (combined, cancellationToken) => (UserGeneratedClassesProvider: combined.Left, MauiControlsAssemblySymbolProvider: combined.Right))
 						.Combine(context.CompilationProvider)
-						.Select(static (combined, cancellationToken) => (MauiControlsAssemblySymbolProvider: combined.Left, Compilation: combined.Right));
+						.Select(static (combined, cancellationToken) => (combined.Left.UserGeneratedClassesProvider, combined.Left.MauiControlsAssemblySymbolProvider, Compilation: combined.Right));
 
 		context.RegisterSourceOutput(inputs, (context, collectedValues) =>
-			Execute(context, collectedValues.Compilation, collectedValues.MauiControlsAssemblySymbolProvider));
+		Execute(context, collectedValues.Compilation, collectedValues.UserGeneratedClassesProvider, collectedValues.MauiControlsAssemblySymbolProvider));
 	}
 
-	static void Execute(SourceProductionContext context, Compilation compilation, IAssemblySymbol mauiControlsAssemblySymbolProvider)
+	static void Execute(SourceProductionContext context, Compilation compilation, ImmutableArray<ClassDeclarationSyntax> userGeneratedClassesProvider, IAssemblySymbol mauiControlsAssemblySymbolProvider)
 	{
 		var textAlignmentSymbol = compilation.GetTypeByMetadataName(iTextAlignmentInterface);
 
@@ -50,6 +57,46 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 			textAlignmentClassList.Add((namedTypeSymbol.Name, "public", namedTypeSymbol.ContainingNamespace.ToDisplayString(), namedTypeSymbol.TypeArguments.GetGenericTypeArgumentsString(), namedTypeSymbol.GetGenericTypeConstraintsAsString()));
 		}
 
+		// Collect All Classes in User Library that Implement ITextAlignment
+		foreach (var classDeclarationSyntax in userGeneratedClassesProvider)
+		{
+			var declarationSymbol = compilation.GetSymbol<INamedTypeSymbol>(classDeclarationSyntax);
+			if (declarationSymbol is null)
+			{
+				var diag = Diagnostic.Create(TextAlignmentDiagnostics.InvalidClassDeclarationSyntax, Location.None, classDeclarationSyntax.Identifier.Text);
+				context.ReportDiagnostic(diag);
+				continue;
+			}
+
+			// If the control inherits from a Maui control that implements ITextStyle, we don't need to generate a extension method for it.
+			// We just generate a method if the Control is a new implementation of ITextStyle and IAnimatable
+			var doesContainSymbolBaseType = mauiTextStyleImplementors.ContainsSymbolBaseType(declarationSymbol);
+
+			if (!doesContainSymbolBaseType
+				&& declarationSymbol.AllInterfaces.Contains(textAlignmentSymbol, SymbolEqualityComparer.Default))
+			{
+				if (declarationSymbol.ContainingNamespace.IsGlobalNamespace)
+				{
+					var diag = Diagnostic.Create(TextAlignmentDiagnostics.GlobalNamespace, Location.None, declarationSymbol.Name);
+					context.ReportDiagnostic(diag);
+					continue;
+				}
+
+				var nameSpace = declarationSymbol.ContainingNamespace.ToDisplayString();
+
+				var accessModifier = GetClassAccessModifier(declarationSymbol);
+
+				if (accessModifier == string.Empty)
+				{
+					var diag = Diagnostic.Create(TextAlignmentDiagnostics.InvalidModifierAccess, Location.None, declarationSymbol.Name);
+					context.ReportDiagnostic(diag);
+					continue;
+				}
+
+				textAlignmentClassList.Add((declarationSymbol.Name, accessModifier, nameSpace, declarationSymbol.TypeArguments.GetGenericTypeArgumentsString(), declarationSymbol.GetGenericTypeConstraintsAsString()));
+			}
+		}
+
 		var options = ((CSharpCompilation)compilation).SyntaxTrees[0].Options as CSharpParseOptions;
 		foreach (var textAlignmentClass in textAlignmentClassList)
 		{
@@ -61,19 +108,19 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 
-namespace CommunityToolkit.Maui.Markup
+namespace "+ textAlignmentClass.Namespace + @"
 {
 	/// <summary>
 	/// Extension Methods for <see cref=""ITextAlignment""/>
 	/// </summary>
-	public static partial class TextAlignmentExtensions
+	" + textAlignmentClass.ClassAcessModifier + " static partial class TextAlignmentExtensions_" + textAlignmentClass.ClassName + @"
 	{
 		/// <summary>
 		/// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.Start""/>
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Start""/></returns>
-		public static " + textAlignmentClass.ClassName + @" TextStart(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
+		public static " + textAlignmentClass.ClassName + @" TextStart" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
 		{
 			textAlignmentControl.HorizontalTextAlignment = TextAlignment.Start;
 			return textAlignmentControl;
@@ -84,7 +131,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Center""/></returns>
-		public static " + textAlignmentClass.ClassName + @" TextCenterHorizontal(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
+		public static " + textAlignmentClass.ClassName + @" TextCenterHorizontal" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
 		{
 			textAlignmentControl.HorizontalTextAlignment = TextAlignment.Center;
 			return textAlignmentControl;
@@ -95,7 +142,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.End""/></returns>
-		public static " + textAlignmentClass.ClassName + @" TextEnd(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
+		public static " + textAlignmentClass.ClassName + @" TextEnd" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
 		{
 			textAlignmentControl.HorizontalTextAlignment = TextAlignment.End;
 			return textAlignmentControl;
@@ -106,7 +153,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Start""/></returns>
-		public static " + textAlignmentClass.ClassName + @" TextTop(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
+		public static " + textAlignmentClass.ClassName + @" TextTop" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
 		{
 			textAlignmentControl.VerticalTextAlignment = TextAlignment.Start;
 			return textAlignmentControl;
@@ -117,7 +164,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Center""/></returns>
-		public static " + textAlignmentClass.ClassName + @" TextCenterVertical(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
+		public static " + textAlignmentClass.ClassName + @" TextCenterVertical" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
 		{
 			textAlignmentControl.VerticalTextAlignment = TextAlignment.Center;
 			return textAlignmentControl;
@@ -128,7 +175,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.End""/></returns>
-		public static " + textAlignmentClass.ClassName + @" TextBottom(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
+		public static " + textAlignmentClass.ClassName + @" TextBottom" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
 		{
 			textAlignmentControl.VerticalTextAlignment = TextAlignment.End;
 			return textAlignmentControl;
@@ -139,7 +186,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Center""/></returns>
-		public static " + textAlignmentClass.ClassName + @" TextCenter(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
+		public static " + textAlignmentClass.ClassName + @" TextCenter" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
 			=> textAlignmentControl.TextCenterHorizontal().TextCenterVertical();
 	}
 
@@ -152,14 +199,14 @@ namespace CommunityToolkit.Maui.Markup
 	    /// <summary>
 	    /// Extension Methods for <see cref=""ITextAlignment""/>
 	    /// </summary>
-	    public static partial class TextAlignmentExtensions
+	    " + textAlignmentClass.ClassAcessModifier + " static partial class TextAlignmentExtensions_" + textAlignmentClass.ClassName + @"
 	    {
 		    /// <summary>
 		    /// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.Start""/>
 		    /// </summary>
 		    /// <param name=""textAlignmentControl""></param>
 		    /// <returns>" + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.Start""/></returns>
-		    public static " + textAlignmentClass.ClassName + @" TextLeft(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
+		    public static " + textAlignmentClass.ClassName + @" TextLeft" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
 		    {
 			    textAlignmentControl.HorizontalTextAlignment = TextAlignment.Start;
 			    return textAlignmentControl;
@@ -170,7 +217,7 @@ namespace CommunityToolkit.Maui.Markup
 		    /// </summary>
 		    /// <param name=""textAlignmentControl""></param>
 		    /// <returns>" + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.End""/></returns>
-		    public static " + textAlignmentClass.ClassName + @" TextRight(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
+		    public static " + textAlignmentClass.ClassName + @" TextRight" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
 		    {
 			    textAlignmentControl.HorizontalTextAlignment = TextAlignment.End;
 			    return textAlignmentControl;
@@ -185,14 +232,14 @@ namespace CommunityToolkit.Maui.Markup
 	    /// <summary>
 	    /// Extension methods for <see cref=""ITextAlignment""/>
 	    /// </summary>
-	    public static partial class TextAlignmentExtensions
+	    " + textAlignmentClass.ClassAcessModifier + " static partial class TextAlignmentExtensions_" + textAlignmentClass.ClassName + @"
 	    {
 		    /// <summary>
 		    /// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.End""/>
 		    /// </summary>
 		    /// <param name=""textAlignmentControl""></param>
 		    /// <returns>" + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.End""/></returns>
-		    public static " + textAlignmentClass.ClassName + @" TextLeft(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
+		    public static " + textAlignmentClass.ClassName + @" TextLeft" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
 		    {
 			    textAlignmentControl.HorizontalTextAlignment = TextAlignment.End;
 			    return textAlignmentControl;
@@ -203,7 +250,7 @@ namespace CommunityToolkit.Maui.Markup
 		    /// </summary>
 		    /// <param name=""textAlignmentControl""></param>
 		    /// <returns>" + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.Start""/></returns>
-		    public static " + textAlignmentClass.ClassName + @" TextRight(this " + textAlignmentClass.ClassName + @" textAlignmentControl)
+		    public static " + textAlignmentClass.ClassName + @" TextRight" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
 		    {
 			    textAlignmentControl.HorizontalTextAlignment = TextAlignment.Start;
 			    return textAlignmentControl;
@@ -215,5 +262,12 @@ namespace CommunityToolkit.Maui.Markup
 			SourceStringExtensions.FormatText(ref source, options);
 			context.AddSource($"{textAlignmentClass.ClassName}TextAlignmentExtensions.g.cs", SourceText.From(source, Encoding.UTF8));
 		}
+
+		static string GetClassAccessModifier(INamedTypeSymbol namedTypeSymbol) => namedTypeSymbol.DeclaredAccessibility switch
+		{
+			Accessibility.Public => "public",
+			Accessibility.Internal => "internal",
+			_ => string.Empty
+		};
 	}
 }
