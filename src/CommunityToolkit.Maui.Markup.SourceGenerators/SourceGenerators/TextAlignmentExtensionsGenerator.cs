@@ -105,6 +105,7 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 // See: CommunityToolkit.Maui.Markup.SourceGenerators.TextAlignmentGenerator
 #nullable enable
 
+using System;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 
@@ -120,8 +121,13 @@ namespace "+ textAlignmentClass.Namespace + @"
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Start""/></returns>
-		public static " + textAlignmentClass.ClassName + @" TextStart" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
+		public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextStart" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 		{
+			ArgumentNullException.ThrowIfNull(textAlignmentControl);
+
+			if (textAlignmentControl is not Microsoft.Maui.ITextAlignment)
+				throw new ArgumentException($""Element must implement {nameof(Microsoft.Maui.ITextAlignment)}"", nameof(textAlignmentControl));
+
 			textAlignmentControl.HorizontalTextAlignment = TextAlignment.Start;
 			return textAlignmentControl;
 		}
@@ -131,8 +137,13 @@ namespace "+ textAlignmentClass.Namespace + @"
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Center""/></returns>
-		public static " + textAlignmentClass.ClassName + @" TextCenterHorizontal" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
+		public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextCenterHorizontal" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 		{
+			ArgumentNullException.ThrowIfNull(textAlignmentControl);
+
+			if (textAlignmentControl is not Microsoft.Maui.ITextAlignment)
+				throw new ArgumentException($""Element must implement {nameof(Microsoft.Maui.ITextAlignment)}"", nameof(textAlignmentControl));
+
 			textAlignmentControl.HorizontalTextAlignment = TextAlignment.Center;
 			return textAlignmentControl;
 		}
@@ -142,8 +153,13 @@ namespace "+ textAlignmentClass.Namespace + @"
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.End""/></returns>
-		public static " + textAlignmentClass.ClassName + @" TextEnd" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
+		public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextEnd" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 		{
+			ArgumentNullException.ThrowIfNull(textAlignmentControl);
+
+			if (textAlignmentControl is not Microsoft.Maui.ITextAlignment)
+				throw new ArgumentException($""Element must implement {nameof(Microsoft.Maui.ITextAlignment)}"", nameof(textAlignmentControl));
+
 			textAlignmentControl.HorizontalTextAlignment = TextAlignment.End;
 			return textAlignmentControl;
 		}
@@ -153,8 +169,13 @@ namespace "+ textAlignmentClass.Namespace + @"
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Start""/></returns>
-		public static " + textAlignmentClass.ClassName + @" TextTop" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
+		public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextTop" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 		{
+			ArgumentNullException.ThrowIfNull(textAlignmentControl);
+
+			if (textAlignmentControl is not Microsoft.Maui.ITextAlignment)
+				throw new ArgumentException($""Element must implement {nameof(Microsoft.Maui.ITextAlignment)}"", nameof(textAlignmentControl));
+
 			textAlignmentControl.VerticalTextAlignment = TextAlignment.Start;
 			return textAlignmentControl;
 		}
@@ -164,8 +185,13 @@ namespace "+ textAlignmentClass.Namespace + @"
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Center""/></returns>
-		public static " + textAlignmentClass.ClassName + @" TextCenterVertical" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
+		public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextCenterVertical" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 		{
+			ArgumentNullException.ThrowIfNull(textAlignmentControl);
+
+			if (textAlignmentControl is not Microsoft.Maui.ITextAlignment)
+				throw new ArgumentException($""Element must implement {nameof(Microsoft.Maui.ITextAlignment)}"", nameof(textAlignmentControl));
+
 			textAlignmentControl.VerticalTextAlignment = TextAlignment.Center;
 			return textAlignmentControl;
 		}
@@ -175,8 +201,13 @@ namespace "+ textAlignmentClass.Namespace + @"
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.End""/></returns>
-		public static " + textAlignmentClass.ClassName + @" TextBottom" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
+		public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextBottom" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 		{
+			ArgumentNullException.ThrowIfNull(textAlignmentControl);
+
+			if (textAlignmentControl is not Microsoft.Maui.ITextAlignment)
+				throw new ArgumentException($""Element must implement {nameof(Microsoft.Maui.ITextAlignment)}"", nameof(textAlignmentControl));
+
 			textAlignmentControl.VerticalTextAlignment = TextAlignment.End;
 			return textAlignmentControl;
 		}
@@ -186,7 +217,7 @@ namespace "+ textAlignmentClass.Namespace + @"
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Center""/></returns>
-		public static " + textAlignmentClass.ClassName + @" TextCenter" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
+		public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextCenter" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 			=> textAlignmentControl.TextCenterHorizontal().TextCenterVertical();
 	}
 
@@ -206,8 +237,13 @@ namespace "+ textAlignmentClass.Namespace + @"
 		    /// </summary>
 		    /// <param name=""textAlignmentControl""></param>
 		    /// <returns>" + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.Start""/></returns>
-		    public static " + textAlignmentClass.ClassName + @" TextLeft" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
+		    public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextLeft" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 		    {
+				ArgumentNullException.ThrowIfNull(textAlignmentControl);
+
+				if (textAlignmentControl is not Microsoft.Maui.ITextAlignment)
+					throw new ArgumentException($""Element must implement {nameof(Microsoft.Maui.ITextAlignment)}"", nameof(textAlignmentControl));
+
 			    textAlignmentControl.HorizontalTextAlignment = TextAlignment.Start;
 			    return textAlignmentControl;
 		    }
@@ -217,8 +253,13 @@ namespace "+ textAlignmentClass.Namespace + @"
 		    /// </summary>
 		    /// <param name=""textAlignmentControl""></param>
 		    /// <returns>" + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.End""/></returns>
-		    public static " + textAlignmentClass.ClassName + @" TextRight" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
+		    public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextRight" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 		    {
+				ArgumentNullException.ThrowIfNull(textAlignmentControl);
+
+				if (textAlignmentControl is not Microsoft.Maui.ITextAlignment)
+					throw new ArgumentException($""Element must implement {nameof(Microsoft.Maui.ITextAlignment)}"", nameof(textAlignmentControl));
+
 			    textAlignmentControl.HorizontalTextAlignment = TextAlignment.End;
 			    return textAlignmentControl;
 		    }
@@ -239,8 +280,13 @@ namespace "+ textAlignmentClass.Namespace + @"
 		    /// </summary>
 		    /// <param name=""textAlignmentControl""></param>
 		    /// <returns>" + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.End""/></returns>
-		    public static " + textAlignmentClass.ClassName + @" TextLeft" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
+		    public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextLeft" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 		    {
+				ArgumentNullException.ThrowIfNull(textAlignmentControl);
+
+				if (textAlignmentControl is not Microsoft.Maui.ITextAlignment)
+					throw new ArgumentException($""Element must implement {nameof(Microsoft.Maui.ITextAlignment)}"", nameof(textAlignmentControl));
+
 			    textAlignmentControl.HorizontalTextAlignment = TextAlignment.End;
 			    return textAlignmentControl;
 		    }
@@ -250,8 +296,13 @@ namespace "+ textAlignmentClass.Namespace + @"
 		    /// </summary>
 		    /// <param name=""textAlignmentControl""></param>
 		    /// <returns>" + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.Start""/></returns>
-		    public static " + textAlignmentClass.ClassName + @" TextRight" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)
+		    public static " + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextRight" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
 		    {
+				ArgumentNullException.ThrowIfNull(textAlignmentControl);
+
+				if (textAlignmentControl is not Microsoft.Maui.ITextAlignment)
+					throw new ArgumentException($""Element must implement {nameof(Microsoft.Maui.ITextAlignment)}"", nameof(textAlignmentControl));
+
 			    textAlignmentControl.HorizontalTextAlignment = TextAlignment.Start;
 			    return textAlignmentControl;
 		    }
