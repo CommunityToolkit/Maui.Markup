@@ -50,9 +50,9 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 		var textAlignmentClassList = new List<(string ClassName, string ClassAcessModifier, string Namespace, string GenericArguments, string GenericConstraints)>();
 
 		// Collect Microsoft.Maui.Controls that Implement ITextAlignment
-		var mauiTextStyleImplementors = mauiControlsAssemblySymbolProvider.GlobalNamespace.GetNamedTypeSymbols().Where(x => x.AllInterfaces.Contains(textAlignmentSymbol, SymbolEqualityComparer.Default));
+		var mauiTextAlignmentImplementors = mauiControlsAssemblySymbolProvider.GlobalNamespace.GetNamedTypeSymbols().Where(x => x.AllInterfaces.Contains(textAlignmentSymbol, SymbolEqualityComparer.Default));
 
-		foreach (var namedTypeSymbol in mauiTextStyleImplementors)
+		foreach (var namedTypeSymbol in mauiTextAlignmentImplementors)
 		{
 			textAlignmentClassList.Add((namedTypeSymbol.Name, "public", namedTypeSymbol.ContainingNamespace.ToDisplayString(), namedTypeSymbol.TypeArguments.GetGenericTypeArgumentsString(), namedTypeSymbol.GetGenericTypeConstraintsAsString()));
 		}
@@ -68,9 +68,9 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 				continue;
 			}
 
-			// If the control inherits from a Maui control that implements ITextStyle, we don't need to generate a extension method for it.
-			// We just generate a method if the Control is a new implementation of ITextStyle and IAnimatable
-			var doesContainSymbolBaseType = mauiTextStyleImplementors.ContainsSymbolBaseType(declarationSymbol);
+			// If the control inherits from a Maui control that implements ITextAlignment, we don't need to generate a extension method for it.
+			// We just generate a method if the Control is a new implementation of ITextAlignment and IAnimatable
+			var doesContainSymbolBaseType = mauiTextAlignmentImplementors.ContainsSymbolBaseType(declarationSymbol);
 
 			if (!doesContainSymbolBaseType
 				&& declarationSymbol.AllInterfaces.Contains(textAlignmentSymbol, SymbolEqualityComparer.Default))
