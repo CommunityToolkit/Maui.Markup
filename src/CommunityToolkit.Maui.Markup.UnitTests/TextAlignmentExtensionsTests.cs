@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
-using CommunityToolkit.Maui.Markup.UnitTests.Base;
+﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
 using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
@@ -236,7 +234,6 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
 	using CommunityToolkit.Maui.Markup.RightToLeft;
-	using CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions;
 
 	[TestFixture]
 	class RightToLeftTextAlignmentExtensionsTests : BaseMarkupTestFixture<Picker>
