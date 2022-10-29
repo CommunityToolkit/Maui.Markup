@@ -751,26 +751,13 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		[TestCase(AppTheme.Unspecified)]
 		public void AppThemeColorBindingCorrectlySetsPropertyToChangeBasedOnApplicationsAppTheme(AppTheme appTheme)
 		{
-			try
-			{
-				var expectedColor = appTheme == AppTheme.Dark ? Colors.Orange : Colors.Purple;
-				new Application();
-				var label = new Label();
+			var label = new Label();
+			var expectedColor = appTheme == AppTheme.Dark ? Colors.Orange : Colors.Purple;
 
-				label.AppThemeColorBinding(Label.TextColorProperty, Colors.Purple, Colors.Orange);
-
-				var current = Application.Current;
-
-				ArgumentNullException.ThrowIfNull(current);
-
-				current.UserAppTheme = appTheme;
-
-				Assert.AreEqual(expectedColor, label.TextColor);
-			}
-			finally
-			{
-				Application.SetCurrentApplication(null!);
-			}
+			PerformAppThemeBasedTest(
+				appTheme,
+				() => label.AppThemeColorBinding(Label.TextColorProperty, Colors.Purple, Colors.Orange),
+				() => Assert.AreEqual(expectedColor, label.TextColor));
 		}
 
 		[TestCase(AppTheme.Light)]
@@ -778,13 +765,25 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		[TestCase(AppTheme.Unspecified)]
 		public void AppThemeBindingCorrectlySetsPropertyToChangeBasedOnApplicationsAppTheme(AppTheme appTheme)
 		{
+			var label = new Label();
+			var expectedText = appTheme == AppTheme.Dark ? "Dark" : "Light";
+
+			PerformAppThemeBasedTest(
+				appTheme,
+				() => label.AppThemeBinding(Label.TextProperty, "Light", "Dark"),
+				() => Assert.AreEqual(expectedText, label.Text));
+		}
+
+		static void PerformAppThemeBasedTest(
+			AppTheme appTheme,
+			Action setAppThemeValue,
+			Action assertResult)
+		{
 			try
 			{
-				var expectedText = appTheme == AppTheme.Dark ? "Dark" : "Light";
 				new Application();
-				var label = new Label();
 
-				label.AppThemeBinding(Label.TextProperty, "Light", "Dark");
+				setAppThemeValue.Invoke();
 
 				var current = Application.Current;
 
@@ -792,7 +791,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 				current.UserAppTheme = appTheme;
 
-				Assert.AreEqual(expectedText, label.Text);
+				assertResult.Invoke();
 			}
 			finally
 			{
