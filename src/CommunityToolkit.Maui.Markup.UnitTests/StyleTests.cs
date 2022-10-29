@@ -1,5 +1,6 @@
 ﻿using System;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
+using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using NUnit.Framework;
@@ -204,6 +205,35 @@ class StyleTests : BaseMarkupTestFixture
 			.Add(new LabelBehavior())
 			.Add(new Trigger(typeof(Label)))
 			.CanCascade(true);
+	}
+
+	[TestCase(AppTheme.Light)]
+	[TestCase(AppTheme.Dark)]
+	[TestCase(AppTheme.Unspecified)]
+	public void AddCorrectlySetsPropertyToChangeBasedOnApplicationsAppTheme(AppTheme appTheme)
+	{
+		try
+		{
+			new Application();
+
+			var label = new Label();
+			var style = new Style<Label>();
+			label.Style = style.Add(Label.TextColorProperty, Colors.Purple, Colors.Orange);
+
+			var expectedColor = appTheme == AppTheme.Dark ? Colors.Orange : Colors.Purple;
+
+			var current = Application.Current;
+
+			ArgumentNullException.ThrowIfNull(current);
+
+			current.UserAppTheme = appTheme;
+
+			Assert.AreEqual(expectedColor, label.TextColor);
+		}
+		finally
+		{
+			Application.SetCurrentApplication(null!);
+		}
 	}
 
 	class LabelBehavior : Behavior<Label> { }
