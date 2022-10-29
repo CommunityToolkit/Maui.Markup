@@ -1,5 +1,6 @@
 ﻿using System;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
+using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using NUnit.Framework;
@@ -204,6 +205,47 @@ class StyleTests : BaseMarkupTestFixture
 			.Add(new LabelBehavior())
 			.Add(new Trigger(typeof(Label)))
 			.CanCascade(true);
+	}
+
+	[TestCase(AppTheme.Light)]
+	[TestCase(AppTheme.Dark)]
+	[TestCase(AppTheme.Unspecified)]
+	public void AddCorrectlySetsPropertyToChangeBasedOnApplicationsAppTheme(AppTheme appTheme)
+	{
+		var label = new Label();
+		var style = new Style<Label>();
+		label.Style = style.Add(Label.TextColorProperty, Colors.Purple, Colors.Orange);
+
+		var expectedColor = appTheme == AppTheme.Dark ? Colors.Orange : Colors.Purple;
+
+		ApplicationTestHelpers.PerformAppThemeBasedTest(
+			appTheme,
+			() => label.AppThemeBinding(Label.TextProperty, "Light", "Dark"),
+			() => Assert.AreEqual(expectedColor, label.TextColor));
+	}
+
+	[TestCase(AppTheme.Light)]
+	[TestCase(AppTheme.Dark)]
+	[TestCase(AppTheme.Unspecified)]
+	public void AddCorrectlySetsPropertiesToChangeBasedOnApplicationsAppTheme(AppTheme appTheme)
+	{
+		var label = new Label();
+		var style = new Style<Label>();
+		label.Style = style.Add(
+				(Label.TextColorProperty, Colors.Purple, Colors.Orange),
+				(Label.TextProperty, "Light", "Dark"));
+
+		var expectedColor = appTheme == AppTheme.Dark ? Colors.Orange : Colors.Purple;
+		var expectedText = appTheme == AppTheme.Dark ? "Dark" : "Light";
+
+		ApplicationTestHelpers.PerformAppThemeBasedTest(
+			appTheme,
+			() => label.AppThemeBinding(Label.TextProperty, "Light", "Dark"),
+			() =>
+			{
+				Assert.AreEqual(expectedColor, label.TextColor);
+				Assert.AreEqual(expectedText, label.Text);
+			});
 	}
 
 	class LabelBehavior : Behavior<Label> { }
