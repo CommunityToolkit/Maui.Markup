@@ -87,7 +87,7 @@ public class Style<T> where T : BindableObject
 	}
 
 	/// <summary>
-	/// Add applies the supplied <paramref name="light"/> and <paramref name="dark"/> values in an <see cref="AppThemeBinding"/>.
+	/// Adds the supplied <paramref name="light"/> and <paramref name="dark"/> values in an <see cref="AppThemeBinding"/>.
 	/// </summary>
 	/// <param name="property">"The <see cref="BindableProperty"/> to style </param>
 	/// <param name="light">"The light value for the <see cref="BindableProperty"/> </param>
@@ -96,6 +96,21 @@ public class Style<T> where T : BindableObject
 	public Style<T> Add(BindableProperty property, object light, object dark)
 	{
 		MauiStyle.Setters.Add(property, new AppThemeBinding { Light = light, Dark = dark });
+		return this;
+	}
+
+	/// <summary>
+	/// Adds the supplied <paramref name="setters"/> in an <see cref="AppThemeBinding"/>.
+	/// </summary>
+	/// <param name="setters">A set of <see cref="BindableProperty"/>, and value for light and dark theme.</param>
+	/// <returns>Style with added setters</returns>
+	public Style<T> Add(params (BindableProperty Property, object Light, object Dark)[] setters)
+	{
+		foreach (var (property, light, dark) in setters)
+		{
+			Add(property, light, dark);
+		}
+
 		return this;
 	}
 
