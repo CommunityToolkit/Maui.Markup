@@ -125,8 +125,10 @@ namespace CommunityToolkit.Maui.Markup
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
-			if (textAlignmentControl is not Microsoft.Maui.ITextAlignment)
-				throw new ArgumentException($""Element must implement {nameof(Microsoft.Maui.ITextAlignment)}"", nameof(textAlignmentControl));
+			if (textAlignmentControl is not ITextAlignment)
+			{
+				throw new ArgumentException($""Element must implement {nameof(ITextAlignment)}"", nameof(textAlignmentControl));
+			}
 
 			textAlignmentControl.HorizontalTextAlignment = TextAlignment.Start;
 			return textAlignmentControl;
@@ -141,8 +143,10 @@ namespace CommunityToolkit.Maui.Markup
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
-			if (textAlignmentControl is not Microsoft.Maui.ITextAlignment)
-				throw new ArgumentException($""Element must implement {nameof(Microsoft.Maui.ITextAlignment)}"", nameof(textAlignmentControl));
+			if (textAlignmentControl is not ITextAlignment)
+			{
+				throw new ArgumentException($""Element must implement {nameof(ITextAlignment)}"", nameof(textAlignmentControl));
+			}
 
 			textAlignmentControl.HorizontalTextAlignment = TextAlignment.Center;
 			return textAlignmentControl;
@@ -157,8 +161,10 @@ namespace CommunityToolkit.Maui.Markup
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
-			if (textAlignmentControl is not Microsoft.Maui.ITextAlignment)
-				throw new ArgumentException($""Element must implement {nameof(Microsoft.Maui.ITextAlignment)}"", nameof(textAlignmentControl));
+			if (textAlignmentControl is not ITextAlignment)
+			{
+				throw new ArgumentException($""Element must implement {nameof(ITextAlignment)}"", nameof(textAlignmentControl));
+			}
 
 			textAlignmentControl.HorizontalTextAlignment = TextAlignment.End;
 			return textAlignmentControl;
@@ -173,8 +179,10 @@ namespace CommunityToolkit.Maui.Markup
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
-			if (textAlignmentControl is not Microsoft.Maui.ITextAlignment)
-				throw new ArgumentException($""Element must implement {nameof(Microsoft.Maui.ITextAlignment)}"", nameof(textAlignmentControl));
+			if (textAlignmentControl is not ITextAlignment)
+			{
+				throw new ArgumentException($""Element must implement {nameof(ITextAlignment)}"", nameof(textAlignmentControl));
+			}
 
 			textAlignmentControl.VerticalTextAlignment = TextAlignment.Start;
 			return textAlignmentControl;
@@ -189,8 +197,10 @@ namespace CommunityToolkit.Maui.Markup
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
-			if (textAlignmentControl is not Microsoft.Maui.ITextAlignment)
-				throw new ArgumentException($""Element must implement {nameof(Microsoft.Maui.ITextAlignment)}"", nameof(textAlignmentControl));
+			if (textAlignmentControl is not ITextAlignment)
+			{
+				throw new ArgumentException($""Element must implement {nameof(ITextAlignment)}"", nameof(textAlignmentControl));
+			}
 
 			textAlignmentControl.VerticalTextAlignment = TextAlignment.Center;
 			return textAlignmentControl;
@@ -205,8 +215,10 @@ namespace CommunityToolkit.Maui.Markup
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
-			if (textAlignmentControl is not Microsoft.Maui.ITextAlignment)
-				throw new ArgumentException($""Element must implement {nameof(Microsoft.Maui.ITextAlignment)}"", nameof(textAlignmentControl));
+			if (textAlignmentControl is not ITextAlignment)
+			{
+				throw new ArgumentException($""Element must implement {nameof(ITextAlignment)}"", nameof(textAlignmentControl));
+			}
 
 			textAlignmentControl.VerticalTextAlignment = TextAlignment.End;
 			return textAlignmentControl;
@@ -241,8 +253,10 @@ namespace CommunityToolkit.Maui.Markup
 		    {
 				ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
-				if (textAlignmentControl is not Microsoft.Maui.ITextAlignment)
-					throw new ArgumentException($""Element must implement {nameof(Microsoft.Maui.ITextAlignment)}"", nameof(textAlignmentControl));
+				if (textAlignmentControl is not ITextAlignment)
+				{
+					throw new ArgumentException($""Element must implement {nameof(ITextAlignment)}"", nameof(textAlignmentControl));
+				}
 
 			    textAlignmentControl.HorizontalTextAlignment = TextAlignment.Start;
 			    return textAlignmentControl;
@@ -257,8 +271,10 @@ namespace CommunityToolkit.Maui.Markup
 		    {
 				ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
-				if (textAlignmentControl is not Microsoft.Maui.ITextAlignment)
-					throw new ArgumentException($""Element must implement {nameof(Microsoft.Maui.ITextAlignment)}"", nameof(textAlignmentControl));
+				if (textAlignmentControl is not ITextAlignment)
+				{
+					throw new ArgumentException($""Element must implement {nameof(ITextAlignment)}"", nameof(textAlignmentControl));
+				}
 
 			    textAlignmentControl.HorizontalTextAlignment = TextAlignment.End;
 			    return textAlignmentControl;
@@ -284,8 +300,10 @@ namespace CommunityToolkit.Maui.Markup
 		    {
 				ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
-				if (textAlignmentControl is not Microsoft.Maui.ITextAlignment)
-					throw new ArgumentException($""Element must implement {nameof(Microsoft.Maui.ITextAlignment)}"", nameof(textAlignmentControl));
+				if (textAlignmentControl is not ITextAlignment)
+				{
+					throw new ArgumentException($""Element must implement {nameof(ITextAlignment)}"", nameof(textAlignmentControl));
+				}
 
 			    textAlignmentControl.HorizontalTextAlignment = TextAlignment.End;
 			    return textAlignmentControl;
@@ -300,8 +318,10 @@ namespace CommunityToolkit.Maui.Markup
 		    {
 				ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
-				if (textAlignmentControl is not Microsoft.Maui.ITextAlignment)
-					throw new ArgumentException($""Element must implement {nameof(Microsoft.Maui.ITextAlignment)}"", nameof(textAlignmentControl));
+				if (textAlignmentControl is not ITextAlignment)
+				{
+					throw new ArgumentException($""Element must implement {nameof(ITextAlignment)}"", nameof(textAlignmentControl));
+				}
 
 			    textAlignmentControl.HorizontalTextAlignment = TextAlignment.Start;
 			    return textAlignmentControl;
