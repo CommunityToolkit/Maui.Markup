@@ -80,19 +80,6 @@ jobs:
         displayName: Set NuGet Version to PR Version
         condition: and(succeeded(), eq(variables['build.reason'], 'PullRequest'))
 
-      - task: PublishTestResults@2
-        displayName: 'Publish Test Results'
-        inputs:
-          testResultsFormat: VSTest
-          testResultsFiles: '**/*.trx'
-          searchFolder: $(Agent.TempDirectory)
-      - task: PublishCodeCoverageResults@1
-        displayName: 'Publish Code Coverage Results'
-        inputs:
-          codeCoverageTool: 'Cobertura'
-          summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
-          failIfCoverageEmpty: true
-
       # build
       - task: VSBuild@1
         displayName: 'Build CommunityToolkit.Maui.Markup.SourceGenerators'
@@ -129,7 +116,21 @@ jobs:
           command: 'test'
           projects: '$(PathToCommunityToolkitUnitTestCsproj)'
           arguments: '--configuration Release --settings ".runsettings" --collect "XPlat code coverage" --logger trx --results-directory $(Agent.TempDirectory)'
-          publishTestResults: false    
+          publishTestResults: false  
+
+      - task: PublishTestResults@2
+        displayName: 'Publish Test Results'
+        inputs:
+          testResultsFormat: VSTest
+          testResultsFiles: '**/*.trx'
+          searchFolder: $(Agent.TempDirectory)
+          
+      - task: PublishCodeCoverageResults@1
+        displayName: 'Publish Code Coverage Results'
+        inputs:
+          codeCoverageTool: 'Cobertura'
+          summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
+          failIfCoverageEmpty: true 
 
       # pack
       - task: VSBuild@1
