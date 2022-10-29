@@ -10,6 +10,7 @@ variables:
   PathToCommunityToolkitCsproj: 'src/CommunityToolkit.Maui.Markup/CommunityToolkit.Maui.Markup.csproj'
   PathToCommunityToolkitSampleCsproj: 'samples/CommunityToolkit.Maui.Markup.Sample/CommunityToolkit.Maui.Markup.Sample.csproj'
   PathToCommunityToolkitUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.UnitTests/CommunityToolkit.Maui.Markup.UnitTests.csproj'
+  PathToCommunityToolkitSourceGeneratorsCsproj: 'src/CommunityToolkit.Maui.Markup.SourceGenerators/CommunityToolkit.Maui.Markup.SourceGenerators.csproj'
   XcodeVersion: '14.0.1'
   ShouldCheckDependencies: true
   
@@ -79,15 +80,6 @@ jobs:
         displayName: Set NuGet Version to PR Version
         condition: and(succeeded(), eq(variables['build.reason'], 'PullRequest'))
 
-      # test
-      - task: DotNetCoreCLI@2
-        displayName: 'Run Unit Tests'
-        inputs:
-          command: 'test'
-          projects: '$(PathToCommunityToolkitUnitTestCsproj)'
-          arguments: '--configuration Release --settings ".runsettings" --collect "XPlat code coverage" --logger trx --results-directory $(Agent.TempDirectory)'
-          publishTestResults: false    
-
       - task: PublishTestResults@2
         displayName: 'Publish Test Results'
         inputs:
@@ -101,13 +93,43 @@ jobs:
           summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
           failIfCoverageEmpty: true
 
-      # build sample
+      # build
       - task: VSBuild@1
-        displayName: 'Build Markup CommunityToolkit.Maui.Markup.Sample'
+        displayName: 'Build CommunityToolkit.Maui.Markup.SourceGenerators'
+        inputs:
+          solution: '$(PathToCommunityToolkitSourceGeneratorsCsproj)'
+          configuration: 'Release'
+          msbuildArgs: '/restore'
+
+      - task: VSBuild@1
+        displayName: 'Build CommunityToolkit.Maui.Markup'
+        inputs:
+          solution: '$(PathToCommunityToolkitCsproj)'
+          configuration: 'Release'
+          msbuildArgs: '/restore'
+
+      - task: VSBuild@1
+        displayName: 'Build CommunityToolkit.Maui.Markup.Sample'
         inputs:
           solution: '$(PathToCommunityToolkitSampleCsproj)'
           configuration: 'Release'
           msbuildArgs: '/restore'
+
+      - task: VSBuild@1
+        displayName: 'Build CommunityToolkit.Maui.Markup.UnitTests'
+        inputs:
+          solution: '$(PathToCommunityToolkitUnitTestCsproj)'
+          configuration: 'Release'
+          msbuildArgs: '/restore'
+
+      # test
+      - task: DotNetCoreCLI@2
+        displayName: 'Run Unit Tests'
+        inputs:
+          command: 'test'
+          projects: '$(PathToCommunityToolkitUnitTestCsproj)'
+          arguments: '--configuration Release --settings ".runsettings" --collect "XPlat code coverage" --logger trx --results-directory $(Agent.TempDirectory)'
+          publishTestResults: false    
 
       # pack
       - task: VSBuild@1
@@ -209,31 +231,45 @@ jobs:
         inputs:
           packageType: 'sdk'
           version: '$(NET_VERSION)'
+
       - task: CmdLine@2
         displayName: 'Install .NET MAUI workload'
-
         inputs:
           script: 'dotnet workload install maui'
+
       - task: CmdLine@2
         displayName: 'Restore NuGet Packages'
         inputs:
           script: 'dotnet restore $(PathToCommunityToolkitCsproj)'
+      
+      # build
+      - task: CmdLine@2
+        displayName: 'Build CommunityToolkit.Maui.Markup.SourceGenerators'
+        inputs:
+          script: dotnet build $(PathToCommunityToolkitSourceGeneratorsCsproj) -c Release
 
       - task: CmdLine@2
-        displayName: 'Build Community Toolkit'
+        displayName: 'Build CommunityToolkit.Maui.Markup'
         inputs:
           script: dotnet build $(PathToCommunityToolkitCsproj) -c Release
 
       - task: CmdLine@2
-        displayName: 'Build Community Toolkit Sample'
+        displayName: 'Build CommunityToolkit.Maui.Markup.Sample'
         inputs:
           script: dotnet build $(PathToCommunityToolkitSampleCsproj) -c Release
 
+      - task: CmdLine@2
+        displayName: 'Build CommunityToolkit.Maui.Markup.UnitTests'
+        inputs:
+          script: dotnet build $(PathToCommunityToolkitSampleCsproj) -c Release
+
+      # test
       - task: CmdLine@2
         displayName: 'Run Unit Tests'
         inputs:
           script: dotnet test $(PathToCommunityToolkitUnitTestCsproj) -c Release
 
+      # pack
       - task: CmdLine@2
         displayName: 'Pack CommunityToolkit NuGets'
         inputs:
