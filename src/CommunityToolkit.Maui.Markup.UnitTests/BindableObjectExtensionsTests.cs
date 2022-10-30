@@ -751,13 +751,12 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		[TestCase(AppTheme.Unspecified)]
 		public void AppThemeColorBindingCorrectlySetsPropertyToChangeBasedOnApplicationsAppTheme(AppTheme appTheme)
 		{
-			var label = new Label();
 			var expectedColor = appTheme == AppTheme.Dark ? Colors.Orange : Colors.Purple;
 
 			ApplicationTestHelpers.PerformAppThemeBasedTest(
 				appTheme,
-				() => label.AppThemeColorBinding(Label.TextColorProperty, Colors.Purple, Colors.Orange),
-				() => Assert.AreEqual(expectedColor, label.TextColor));
+				() => new Label().AppThemeColorBinding(Label.TextColorProperty, Colors.Purple, Colors.Orange),
+				(label) => Assert.AreEqual(expectedColor, label.TextColor));
 		}
 
 		[TestCase(AppTheme.Light)]
@@ -765,13 +764,12 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		[TestCase(AppTheme.Unspecified)]
 		public void AppThemeBindingCorrectlySetsPropertyToChangeBasedOnApplicationsAppTheme(AppTheme appTheme)
 		{
-			var label = new Label();
 			var expectedText = appTheme == AppTheme.Dark ? "Dark" : "Light";
 
 			ApplicationTestHelpers.PerformAppThemeBasedTest(
 				appTheme,
-				() => label.AppThemeBinding(Label.TextProperty, "Light", "Dark"),
-				() => Assert.AreEqual(expectedText, label.Text));
+				() => new Label().AppThemeBinding(Label.TextProperty, "Light", "Dark"),
+				(label) => Assert.AreEqual(expectedText, label.Text));
 		}
 
 		class ViewModel

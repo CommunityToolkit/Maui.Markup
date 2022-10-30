@@ -12,16 +12,16 @@ public static class ApplicationTestHelpers
 	/// <param name="appTheme">The <see cref="AppTheme"/> value to set the application to.</param>
 	/// <param name="setAppThemeValue">The action to perform in setting the value for the themes. Basically the thing that will be tested.</param>
 	/// <param name="assertResult">The action to perform when asserting the result of the <see cref="AppTheme"/> change. Basically the proof of the test.</param>
-	public static void PerformAppThemeBasedTest(
+	public static void PerformAppThemeBasedTest<TBindable>(
 		AppTheme appTheme,
-		Action setAppThemeValue,
-		Action assertResult)
+		Func<TBindable> setAppThemeValue,
+		Action<TBindable> assertResult)
 	{
 		try
 		{
 			new Application();
 
-			setAppThemeValue.Invoke();
+			var bindable = setAppThemeValue.Invoke();
 
 			var current = Application.Current;
 
@@ -29,7 +29,7 @@ public static class ApplicationTestHelpers
 
 			current.UserAppTheme = appTheme;
 
-			assertResult.Invoke();
+			assertResult.Invoke(bindable);
 		}
 		finally
 		{
