@@ -20,8 +20,8 @@ sealed class SettingsPage : BaseContentPage<SettingsViewModel>
 					.DynamicResource(Label.TextColorProperty, nameof(BaseTheme.PrimaryTextColor))
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
 					.LayoutBounds(0, 0, 1, 40)
-					//.TextCenterHorizontal()
-					//.TextBottom()
+					.TextCenterHorizontal()
+					.TextBottom()
 					.Assign(out Label topNewsStoriesToFetchLabel),
 
 				new Entry { Keyboard = Keyboard.Numeric, BackgroundColor = Colors.White }
@@ -37,7 +37,7 @@ sealed class SettingsPage : BaseContentPage<SettingsViewModel>
 						InvalidStyle = (Style?)Application.Current?.Resources[nameof(BaseTheme.InvalidEntryNumericValidationBehaviorStyle)],
 					})
 					.Bind(Entry.TextProperty, nameof(SettingsViewModel.NumberOfTopStoriesToFetch))
-					//.TextCenter()
+					.TextCenter()
 					.SemanticDescription(topNewsStoriesToFetchLabel.Text),
 
 				new Label()
@@ -49,7 +49,7 @@ sealed class SettingsPage : BaseContentPage<SettingsViewModel>
 						mode: BindingMode.OneTime)
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
 					.LayoutBounds(0, 90, 1, 40)
-					//.TextCenter().DynamicResource(Label.TextColorProperty, nameof(BaseTheme.PrimaryTextColor)).Font(size: 12, italic: true)
+					.TextCenter().DynamicResource(Label.TextColorProperty, nameof(BaseTheme.PrimaryTextColor)).Font(size: 12, italic: true)
 					.SemanticHint($"The minimum and maximum possible values for the {topNewsStoriesToFetchLabel.Text} field above.")
 			}
 		};
