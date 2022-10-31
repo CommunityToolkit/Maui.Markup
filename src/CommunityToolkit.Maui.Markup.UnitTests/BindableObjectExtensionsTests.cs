@@ -764,11 +764,14 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		[TestCase(AppTheme.Unspecified)]
 		public void AppThemeBindingCorrectlySetsPropertyToChangeBasedOnApplicationsAppTheme(AppTheme appTheme)
 		{
-			var expectedText = appTheme == AppTheme.Dark ? "Dark" : "Light";
+			const string dark = nameof(AppTheme.Dark);
+			const string light = nameof(AppTheme.Light);
+
+			var expectedText = appTheme == AppTheme.Dark ? dark : light;
 
 			ApplicationTestHelpers.PerformAppThemeBasedTest(
 				appTheme,
-				() => new Label().AppThemeBinding(Label.TextProperty, "Light", "Dark"),
+				() => new Label().AppThemeBinding(Label.TextProperty, light, dark),
 				(label) => Assert.AreEqual(expectedText, label.Text));
 		}
 

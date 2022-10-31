@@ -190,12 +190,7 @@ class StyleTests : BaseMarkupTestFixture
 	[Test]
 	public void Fluent()
 	{
-		Style basedOnStyle = new Style<Label>();
-
-		if (basedOnStyle is null)
-		{
-			throw new NullReferenceException();
-		}
+		var basedOnStyle = new Style<Label>();
 
 		var style =
 			new Style<Label>()
@@ -205,6 +200,12 @@ class StyleTests : BaseMarkupTestFixture
 			.Add(new LabelBehavior())
 			.Add(new Trigger(typeof(Label)))
 			.CanCascade(true);
+
+		Assert.IsTrue(style.MauiStyle.CanCascade);
+		Assert.AreEqual(Colors.Red, style.MauiStyle.Setters[0].Value);
+		Assert.IsInstanceOf<LabelBehavior>(style.MauiStyle.Behaviors[0]);
+		Assert.IsInstanceOf<Trigger>(style.MauiStyle.Triggers[0]);
+		Assert.IsTrue(style.MauiStyle.CanBeAppliedTo(typeof(Label)));
 	}
 
 	[TestCase(AppTheme.Light)]
@@ -216,14 +217,9 @@ class StyleTests : BaseMarkupTestFixture
 
 		ApplicationTestHelpers.PerformAppThemeBasedTest(
 			appTheme,
-			() =>
-			{
-				var label = new Label();
-				var style = new Style<Label>();
-				label.Style = style.Add(Label.TextColorProperty, Colors.Purple, Colors.Orange);
-
-				return label.AppThemeBinding(Label.TextProperty, "Light", "Dark");
-			},
+			() => new Label()
+					.Style(new Style<Label>().Add(Label.TextColorProperty, Colors.Purple, Colors.Orange))
+					.AppThemeBinding(Label.TextProperty, nameof(AppTheme.Light), nameof(AppTheme.Dark)),
 			(label) => Assert.AreEqual(expectedColor, label.TextColor));
 	}
 
@@ -237,16 +233,10 @@ class StyleTests : BaseMarkupTestFixture
 
 		ApplicationTestHelpers.PerformAppThemeBasedTest(
 			appTheme,
-			() =>
-			{
-				var label = new Label();
-				var style = new Style<Label>();
-				label.Style = style.Add(
-						(Label.TextColorProperty, Colors.Purple, Colors.Orange),
-						(Label.TextProperty, "Light", "Dark"));
-
-				return label.AppThemeBinding(Label.TextProperty, "Light", "Dark");
-			},
+			() => new Label()
+					.Style(new Style<Label>().Add((Label.TextColorProperty, Colors.Purple, Colors.Orange),
+													(Label.TextProperty, "Light", "Dark")))
+					.AppThemeBinding(Label.TextProperty, nameof(AppTheme.Light), nameof(AppTheme.Dark)),
 			(label) =>
 			{
 				Assert.AreEqual(expectedColor, label.TextColor);
