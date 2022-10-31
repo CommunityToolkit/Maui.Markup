@@ -15,13 +15,13 @@ public static class ApplicationTestHelpers
 	public static void PerformAppThemeBasedTest<TBindable>(
 		AppTheme appTheme,
 		Func<TBindable> setAppThemeValue,
-		Action<TBindable> assertResult)
+		Action<TBindable> assertResult) where TBindable : BindableObject
 	{
 		try
 		{
-			new Application();
+			_ = new Application();
 
-			var bindable = setAppThemeValue.Invoke();
+			var bindable = setAppThemeValue();
 
 			var current = Application.Current;
 
@@ -33,7 +33,7 @@ public static class ApplicationTestHelpers
 		}
 		finally
 		{
-			Application.SetCurrentApplication(null!);
+			Application.ClearCurrent();
 		}
 	}
 }
