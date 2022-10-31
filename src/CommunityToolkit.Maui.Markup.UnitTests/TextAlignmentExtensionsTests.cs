@@ -3,6 +3,7 @@ using CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using NUnit.Framework;
+using Unique.Namespace.To.Test.Interface;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
@@ -311,11 +312,6 @@ namespace CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions
 
 	}
 
-	public interface ISomeInterface
-	{
-
-	}
-
 	public class ClassConstraintWithInterface : ISomeInterface
 	{
 
@@ -377,5 +373,13 @@ namespace CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions
 		public TextAlignment HorizontalTextAlignment { get; set; }
 
 		public TextAlignment VerticalTextAlignment { get; set; }
+	}
+}
+
+namespace Unique.Namespace.To.Test.Interface
+{
+	public interface ISomeInterface
+	{
+
 	}
 }
