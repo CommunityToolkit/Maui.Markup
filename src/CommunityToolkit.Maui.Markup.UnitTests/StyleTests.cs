@@ -211,14 +211,14 @@ class StyleTests : BaseMarkupTestFixture
 	[TestCase(AppTheme.Light)]
 	[TestCase(AppTheme.Dark)]
 	[TestCase(AppTheme.Unspecified)]
-	public void AddCorrectlySetsPropertyToChangeBasedOnApplicationsAppTheme(AppTheme appTheme)
+	public void AddAppThemeBindingCorrectlySetsPropertyToChangeBasedOnApplicationsAppTheme(AppTheme appTheme)
 	{
 		var expectedColor = appTheme == AppTheme.Dark ? Colors.Orange : Colors.Purple;
 
 		ApplicationTestHelpers.PerformAppThemeBasedTest(
 			appTheme,
 			() => new Label()
-					.Style(new Style<Label>().Add(Label.TextColorProperty, Colors.Purple, Colors.Orange))
+					.Style(new Style<Label>().AddAppThemeBinding(Label.TextColorProperty, Colors.Purple, Colors.Orange))
 					.AppThemeBinding(Label.TextProperty, nameof(AppTheme.Light), nameof(AppTheme.Dark)),
 			(label) => Assert.AreEqual(expectedColor, label.TextColor));
 	}
@@ -226,7 +226,7 @@ class StyleTests : BaseMarkupTestFixture
 	[TestCase(AppTheme.Light)]
 	[TestCase(AppTheme.Dark)]
 	[TestCase(AppTheme.Unspecified)]
-	public void AddCorrectlySetsPropertiesToChangeBasedOnApplicationsAppTheme(AppTheme appTheme)
+	public void AddAppThemeBindingsCorrectlySetsPropertiesToChangeBasedOnApplicationsAppTheme(AppTheme appTheme)
 	{
 		var expectedColor = appTheme == AppTheme.Dark ? Colors.Orange : Colors.Purple;
 		var expectedText = appTheme == AppTheme.Dark ? "Dark" : "Light";
@@ -234,7 +234,7 @@ class StyleTests : BaseMarkupTestFixture
 		ApplicationTestHelpers.PerformAppThemeBasedTest(
 			appTheme,
 			() => new Label()
-					.Style(new Style<Label>().Add((Label.TextColorProperty, Colors.Purple, Colors.Orange),
+					.Style(new Style<Label>().AddAppThemeBindings((Label.TextColorProperty, Colors.Purple, Colors.Orange),
 													(Label.TextProperty, "Light", "Dark")))
 					.AppThemeBinding(Label.TextProperty, nameof(AppTheme.Light), nameof(AppTheme.Dark)),
 			(label) =>
