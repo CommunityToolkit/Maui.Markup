@@ -108,7 +108,7 @@ public class Style<T> where T : BindableObject
 	{
 		foreach (var (property, light, dark) in setters)
 		{
-			Add(property, light, dark);
+			AddAppThemeBinding(property, light, dark);
 		}
 
 		return this;
