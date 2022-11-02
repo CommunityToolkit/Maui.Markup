@@ -1,5 +1,6 @@
 ﻿using System;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
+using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using NUnit.Framework;
@@ -189,12 +190,7 @@ class StyleTests : BaseMarkupTestFixture
 	[Test]
 	public void Fluent()
 	{
-		Style basedOnStyle = new Style<Label>();
-
-		if (basedOnStyle is null)
-		{
-			throw new NullReferenceException();
-		}
+		var basedOnStyle = new Style<Label>();
 
 		var style =
 			new Style<Label>()
@@ -204,6 +200,48 @@ class StyleTests : BaseMarkupTestFixture
 			.Add(new LabelBehavior())
 			.Add(new Trigger(typeof(Label)))
 			.CanCascade(true);
+
+		Assert.IsTrue(style.MauiStyle.CanCascade);
+		Assert.AreEqual(Colors.Red, style.MauiStyle.Setters[0].Value);
+		Assert.IsInstanceOf<LabelBehavior>(style.MauiStyle.Behaviors[0]);
+		Assert.IsInstanceOf<Trigger>(style.MauiStyle.Triggers[0]);
+		Assert.IsTrue(style.MauiStyle.CanBeAppliedTo(typeof(Label)));
+	}
+
+	[TestCase(AppTheme.Light)]
+	[TestCase(AppTheme.Dark)]
+	[TestCase(AppTheme.Unspecified)]
+	public void AddAppThemeBindingCorrectlySetsPropertyToChangeBasedOnApplicationsAppTheme(AppTheme appTheme)
+	{
+		var expectedColor = appTheme == AppTheme.Dark ? Colors.Orange : Colors.Purple;
+
+		ApplicationTestHelpers.PerformAppThemeBasedTest(
+			appTheme,
+			() => new Label()
+					.Style(new Style<Label>().AddAppThemeBinding(Label.TextColorProperty, Colors.Purple, Colors.Orange))
+					.AppThemeBinding(Label.TextProperty, nameof(AppTheme.Light), nameof(AppTheme.Dark)),
+			(label) => Assert.AreEqual(expectedColor, label.TextColor));
+	}
+
+	[TestCase(AppTheme.Light)]
+	[TestCase(AppTheme.Dark)]
+	[TestCase(AppTheme.Unspecified)]
+	public void AddAppThemeBindingsCorrectlySetsPropertiesToChangeBasedOnApplicationsAppTheme(AppTheme appTheme)
+	{
+		var expectedColor = appTheme == AppTheme.Dark ? Colors.Orange : Colors.Purple;
+		var expectedText = appTheme == AppTheme.Dark ? nameof(AppTheme.Dark) : nameof(AppTheme.Light);
+
+		ApplicationTestHelpers.PerformAppThemeBasedTest(
+			appTheme,
+			() => new Label()
+					.Style(new Style<Label>().AddAppThemeBindings((Label.TextColorProperty, Colors.Purple, Colors.Orange),
+													(Label.TextProperty, nameof(AppTheme.Light), nameof(AppTheme.Dark))))
+					.AppThemeBinding(Label.TextProperty, nameof(AppTheme.Light), nameof(AppTheme.Dark)),
+			(label) =>
+			{
+				Assert.AreEqual(expectedColor, label.TextColor);
+				Assert.AreEqual(expectedText, label.Text);
+			});
 	}
 
 	class LabelBehavior : Behavior<Label> { }

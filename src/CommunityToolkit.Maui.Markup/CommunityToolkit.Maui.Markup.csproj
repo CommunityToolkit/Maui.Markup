@@ -45,6 +45,6 @@
 	</ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\CommunityToolkit.Maui.Markup.SourceGenerators\CommunityToolkit.Maui.Markup.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+		<None Include="..\CommunityToolkit.Maui.Markup.SourceGenerators\bin\$(Configuration)\netstandard2.0\CommunityToolkit.Maui.Markup.SourceGenerators.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>
 </Project>
