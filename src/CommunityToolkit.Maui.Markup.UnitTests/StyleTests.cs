@@ -229,13 +229,13 @@ class StyleTests : BaseMarkupTestFixture
 	public void AddAppThemeBindingsCorrectlySetsPropertiesToChangeBasedOnApplicationsAppTheme(AppTheme appTheme)
 	{
 		var expectedColor = appTheme == AppTheme.Dark ? Colors.Orange : Colors.Purple;
-		var expectedText = appTheme == AppTheme.Dark ? "Dark" : "Light";
+		var expectedText = appTheme == AppTheme.Dark ? nameof(AppTheme.Dark) : nameof(AppTheme.Light);
 
 		ApplicationTestHelpers.PerformAppThemeBasedTest(
 			appTheme,
 			() => new Label()
 					.Style(new Style<Label>().AddAppThemeBindings((Label.TextColorProperty, Colors.Purple, Colors.Orange),
-													(Label.TextProperty, "Light", "Dark")))
+													(Label.TextProperty, nameof(AppTheme.Light), nameof(AppTheme.Dark))))
 					.AppThemeBinding(Label.TextProperty, nameof(AppTheme.Light), nameof(AppTheme.Dark)),
 			(label) =>
 			{
