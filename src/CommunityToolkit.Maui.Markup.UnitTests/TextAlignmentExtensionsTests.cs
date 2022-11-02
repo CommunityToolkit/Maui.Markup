@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
+using CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using NUnit.Framework;
+using Unique.Namespace.To.Test.Interface;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
@@ -40,6 +42,97 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 					(TextAlignmentElement.VerticalTextAlignmentProperty, TextAlignment.Start, TextAlignment.Center));
 
 		[Test]
+		public void PublicTextAlignmentView()
+		{
+			Assert.IsInstanceOf<PublicTextAlignmentView>(
+				new PublicTextAlignmentView()
+				.TextStart()
+				.TextCenterHorizontal()
+				.TextEnd()
+				.TextTop()
+				.TextCenterVertical()
+				.TextBottom()
+				.TextCenter());
+		}
+
+		[Test]
+		public void InternalTextAlignmentView()
+		{
+			Assert.IsInstanceOf<InternalTextAlignmentView>(
+				new InternalTextAlignmentView()
+				.TextStart()
+				.TextCenterHorizontal()
+				.TextEnd()
+				.TextTop()
+				.TextCenterVertical()
+				.TextBottom()
+				.TextCenter());
+		}
+
+		[Test]
+		public void Extensions_For_Generic_Class()
+		{
+			var textAlignmentView = new GenericPicker<
+				ClassConstraintWithInterface,
+				ClassConstraint,
+				StructConstraint,
+				ClassConstraintWithInterface,
+				string,
+				int,
+				bool,
+				ClassConstraintWithInterface?,
+				ClassConstraint[],
+				ClassConstraintWithInterface,
+				RecordClassContstraint,
+				RecordClassContstraint[],
+				RecordStructContstraint>
+			{
+				HorizontalTextAlignment = TextAlignment.Center
+			};
+
+			Assert.AreEqual(TextAlignment.Center, textAlignmentView.HorizontalTextAlignment);
+
+			textAlignmentView.TextEnd();
+
+			Assert.AreEqual(TextAlignment.End, textAlignmentView.HorizontalTextAlignment);
+		}
+
+		[Test]
+		public void GenericPickerShouldUseThePickerExtension()
+		{
+			var genericPicker = new MyGenericPicker<string>();
+
+			Assert.AreEqual(TextAlignment.Start, genericPicker.HorizontalTextAlignment);
+
+			genericPicker.TextEnd();
+
+			Assert.AreEqual(TextAlignment.End, genericPicker.HorizontalTextAlignment);
+		}
+
+		[Test]
+		public void MoreGenericPickerShouldUseThePickerExtension()
+		{
+			var genericPicker = new MoreGenericPicker<string>();
+
+			Assert.AreEqual(TextAlignment.Start, genericPicker.HorizontalTextAlignment);
+
+			genericPicker.TextEnd();
+
+			Assert.AreEqual(TextAlignment.End, genericPicker.HorizontalTextAlignment);
+		}
+
+		[Test]
+		public void BrandNewControlShouldHaveHisOwnExtensionMethod()
+		{
+			var brandNewControl = new BrandNewControl();
+			Assert.AreEqual(TextAlignment.Start, brandNewControl.HorizontalTextAlignment);
+
+			brandNewControl.TextEnd();
+
+			Assert.AreEqual(TextAlignment.End, brandNewControl.HorizontalTextAlignment);
+		}
+
+		[Test]
 		public void SupportDerivedFromBindable()
 		{
 			Assert.IsInstanceOf<DerivedFromSearchBar>(
@@ -56,7 +149,28 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				.Italic());
 		}
 
+		[Test]
+		public void SupportCustomTextAlignment()
+		{
+			Assert.IsInstanceOf<CustomTextAlignmentControl>(
+				new CustomTextAlignmentControl()
+				.TextStart()
+				.TextCenterHorizontal()
+				.TextEnd()
+				.TextTop()
+				.TextCenterVertical()
+				.TextBottom()
+				.TextCenter());
+		}
+
 		class DerivedFromSearchBar : SearchBar { }
+	}
+
+	class CustomTextAlignmentControl : ITextAlignment
+	{
+		public TextAlignment HorizontalTextAlignment { get; set; } = TextAlignment.Center;
+
+		public TextAlignment VerticalTextAlignment { get; set; } = TextAlignment.Center;
 	}
 }
 
@@ -75,6 +189,46 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		[Test]
 		public void TextRight()
 			=> TestPropertiesSet(l => l.TextRight(), (TextAlignmentElement.HorizontalTextAlignmentProperty, TextAlignment.End));
+
+		[Test]
+		public void SupportDerivedFromBindable()
+		{
+			Assert.IsInstanceOf<DerivedFromEntry>(
+				new DerivedFromEntry()
+				.TextStart()
+				.TextCenterHorizontal()
+				.TextEnd()
+				.TextTop()
+				.TextCenterVertical()
+				.TextBottom()
+				.TextCenter()
+				.FontSize(8.0)
+				.Bold()
+				.Italic());
+		}
+
+		[Test]
+		public void SupportCustomTextAlignment()
+		{
+			Assert.IsInstanceOf<LeftToRightCustomTextAlignmentControl>(
+				new LeftToRightCustomTextAlignmentControl()
+				.TextStart()
+				.TextCenterHorizontal()
+				.TextEnd()
+				.TextTop()
+				.TextCenterVertical()
+				.TextBottom()
+				.TextCenter());
+		}
+
+		class DerivedFromEntry : Entry { }
+	}
+
+	class LeftToRightCustomTextAlignmentControl : ITextAlignment
+	{
+		public TextAlignment HorizontalTextAlignment { get; set; } = TextAlignment.Center;
+
+		public TextAlignment VerticalTextAlignment { get; set; } = TextAlignment.Center;
 	}
 }
 
@@ -93,5 +247,139 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		[Test]
 		public void TextRight()
 			=> TestPropertiesSet(l => l.TextRight(), (TextAlignmentElement.HorizontalTextAlignmentProperty, TextAlignment.Start));
+
+		[Test]
+		public void SupportDerivedFromBindable()
+		{
+			Assert.IsInstanceOf<DerivedFromEditor>(
+				new DerivedFromEditor()
+				.TextStart()
+				.TextCenterHorizontal()
+				.TextEnd()
+				.TextTop()
+				.TextCenterVertical()
+				.TextBottom()
+				.TextCenter()
+				.FontSize(8.0)
+				.Bold()
+				.Italic());
+		}
+
+		[Test]
+		public void SupportCustomTextAlignment()
+		{
+			Assert.IsInstanceOf<RightToLeftCustomTextAlignmentControl>(
+				new RightToLeftCustomTextAlignmentControl()
+				.TextStart()
+				.TextCenterHorizontal()
+				.TextEnd()
+				.TextTop()
+				.TextCenterVertical()
+				.TextBottom()
+				.TextCenter());
+		}
+
+		class DerivedFromEditor : Editor { }
+	}
+
+	class RightToLeftCustomTextAlignmentControl : ITextAlignment
+	{
+		public TextAlignment HorizontalTextAlignment { get; set; } = TextAlignment.Center;
+
+		public TextAlignment VerticalTextAlignment { get; set; } = TextAlignment.Center;
+	}
+}
+
+namespace CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions
+{
+	public class PublicTextAlignmentView : View, ICustomTextAlignment
+	{
+		public TextAlignment HorizontalTextAlignment { get; set; }
+
+		public TextAlignment VerticalTextAlignment { get; set; }
+	}
+
+	class InternalTextAlignmentView : View, ICustomTextAlignment
+	{
+		public TextAlignment HorizontalTextAlignment { get; set; }
+
+		public TextAlignment VerticalTextAlignment { get; set; }
+	}
+
+	// Ensures custom ITextAlignment interfaces are supported
+	interface ICustomTextAlignment : ITextAlignment
+	{
+
+	}
+
+	public class ClassConstraintWithInterface : ISomeInterface
+	{
+
+	}
+
+	public class ClassConstraint
+	{
+
+	}
+
+	class MyGenericPicker<T> : Picker
+	{
+
+	}
+
+	public record RecordClassContstraint
+	{
+
+	}
+
+
+	public readonly record struct RecordStructContstraint
+	{
+
+	}
+
+	class MoreGenericPicker<T> : MyGenericPicker<T>
+	{
+
+	}
+
+	public struct StructConstraint
+	{
+
+	}
+
+	public class GenericPicker<TA, TB, TC, TD, TE, TF, TG, TH, TI, TJ, TK, TL, TM> : View, ITextAlignment
+		where TA : notnull, ISomeInterface
+		where TB : class
+		where TC : struct
+		where TD : class, ISomeInterface, new()
+		//TE has no constraints 
+		where TF : notnull
+		where TG : unmanaged
+		where TH : ISomeInterface?
+		where TI : class?
+		where TJ : ISomeInterface
+		where TK : new()
+		where TL : class
+		where TM : struct
+	{
+		public TextAlignment HorizontalTextAlignment { get; set; }
+
+		public TextAlignment VerticalTextAlignment { get; set; }
+	}
+
+	class BrandNewControl : View, ITextAlignment
+	{
+		public TextAlignment HorizontalTextAlignment { get; set; }
+
+		public TextAlignment VerticalTextAlignment { get; set; }
+	}
+}
+
+namespace Unique.Namespace.To.Test.Interface
+{
+	public interface ISomeInterface
+	{
+
 	}
 }
