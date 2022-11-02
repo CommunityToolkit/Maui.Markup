@@ -17,8 +17,6 @@ sealed class NewsPage : BaseContentPage<NewsViewModel>
 
 		Content = new RefreshView
 		{
-			RefreshColor = Colors.Black,
-
 			Content = new CollectionView
 			{
 				BackgroundColor = Colors.Transparent,
@@ -31,6 +29,7 @@ sealed class NewsPage : BaseContentPage<NewsViewModel>
 
 		}.Bind(RefreshView.IsRefreshingProperty, nameof(NewsViewModel.IsListRefreshing))
 		 .Bind(RefreshView.CommandProperty, nameof(NewsViewModel.PullToRefreshCommand))
+		 .AppThemeColorBinding(RefreshView.RefreshColorProperty, Colors.Black, Colors.LightGray)
 		 .Assign(out refreshView);
 	}
 

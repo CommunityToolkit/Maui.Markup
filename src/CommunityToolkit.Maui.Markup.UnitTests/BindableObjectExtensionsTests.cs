@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows.Input;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using CommunityToolkit.Maui.Markup.UnitTests.BindableObjectViews;
+using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using NUnit.Framework;
@@ -743,6 +744,35 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				.Assign(out DerivedFromLabel assignDerivedFromLabel));
 
 			Assert.IsInstanceOf<DerivedFromTextCell>(new DerivedFromTextCell().BindCommand(nameof(viewModel.Command)));
+		}
+
+		[TestCase(AppTheme.Light)]
+		[TestCase(AppTheme.Dark)]
+		[TestCase(AppTheme.Unspecified)]
+		public void AppThemeColorBindingCorrectlySetsPropertyToChangeBasedOnApplicationsAppTheme(AppTheme appTheme)
+		{
+			var expectedColor = appTheme == AppTheme.Dark ? Colors.Orange : Colors.Purple;
+
+			ApplicationTestHelpers.PerformAppThemeBasedTest(
+				appTheme,
+				() => new Label().AppThemeColorBinding(Label.TextColorProperty, Colors.Purple, Colors.Orange),
+				(label) => Assert.AreEqual(expectedColor, label.TextColor));
+		}
+
+		[TestCase(AppTheme.Light)]
+		[TestCase(AppTheme.Dark)]
+		[TestCase(AppTheme.Unspecified)]
+		public void AppThemeBindingCorrectlySetsPropertyToChangeBasedOnApplicationsAppTheme(AppTheme appTheme)
+		{
+			const string dark = nameof(AppTheme.Dark);
+			const string light = nameof(AppTheme.Light);
+
+			var expectedText = appTheme == AppTheme.Dark ? dark : light;
+
+			ApplicationTestHelpers.PerformAppThemeBasedTest(
+				appTheme,
+				() => new Label().AppThemeBinding(Label.TextProperty, light, dark),
+				(label) => Assert.AreEqual(expectedText, label.Text));
 		}
 
 		class ViewModel
