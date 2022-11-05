@@ -475,7 +475,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 					ArgumentNullException.ThrowIfNull(text);
 					ArgumentNullException.ThrowIfNull(repeat);
 
-					return text.Substring(0, text.Length / repeat.Value).Trim('\'');
+					return text[..(text.Length / repeat.Value)].Trim('\'');
 				},
 				2
 			);
@@ -693,20 +693,6 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		}
 
 		[Test]
-		public void Assign()
-		{
-			var createdLabel = new Label().Assign(out Label assignLabel);
-			Assert.That(ReferenceEquals(createdLabel, assignLabel));
-		}
-
-		[Test]
-		public void Invoke()
-		{
-			var createdLabel = new Label().Invoke(null).Invoke(l => l.Text = nameof(Invoke));
-			Assert.That(createdLabel.Text, Is.EqualTo(nameof(Invoke)));
-		}
-
-		[Test]
 		public void SupportDerivedElements()
 		{
 			Assert.IsInstanceOf<DerivedFromLabel>(
@@ -744,6 +730,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				.Assign(out DerivedFromLabel assignDerivedFromLabel));
 
 			Assert.IsInstanceOf<DerivedFromTextCell>(new DerivedFromTextCell().BindCommand(nameof(viewModel.Command)));
+			Assert.IsInstanceOf<DerivedFromLabel>(assignDerivedFromLabel);
 		}
 
 		[TestCase(AppTheme.Light)]
