@@ -9,10 +9,17 @@ namespace CommunityToolkit.Maui.Markup.UnitTests;
 class ObjectExtensionsTests : BaseMarkupTestFixture
 {
 	[Test]
-	public void Assign()
+	public void AssignLabel()
 	{
-		var createdLabel = new Label().Assign(out Label assignLabel);
-		Assert.That(ReferenceEquals(createdLabel, assignLabel));
+		var createdLabel = new Label().Assign(out Label assignedLabel);
+		Assert.That(ReferenceEquals(createdLabel, assignedLabel));
+	}
+
+	[Test]
+	public void AssignString()
+	{
+		var createdString = "Hello World".Assign(out string assignedString);
+		Assert.That(ReferenceEquals(createdString, assignedString));
 	}
 
 	[Test]

@@ -14,7 +14,7 @@ public static class ObjectExtensions
 	/// <param name="variable"></param>
 	/// <returns>TBindable</returns>
 	public static TBindable Assign<TBindable, TVariable>(this TBindable bindable, out TVariable variable)
-		where TBindable : BindableObject, TVariable
+		where TBindable : TVariable
 	{
 		variable = bindable;
 		return bindable;
