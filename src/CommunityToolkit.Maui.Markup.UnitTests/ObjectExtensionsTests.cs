@@ -18,15 +18,25 @@ class ObjectExtensionsTests : BaseMarkupTestFixture
 	[Test]
 	public void AssignString()
 	{
-		var createdString = "Hello World".Assign(out string assignedString);
+		string? testString = null;
+		const string text = "Hello World";
+
+		var createdString = text.Invoke(_ => testString = text).Assign(out string assignedString);
+
+		Assert.NotNull(testString);
+		Assert.AreEqual(text, testString);
+		Assert.AreEqual(text, assignedString);
+		Assert.AreEqual(text, createdString);
 		Assert.That(ReferenceEquals(createdString, assignedString));
 	}
 
 	[Test]
 	public void Invoke()
 	{
-		var createdLabel = new Label().Invoke(l => l.Text = nameof(Invoke));
-		Assert.That(createdLabel.Text, Is.EqualTo(nameof(Invoke)));
+		const string text = nameof(Invoke);
+
+		var createdLabel = new Label().Invoke(l => l.Text = text);
+		Assert.That(createdLabel.Text, Is.EqualTo(text));
 	}
 
 	[Test]

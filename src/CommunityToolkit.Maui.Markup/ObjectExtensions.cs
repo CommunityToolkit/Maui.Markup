@@ -6,32 +6,33 @@
 public static class ObjectExtensions
 {
 	/// <summary>
-	/// Assign TBindable to a variable
+	/// Assign <typeparam name="TAssignable"/> to a variable
 	/// </summary>
-	/// <typeparam name="TBindable"></typeparam>
+	/// <typeparam name="TAssignable"></typeparam>
 	/// <typeparam name="TVariable"></typeparam>
-	/// <param name="bindable"></param>
+	/// <param name="assignable"></param>
 	/// <param name="variable"></param>
 	/// <returns>TBindable</returns>
-	public static TBindable Assign<TBindable, TVariable>(this TBindable bindable, out TVariable variable)
-		where TBindable : TVariable
+	public static TAssignable Assign<TAssignable, TVariable>(this TAssignable assignable, out TVariable variable)
+		where TAssignable : TVariable
 	{
-		variable = bindable;
-		return bindable;
+		variable = assignable;
+		return assignable;
 	}
+
 	/// <summary>
-	/// Perform an action on a Bindable Object
+	/// Perform an action on <typeparam name="TAssignable"/>
 	/// </summary>
-	/// <typeparam name="TBindable"></typeparam>
-	/// <param name="bindable"></param>
+	/// <typeparam name="TAssignable"></typeparam>
+	/// <param name="assignable"></param>
 	/// <param name="action"></param>
 	/// <returns>TBindable</returns>
-	public static TBindable Invoke<TBindable>(this TBindable bindable, Action<TBindable> action)
+	public static TAssignable Invoke<TAssignable>(this TAssignable assignable, Action<TAssignable> action)
 	{
 		ArgumentNullException.ThrowIfNull(action);
 
-		action.Invoke(bindable);
-		return bindable;
+		action(assignable);
+		return assignable;
 	}
 }
 
