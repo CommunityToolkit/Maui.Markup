@@ -181,14 +181,24 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 	[TestFixture]
 	class LeftToRightTextAlignmentExtensionsTests : BaseMarkupTestFixture<Picker>
 	{
-
 		[Test]
 		public void TextLeft()
-			=> TestPropertiesSet(l => l.TextLeft(), (TextAlignmentElement.HorizontalTextAlignmentProperty, TextAlignment.Start));
+		{
+			Bindable.TextEnd();
+			Assert.AreEqual(TextAlignment.End, Bindable.HorizontalTextAlignment);
+
+			Bindable.TextLeft();
+			Assert.AreEqual(TextAlignment.Start, Bindable.HorizontalTextAlignment);
+		}
 
 		[Test]
 		public void TextRight()
-			=> TestPropertiesSet(l => l.TextRight(), (TextAlignmentElement.HorizontalTextAlignmentProperty, TextAlignment.End));
+		{
+			Assert.AreEqual(TextAlignment.Start, Bindable.HorizontalTextAlignment);
+
+			Bindable.TextRight();
+			Assert.AreEqual(TextAlignment.End, Bindable.HorizontalTextAlignment);
+		}
 
 		[Test]
 		public void SupportDerivedFromBindable()
@@ -241,12 +251,23 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 	{
 
 		[Test]
-		public void TextLeft()
-			=> TestPropertiesSet(l => l.TextLeft(), (TextAlignmentElement.HorizontalTextAlignmentProperty, TextAlignment.End));
+		public void TextRight()
+		{
+			Bindable.TextEnd();
+			Assert.AreEqual(TextAlignment.End, Bindable.HorizontalTextAlignment);
+
+			Bindable.TextRight();
+			Assert.AreEqual(TextAlignment.Start, Bindable.HorizontalTextAlignment);
+		}
 
 		[Test]
-		public void TextRight()
-			=> TestPropertiesSet(l => l.TextRight(), (TextAlignmentElement.HorizontalTextAlignmentProperty, TextAlignment.Start));
+		public void TextLeft()
+		{
+			Assert.AreEqual(TextAlignment.Start, Bindable.HorizontalTextAlignment);
+
+			Bindable.TextLeft();
+			Assert.AreEqual(TextAlignment.End, Bindable.HorizontalTextAlignment);
+		}
 
 		[Test]
 		public void SupportDerivedFromBindable()
