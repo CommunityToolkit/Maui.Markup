@@ -35,4 +35,3 @@ public static class ObjectExtensions
 		return assignable;
 	}
 }
-
