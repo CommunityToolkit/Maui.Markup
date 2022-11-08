@@ -16,6 +16,13 @@ class ObjectExtensionsTests : BaseMarkupTestFixture
 	}
 
 	[Test]
+	public void AssignCustomLabel()
+	{
+		var createdLabel = new CustomLabel().Assign(out Label assignedLabel);
+		Assert.That(ReferenceEquals(createdLabel, assignedLabel));
+	}
+
+	[Test]
 	public void AssignString()
 	{
 		string? testString = null;
@@ -40,10 +47,29 @@ class ObjectExtensionsTests : BaseMarkupTestFixture
 	}
 
 	[Test]
+	public void InvokeCustomEntry()
+	{
+		const string text = nameof(Invoke);
+
+		var createdLabel = new CustomEntry().Invoke(l => l.Text = text);
+		Assert.That(createdLabel.Text, Is.EqualTo(text));
+	}
+
+	[Test]
 	public void InvokeNullThrowsArgumentNullException()
 	{
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
 		Assert.Throws<ArgumentNullException>(() => new Label().Invoke(null));
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+	}
+
+	class CustomLabel : Label
+	{
+
+	}
+
+	class CustomEntry : Entry
+	{
+
 	}
 }
