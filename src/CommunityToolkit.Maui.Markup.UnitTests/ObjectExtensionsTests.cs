@@ -18,8 +18,9 @@ class ObjectExtensionsTests : BaseMarkupTestFixture
 	[Test]
 	public void AssignCustomLabel()
 	{
-		var createdLabel = new CustomLabel().Assign(out Label assignedLabel);
+		var createdLabel = new CustomLabel().Assign(out Label assignedLabel).Assign(out CustomLabel assignedCustomLabel);
 		Assert.That(ReferenceEquals(createdLabel, assignedLabel));
+		Assert.That(ReferenceEquals(assignedCustomLabel, assignedLabel));
 	}
 
 	[Test]
