@@ -6,7 +6,7 @@
 public static class ObjectExtensions
 {
 	/// <summary>
-	/// Assign <typeparam name="TAssignable"/> to a variable
+	/// Assign <typeparamref name="TAssignable"/> to a variable
 	/// </summary>
 	/// <typeparam name="TAssignable"></typeparam>
 	/// <typeparam name="TVariable"></typeparam>
@@ -21,7 +21,7 @@ public static class ObjectExtensions
 	}
 
 	/// <summary>
-	/// Perform an action on <typeparam name="TAssignable"/>
+	/// Perform an action on <typeparamref name="TAssignable"/>
 	/// </summary>
 	/// <typeparam name="TAssignable"></typeparam>
 	/// <param name="assignable"></param>
