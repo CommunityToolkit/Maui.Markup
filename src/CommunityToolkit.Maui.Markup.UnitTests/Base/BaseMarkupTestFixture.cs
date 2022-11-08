@@ -69,7 +69,7 @@ abstract class BaseMarkupTestFixture : BaseTestFixture
 		foreach (var (property, expectedValue) in propertyChanges)
 		{
 			bindable.SetValue(property, property.DefaultValue);
-			Assume.That(bindable.GetPropertyIfSet(property, expectedValue), Is.Not.EqualTo(expectedValue));
+			Assert.That(bindable.GetPropertyIfSet(property, expectedValue), Is.Not.EqualTo(expectedValue));
 		}
 
 		modify(bindable);
