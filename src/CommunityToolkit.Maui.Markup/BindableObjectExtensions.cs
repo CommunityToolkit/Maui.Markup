@@ -27,6 +27,7 @@ public static class BindableObjectExtensions
 				TargetNullValue = targetNullValue,
 				FallbackValue = fallbackValue
 			});
+
 		return bindable;
 	}
 
@@ -51,6 +52,7 @@ public static class BindableObjectExtensions
 				TargetNullValue = targetNullValue,
 				FallbackValue = fallbackValue
 			});
+
 		return bindable;
 	}
 
@@ -76,6 +78,7 @@ public static class BindableObjectExtensions
 				TargetNullValue = targetNullValue,
 				FallbackValue = fallbackValue
 			});
+
 		return bindable;
 	}
 
@@ -111,6 +114,7 @@ public static class BindableObjectExtensions
 		TDest? fallbackValue = default) where TBindable : BindableObject
 	{
 		var converter = new FuncConverter<TSource, TDest, object>(convert, convertBack);
+
 		bindable.Bind(
 			DefaultBindableProperties.GetDefaultProperty<TBindable>(),
 			path, mode, converter, null, stringFormat, source, targetNullValue, fallbackValue);
@@ -161,34 +165,6 @@ public static class BindableObjectExtensions
 			bindable.SetBinding(parameterProperty, new Binding(path: parameterPath, source: parameterSource));
 		}
 
-		return bindable;
-	}
-
-	/// <summary>
-	/// Assign TBindable to a variable
-	/// </summary>
-	/// <typeparam name="TBindable"></typeparam>
-	/// <typeparam name="TVariable"></typeparam>
-	/// <param name="bindable"></param>
-	/// <param name="variable"></param>
-	/// <returns>TBindable</returns>
-	public static TBindable Assign<TBindable, TVariable>(this TBindable bindable, out TVariable variable)
-		where TBindable : BindableObject, TVariable
-	{
-		variable = bindable;
-		return bindable;
-	}
-
-	/// <summary>
-	/// Perform an action on a Bindable Object
-	/// </summary>
-	/// <typeparam name="TBindable"></typeparam>
-	/// <param name="bindable"></param>
-	/// <param name="action"></param>
-	/// <returns>TBindable</returns>
-	public static TBindable Invoke<TBindable>(this TBindable bindable, Action<TBindable>? action) where TBindable : BindableObject
-	{
-		action?.Invoke(bindable);
 		return bindable;
 	}
 

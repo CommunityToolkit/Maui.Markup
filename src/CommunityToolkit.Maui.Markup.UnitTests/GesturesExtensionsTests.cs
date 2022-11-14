@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Input;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using Microsoft.Maui;
@@ -9,7 +8,7 @@ using NUnit.Framework;
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture(typeof(Label))] // Derived from View
-class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGestureElement : IGestureRecognizers, new()
+class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGestureElement : View, IGestureRecognizers, new()
 {
 	[Test]
 	public void BindClickGestureDefaults()
@@ -97,7 +96,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 		var gestureElement = new TGestureElement();
 
 		gestureElement.TapGesture(() => taps++, numberOfTaps);
-		((TapGestureRecognizer)gestureElement.GestureRecognizers[0]).SendTapped(null);
+		((TapGestureRecognizer)gestureElement.GestureRecognizers[0]).SendTapped(gestureElement);
 
 		Assert.Greater(taps, 0);
 		Assert.AreEqual(1, gestureElement.GestureRecognizers.Count);
