@@ -198,7 +198,7 @@ jobs:
       - pwsh: |
           Invoke-WebRequest 'https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.ps1' -OutFile 'workload-install.ps1'
           .\workload-install.ps1
-      displayName: Install Tizen Workload
+        displayName: Install Tizen Workload
 
       - task: Bash@3
         displayName: 'Verify Formatting'
