@@ -60,6 +60,11 @@ jobs:
               dotnet --info
               dotnet workload install maui
 
+      - pwsh: |
+          Invoke-WebRequest 'https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.ps1' -OutFile 'workload-install.ps1'
+          .\workload-install.ps1
+        displayName: Install Tizen Workload
+
       # if this is a tagged build, then update the version number
       - powershell: |
           $buildSourceBranch = "$(Build.SourceBranch)"
