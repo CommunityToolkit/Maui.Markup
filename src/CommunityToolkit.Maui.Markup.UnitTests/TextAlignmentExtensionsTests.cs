@@ -1,5 +1,4 @@
-﻿using System;
-using CommunityToolkit.Maui.Markup.UnitTests.Base;
+﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
