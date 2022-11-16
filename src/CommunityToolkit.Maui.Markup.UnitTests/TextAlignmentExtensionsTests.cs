@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
+﻿using System;
+using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
@@ -85,14 +86,62 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				ClassConstraintWithInterface,
 				RecordClassContstraint,
 				RecordClassContstraint[],
-				RecordStructContstraint>
-			{
-				HorizontalTextAlignment = TextAlignment.Center
-			};
+				RecordStructContstraint>()
+					.TextCenter<GenericPicker<ClassConstraintWithInterface,
+									ClassConstraint,
+									StructConstraint,
+									ClassConstraintWithInterface,
+									string,
+									int,
+									bool,
+									ClassConstraintWithInterface?,
+									ClassConstraint[],
+									ClassConstraintWithInterface,
+									RecordClassContstraint,
+									RecordClassContstraint[],
+									RecordStructContstraint>, 
+									ClassConstraintWithInterface,
+									ClassConstraint,
+									StructConstraint,
+									ClassConstraintWithInterface,
+									string,
+									int,
+									bool,
+									ClassConstraintWithInterface?,
+									ClassConstraint[],
+									ClassConstraintWithInterface,
+									RecordClassContstraint,
+									RecordClassContstraint[],
+									RecordStructContstraint>();
 
 			Assert.AreEqual(TextAlignment.Center, textAlignmentView.HorizontalTextAlignment);
 
-			textAlignmentView.TextEnd();
+			textAlignmentView.TextEnd<GenericPicker<ClassConstraintWithInterface,
+									ClassConstraint,
+									StructConstraint,
+									ClassConstraintWithInterface,
+									string,
+									int,
+									bool,
+									ClassConstraintWithInterface?,
+									ClassConstraint[],
+									ClassConstraintWithInterface,
+									RecordClassContstraint,
+									RecordClassContstraint[],
+									RecordStructContstraint>,
+									ClassConstraintWithInterface,
+									ClassConstraint,
+									StructConstraint,
+									ClassConstraintWithInterface,
+									string,
+									int,
+									bool,
+									ClassConstraintWithInterface?,
+									ClassConstraint[],
+									ClassConstraintWithInterface,
+									RecordClassContstraint,
+									RecordClassContstraint[],
+									RecordStructContstraint>();
 
 			Assert.AreEqual(TextAlignment.End, textAlignmentView.HorizontalTextAlignment);
 		}
@@ -104,9 +153,10 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 			Assert.AreEqual(TextAlignment.Start, genericPicker.HorizontalTextAlignment);
 
-			genericPicker.TextEnd();
+			var generatedPicker = genericPicker.TextEnd();
 
 			Assert.AreEqual(TextAlignment.End, genericPicker.HorizontalTextAlignment);
+			Assert.IsInstanceOf<MyGenericPicker<string>>(generatedPicker);
 		}
 
 		[Test]
