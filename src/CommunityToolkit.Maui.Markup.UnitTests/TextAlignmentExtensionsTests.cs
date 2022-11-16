@@ -98,7 +98,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 									ClassConstraintWithInterface,
 									RecordClassContstraint,
 									RecordClassContstraint[],
-									RecordStructContstraint>, 
+									RecordStructContstraint>,
 									ClassConstraintWithInterface,
 									ClassConstraint,
 									StructConstraint,
