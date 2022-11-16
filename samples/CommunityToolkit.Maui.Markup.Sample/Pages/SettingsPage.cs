@@ -22,7 +22,7 @@ sealed class SettingsPage : BaseContentPage<SettingsViewModel>
 					.LayoutBounds(0, 0, 1, 40)
 					.TextCenterHorizontal()
 					.TextBottom()
-					.Assign(out Label topNewsStoriesToFetchLabel),
+					.Assign(out var topNewsStoriesToFetchLabel),
 
 				new Entry { Keyboard = Keyboard.Numeric, BackgroundColor = Colors.White }
 					.Placeholder($"Provide a value between {SettingsService.MinimumStoriesToFetch} and {SettingsService.MaximumStoriesToFetch}", Colors.Grey)

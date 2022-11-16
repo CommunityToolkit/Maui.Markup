@@ -727,7 +727,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 						return (isRed.HasValue && isRed.Value ? Colors.Red : Colors.Green).MultiplyAlpha(alpha.Value);
 					})
 				.Invoke(l => l.Text = nameof(SupportDerivedElements))
-				.Assign(out DerivedFromLabel assignDerivedFromLabel));
+				.Assign<DerivedFromLabel>(out var assignDerivedFromLabel));
 
 			Assert.IsInstanceOf<DerivedFromTextCell>(new DerivedFromTextCell().BindCommand(nameof(viewModel.Command)));
 			Assert.IsInstanceOf<DerivedFromLabel>(assignDerivedFromLabel);

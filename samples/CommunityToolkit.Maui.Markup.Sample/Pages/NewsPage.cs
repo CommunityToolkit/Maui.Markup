@@ -30,7 +30,7 @@ sealed class NewsPage : BaseContentPage<NewsViewModel>
 		}.Bind(RefreshView.IsRefreshingProperty, nameof(NewsViewModel.IsListRefreshing))
 		 .Bind(RefreshView.CommandProperty, nameof(NewsViewModel.PullToRefreshCommand))
 		 .AppThemeColorBinding(RefreshView.RefreshColorProperty, Colors.Black, Colors.LightGray)
-		 .Assign(out refreshView);
+		 .Assign<RefreshView>(out refreshView);
 	}
 
 	protected override void OnAppearing()

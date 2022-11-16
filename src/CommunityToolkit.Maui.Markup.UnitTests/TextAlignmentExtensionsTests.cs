@@ -146,7 +146,11 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				.TextCenter()
 				.FontSize(8.0)
 				.Bold()
-				.Italic());
+				.Italic()
+				.Assign(out DerivedFromSearchBar searchbar));
+
+			Assert.IsInstanceOf<DerivedFromSearchBar>(searchbar);
+			Assert.IsInstanceOf<SearchBar>(searchbar);
 		}
 
 		[Test]
