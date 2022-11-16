@@ -121,7 +121,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Start""/></returns>
-		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextStart" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		public static TAssignable TextStart<TAssignable>(this TAssignable textAlignmentControl) where TAssignable : " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + textAlignmentClass.GenericConstraints + @"
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
