@@ -341,10 +341,24 @@ namespace CommunityToolkit.Maui.Markup
 			_ => string.Empty
 		};
 
-		static string GetGenericTypeParametersDeclarationString(in string genericArguments) =>
-			$"<TAssignable" + (string.IsNullOrWhiteSpace(genericArguments) ? ">" : ("," + genericArguments + ">"));
+		static string GetGenericTypeParametersDeclarationString(in string genericArguments)
+		{
+			if (string.IsNullOrWhiteSpace(genericArguments))
+			{
+				return "<TAssignable>";
+			}
 
-		static string GetGenericArgumentsString(in string genericArguments) =>
-			(string.IsNullOrWhiteSpace(genericArguments) ? "" : "<") + genericArguments + (string.IsNullOrWhiteSpace(genericArguments) ? "" : ">");
+			return $"<TAssignable,{genericArguments}>";
+		}
+
+		static string GetGenericArgumentsString(in string genericArguments)
+		{
+			if (string.IsNullOrWhiteSpace(genericArguments))
+			{
+				return string.Empty;
+			}
+
+			return $"<{genericArguments}>";
+		}
 	}
 }
