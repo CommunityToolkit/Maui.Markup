@@ -349,5 +349,3 @@ namespace CommunityToolkit.Maui.Markup
 	}
 
 }
-
-
