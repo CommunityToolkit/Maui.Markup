@@ -347,5 +347,4 @@ namespace CommunityToolkit.Maui.Markup
 		static string GetGenericArgumentsString(in string genericArguments) =>
 			(string.IsNullOrWhiteSpace(genericArguments) ? "" : "<") + genericArguments + (string.IsNullOrWhiteSpace(genericArguments) ? "" : ">");
 	}
-
 }
