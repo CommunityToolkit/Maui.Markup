@@ -46,7 +46,7 @@ body:
         - **OS**: Windows 10 Build 10.0.19041.0
         - **.NET MAUI**: 6.0.408
     value: |
-        - .NET MAUI CommunityToolkit:
+        - .NET MAUI C# Markup CommunityToolkit:
         - OS:
         - .NET MAUI:
     render: markdown
