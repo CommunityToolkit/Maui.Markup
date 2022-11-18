@@ -42,7 +42,7 @@ body:
     label: Environment
     description: |
       examples:
-        - **.NET MAUI CommunityToolkit**: 1.2.0
+        - **.NET MAUI C# Markup CommunityToolkit**: 1.2.0
         - **OS**: Windows 10 Build 10.0.19041.0
         - **.NET MAUI**: 6.0.408
     value: |
