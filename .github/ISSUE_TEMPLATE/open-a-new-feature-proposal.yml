@@ -56,7 +56,7 @@ body:
   attributes:
     label: Usage Syntax
     render: markdown
-    description: Please provide an example of how an end-user will use this feature. If this is a UI control, please an example of the feature being consumed in both a C# UIand a XAML UI.
+    description: Please provide an example of how an end-user will use this feature. If this is a UI control, please an example of the feature being consumed in a C# UI.
     placeholder: |  
         Here is an example from Font<TFontElement>:
 
