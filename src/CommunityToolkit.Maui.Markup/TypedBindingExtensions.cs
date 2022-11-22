@@ -38,7 +38,7 @@ public static class TypedBindingExtensions
 		return bindable;
 	}
 
-	/// <summary>Bind to a specified property with inline conversion</summary>
+	/// <summary>Bind to a specified property</summary>
 	public static TBindable Bind<TBindable, TBindingContext, TSource>(
 		this TBindable bindable,
 		BindableProperty targetProperty,
