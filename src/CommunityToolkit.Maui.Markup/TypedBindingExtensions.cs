@@ -16,7 +16,7 @@ public static class TypedBindingExtensions
 		BindableProperty targetProperty,
 		Func<TBindingContext, TSource> getter,
 		Action<TBindingContext, TSource>? setter = null,
-		BindingMode mode = BindingMode.Default,
+		BindingMode? mode = null,
 		Func<TSource?, TDest>? convert = null,
 		Func<TDest?, TSource>? convertBack = null,
 		string? stringFormat = null,
@@ -27,8 +27,13 @@ public static class TypedBindingExtensions
 		var converter = new FuncConverter<TSource, TDest, object>(convert, convertBack);
 		bindable.SetBinding(targetProperty, new TypedBinding<TBindingContext, TSource>(result => (getter(result), true), setter, null)
 		{
+			Mode = (setter, mode) switch
+			{
+				(_, not null) => mode.Value, // Always use the provided mode when given
+				(null, null) => BindingMode.OneWay, // When setter is null, binding is read-only; use BindingMode.OneWay to improve performance
+				_ => BindingMode.Default // Default to BindingMode.Default
+			},
 			Converter = converter,
-			Mode = mode,
 			StringFormat = stringFormat,
 			Source = source,
 			TargetNullValue = targetNullValue,
@@ -44,13 +49,18 @@ public static class TypedBindingExtensions
 		BindableProperty targetProperty,
 		Func<TBindingContext, TSource> getter,
 		Action<TBindingContext, TSource>? setter = null,
-		BindingMode mode = BindingMode.Default,
+		BindingMode? mode = null,
 		string? stringFormat = null,
 		TBindingContext? source = default) where TBindable : BindableObject
 	{
 		bindable.SetBinding(targetProperty, new TypedBinding<TBindingContext, TSource>(result => (getter(result), true), setter, null)
 		{
-			Mode = mode,
+			Mode = (setter, mode) switch
+			{
+				(_, not null) => mode.Value, // Always use the provided mode when given
+				(null, null) => BindingMode.OneWay, // When setter is null, binding is read-only; use BindingMode.OneWay to improve performance
+				_ => BindingMode.Default // Default to BindingMode.Default
+			},
 			StringFormat = stringFormat,
 			Source = source,
 		});
