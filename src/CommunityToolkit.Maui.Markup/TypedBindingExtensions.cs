@@ -1,10 +1,9 @@
-﻿using System.ComponentModel;
-using Microsoft.Maui.Controls.Internals;
+﻿using Microsoft.Maui.Controls.Internals;
 
 namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>
-/// Extension Methods for Bindable Objects
+/// TypedBinding Extension Methods for Bindable Objects
 /// </summary>
 public static class TypedBindingExtensions
 {
