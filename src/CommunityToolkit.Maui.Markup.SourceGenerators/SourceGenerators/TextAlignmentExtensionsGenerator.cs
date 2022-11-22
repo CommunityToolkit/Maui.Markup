@@ -121,7 +121,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Start""/></returns>
-		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextStart" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		public static TAssignable TextStart" + GetGenericTypeParametersDeclarationString(textAlignmentClass.GenericArguments) + "(this TAssignable textAlignmentControl) where TAssignable : " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + GetGenericArgumentsString(textAlignmentClass.GenericArguments) + textAlignmentClass.GenericConstraints + @"
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
@@ -139,7 +139,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Center""/></returns>
-		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextCenterHorizontal" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		public static TAssignable TextCenterHorizontal" + GetGenericTypeParametersDeclarationString(textAlignmentClass.GenericArguments) + "(this TAssignable textAlignmentControl) where TAssignable : " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + GetGenericArgumentsString(textAlignmentClass.GenericArguments) + textAlignmentClass.GenericConstraints + @"
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
@@ -157,7 +157,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.End""/></returns>
-		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextEnd" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		public static TAssignable TextEnd" + GetGenericTypeParametersDeclarationString(textAlignmentClass.GenericArguments) + "(this TAssignable textAlignmentControl) where TAssignable : " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + GetGenericArgumentsString(textAlignmentClass.GenericArguments) + textAlignmentClass.GenericConstraints + @"
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
@@ -175,7 +175,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Start""/></returns>
-		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextTop" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		public static TAssignable TextTop" + GetGenericTypeParametersDeclarationString(textAlignmentClass.GenericArguments) + "(this TAssignable textAlignmentControl) where TAssignable : " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + GetGenericArgumentsString(textAlignmentClass.GenericArguments) + textAlignmentClass.GenericConstraints + @"
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
@@ -193,7 +193,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Center""/></returns>
-		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextCenterVertical" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		public static TAssignable TextCenterVertical" + GetGenericTypeParametersDeclarationString(textAlignmentClass.GenericArguments) + "(this TAssignable textAlignmentControl) where TAssignable : " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + GetGenericArgumentsString(textAlignmentClass.GenericArguments) + textAlignmentClass.GenericConstraints + @"
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
@@ -211,7 +211,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.End""/></returns>
-		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextBottom" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		public static TAssignable TextBottom" + GetGenericTypeParametersDeclarationString(textAlignmentClass.GenericArguments) + "(this TAssignable textAlignmentControl) where TAssignable : " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + GetGenericArgumentsString(textAlignmentClass.GenericArguments) + textAlignmentClass.GenericConstraints + @"
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
@@ -229,8 +229,8 @@ namespace CommunityToolkit.Maui.Markup
 		/// </summary>
 		/// <param name=""textAlignmentControl""></param>
 		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Center""/></returns>
-		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextCenter" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
-			=> textAlignmentControl.TextCenterHorizontal().TextCenterVertical();
+		public static TAssignable TextCenter" + GetGenericTypeParametersDeclarationString(textAlignmentClass.GenericArguments) + "(this TAssignable textAlignmentControl) where TAssignable : " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + GetGenericArgumentsString(textAlignmentClass.GenericArguments) + textAlignmentClass.GenericConstraints + @"
+			=> textAlignmentControl.TextCenterHorizontal" + GetGenericTypeParametersDeclarationString(textAlignmentClass.GenericArguments) + "().TextCenterVertical" + GetGenericTypeParametersDeclarationString(textAlignmentClass.GenericArguments) + @"();
 	}
 
 
@@ -249,7 +249,7 @@ namespace CommunityToolkit.Maui.Markup
 		    /// </summary>
 		    /// <param name=""textAlignmentControl""></param>
 		    /// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.Start""/></returns>
-		    public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextLeft" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		    public static TAssignable TextLeft" + GetGenericTypeParametersDeclarationString(textAlignmentClass.GenericArguments) + "(this TAssignable textAlignmentControl) where TAssignable : " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + GetGenericArgumentsString(textAlignmentClass.GenericArguments) + textAlignmentClass.GenericConstraints + @"
 		    {
 				ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
@@ -267,7 +267,7 @@ namespace CommunityToolkit.Maui.Markup
 		    /// </summary>
 		    /// <param name=""textAlignmentControl""></param>
 		    /// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.End""/></returns>
-		    public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextRight" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		    public static TAssignable TextRight" + GetGenericTypeParametersDeclarationString(textAlignmentClass.GenericArguments) + "(this TAssignable textAlignmentControl) where TAssignable : " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + GetGenericArgumentsString(textAlignmentClass.GenericArguments) + textAlignmentClass.GenericConstraints + @"
 		    {
 				ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
@@ -296,7 +296,7 @@ namespace CommunityToolkit.Maui.Markup
 		    /// </summary>
 		    /// <param name=""textAlignmentControl""></param>
 		    /// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.End""/></returns>
-		    public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextLeft" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		    public static TAssignable TextLeft" + GetGenericTypeParametersDeclarationString(textAlignmentClass.GenericArguments) + "(this TAssignable textAlignmentControl) where TAssignable : " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + GetGenericArgumentsString(textAlignmentClass.GenericArguments) + textAlignmentClass.GenericConstraints + @"
 		    {
 				ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
@@ -314,7 +314,7 @@ namespace CommunityToolkit.Maui.Markup
 		    /// </summary>
 		    /// <param name=""textAlignmentControl""></param>
 		    /// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.Start""/></returns>
-		    public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextRight" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		    public static TAssignable TextRight" + GetGenericTypeParametersDeclarationString(textAlignmentClass.GenericArguments) + "(this TAssignable textAlignmentControl) where TAssignable : " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + GetGenericArgumentsString(textAlignmentClass.GenericArguments) + textAlignmentClass.GenericConstraints + @"
 		    {
 				ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
@@ -340,5 +340,25 @@ namespace CommunityToolkit.Maui.Markup
 			Accessibility.Internal => "internal",
 			_ => string.Empty
 		};
+
+		static string GetGenericTypeParametersDeclarationString(in string genericArguments)
+		{
+			if (string.IsNullOrWhiteSpace(genericArguments))
+			{
+				return "<TAssignable>";
+			}
+
+			return $"<TAssignable,{genericArguments}>";
+		}
+
+		static string GetGenericArgumentsString(in string genericArguments)
+		{
+			if (string.IsNullOrWhiteSpace(genericArguments))
+			{
+				return string.Empty;
+			}
+
+			return $"<{genericArguments}>";
+		}
 	}
 }

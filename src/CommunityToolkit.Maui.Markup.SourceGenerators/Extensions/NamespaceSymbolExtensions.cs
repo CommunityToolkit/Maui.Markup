@@ -40,7 +40,7 @@ static class NamespaceSymbolExtensions
 			return string.Empty;
 		}
 
-		StringBuilder result = new("<");
+		StringBuilder result = new();
 
 		bool isFirstArgument = true;
 		foreach (ITypeSymbol typeArg in typeArguments)
@@ -68,8 +68,6 @@ static class NamespaceSymbolExtensions
 			}
 
 		}
-
-		result.Append(">");
 
 		return result.ToString();
 	}
