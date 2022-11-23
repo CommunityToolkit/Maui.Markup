@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Input;
+using BindableObjectViews;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
-using CommunityToolkit.Maui.Markup.UnitTests.BindableObjectViews;
 using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
@@ -777,7 +777,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 	}
 }
 
-namespace CommunityToolkit.Maui.Markup.UnitTests.BindableObjectViews // This namespace simulates derived controls defined in a separate app, for use in the tests in this file only
+namespace BindableObjectViews // This namespace simulates derived controls defined in a separate app, for use in the tests in this file only
 {
 	class DerivedFromLabel : Label
 	{
