@@ -63,8 +63,8 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		Assert.AreEqual("0.1%", label.Text);
 		Assert.AreEqual(ViewModel.DefaultPercentage, viewModel.Percentage);
 
-		await label.Dispatcher.DispatchAsync(()=> viewModel.Percentage = 0.6);
-		var propertyName= await propertyChangedEventArgsTCS.Task;
+		await label.Dispatcher.DispatchAsync(() => viewModel.Percentage = 0.6);
+		var propertyName = await propertyChangedEventArgsTCS.Task;
 
 		Assert.True(didPropertyChangeFire);
 		Assert.AreEqual(nameof(ViewModel.Percentage), propertyName);
