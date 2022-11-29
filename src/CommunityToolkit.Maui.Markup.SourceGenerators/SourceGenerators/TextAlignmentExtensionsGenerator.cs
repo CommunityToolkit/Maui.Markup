@@ -114,7 +114,7 @@ namespace CommunityToolkit.Maui.Markup
 	/// <summary>
 	/// Extension Methods for <see cref=""ITextAlignment""/>
 	/// </summary>
-	" + textAlignmentClass.ClassAcessModifier + " static partial class TextAlignmentExtensions_" + textAlignmentClass.ClassName + @"
+	static partial class TextAlignmentExtensions_" + textAlignmentClass.ClassName + @"
 	{
 		/// <summary>
 		/// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.Start""/>
