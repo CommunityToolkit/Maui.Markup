@@ -17,19 +17,18 @@ public static class TypedBindingExtensions
 		string? stringFormat = null,
 		TBindingContext? source = default) where TBindable : BindableObject
 	{
-		bindable.SetBinding(targetProperty, new TypedBinding<TBindingContext, TSource>(result => (getter(result), true), setter, null)
-		{
-			Mode = (setter, mode) switch
-			{
-				(_, not null) => mode.Value, // Always use the provided mode when given
-				(null, null) => BindingMode.OneWay, // When setter is null, binding is read-only; use BindingMode.OneWay to improve performance
-				_ => BindingMode.Default // Default to BindingMode.Default
-			},
-			StringFormat = stringFormat,
-			Source = source,
-		});
-
-		return bindable;
+		return Bind<TBindable, TBindingContext, TSource, object?, object?>(bindable,
+					targetProperty,
+					getter,
+					setter,
+					mode,
+					null,
+					null,
+					null,
+					stringFormat,
+					source,
+					null,
+					null);
 	}
 
 	/// <summary>Bind to a specified property with inline conversion</summary>
@@ -46,23 +45,18 @@ public static class TypedBindingExtensions
 		TDest? targetNullValue = default,
 		TDest? fallbackValue = default) where TBindable : BindableObject
 	{
-		var converter = new FuncConverter<TSource, TDest, object>(convert, convertBack);
-		bindable.SetBinding(targetProperty, new TypedBinding<TBindingContext, TSource>(result => (getter(result), true), setter, null)
-		{
-			Mode = (setter, mode) switch
-			{
-				(_, not null) => mode.Value, // Always use the provided mode when given
-				(null, null) => BindingMode.OneWay, // When setter is null, binding is read-only; use BindingMode.OneWay to improve performance
-				_ => BindingMode.Default // Default to BindingMode.Default
-			},
-			Converter = converter,
-			StringFormat = stringFormat,
-			Source = source,
-			TargetNullValue = targetNullValue,
-			FallbackValue = fallbackValue
-		});
-
-		return bindable;
+		return Bind<TBindable, TBindingContext, TSource, object?, TDest>(bindable,
+					targetProperty,
+					getter,
+					setter,
+					mode,
+					convert is null ? null : (source, _) => convert(source),
+					convertBack is null ? null : (dest, _) => convertBack(dest),
+					null,
+					stringFormat,
+					source,
+					targetNullValue,
+					fallbackValue);
 	}
 
 	/// <summary>Bind to a specified property with inline conversion and conversion parameter</summary>
@@ -80,7 +74,12 @@ public static class TypedBindingExtensions
 		TDest? targetNullValue = default,
 		TDest? fallbackValue = default) where TBindable : BindableObject
 	{
-		var converter = new FuncConverter<TSource, TDest, TParam>(convert, convertBack);
+		var converter = (convert, convertBack) switch
+		{
+			(null, null) => null,
+			_ => new FuncConverter<TSource, TDest, TParam>(convert, convertBack)
+		};
+
 		bindable.SetBinding(targetProperty, new TypedBinding<TBindingContext, TSource>(result => (getter(result), true), setter, null)
 		{
 			Mode = (setter, mode) switch
