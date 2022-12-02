@@ -130,6 +130,47 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	}
 
 	[Test]
+	public void ConfirmOneTimeBinding()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		bool didLabelPropertyChangeFire = false;
+		bool didViewModelPropertyChangeFire = false;
+
+		var label = new Label
+		{
+			BindingContext = viewModel
+		}.Bind<Label, ViewModel, Color>(Label.TextColorProperty, nameof(ViewModel.TextColor), static (ViewModel viewModel) => viewModel.TextColor, static (ViewModel viewModel, Color color) => viewModel.TextColor = color, BindingMode.OneTime);
+
+		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
+		label.PropertyChanged += HandleLabelPropertyChanged;
+
+		BindingHelpers.AssertTypedBindingExists<Label, ViewModel, Color>(label, Label.TextColorProperty, BindingMode.OneTime, viewModel);
+		Assert.AreEqual(ViewModel.DefaultColor, label.TextColor);
+
+		viewModel.TextColor = Colors.Green;
+		Assert.AreEqual(Colors.Green, viewModel.TextColor);
+		Assert.AreEqual(ViewModel.DefaultColor, label.GetValue(Label.TextColorProperty));
+
+		label.TextColor = Colors.Red;
+		Assert.AreEqual(Colors.Red, label.TextColor);
+		Assert.AreEqual(Colors.Green, viewModel.TextColor);
+
+		Assert.True(didViewModelPropertyChangeFire);
+		Assert.True(didLabelPropertyChangeFire);
+
+		void HandleViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+		{
+			didViewModelPropertyChangeFire = true;
+		}
+
+		void HandleLabelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+		{
+			didLabelPropertyChangeFire = true;
+		}
+	}
+
+	[Test]
 	public async Task ConfirmReadWriteTypedBinding()
 	{
 		ArgumentNullException.ThrowIfNull(viewModel);
