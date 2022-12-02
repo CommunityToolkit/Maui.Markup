@@ -157,19 +157,19 @@ public static class TypedBindingExtensions
 
 	/// <summary>Bind to a specified property with inline conversion and conversion parameter</summary>
 	public static TBindable Bind<TBindable, TBindingContext, TSource, TParam, TDest>(
-	this TBindable bindable,
-	BindableProperty targetProperty,
-	string[] propertyNames,
-	Func<TBindingContext, TSource> getter,
-	Action<TBindingContext, TSource>? setter = null,
-	BindingMode mode = BindingMode.Default,
-	Func<TSource?, TParam?, TDest>? convert = null,
-	Func<TDest?, TParam?, TSource>? convertBack = null,
-	TParam? converterParameter = default,
-	string? stringFormat = null,
-	TBindingContext? source = default,
-	TDest? targetNullValue = default,
-	TDest? fallbackValue = default) where TBindable : BindableObject
+		this TBindable bindable,
+		BindableProperty targetProperty,
+		string[] propertyNames,
+		Func<TBindingContext, TSource> getter,
+		Action<TBindingContext, TSource>? setter = null,
+		BindingMode mode = BindingMode.Default,
+		Func<TSource?, TParam?, TDest>? convert = null,
+		Func<TDest?, TParam?, TSource>? convertBack = null,
+		TParam? converterParameter = default,
+		string? stringFormat = null,
+		TBindingContext? source = default,
+		TDest? targetNullValue = default,
+		TDest? fallbackValue = default) where TBindable : BindableObject
 	{
 		var converter = (convert, convertBack) switch
 		{
