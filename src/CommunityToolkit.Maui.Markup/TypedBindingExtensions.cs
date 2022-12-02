@@ -156,7 +156,7 @@ public static class TypedBindingExtensions
 	}
 
 		/// <summary>Bind to a specified property with inline conversion and conversion parameter</summary>
-		public static TBindable Bind<TBindable, TBindingContext, TSource, TParam, TDest>(
+	public static TBindable Bind<TBindable, TBindingContext, TSource, TParam, TDest>(
 		this TBindable bindable,
 		BindableProperty targetProperty,
 		string[] propertyNames,
