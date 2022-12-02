@@ -27,7 +27,7 @@ sealed class NewsPage : BaseContentPage<NewsViewModel>
 			 .Bind(CollectionView.ItemsSourceProperty, nameof(NewsViewModel.TopStoryCollection))
 			 .AutomationId("NewsCollectionView")
 
-		}.Bind(RefreshView.IsRefreshingProperty, (NewsViewModel vm) => vm.IsListRefreshing, (NewsViewModel vm, bool isRefreshing) => vm.IsListRefreshing = isRefreshing)
+		}.Bind(RefreshView.IsRefreshingProperty, nameof(RefreshView.IsRefreshingProperty), (NewsViewModel vm) => vm.IsListRefreshing, (NewsViewModel vm, bool isRefreshing) => vm.IsListRefreshing = isRefreshing)
 		 .Bind(RefreshView.CommandProperty, nameof(NewsViewModel.PullToRefreshCommand))
 		 .AppThemeColorBinding(RefreshView.RefreshColorProperty, Colors.Black, Colors.LightGray)
 		 .Assign(out refreshView);

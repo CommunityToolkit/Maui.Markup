@@ -155,7 +155,7 @@ public static class TypedBindingExtensions
 			fallbackValue);
 	}
 
-		/// <summary>Bind to a specified property with inline conversion and conversion parameter</summary>
+	/// <summary>Bind to a specified property with inline conversion and conversion parameter</summary>
 	public static TBindable Bind<TBindable, TBindingContext, TSource, TParam, TDest>(
 		this TBindable bindable,
 		BindableProperty targetProperty,
@@ -179,7 +179,7 @@ public static class TypedBindingExtensions
 
 		var handlers = new List<Tuple<Func<TBindingContext, object?>, string>>();
 
-		foreach(var propertyName in propertyNames)
+		foreach (var propertyName in propertyNames)
 		{
 			handlers.Add(new Tuple<Func<TBindingContext, object?>, string>((TBindingContext b) => b, propertyName));
 		}
