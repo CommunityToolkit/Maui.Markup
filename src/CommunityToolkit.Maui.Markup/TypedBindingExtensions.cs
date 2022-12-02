@@ -108,6 +108,6 @@ public static class TypedBindingExtensions
 	{
 		MemberExpression m => m.Member.Name,
 		UnaryExpression u when u.Operand is MemberExpression m => m.Member.Name,
-		_ => throw new NotImplementedException(expression.GetType().ToString())
+		_ => throw new InvalidOperationException("Could not retreive member name")
 	};
 }
