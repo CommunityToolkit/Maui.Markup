@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
+﻿using System.Linq.Expressions;
 using Microsoft.Maui.Controls.Internals;
 
 namespace CommunityToolkit.Maui.Markup;
@@ -85,12 +83,14 @@ public static class TypedBindingExtensions
 			_ => new FuncConverter<TSource, TDest, TParam>(convert, convertBack)
 		};
 
-		var handlers = new List<Tuple<Func<TBindingContext, object?>, string>>
+		var handlers = new Tuple<Func<TBindingContext, object?>, string>[]
 		{
 			new Tuple<Func<TBindingContext, object?>, string>((TBindingContext b) => b, GetMemberName(getter))
 		};
 
-		bindable.SetBinding(targetProperty, new TypedBinding<TBindingContext, TSource>(result => (getter.Compile()(result), true), setter, handlers.ToArray())
+		var getterFunc = convertExpressionToFunc(getter);
+
+		bindable.SetBinding(targetProperty, new TypedBinding<TBindingContext, TSource>(bindingContext => (getterFunc(bindingContext), true), setter, handlers)
 		{
 			Mode = mode,
 			Converter = converter,
@@ -102,9 +102,11 @@ public static class TypedBindingExtensions
 		});
 
 		return bindable;
+
+		static Func<TBindingContext, TSource> convertExpressionToFunc(in Expression<Func<TBindingContext, TSource>> expression) => expression.Compile();
 	}
 
-	static string GetMemberName<T>(Expression<T> expression) => expression.Body switch
+	static string GetMemberName<T>(in Expression<T> expression) => expression.Body switch
 	{
 		MemberExpression m => m.Member.Name,
 		UnaryExpression u when u.Operand is MemberExpression m => m.Member.Name,
