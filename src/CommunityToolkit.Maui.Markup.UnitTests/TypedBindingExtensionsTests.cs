@@ -53,7 +53,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		var label = new Label
 		{
 			BindingContext = viewModel
-		}.Bind<Label, ViewModel, double>(Label.TextProperty, nameof(ViewModel.Percentage), static (ViewModel viewModel) => viewModel.Percentage, stringFormat: stringFormat);
+		}.Bind<Label, ViewModel, double>(Label.TextProperty, static (ViewModel viewModel) => viewModel.Percentage, stringFormat: stringFormat);
 
 		viewModel.PropertyChanged += HandlePropertyChanged;
 
@@ -91,7 +91,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		var label = new Label
 		{
 			BindingContext = viewModel
-		}.Bind<Label, ViewModel, Color>(Label.TextColorProperty, nameof(ViewModel.TextColor), static (ViewModel viewModel) => viewModel.TextColor);
+		}.Bind<Label, ViewModel, Color>(Label.TextColorProperty, static (ViewModel viewModel) => viewModel.TextColor);
 
 		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
 		label.PropertyChanged += HandleLabelPropertyChanged;
@@ -140,7 +140,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		var label = new Label
 		{
 			BindingContext = viewModel
-		}.Bind<Label, ViewModel, Color>(Label.TextColorProperty, nameof(ViewModel.TextColor), static (ViewModel viewModel) => viewModel.TextColor, static (ViewModel viewModel, Color color) => viewModel.TextColor = color, BindingMode.OneTime);
+		}.Bind<Label, ViewModel, Color>(Label.TextColorProperty, static (ViewModel viewModel) => viewModel.TextColor, static (ViewModel viewModel, Color color) => viewModel.TextColor = color, BindingMode.OneTime);
 
 		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
 		label.PropertyChanged += HandleLabelPropertyChanged;
@@ -186,7 +186,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		var slider = new Slider
 		{
 			BindingContext = viewModel
-		}.Bind<Slider, ViewModel, double>(Slider.ValueProperty, nameof(ViewModel.Percentage), getter, setter);
+		}.Bind<Slider, ViewModel, double>(Slider.ValueProperty, static (ViewModel viewModel) => viewModel.Percentage, static (ViewModel viewModel, double temperature) => viewModel.Percentage = temperature);
 
 		slider.PropertyChanged += HandleSliderPropertyChanged;
 		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
@@ -212,9 +212,6 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 
 		Assert.AreEqual(0.6, slider.Value);
 		Assert.AreEqual(0.6, viewModel.Percentage);
-
-		static double getter(ViewModel viewModel) => viewModel.Percentage;
-		static void setter(ViewModel viewModel, double temperature) => viewModel.Percentage = temperature;
 
 		void HandleViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
 		{
