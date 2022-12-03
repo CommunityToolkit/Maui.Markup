@@ -24,14 +24,14 @@ class StoryDataTemplate : DataTemplate
 				.Row(Row.Title)
 				.Font(size: 16).DynamicResource(Label.TextColorProperty, nameof(BaseTheme.PrimaryTextColor))
 				.Top().Padding(10, 0)
-				.Bind(Label.TextProperty, (StoryModel m) => m.Title, mode: BindingMode.OneTime)
+				.Bind(Label.TextProperty, static (StoryModel m) => m.Title, mode: BindingMode.OneTime)
 				.SemanticHint("The title of the news article."),
 
 			new Label()
 				.Row(Row.Description)
 				.Font(size: 13).DynamicResource(Label.TextColorProperty, nameof(BaseTheme.SecondaryTextColor))
 				.Paddings(10, 0, 10, 5)
-				.Bind(Label.TextProperty, (StoryModel m) => m.Description, mode: BindingMode.OneTime)
+				.Bind(Label.TextProperty, static (StoryModel m) => m.Description, mode: BindingMode.OneTime)
 				.SemanticHint("The description of the news article.")
 		}
 	};

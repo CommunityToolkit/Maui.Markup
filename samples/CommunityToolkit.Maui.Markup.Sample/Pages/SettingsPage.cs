@@ -36,7 +36,7 @@ sealed class SettingsPage : BaseContentPage<SettingsViewModel>
 						ValidStyle = (Style?)Application.Current?.Resources[nameof(BaseTheme.ValidEntryNumericValidationBehaviorStyle)],
 						InvalidStyle = (Style?)Application.Current?.Resources[nameof(BaseTheme.InvalidEntryNumericValidationBehaviorStyle)],
 					})
-					.Bind(Entry.TextProperty, (SettingsViewModel vm) => vm.NumberOfTopStoriesToFetch, (SettingsViewModel vm, int text) => vm.NumberOfTopStoriesToFetch = text)
+					.Bind(Entry.TextProperty, static (SettingsViewModel vm) => vm.NumberOfTopStoriesToFetch, static (SettingsViewModel vm, int text) => vm.NumberOfTopStoriesToFetch = text)
 					.TextCenter()
 					.SemanticDescription(topNewsStoriesToFetchLabel.Text),
 

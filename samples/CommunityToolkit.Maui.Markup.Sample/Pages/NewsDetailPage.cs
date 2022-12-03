@@ -6,7 +6,7 @@ sealed class NewsDetailPage : BaseContentPage<NewsDetailViewModel>
 {
 	public NewsDetailPage(NewsDetailViewModel newsDetailViewModel) : base(newsDetailViewModel, newsDetailViewModel.Title)
 	{
-		this.Bind(TitleProperty, nameof(NewsDetailViewModel.Title));
+		this.Bind(TitleProperty, static (NewsDetailViewModel vm) => vm.Title);
 
 		Content = new FlexLayout
 		{
@@ -17,7 +17,7 @@ sealed class NewsDetailPage : BaseContentPage<NewsDetailViewModel>
 			{
 				new WebView()
 					.Grow(1).AlignSelf(FlexAlignSelf.Stretch)
-					.Bind(WebView.SourceProperty, nameof(NewsDetailViewModel.Uri), BindingMode.OneWay),
+					.Bind(WebView.SourceProperty, static (NewsDetailViewModel vm) => vm.Uri, mode: BindingMode.OneWay),
 
 				new Button()
 					.Text("Launch in Browser \uf35d")
@@ -25,7 +25,7 @@ sealed class NewsDetailPage : BaseContentPage<NewsDetailViewModel>
 					.Basis(50)
 					.DynamicResource(Button.TextColorProperty, nameof(BaseTheme.PrimaryTextColor))
 					.DynamicResource(Button.BackgroundColorProperty, nameof(BaseTheme.NavigationBarBackgroundColor))
-					.Bind(Button.CommandProperty, nameof(NewsDetailViewModel.OpenBrowserCommand), BindingMode.OneWay)
+					.Bind(Button.CommandProperty, static (NewsDetailViewModel vm) => vm.OpenBrowserCommand, mode: BindingMode.OneWay)
 					.SemanticHint("Launches the news article in the devices browser."),
 
 				new Label()
@@ -34,7 +34,7 @@ sealed class NewsDetailPage : BaseContentPage<NewsDetailViewModel>
 					.Paddings(bottom: 20)
 					.DynamicResource(Label.TextColorProperty, nameof(BaseTheme.PrimaryTextColor))
 					.DynamicResource(Label.BackgroundColorProperty, nameof(BaseTheme.NavigationBarBackgroundColor))
-					.Bind(Label.TextProperty, nameof(NewsDetailViewModel.ScoreDescription), BindingMode.OneWay)
+					.Bind(Label.TextProperty, static (NewsDetailViewModel vm) => vm.ScoreDescription, mode: BindingMode.OneWay)
 					.SemanticHint("Displays the score of the news article."),
 			}
 		};

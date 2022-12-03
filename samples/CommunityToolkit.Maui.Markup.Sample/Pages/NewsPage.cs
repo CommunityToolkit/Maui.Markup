@@ -24,11 +24,11 @@ sealed class NewsPage : BaseContentPage<NewsViewModel>
 
 			}.ItemTemplate(new StoryDataTemplate())
 			 .Invoke(collectionView => collectionView.SelectionChanged += HandleSelectionChanged)
-			 .Bind(CollectionView.ItemsSourceProperty, nameof(NewsViewModel.TopStoryCollection))
+			 .Bind(CollectionView.ItemsSourceProperty, static (NewsViewModel vm) => vm.TopStoryCollection)
 			 .AutomationId("NewsCollectionView")
 
-		}.Bind(RefreshView.IsRefreshingProperty, (NewsViewModel vm) => vm.IsListRefreshing, (NewsViewModel vm, bool isRefreshing) => vm.IsListRefreshing = isRefreshing)
-		 .Bind(RefreshView.CommandProperty, nameof(NewsViewModel.PullToRefreshCommand))
+		}.Bind(RefreshView.IsRefreshingProperty, static (NewsViewModel vm) => vm.IsListRefreshing, static (NewsViewModel vm, bool isRefreshing) => vm.IsListRefreshing = isRefreshing)
+		 .Bind(RefreshView.CommandProperty, static (NewsViewModel vm) => vm.PullToRefreshCommand)
 		 .AppThemeColorBinding(RefreshView.RefreshColorProperty, Colors.Black, Colors.LightGray)
 		 .Assign(out refreshView);
 	}
