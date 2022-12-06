@@ -233,31 +233,27 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	[TestCase(true, true)]
 	public void ValueSetOnOneWayWithNestedPathBinding(bool setContextFirst, bool isDefault)
 	{
-		var bindable = new Entry();
+		var entry = new Entry();
 		var bindingMode = isDefault ? BindingMode.Default : BindingMode.OneWay;
-		var textColor = Colors.Pink;
 
 		var viewmodel = new NestedViewModel
 		{
 			Model = new NestedViewModel
 			{
-				Model = new NestedViewModel
-				{
-					TextColor = textColor
-				}
+				Model = new NestedViewModel()
 			}
 		};
 
 		if (setContextFirst)
 		{
-			bindable.BindingContext = viewmodel;
-			bindable.Bind(Entry.TextColorProperty,
+			entry.BindingContext = viewmodel;
+			entry.Bind(Entry.TextColorProperty,
 							static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
 							new (Func<NestedViewModel, object?>, string)[]
 							{
-								(vm => vm, "Model"),
-								(vm => vm.Model, "Model"),
-								(vm => vm.Model.Model, "Text")
+								(vm => vm, nameof(NestedViewModel.Model)),
+								(vm => vm.Model, nameof(NestedViewModel.Model)),
+								(vm => vm.Model.Model, nameof(NestedViewModel.Model.TextColor))
 							},
 							static (NestedViewModel vm, Color? color) =>
 							{
@@ -270,13 +266,13 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		}
 		else
 		{
-			bindable.Bind(Entry.TextColorProperty,
+			entry.Bind(Entry.TextColorProperty,
 							static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
 							new (Func<NestedViewModel, object?>, string)[]
 							{
-								(vm => vm, "Model"),
-								(vm => vm.Model, "Model"),
-								(vm => vm.Model.Model, "Text")
+								(vm => vm, nameof(NestedViewModel.Model)),
+								(vm => vm.Model, nameof(NestedViewModel.Model)),
+								(vm => vm.Model.Model, nameof(NestedViewModel.Model.TextColor))
 							},
 							static (NestedViewModel vm, Color? color) =>
 							{
@@ -286,11 +282,18 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 								}
 							},
 							bindingMode);
-			bindable.BindingContext = viewmodel;
+
+			entry.BindingContext = viewmodel;
 		}
 
+		Assert.AreEqual(ViewModel.DefaultColor, viewmodel.Model.Model.TextColor);
+		Assert.AreEqual(ViewModel.DefaultColor, entry.GetValue(Entry.TextColorProperty));
+
+		var textColor = Colors.Pink;
+
+		viewmodel.Model.Model.TextColor = textColor;
 		Assert.AreEqual(textColor, viewmodel.Model.Model.TextColor);
-		Assert.AreEqual(textColor, bindable.GetValue(Entry.TextColorProperty));
+		Assert.AreEqual(textColor, entry.GetValue(Entry.TextColorProperty));
 	}
 
 	class ViewModel : INotifyPropertyChanged
