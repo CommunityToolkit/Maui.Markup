@@ -19,10 +19,10 @@ sealed class NewsPage : BaseContentPage<NewsViewModel>
 		{
 			Content = new CollectionView
 			{
-				BackgroundColor = Colors.Transparent,
 				SelectionMode = SelectionMode.Single,
 
-			}.ItemTemplate(new StoryDataTemplate())
+			}.BackgroundColor(Colors.Transparent)
+			 .ItemTemplate(new StoryDataTemplate())
 			 .Invoke(collectionView => collectionView.SelectionChanged += HandleSelectionChanged)
 			 .Bind(CollectionView.ItemsSourceProperty, nameof(NewsViewModel.TopStoryCollection))
 			 .AutomationId("NewsCollectionView")
