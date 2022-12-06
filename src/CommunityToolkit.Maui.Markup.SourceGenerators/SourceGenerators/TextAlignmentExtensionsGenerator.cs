@@ -54,7 +54,7 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 
 		foreach (var namedTypeSymbol in mauiTextAlignmentImplementors)
 		{
-			textAlignmentClassList.Add((namedTypeSymbol.Name, "public", namedTypeSymbol.ContainingNamespace.ToDisplayString(), namedTypeSymbol.TypeArguments.GetGenericTypeArgumentsString(), namedTypeSymbol.GetGenericTypeConstraintsAsString()));
+			textAlignmentClassList.Add((namedTypeSymbol.Name, "internal", namedTypeSymbol.ContainingNamespace.ToDisplayString(), namedTypeSymbol.TypeArguments.GetGenericTypeArgumentsString(), namedTypeSymbol.GetGenericTypeConstraintsAsString()));
 		}
 
 		// Collect All Classes in User Library that Implement ITextAlignment
@@ -114,7 +114,7 @@ namespace CommunityToolkit.Maui.Markup
 	/// <summary>
 	/// Extension Methods for <see cref=""ITextAlignment""/>
 	/// </summary>
-	static partial class TextAlignmentExtensions_" + textAlignmentClass.ClassName + @"
+	" + textAlignmentClass.ClassAcessModifier + @" static partial class TextAlignmentExtensions_" + textAlignmentClass.ClassName + @"
 	{
 		/// <summary>
 		/// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.Start""/>
@@ -242,7 +242,7 @@ namespace CommunityToolkit.Maui.Markup
 	    /// <summary>
 	    /// Extension Methods for <see cref=""ITextAlignment""/>
 	    /// </summary>
-	    " + textAlignmentClass.ClassAcessModifier + " static partial class TextAlignmentExtensions_" + textAlignmentClass.ClassName + @"
+	    " + textAlignmentClass.ClassAcessModifier + @" static partial class TextAlignmentExtensions_" + textAlignmentClass.ClassName + @"
 	    {
 		    /// <summary>
 		    /// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.Start""/>
@@ -289,7 +289,7 @@ namespace CommunityToolkit.Maui.Markup
 	    /// <summary>
 	    /// Extension methods for <see cref=""ITextAlignment""/>
 	    /// </summary>
-	    " + textAlignmentClass.ClassAcessModifier + " static partial class TextAlignmentExtensions_" + textAlignmentClass.ClassName + @"
+	    " + textAlignmentClass.ClassAcessModifier + @" static partial class TextAlignmentExtensions_" + textAlignmentClass.ClassName + @"
 	    {
 		    /// <summary>
 		    /// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.End""/>
