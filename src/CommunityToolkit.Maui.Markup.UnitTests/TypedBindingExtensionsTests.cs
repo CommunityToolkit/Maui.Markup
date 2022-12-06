@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using Microsoft.Maui.Controls;
-using Microsoft.Maui.Dispatching;
 using Microsoft.Maui.Graphics;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
@@ -228,6 +227,72 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		}
 	}
 
+	[TestCase(false, false)]
+	[TestCase(false, true)]
+	[TestCase(true, false)]
+	[TestCase(true, true)]
+	public void ValueSetOnOneWayWithNestedPathBinding(bool setContextFirst, bool isDefault)
+	{
+		var bindable = new Entry();
+		var bindingMode = isDefault ? BindingMode.Default : BindingMode.OneWay;
+		var textColor = Colors.Pink;
+
+		var viewmodel = new NestedViewModel
+		{
+			Model = new NestedViewModel
+			{
+				Model = new NestedViewModel
+				{
+					TextColor = textColor
+				}
+			}
+		};
+
+		if (setContextFirst)
+		{
+			bindable.BindingContext = viewmodel;
+			bindable.Bind(Entry.TextColorProperty,
+							static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
+							new (Func<NestedViewModel, object?>, string)[]
+							{
+								(vm => vm, "Model"),
+								(vm => vm.Model, "Model"),
+								(vm => vm.Model.Model, "Text")
+							},
+							static (NestedViewModel vm, Color? color) =>
+							{
+								if (vm.Model?.Model?.TextColor is not null && color is not null)
+								{
+									vm.Model.Model.TextColor = color;
+								}
+							},
+							bindingMode);
+		}
+		else
+		{
+			bindable.Bind(Entry.TextColorProperty,
+							static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
+							new (Func<NestedViewModel, object?>, string)[]
+							{
+								(vm => vm, "Model"),
+								(vm => vm.Model, "Model"),
+								(vm => vm.Model.Model, "Text")
+							},
+							static (NestedViewModel vm, Color? color) =>
+							{
+								if (vm.Model?.Model?.TextColor is not null && color is not null)
+								{
+									vm.Model.Model.TextColor = color;
+								}
+							},
+							bindingMode);
+			bindable.BindingContext = viewmodel;
+		}
+
+		Assert.AreEqual(textColor, viewmodel.Model.Model.TextColor);
+		Assert.AreEqual(textColor, bindable.GetValue(Entry.TextColorProperty));
+	}
+
 	class ViewModel : INotifyPropertyChanged
 	{
 		public const double DefaultPercentage = 0.5;
@@ -262,7 +327,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 			set => SetProperty(ref textColor, value);
 		}
 
-		protected void SetProperty<T>(ref T backingStore, in T value, in Action? onChanged = null, [CallerMemberName] in string propertyname = "")
+		protected void SetProperty<T>(ref T backingStore, in T value, [CallerMemberName] in string propertyname = "")
 		{
 			if (EqualityComparer<T>.Default.Equals(backingStore, value))
 			{
@@ -271,12 +336,21 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 
 			backingStore = value;
 
-			onChanged?.Invoke();
-
 			OnPropertyChanged(propertyname);
 		}
 
 		void OnPropertyChanged([CallerMemberName] string propertyName = "") =>
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+	}
+
+	class NestedViewModel : ViewModel
+	{
+		NestedViewModel? model;
+
+		public NestedViewModel? Model
+		{
+			get => model;
+			set => SetProperty(ref model, value);
+		}
 	}
 }
