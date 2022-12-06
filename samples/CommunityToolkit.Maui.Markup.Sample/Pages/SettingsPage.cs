@@ -10,7 +10,7 @@ sealed class SettingsPage : BaseContentPage<SettingsViewModel>
 		{
 			Children =
 			{
-				new Image { Opacity = 0.25 }.Source("dotnet_bot").IsOpaque(false).Aspect(Aspect.AspectFit)
+				new Image().Source("dotnet_bot.png").Opacity(0.25).IsOpaque(false).Aspect(Aspect.AspectFit)
 					.LayoutFlags(AbsoluteLayoutFlags.SizeProportional | AbsoluteLayoutFlags.PositionProportional)
 					.LayoutBounds(0.5, 0.5, 0.5, 0.5)
 					.AutomationIsInAccessibleTree(false),
@@ -24,7 +24,8 @@ sealed class SettingsPage : BaseContentPage<SettingsViewModel>
 					.TextBottom()
 					.Assign(out Label topNewsStoriesToFetchLabel),
 
-				new Entry { Keyboard = Keyboard.Numeric, BackgroundColor = Colors.White }
+				new Entry { Keyboard = Keyboard.Numeric }
+					.BackgroundColor(Colors.White)
 					.Placeholder($"Provide a value between {SettingsService.MinimumStoriesToFetch} and {SettingsService.MaximumStoriesToFetch}", Colors.Grey)
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
 					.LayoutBounds(0.5, 45, 0.8, 40)
