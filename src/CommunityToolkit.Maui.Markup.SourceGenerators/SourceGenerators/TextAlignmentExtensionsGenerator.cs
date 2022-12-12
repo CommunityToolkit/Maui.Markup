@@ -95,7 +95,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.Start"/>
 		/// </summary>
 		/// <param name="textAlignmentControl"></param>
-		/// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}"/> with added <see cref="TextAlignment.Start"/></returns>
+		/// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{{textAlignmentClassMetadata.GenericArguments}}}"/> with added <see cref="TextAlignment.Start"/></returns>
 		public static TAssignable TextStart{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
@@ -113,7 +113,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.Center"/>
 		/// </summary>
 		/// <param name="textAlignmentControl"></param>
-		/// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}"/> with added <see cref="TextAlignment.Center"/></returns>
+		/// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{{textAlignmentClassMetadata.GenericArguments}}}"/> with added <see cref="TextAlignment.Center"/></returns>
 		public static TAssignable TextCenterHorizontal{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
@@ -131,7 +131,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.End"/>
 		/// </summary>
 		/// <param name="textAlignmentControl"></param>
-		/// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}"/> with added <see cref="TextAlignment.End"/></returns>
+		/// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{{textAlignmentClassMetadata.GenericArguments}}}"/> with added <see cref="TextAlignment.End"/></returns>
 		public static TAssignable TextEnd{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
@@ -149,7 +149,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// <see cref="ITextAlignment.VerticalTextAlignment"/> = <see cref="TextAlignment.Start"/>
 		/// </summary>
 		/// <param name="textAlignmentControl"></param>
-		/// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}"/> with added <see cref="TextAlignment.Start"/></returns>
+		/// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{{textAlignmentClassMetadata.GenericArguments}}}"/> with added <see cref="TextAlignment.Start"/></returns>
 		public static TAssignable TextTop{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
@@ -167,7 +167,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// <see cref="ITextAlignment.VerticalTextAlignment"/> = <see cref="TextAlignment.Center"/>
 		/// </summary>
 		/// <param name="textAlignmentControl"></param>
-		/// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}"/> with added <see cref="TextAlignment.Center"/></returns>
+		/// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{{textAlignmentClassMetadata.GenericArguments}}}"/> with added <see cref="TextAlignment.Center"/></returns>
 		public static TAssignable TextCenterVertical{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
@@ -185,7 +185,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// <see cref="ITextAlignment.VerticalTextAlignment"/> = <see cref="TextAlignment.End"/>
 		/// </summary>
 		/// <param name="textAlignmentControl"></param>
-		/// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}"/> with added <see cref="TextAlignment.End"/></returns>
+		/// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{{textAlignmentClassMetadata.GenericArguments}}}"/> with added <see cref="TextAlignment.End"/></returns>
 		public static TAssignable TextBottom{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
@@ -203,7 +203,7 @@ namespace CommunityToolkit.Maui.Markup
 		/// <see cref="ITextAlignment.VerticalTextAlignment"/> = <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.Center"/>
 		/// </summary>
 		/// <param name="textAlignmentControl"></param>
-		/// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}"/> with added <see cref="TextAlignment.Center"/></returns>
+		/// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{{textAlignmentClassMetadata.GenericArguments}}}"/> with added <see cref="TextAlignment.Center"/></returns>
 		public static TAssignable TextCenter{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
 			=> textAlignmentControl.TextCenterHorizontal{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}().TextCenterVertical{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}();
 	}
@@ -223,7 +223,7 @@ namespace CommunityToolkit.Maui.Markup
 		    /// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.Start"/>
 		    /// </summary>
 		    /// <param name="textAlignmentControl"></param>
-		    /// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}"/> with <see cref="TextAlignment.Start"/></returns>
+		    /// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{{textAlignmentClassMetadata.GenericArguments}}}"/> with <see cref="TextAlignment.Start"/></returns>
 		    public static TAssignable TextLeft{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
 		    {
 				ArgumentNullException.ThrowIfNull(textAlignmentControl);
@@ -241,7 +241,7 @@ namespace CommunityToolkit.Maui.Markup
 		    /// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.End"/>
 		    /// </summary>
 		    /// <param name="textAlignmentControl"></param>
-		    /// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}"/> with <see cref="TextAlignment.End"/></returns>
+		    /// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{{textAlignmentClassMetadata.GenericArguments}}}"/> with <see cref="TextAlignment.End"/></returns>
 		    public static TAssignable TextRight{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
 		    {
 				ArgumentNullException.ThrowIfNull(textAlignmentControl);
@@ -270,7 +270,7 @@ namespace CommunityToolkit.Maui.Markup
 		    /// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.End"/>
 		    /// </summary>
 		    /// <param name="textAlignmentControl"></param>
-		    /// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}"/> with <see cref="TextAlignment.End"/></returns>
+		    /// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{{textAlignmentClassMetadata.GenericArguments}}}"/> with <see cref="TextAlignment.End"/></returns>
 		    public static TAssignable TextLeft{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
 		    {
 				ArgumentNullException.ThrowIfNull(textAlignmentControl);
@@ -288,7 +288,7 @@ namespace CommunityToolkit.Maui.Markup
 		    /// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.Start"/>
 		    /// </summary>
 		    /// <param name="textAlignmentControl"></param>
-		    /// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}"/> with <see cref="TextAlignment.Start"/></returns>
+		    /// <returns><see cref="{{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{{textAlignmentClassMetadata.GenericArguments}}}"/> with <see cref="TextAlignment.Start"/></returns>
 		    public static TAssignable TextRight{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
 		    {
 				ArgumentNullException.ThrowIfNull(textAlignmentControl);
