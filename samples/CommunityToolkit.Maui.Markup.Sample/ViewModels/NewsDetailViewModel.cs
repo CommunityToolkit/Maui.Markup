@@ -24,8 +24,8 @@ sealed partial class NewsDetailViewModel : BaseViewModel, IQueryAttributable
 		ArgumentNullException.ThrowIfNull(Uri);
 		var browserOptions = new BrowserLaunchOptions
 		{
-			PreferredControlColor = (Color?)Application.Current?.Resources[nameof(BaseTheme.BrowserNavigationBarTextColor)],
-			PreferredToolbarColor = (Color?)Application.Current?.Resources[nameof(BaseTheme.BrowserNavigationBarBackgroundColor)],
+			PreferredControlColor = App.Current?.RequestedTheme==AppTheme.Dark ? Colors.White : Color.FromArgb("3F3F3F"),
+			PreferredToolbarColor = App.Current?.RequestedTheme == AppTheme.Dark ? Color.FromArgb("BA7E56"): Color.FromArgb("FFE6D5"),
 		};
 
 		return browser.OpenAsync(Uri, browserOptions);
