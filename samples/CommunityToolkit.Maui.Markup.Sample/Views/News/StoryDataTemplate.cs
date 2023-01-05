@@ -17,7 +17,7 @@ class StoryDataTemplate : DataTemplate
 			(Row.Title, 20),
 			(Row.Description, 20),
 			(Row.BottomPadding, 1)),
-	
+
 		Children =
 		{
 			new Label { LineBreakMode = LineBreakMode.TailTruncation, MaxLines = 1 }

@@ -1,6 +1,4 @@
-﻿
-
-using CommunityToolkit.Maui.Markup.Sample.Resources;
+﻿using CommunityToolkit.Maui.Markup.Sample.Resources;
 using Microsoft.Maui.Layouts;
 
 namespace CommunityToolkit.Maui.Markup.Sample.Pages;
@@ -9,10 +7,10 @@ sealed class SettingsPage : BaseContentPage<SettingsViewModel>
 {
 	public SettingsPage(SettingsViewModel settingsViewModel) : base(settingsViewModel, "Settings")
 	{
-		
-			Content = new AbsoluteLayout
-			{
-				Children =
+
+		Content = new AbsoluteLayout
+		{
+			Children =
 			{
 				new Image().Source("dotnet_bot.png").Opacity(0.25).IsOpaque(false).Aspect(Aspect.AspectFit)
 					.LayoutFlags(AbsoluteLayoutFlags.SizeProportional | AbsoluteLayoutFlags.PositionProportional)
@@ -59,9 +57,9 @@ sealed class SettingsPage : BaseContentPage<SettingsViewModel>
 					.Font(size: 12, italic: true)
 					.SemanticHint($"The minimum and maximum possible values for the {topNewsStoriesToFetchLabel.Text} field above.")
 			}
-			};
-	
-		
-		
+		};
+
+
+
 	}
 }
