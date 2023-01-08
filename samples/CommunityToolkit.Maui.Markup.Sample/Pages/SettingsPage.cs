@@ -7,7 +7,6 @@ sealed class SettingsPage : BaseContentPage<SettingsViewModel>
 {
 	public SettingsPage(SettingsViewModel settingsViewModel) : base(settingsViewModel, "Settings")
 	{
-
 		Content = new AbsoluteLayout
 		{
 			Children =
@@ -19,7 +18,7 @@ sealed class SettingsPage : BaseContentPage<SettingsViewModel>
 
 				new Label()
 					.Text("Top Stories To Fetch")
-					.AppThemeBinding(Label.TextColorProperty, Colors.Black, Color.FromArgb("FFF2EA"))
+					.AppThemeBinding(Label.TextColorProperty,AppStyles.BlackColor, AppStyles.PrimaryTextColorDark)
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
 					.LayoutBounds(0, 0, 1, 40)
 					.TextCenterHorizontal()
@@ -53,7 +52,7 @@ sealed class SettingsPage : BaseContentPage<SettingsViewModel>
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
 					.LayoutBounds(0, 90, 1, 40)
 					.TextCenter()
-					.AppThemeBinding(Label.TextColorProperty, Colors.Black, Color.FromArgb("FFF2EA"))
+					.AppThemeColorBinding(Label.TextColorProperty,AppStyles.BlackColor, AppStyles.PrimaryTextColorDark)
 					.Font(size: 12, italic: true)
 					.SemanticHint($"The minimum and maximum possible values for the {topNewsStoriesToFetchLabel.Text} field above.")
 			}

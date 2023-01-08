@@ -1,4 +1,6 @@
-﻿namespace CommunityToolkit.Maui.Markup.Sample.ViewModels;
+﻿using CommunityToolkit.Maui.Markup.Sample.Resources;
+
+namespace CommunityToolkit.Maui.Markup.Sample.ViewModels;
 
 sealed partial class NewsDetailViewModel : BaseViewModel, IQueryAttributable
 {
@@ -24,8 +26,8 @@ sealed partial class NewsDetailViewModel : BaseViewModel, IQueryAttributable
 		ArgumentNullException.ThrowIfNull(Uri);
 		var browserOptions = new BrowserLaunchOptions
 		{
-			PreferredControlColor = App.Current?.RequestedTheme == AppTheme.Dark ? Colors.White : Color.FromArgb("3F3F3F"),
-			PreferredToolbarColor = App.Current?.RequestedTheme == AppTheme.Dark ? Color.FromArgb("BA7E56") : Color.FromArgb("FFE6D5"),
+			PreferredControlColor = AppStyles.PreferredControlColor,
+			PreferredToolbarColor = AppStyles.PreferredToolbarColor,
 		};
 
 		return browser.OpenAsync(Uri, browserOptions);

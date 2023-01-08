@@ -1,4 +1,5 @@
-﻿using static CommunityToolkit.Maui.Markup.GridRowsColumns;
+﻿using CommunityToolkit.Maui.Markup.Sample.Resources;
+using static CommunityToolkit.Maui.Markup.GridRowsColumns;
 
 namespace CommunityToolkit.Maui.Markup.Sample.Views.News;
 
@@ -22,13 +23,13 @@ class StoryDataTemplate : DataTemplate
 		{
 			new Label { LineBreakMode = LineBreakMode.TailTruncation, MaxLines = 1 }
 				.Row(Row.Title)
-				.Font(size: 16).AppThemeBinding(Label.TextColorProperty, Colors.Black, Color.FromArgb("FFF2EA"))
+				.Font(size: 16).AppThemeBinding(Label.TextColorProperty, AppStyles.BlackColor, AppStyles.PrimaryTextColorDark)
 				.Top().Padding(10, 0)
 				.Bind(Label.TextProperty, nameof(StoryModel.Title))
 				.SemanticHint("The title of the news article."),
 
 			new Label().Row(Row.Description)
-				.Font(size: 13).AppThemeBinding(Label.TextColorProperty, Color.FromArgb("828282"), Color.FromArgb("E9DDD5"))
+				.Font(size: 13).AppThemeBinding(Label.TextColorProperty, AppStyles.SecondaryTextColorLight, AppStyles.SecondaryTextColorDark)
 				.Paddings(10, 0, 10, 5)
 				.Bind(Label.TextProperty, nameof(StoryModel.Description))
 				.SemanticHint("The description of the news article.")
