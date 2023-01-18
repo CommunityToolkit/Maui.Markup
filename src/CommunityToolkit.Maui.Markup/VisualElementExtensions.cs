@@ -167,7 +167,7 @@ public static class VisualElementExtensions
 	/// <param name="style">The <see cref="Markup.Style{T}"/> to apply.</param>
 	/// <returns>The supplied <paramref name="element"/> with the supplied <paramref name="style"/> applied.</returns>
 	public static TVisualElement Style<TVisualElement>(this TVisualElement element, Style<TVisualElement> style) where TVisualElement : VisualElement
-		=> element.Style((Style)style);
+		=> element.Style(style.MauiStyle);
 
 	/// <summary>
 	/// Sets the supplied <paramref name="style"/> on this <paramref name="element"/>.
