@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Maui.Markup.Sample.Resources;
-using static CommunityToolkit.Maui.Markup.GridRowsColumns;
+﻿using static CommunityToolkit.Maui.Markup.GridRowsColumns;
 
 namespace CommunityToolkit.Maui.Markup.Sample.Views.News;
 

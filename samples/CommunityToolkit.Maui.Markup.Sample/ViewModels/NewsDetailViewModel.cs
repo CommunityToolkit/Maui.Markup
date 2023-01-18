@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Maui.Markup.Sample.Resources;
-
-namespace CommunityToolkit.Maui.Markup.Sample.ViewModels;
+﻿namespace CommunityToolkit.Maui.Markup.Sample.ViewModels;
 
 sealed partial class NewsDetailViewModel : BaseViewModel, IQueryAttributable
 {

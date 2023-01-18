@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Maui.Markup.Sample.Resources;
-using Microsoft.Maui.Layouts;
+﻿using Microsoft.Maui.Layouts;
 
 namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
@@ -57,8 +56,5 @@ sealed class SettingsPage : BaseContentPage<SettingsViewModel>
 					.SemanticHint($"The minimum and maximum possible values for the {topNewsStoriesToFetchLabel.Text} field above.")
 			}
 		};
-
-
-
 	}
 }
