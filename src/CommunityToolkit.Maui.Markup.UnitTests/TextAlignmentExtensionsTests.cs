@@ -1,4 +1,8 @@
-﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
@@ -85,14 +89,62 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				ClassConstraintWithInterface,
 				RecordClassContstraint,
 				RecordClassContstraint[],
-				RecordStructContstraint>
-			{
-				HorizontalTextAlignment = TextAlignment.Center
-			};
+				RecordStructContstraint>()
+					.TextCenter<GenericPicker<ClassConstraintWithInterface,
+									ClassConstraint,
+									StructConstraint,
+									ClassConstraintWithInterface,
+									string,
+									int,
+									bool,
+									ClassConstraintWithInterface?,
+									ClassConstraint[],
+									ClassConstraintWithInterface,
+									RecordClassContstraint,
+									RecordClassContstraint[],
+									RecordStructContstraint>,
+									ClassConstraintWithInterface,
+									ClassConstraint,
+									StructConstraint,
+									ClassConstraintWithInterface,
+									string,
+									int,
+									bool,
+									ClassConstraintWithInterface?,
+									ClassConstraint[],
+									ClassConstraintWithInterface,
+									RecordClassContstraint,
+									RecordClassContstraint[],
+									RecordStructContstraint>();
 
 			Assert.AreEqual(TextAlignment.Center, textAlignmentView.HorizontalTextAlignment);
 
-			textAlignmentView.TextEnd();
+			textAlignmentView.TextEnd<GenericPicker<ClassConstraintWithInterface,
+									ClassConstraint,
+									StructConstraint,
+									ClassConstraintWithInterface,
+									string,
+									int,
+									bool,
+									ClassConstraintWithInterface?,
+									ClassConstraint[],
+									ClassConstraintWithInterface,
+									RecordClassContstraint,
+									RecordClassContstraint[],
+									RecordStructContstraint>,
+									ClassConstraintWithInterface,
+									ClassConstraint,
+									StructConstraint,
+									ClassConstraintWithInterface,
+									string,
+									int,
+									bool,
+									ClassConstraintWithInterface?,
+									ClassConstraint[],
+									ClassConstraintWithInterface,
+									RecordClassContstraint,
+									RecordClassContstraint[],
+									RecordStructContstraint>();
 
 			Assert.AreEqual(TextAlignment.End, textAlignmentView.HorizontalTextAlignment);
 		}
@@ -104,9 +156,10 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 			Assert.AreEqual(TextAlignment.Start, genericPicker.HorizontalTextAlignment);
 
-			genericPicker.TextEnd();
+			var generatedPicker = genericPicker.TextEnd();
 
 			Assert.AreEqual(TextAlignment.End, genericPicker.HorizontalTextAlignment);
+			Assert.IsInstanceOf<MyGenericPicker<string>>(generatedPicker);
 		}
 
 		[Test]
@@ -161,6 +214,41 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				.TextCenterVertical()
 				.TextBottom()
 				.TextCenter());
+		}
+
+		[Test]
+		public void AccessModifierForMauiControlsShouldNotBePublic()
+		{
+			foreach (var (generatedType, control) in GetGeneratedTextAlignmentExtensionTypes())
+			{
+				if (control.Assembly == typeof(Button).Assembly)
+				{
+					Assert.False(generatedType.IsPublic);
+				}
+			}
+		}
+
+		[Test]
+		public void AccessModifierForCustomControlsShouldMatchTheControl()
+		{
+			var executingAssembly = Assembly.GetExecutingAssembly();
+
+			foreach (var (generatedType, control) in GetGeneratedTextAlignmentExtensionTypes())
+			{
+				if (control.Assembly == executingAssembly)
+				{
+					Assert.AreEqual(control.IsPublic, generatedType.IsPublic);
+				}
+			}
+		}
+
+		static IEnumerable<(Type generatedType, Type control)> GetGeneratedTextAlignmentExtensionTypes()
+		{
+			return from type in Assembly.GetExecutingAssembly().GetTypes()
+				   where type.Name.StartsWith("TextAlignmentExtensions_")
+				   let method = type.GetMethods().Single(m => m.Name.StartsWith("TextLeft") || m.Name.StartsWith("TextStart"))
+				   let control = method.GetParameters()[0].ParameterType.BaseType
+				   select (type, control);
 		}
 
 		class DerivedFromSearchBar : SearchBar { }

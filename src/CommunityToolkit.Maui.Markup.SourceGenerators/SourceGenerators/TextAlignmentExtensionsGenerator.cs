@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
@@ -20,87 +21,61 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 		// Get All Classes in User Library
 		var userGeneratedClassesProvider = context.SyntaxProvider.CreateSyntaxProvider(
 			static (syntaxNode, cancellationToken) => syntaxNode is ClassDeclarationSyntax { BaseList: not null },
-			static (context, cancellationToken) => (ClassDeclarationSyntax)context.Node);
+			static (context, cancellationToken) =>
+			{
+				var compilation = context.SemanticModel.Compilation;
 
-		// Get Microsoft.Maui.Controls Assembly Symbol
+				var iTextAlignmentInterfaceSymbol = compilation.GetTypeByMetadataName(iTextAlignmentInterface);
+
+				if (iTextAlignmentInterfaceSymbol is null)
+				{
+					throw new Exception("There's no .NET MAUI referenced in the project.");
+				}
+
+				var classSymbol = (INamedTypeSymbol?)context.SemanticModel.GetDeclaredSymbol(context.Node);
+
+				// If the ClassDlecarationSyntax doesn't implements those interfaces we just return null
+				if (classSymbol?.AllInterfaces.Contains(iTextAlignmentInterfaceSymbol, SymbolEqualityComparer.Default) is not true)
+				{
+					return null;
+				}
+
+				return classSymbol;
+			});
+
+		// Get Microsoft.Maui.Controls Symbols that implements the desired interfaces
 		var mauiControlsAssemblySymbolProvider = context.CompilationProvider.Select(
-			static (compilation, token) => compilation.SourceModule.ReferencedAssemblySymbols.Single(q => q.Name == mauiControlsAssembly));
+			static (compilation, token) =>
+			{
+				var iTextAlignmentInterfaceSymbol = compilation.GetTypeByMetadataName(iTextAlignmentInterface);
 
+				if (iTextAlignmentInterfaceSymbol is null)
+				{
+					throw new Exception("There's no .NET MAUI referenced in the project.");
+				}
+
+				var mauiAssembly = compilation.SourceModule.ReferencedAssemblySymbols.Single(q => q.Name == mauiControlsAssembly);
+				var symbols = GetMauiInterfaceImplementors(mauiAssembly, iTextAlignmentInterfaceSymbol).Where(static x => x is not null);
+
+				return symbols;
+			});
+
+
+		// Here we Collect all the Classes candidates from the first pipeline
+		// Then we merge them with the Maui.Controls that implements the desired interfaces
+		// Then we make sure they are unique and the user control doesn't inherit from any Maui control that implements the desired interface already
+		// Then we transform the ISymbol to be a type that we can compare and preserve the Incremental behavior of this Source Generator
 		var inputs = userGeneratedClassesProvider.Collect()
-						.Combine(mauiControlsAssemblySymbolProvider)
-						.Select(static (combined, cancellationToken) => (UserGeneratedClassesProvider: combined.Left, MauiControlsAssemblySymbolProvider: combined.Right))
-						.Combine(context.CompilationProvider)
-						.Select(static (combined, cancellationToken) => (combined.Left.UserGeneratedClassesProvider, combined.Left.MauiControlsAssemblySymbolProvider, Compilation: combined.Right));
+			.Combine(mauiControlsAssemblySymbolProvider)
+			.SelectMany(static (x, _) => Deduplicate(x.Left, x.Right).ToImmutableArray())
+			.Select(static (x, _) => GenerateMetadata(x));
 
-		context.RegisterSourceOutput(inputs, (context, collectedValues) =>
-		Execute(context, collectedValues.Compilation, collectedValues.UserGeneratedClassesProvider, collectedValues.MauiControlsAssemblySymbolProvider));
+		context.RegisterSourceOutput(inputs, Execute);
 	}
 
-	static void Execute(SourceProductionContext context, Compilation compilation, ImmutableArray<ClassDeclarationSyntax> userGeneratedClassesProvider, IAssemblySymbol mauiControlsAssemblySymbolProvider)
+	static void Execute(SourceProductionContext context, TextAlignmentClassMetadata textAlignmentClassMetadata)
 	{
-		var textAlignmentSymbol = compilation.GetTypeByMetadataName(iTextAlignmentInterface);
-
-		if (textAlignmentSymbol is null)
-		{
-			var diag = Diagnostic.Create(TextAlignmentDiagnostics.MauiReferenceIsMissing, Location.None);
-			context.ReportDiagnostic(diag);
-			return;
-		}
-
-		var textAlignmentClassList = new List<(string ClassName, string ClassAcessModifier, string Namespace, string GenericArguments, string GenericConstraints)>();
-
-		// Collect Microsoft.Maui.Controls that Implement ITextAlignment
-		var mauiTextAlignmentImplementors = mauiControlsAssemblySymbolProvider.GlobalNamespace.GetNamedTypeSymbols().Where(x => x.AllInterfaces.Contains(textAlignmentSymbol, SymbolEqualityComparer.Default));
-
-		foreach (var namedTypeSymbol in mauiTextAlignmentImplementors)
-		{
-			textAlignmentClassList.Add((namedTypeSymbol.Name, "public", namedTypeSymbol.ContainingNamespace.ToDisplayString(), namedTypeSymbol.TypeArguments.GetGenericTypeArgumentsString(), namedTypeSymbol.GetGenericTypeConstraintsAsString()));
-		}
-
-		// Collect All Classes in User Library that Implement ITextAlignment
-		foreach (var classDeclarationSyntax in userGeneratedClassesProvider)
-		{
-			var declarationSymbol = compilation.GetSymbol<INamedTypeSymbol>(classDeclarationSyntax);
-			if (declarationSymbol is null)
-			{
-				var diag = Diagnostic.Create(TextAlignmentDiagnostics.InvalidClassDeclarationSyntax, Location.None, classDeclarationSyntax.Identifier.Text);
-				context.ReportDiagnostic(diag);
-				continue;
-			}
-
-			// If the control inherits from a Maui control that implements ITextAlignment, we don't need to generate a extension method for it.
-			// We just generate a method if the Control is a new implementation of ITextAlignment and IAnimatable
-			var doesContainSymbolBaseType = mauiTextAlignmentImplementors.ContainsSymbolBaseType(declarationSymbol);
-
-			if (!doesContainSymbolBaseType
-				&& declarationSymbol.AllInterfaces.Contains(textAlignmentSymbol, SymbolEqualityComparer.Default))
-			{
-				if (declarationSymbol.ContainingNamespace.IsGlobalNamespace)
-				{
-					var diag = Diagnostic.Create(TextAlignmentDiagnostics.GlobalNamespace, Location.None, declarationSymbol.Name);
-					context.ReportDiagnostic(diag);
-					continue;
-				}
-
-				var nameSpace = declarationSymbol.ContainingNamespace.ToDisplayString();
-
-				var accessModifier = GetClassAccessModifier(declarationSymbol);
-
-				if (accessModifier == string.Empty)
-				{
-					var diag = Diagnostic.Create(TextAlignmentDiagnostics.InvalidModifierAccess, Location.None, declarationSymbol.Name);
-					context.ReportDiagnostic(diag);
-					continue;
-				}
-
-				textAlignmentClassList.Add((declarationSymbol.Name, accessModifier, nameSpace, declarationSymbol.TypeArguments.GetGenericTypeArgumentsString(), declarationSymbol.GetGenericTypeConstraintsAsString()));
-			}
-		}
-
-		var options = ((CSharpCompilation)compilation).SyntaxTrees[0].Options as CSharpParseOptions;
-		foreach (var textAlignmentClass in textAlignmentClassList)
-		{
-			var textColorToBuilder = @"
+		var textColorToBuilder = $$"""
 // <auto-generated>
 // See: CommunityToolkit.Maui.Markup.SourceGenerators.TextAlignmentGenerator
 #nullable enable
@@ -112,22 +87,22 @@ using Microsoft.Maui.Controls;
 namespace CommunityToolkit.Maui.Markup
 {
 	/// <summary>
-	/// Extension Methods for <see cref=""ITextAlignment""/>
+	/// Extension Methods for <see cref="ITextAlignment"/>
 	/// </summary>
-	" + textAlignmentClass.ClassAcessModifier + " static partial class TextAlignmentExtensions_" + textAlignmentClass.ClassName + @"
+	{{textAlignmentClassMetadata.ClassAcessModifier}} static partial class TextAlignmentExtensions_{{textAlignmentClassMetadata.ClassName}}
 	{
 		/// <summary>
-		/// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.Start""/>
+		/// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.Start"/>
 		/// </summary>
-		/// <param name=""textAlignmentControl""></param>
-		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Start""/></returns>
-		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextStart" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		/// <param name="textAlignmentControl"></param>
+		/// <returns><typeparamref name="TAssignable"/> with added <see cref="TextAlignment.Start"/></returns>
+		public static TAssignable TextStart{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
 			if (textAlignmentControl is not ITextAlignment)
 			{
-				throw new ArgumentException($""Element must implement {nameof(ITextAlignment)}"", nameof(textAlignmentControl));
+				throw new ArgumentException($"Element must implement {nameof(ITextAlignment)}", nameof(textAlignmentControl));
 			}
 
 			textAlignmentControl.HorizontalTextAlignment = TextAlignment.Start;
@@ -135,17 +110,17 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.Center""/>
+		/// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.Center"/>
 		/// </summary>
-		/// <param name=""textAlignmentControl""></param>
-		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Center""/></returns>
-		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextCenterHorizontal" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		/// <param name="textAlignmentControl"></param>
+		/// <returns><typeparamref name="TAssignable"/> with added <see cref="TextAlignment.Center"/></returns>
+		public static TAssignable TextCenterHorizontal{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
 			if (textAlignmentControl is not ITextAlignment)
 			{
-				throw new ArgumentException($""Element must implement {nameof(ITextAlignment)}"", nameof(textAlignmentControl));
+				throw new ArgumentException($"Element must implement {nameof(ITextAlignment)}", nameof(textAlignmentControl));
 			}
 
 			textAlignmentControl.HorizontalTextAlignment = TextAlignment.Center;
@@ -153,17 +128,17 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.End""/>
+		/// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.End"/>
 		/// </summary>
-		/// <param name=""textAlignmentControl""></param>
-		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.End""/></returns>
-		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextEnd" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		/// <param name="textAlignmentControl"></param>
+		/// <returns><typeparamref name="TAssignable"/> with added <see cref="TextAlignment.End"/></returns>
+		public static TAssignable TextEnd{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
 			if (textAlignmentControl is not ITextAlignment)
 			{
-				throw new ArgumentException($""Element must implement {nameof(ITextAlignment)}"", nameof(textAlignmentControl));
+				throw new ArgumentException($"Element must implement {nameof(ITextAlignment)}", nameof(textAlignmentControl));
 			}
 
 			textAlignmentControl.HorizontalTextAlignment = TextAlignment.End;
@@ -171,17 +146,17 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// <see cref=""ITextAlignment.VerticalTextAlignment""/> = <see cref=""TextAlignment.Start""/>
+		/// <see cref="ITextAlignment.VerticalTextAlignment"/> = <see cref="TextAlignment.Start"/>
 		/// </summary>
-		/// <param name=""textAlignmentControl""></param>
-		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Start""/></returns>
-		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextTop" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		/// <param name="textAlignmentControl"></param>
+		/// <returns><typeparamref name="TAssignable"/> with added <see cref="TextAlignment.Start"/></returns>
+		public static TAssignable TextTop{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
 			if (textAlignmentControl is not ITextAlignment)
 			{
-				throw new ArgumentException($""Element must implement {nameof(ITextAlignment)}"", nameof(textAlignmentControl));
+				throw new ArgumentException($"Element must implement {nameof(ITextAlignment)}", nameof(textAlignmentControl));
 			}
 
 			textAlignmentControl.VerticalTextAlignment = TextAlignment.Start;
@@ -189,17 +164,17 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// <see cref=""ITextAlignment.VerticalTextAlignment""/> = <see cref=""TextAlignment.Center""/>
+		/// <see cref="ITextAlignment.VerticalTextAlignment"/> = <see cref="TextAlignment.Center"/>
 		/// </summary>
-		/// <param name=""textAlignmentControl""></param>
-		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Center""/></returns>
-		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextCenterVertical" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		/// <param name="textAlignmentControl"></param>
+		/// <returns><typeparamref name="TAssignable"/> with added <see cref="TextAlignment.Center"/></returns>
+		public static TAssignable TextCenterVertical{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
 			if (textAlignmentControl is not ITextAlignment)
 			{
-				throw new ArgumentException($""Element must implement {nameof(ITextAlignment)}"", nameof(textAlignmentControl));
+				throw new ArgumentException($"Element must implement {nameof(ITextAlignment)}", nameof(textAlignmentControl));
 			}
 
 			textAlignmentControl.VerticalTextAlignment = TextAlignment.Center;
@@ -207,17 +182,17 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// <see cref=""ITextAlignment.VerticalTextAlignment""/> = <see cref=""TextAlignment.End""/>
+		/// <see cref="ITextAlignment.VerticalTextAlignment"/> = <see cref="TextAlignment.End"/>
 		/// </summary>
-		/// <param name=""textAlignmentControl""></param>
-		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.End""/></returns>
-		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextBottom" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		/// <param name="textAlignmentControl"></param>
+		/// <returns><typeparamref name="TAssignable"/> with added <see cref="TextAlignment.End"/></returns>
+		public static TAssignable TextBottom{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
 		{
 			ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
 			if (textAlignmentControl is not ITextAlignment)
 			{
-				throw new ArgumentException($""Element must implement {nameof(ITextAlignment)}"", nameof(textAlignmentControl));
+				throw new ArgumentException($"Element must implement {nameof(ITextAlignment)}", nameof(textAlignmentControl));
 			}
 
 			textAlignmentControl.VerticalTextAlignment = TextAlignment.End;
@@ -225,12 +200,12 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		/// <summary>
-		/// <see cref=""ITextAlignment.VerticalTextAlignment""/> = <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.Center""/>
+		/// <see cref="ITextAlignment.VerticalTextAlignment"/> = <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.Center"/>
 		/// </summary>
-		/// <param name=""textAlignmentControl""></param>
-		/// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with added <see cref=""TextAlignment.Center""/></returns>
-		public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextCenter" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
-			=> textAlignmentControl.TextCenterHorizontal().TextCenterVertical();
+		/// <param name="textAlignmentControl"></param>
+		/// <returns><typeparamref name="TAssignable"/> with added <see cref="TextAlignment.Center"/></returns>
+		public static TAssignable TextCenter{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
+			=> textAlignmentControl.TextCenterHorizontal{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}().TextCenterVertical{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}();
 	}
 
 
@@ -240,22 +215,22 @@ namespace CommunityToolkit.Maui.Markup
 	namespace LeftToRight
     {
 	    /// <summary>
-	    /// Extension Methods for <see cref=""ITextAlignment""/>
+	    /// Extension Methods for <see cref="ITextAlignment"/>
 	    /// </summary>
-	    " + textAlignmentClass.ClassAcessModifier + " static partial class TextAlignmentExtensions_" + textAlignmentClass.ClassName + @"
+	    {{textAlignmentClassMetadata.ClassAcessModifier}} static partial class TextAlignmentExtensions_{{textAlignmentClassMetadata.ClassName}}
 	    {
 		    /// <summary>
-		    /// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.Start""/>
+		    /// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.Start"/>
 		    /// </summary>
-		    /// <param name=""textAlignmentControl""></param>
-		    /// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.Start""/></returns>
-		    public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextLeft" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		    /// <param name="textAlignmentControl"></param>
+		    /// <returns><typeparamref name="TAssignable"/> with <see cref="TextAlignment.Start"/></returns>
+		    public static TAssignable TextLeft{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
 		    {
 				ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
 				if (textAlignmentControl is not ITextAlignment)
 				{
-					throw new ArgumentException($""Element must implement {nameof(ITextAlignment)}"", nameof(textAlignmentControl));
+					throw new ArgumentException($"Element must implement {nameof(ITextAlignment)}", nameof(textAlignmentControl));
 				}
 
 			    textAlignmentControl.HorizontalTextAlignment = TextAlignment.Start;
@@ -263,17 +238,17 @@ namespace CommunityToolkit.Maui.Markup
 		    }
 
 		    /// <summary>
-		    /// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.End""/>
+		    /// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.End"/>
 		    /// </summary>
-		    /// <param name=""textAlignmentControl""></param>
-		    /// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.End""/></returns>
-		    public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextRight" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		    /// <param name="textAlignmentControl"></param>
+		    /// <returns><typeparamref name="TAssignable"/> with <see cref="TextAlignment.End"/></returns>
+		    public static TAssignable TextRight{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
 		    {
 				ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
 				if (textAlignmentControl is not ITextAlignment)
 				{
-					throw new ArgumentException($""Element must implement {nameof(ITextAlignment)}"", nameof(textAlignmentControl));
+					throw new ArgumentException($"Element must implement {nameof(ITextAlignment)}", nameof(textAlignmentControl));
 				}
 
 			    textAlignmentControl.HorizontalTextAlignment = TextAlignment.End;
@@ -287,22 +262,22 @@ namespace CommunityToolkit.Maui.Markup
     namespace RightToLeft
     {
 	    /// <summary>
-	    /// Extension methods for <see cref=""ITextAlignment""/>
+	    /// Extension methods for <see cref="ITextAlignment"/>
 	    /// </summary>
-	    " + textAlignmentClass.ClassAcessModifier + " static partial class TextAlignmentExtensions_" + textAlignmentClass.ClassName + @"
+	    {{textAlignmentClassMetadata.ClassAcessModifier}} static partial class TextAlignmentExtensions_{{textAlignmentClassMetadata.ClassName}}
 	    {
 		    /// <summary>
-		    /// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.End""/>
+		    /// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.End"/>
 		    /// </summary>
-		    /// <param name=""textAlignmentControl""></param>
-		    /// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.End""/></returns>
-		    public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextLeft" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		    /// <param name="textAlignmentControl"></param>
+		    /// <returns><typeparamref name="TAssignable"/> with <see cref="TextAlignment.End"/></returns>
+		    public static TAssignable TextLeft{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
 		    {
 				ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
 				if (textAlignmentControl is not ITextAlignment)
 				{
-					throw new ArgumentException($""Element must implement {nameof(ITextAlignment)}"", nameof(textAlignmentControl));
+					throw new ArgumentException($"Element must implement {nameof(ITextAlignment)}", nameof(textAlignmentControl));
 				}
 
 			    textAlignmentControl.HorizontalTextAlignment = TextAlignment.End;
@@ -310,17 +285,17 @@ namespace CommunityToolkit.Maui.Markup
 		    }
 
 		    /// <summary>
-		    /// <see cref=""ITextAlignment.HorizontalTextAlignment""/> = <see cref=""TextAlignment.Start""/>
+		    /// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.Start"/>
 		    /// </summary>
-		    /// <param name=""textAlignmentControl""></param>
-		    /// <returns>" + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + @" with <see cref=""TextAlignment.Start""/></returns>
-		    public static " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" TextRight" + textAlignmentClass.GenericArguments + "(this " + textAlignmentClass.Namespace + "." + textAlignmentClass.ClassName + textAlignmentClass.GenericArguments + @" textAlignmentControl)" + textAlignmentClass.GenericConstraints + @"
+		    /// <param name="textAlignmentControl"></param>
+		    /// <returns><typeparamref name="TAssignable"/> with <see cref="TextAlignment.Start"/></returns>
+		    public static TAssignable TextRight{{GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments)}}(this TAssignable textAlignmentControl) where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments)}}{{textAlignmentClassMetadata.GenericConstraints}}
 		    {
 				ArgumentNullException.ThrowIfNull(textAlignmentControl);
 
 				if (textAlignmentControl is not ITextAlignment)
 				{
-					throw new ArgumentException($""Element must implement {nameof(ITextAlignment)}"", nameof(textAlignmentControl));
+					throw new ArgumentException($"Element must implement {nameof(ITextAlignment)}", nameof(textAlignmentControl));
 				}
 
 			    textAlignmentControl.HorizontalTextAlignment = TextAlignment.Start;
@@ -328,17 +303,75 @@ namespace CommunityToolkit.Maui.Markup
 		    }
 	    }
     }
-}";
-			var source = textColorToBuilder.ToString();
-			SourceStringExtensions.FormatText(ref source, options);
-			context.AddSource($"{textAlignmentClass.ClassName}TextAlignmentExtensions.g.cs", SourceText.From(source, Encoding.UTF8));
+}
+""";
+		var source = textColorToBuilder.ToString();
+		SourceStringExtensions.FormatText(ref source);
+		context.AddSource($"{textAlignmentClassMetadata.ClassName}TextAlignmentExtensions.g.cs", SourceText.From(source, Encoding.UTF8));
+	}
+
+	static IEnumerable<INamedTypeSymbol> Deduplicate(ImmutableArray<INamedTypeSymbol?> left, IEnumerable<INamedTypeSymbol> right)
+	{
+		foreach (var leftItem in left)
+		{
+			if (leftItem is null)
+			{
+				continue;
+			}
+
+			var result = right.ContainsSymbolBaseType(leftItem);
+			if (!result)
+			{
+				yield return leftItem;
+			}
 		}
 
-		static string GetClassAccessModifier(INamedTypeSymbol namedTypeSymbol) => namedTypeSymbol.DeclaredAccessibility switch
+		foreach (var rightItem in right)
 		{
-			Accessibility.Public => "public",
-			Accessibility.Internal => "internal",
-			_ => string.Empty
-		};
+			yield return rightItem;
+		}
 	}
+
+	static IEnumerable<INamedTypeSymbol> GetMauiInterfaceImplementors(IAssemblySymbol mauiControlsAssemblySymbolProvider, INamedTypeSymbol itextAlignmentSymbol)
+	{
+		return mauiControlsAssemblySymbolProvider.GlobalNamespace.GetNamedTypeSymbols().Where(x => x.AllInterfaces.Contains(itextAlignmentSymbol, SymbolEqualityComparer.Default));
+	}
+
+	static string GetClassAccessModifier(INamedTypeSymbol namedTypeSymbol) => namedTypeSymbol.DeclaredAccessibility switch
+	{
+		Accessibility.Public => "public",
+		Accessibility.Internal => "internal",
+		_ => string.Empty
+	};
+
+	static string GetGenericTypeParametersDeclarationString(in string genericArguments)
+	{
+		if (string.IsNullOrWhiteSpace(genericArguments))
+		{
+			return "<TAssignable>";
+		}
+
+		return $"<TAssignable,{genericArguments}>";
+	}
+
+	static string GetGenericArgumentsString(in string genericArguments)
+	{
+		if (string.IsNullOrWhiteSpace(genericArguments))
+		{
+			return string.Empty;
+		}
+
+		return $"<{genericArguments}>";
+	}
+
+	static TextAlignmentClassMetadata GenerateMetadata(INamedTypeSymbol namedTypeSymbol)
+	{
+		var accessModifier = mauiControlsAssembly == namedTypeSymbol.ContainingNamespace.ToDisplayString()
+			? "internal"
+			: GetClassAccessModifier(namedTypeSymbol);
+
+		return new(namedTypeSymbol.Name, accessModifier, namedTypeSymbol.ContainingNamespace.ToDisplayString(), namedTypeSymbol.TypeArguments.GetGenericTypeArgumentsString(), namedTypeSymbol.GetGenericTypeConstraintsAsString());
+	}
+
+	record TextAlignmentClassMetadata(string ClassName, string ClassAcessModifier, string Namespace, string GenericArguments, string GenericConstraints);
 }
