@@ -212,7 +212,7 @@ jobs:
         inputs:
           targetType: 'inline'
           script: |
-            dotnet format $PathToSamplesSolution --verify-no-changes --exclude-diagnostics CA1416
+            dotnet format $PathToSamplesSolution -v diag --verify-no-changes --exclude-diagnostics CA1416
             status=$?
             [ $status -eq 0 ] && echo "No errors found"
             [ $status -ne 0 ] && echo "Formatting errors found. In the Windows Command Line, please run \`dotnet format $PathToSamplesSolution\`, then commit + push the newly formatted code"
@@ -244,7 +244,7 @@ jobs:
         inputs:
           targetType: 'inline'
           script: |
-            dotnet format $PathToSamplesSolution --verify-no-changes --exclude-diagnostics CA1416
+            dotnet format $PathToSamplesSolution -v diag --verify-no-changes --exclude-diagnostics CA1416
             status=$?
             [ $status -eq 0 ] && echo "No errors found"
             [ $status -ne 0 ] && echo "Formatting errors found. In the macOS Terminal, please run \`dotnet format $PathToSamplesSolution\`, then commit + push the newly formatted code"
