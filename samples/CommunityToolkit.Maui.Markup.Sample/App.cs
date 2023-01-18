@@ -1,28 +1,15 @@
-﻿namespace CommunityToolkit.Maui.Markup.Sample;
+﻿using CommunityToolkit.Maui.Markup.Sample.Resources;
+
+namespace CommunityToolkit.Maui.Markup.Sample;
 
 class App : Application
 {
 	public App(AppShell shell)
 	{
-		SetAppTheme(RequestedTheme);
-
-		RequestedThemeChanged += HandleRequestedThemeChanged;
+		Resources = new AppStyles();
 
 		MainPage = shell;
 	}
 
-	protected override void OnResume()
-	{
-		base.OnResume();
-		SetAppTheme(RequestedTheme);
-	}
 
-	void HandleRequestedThemeChanged(object? sender, AppThemeChangedEventArgs e) =>
-		SetAppTheme(e.RequestedTheme);
-
-	void SetAppTheme(in AppTheme appTheme) => Resources = appTheme switch
-	{
-		AppTheme.Dark => new DarkTheme(),
-		_ => new LightTheme()
-	};
 }

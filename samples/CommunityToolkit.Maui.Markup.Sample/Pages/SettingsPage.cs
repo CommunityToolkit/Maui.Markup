@@ -17,7 +17,7 @@ sealed class SettingsPage : BaseContentPage<SettingsViewModel>
 
 				new Label()
 					.Text("Top Stories To Fetch")
-					.DynamicResource(Label.TextColorProperty, nameof(BaseTheme.PrimaryTextColor))
+					.AppThemeBinding(Label.TextColorProperty,AppStyles.BlackColor, AppStyles.PrimaryTextColorDark)
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
 					.LayoutBounds(0, 0, 1, 40)
 					.TextCenterHorizontal()
@@ -34,8 +34,8 @@ sealed class SettingsPage : BaseContentPage<SettingsViewModel>
 						Flags = ValidationFlags.ValidateOnValueChanged,
 						MinimumValue = SettingsService.MinimumStoriesToFetch,
 						MaximumValue = SettingsService.MaximumStoriesToFetch,
-						ValidStyle = (Style?)Application.Current?.Resources[nameof(BaseTheme.ValidEntryNumericValidationBehaviorStyle)],
-						InvalidStyle = (Style?)Application.Current?.Resources[nameof(BaseTheme.InvalidEntryNumericValidationBehaviorStyle)],
+						ValidStyle = AppStyles.ValidEntryNumericValidationBehaviorStyle,
+						InvalidStyle = AppStyles.InvalidEntryNumericValidationBehaviorStyle,
 					})
 					.Bind(Entry.TextProperty, nameof(SettingsViewModel.NumberOfTopStoriesToFetch))
 					.TextCenter()
@@ -50,7 +50,9 @@ sealed class SettingsPage : BaseContentPage<SettingsViewModel>
 						mode: BindingMode.OneTime)
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
 					.LayoutBounds(0, 90, 1, 40)
-					.TextCenter().DynamicResource(Label.TextColorProperty, nameof(BaseTheme.PrimaryTextColor)).Font(size: 12, italic: true)
+					.TextCenter()
+					.AppThemeColorBinding(Label.TextColorProperty,AppStyles.BlackColor, AppStyles.PrimaryTextColorDark)
+					.Font(size: 12, italic: true)
 					.SemanticHint($"The minimum and maximum possible values for the {topNewsStoriesToFetchLabel.Text} field above.")
 			}
 		};
