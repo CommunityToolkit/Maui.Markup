@@ -31,15 +31,15 @@ public class AppStyles : ResourceDictionary
 
 	static readonly Color browserNavigationBarTextColorLight = Color.FromArgb("3F3F3F");
 
-	static readonly Color browserNavigationBarBackgroundColorDark  = Color.FromArgb("BA7E56");
+	static readonly Color browserNavigationBarBackgroundColorDark = Color.FromArgb("BA7E56");
 
 	static readonly Color browserNavigationBarBackgroundColorLight = Color.FromArgb("FFE6D5");
 
 	static readonly Color darkOrange = Color.FromArgb("C3560E");
 
-    static readonly Color lightOrange = Color.FromArgb("FF6601");
+	static readonly Color lightOrange = Color.FromArgb("FF6601");
 
-	public static readonly Color PreferredControlColor = App.Current?.RequestedTheme == AppTheme.Dark? browserNavigationBarTextColorDark : browserNavigationBarTextColorLight;
+	public static readonly Color PreferredControlColor = App.Current?.RequestedTheme == AppTheme.Dark ? browserNavigationBarTextColorDark : browserNavigationBarTextColorLight;
 
 	public static readonly Color PreferredToolbarColor = App.Current?.RequestedTheme == AppTheme.Dark ? browserNavigationBarBackgroundColorDark : browserNavigationBarBackgroundColorLight;
 
@@ -56,17 +56,17 @@ public class AppStyles : ResourceDictionary
 												.AddAppThemeBinding(Label.TextColorProperty, BlackColor, PrimaryTextColorDark)
 												.AddAppThemeBinding(Label.BackgroundColorProperty, lightOrange, darkOrange);
 	public static Style NavigationPageStyle { get; } = new Style<NavigationPage>()
-														.AddAppThemeBinding(NavigationPage.BarTextColorProperty, BlackColor,whiteColor)
-														.AddAppThemeBinding(NavigationPage.BackgroundColorProperty, pageBackgroundColorLight,pageBackgroundColorDark)
+														.AddAppThemeBinding(NavigationPage.BarTextColorProperty, BlackColor, whiteColor)
+														.AddAppThemeBinding(NavigationPage.BackgroundColorProperty, pageBackgroundColorLight, pageBackgroundColorDark)
 														.AddAppThemeBinding(NavigationPage.BarBackgroundColorProperty, lightOrange, darkOrange)
 														.ApplyToDerivedTypes(true);
 
 	public static Style ShellStyle { get; } = new Style<Shell>()
 												.AddAppThemeBinding(Shell.NavBarHasShadowProperty, true, true)
-												.AddAppThemeBinding(Shell.TitleColorProperty, BlackColor,whiteColor)
-												.AddAppThemeBinding(Shell.DisabledColorProperty, BlackColor,whiteColor)
-												.AddAppThemeBinding(Shell.UnselectedColorProperty, BlackColor,whiteColor)
-												.AddAppThemeBinding(Shell.ForegroundColorProperty, BlackColor,whiteColor)
+												.AddAppThemeBinding(Shell.TitleColorProperty, BlackColor, whiteColor)
+												.AddAppThemeBinding(Shell.DisabledColorProperty, BlackColor, whiteColor)
+												.AddAppThemeBinding(Shell.UnselectedColorProperty, BlackColor, whiteColor)
+												.AddAppThemeBinding(Shell.ForegroundColorProperty, BlackColor, whiteColor)
 												.AddAppThemeBinding(Shell.BackgroundColorProperty, lightOrange, darkOrange).ApplyToDerivedTypes(true);
 
 	public static Style ValidEntryNumericValidationBehaviorStyle { get; } = new Style<Entry>()

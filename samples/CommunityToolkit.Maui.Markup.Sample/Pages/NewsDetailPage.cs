@@ -32,7 +32,7 @@ sealed class NewsDetailPage : BaseContentPage<NewsDetailViewModel>
 					.TextCenter()
 					.AlignSelf(FlexAlignSelf.Stretch)
 					.Paddings(bottom: 20)
-		            .Style(AppStyles.LabelStyle)
+					.Style(AppStyles.LabelStyle)
 					.Bind(Label.TextProperty, nameof(NewsDetailViewModel.ScoreDescription), BindingMode.OneWay)
 					.SemanticHint("Displays the score of the news article."),
 			}

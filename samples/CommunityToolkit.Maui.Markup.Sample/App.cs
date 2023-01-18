@@ -11,5 +11,5 @@ class App : Application
 		MainPage = shell;
 	}
 
-	
+
 }
