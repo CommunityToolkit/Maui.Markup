@@ -23,8 +23,7 @@ sealed class NewsDetailPage : BaseContentPage<NewsDetailViewModel>
 					.Text("Launch in Browser \uf35d")
 					.Font(size: 20, family: "FontAwesome")
 					.Basis(50)
-					.DynamicResource(Button.TextColorProperty, nameof(BaseTheme.PrimaryTextColor))
-					.DynamicResource(Button.BackgroundColorProperty, nameof(BaseTheme.NavigationBarBackgroundColor))
+					.Style(AppStyles.ButtonStyle)
 					.Bind(Button.CommandProperty, nameof(NewsDetailViewModel.OpenBrowserCommand), BindingMode.OneWay)
 					.SemanticHint("Launches the news article in the devices browser."),
 
@@ -32,8 +31,7 @@ sealed class NewsDetailPage : BaseContentPage<NewsDetailViewModel>
 					.TextCenter()
 					.AlignSelf(FlexAlignSelf.Stretch)
 					.Paddings(bottom: 20)
-					.DynamicResource(Label.TextColorProperty, nameof(BaseTheme.PrimaryTextColor))
-					.DynamicResource(Label.BackgroundColorProperty, nameof(BaseTheme.NavigationBarBackgroundColor))
+					.Style(AppStyles.LabelStyle)
 					.Bind(Label.TextProperty, nameof(NewsDetailViewModel.ScoreDescription), BindingMode.OneWay)
 					.SemanticHint("Displays the score of the news article."),
 			}

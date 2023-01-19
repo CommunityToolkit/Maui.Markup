@@ -164,9 +164,19 @@ public static class VisualElementExtensions
 	/// </summary>
 	/// <typeparam name="TVisualElement">The type of element.</typeparam>
 	/// <param name="element">This element to apply the <paramref name="style"/> to.</param>
-	/// <param name="style">The <see cref="Style"/> to apply.</param>
+	/// <param name="style">The <see cref="Markup.Style{T}"/> to apply.</param>
 	/// <returns>The supplied <paramref name="element"/> with the supplied <paramref name="style"/> applied.</returns>
 	public static TVisualElement Style<TVisualElement>(this TVisualElement element, Style<TVisualElement> style) where TVisualElement : VisualElement
+		=> element.Style(style.MauiStyle);
+
+	/// <summary>
+	/// Sets the supplied <paramref name="style"/> on this <paramref name="element"/>.
+	/// </summary>
+	/// <typeparam name="TVisualElement">The type of element.</typeparam>
+	/// <param name="element">This element to apply the <paramref name="style"/> to.</param>
+	/// <param name="style">The <see cref="Microsoft.Maui.Controls.Style"/> to apply.</param>
+	/// <returns>The supplied <paramref name="element"/> with the supplied <paramref name="style"/> applied.</returns>
+	public static TVisualElement Style<TVisualElement>(this TVisualElement element, Style style) where TVisualElement : VisualElement
 	{
 		element.Style = style;
 		return element;

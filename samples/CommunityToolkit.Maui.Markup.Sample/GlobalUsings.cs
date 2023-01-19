@@ -6,7 +6,7 @@ global using CommunityToolkit.Maui.Markup.Sample.Constants;
 global using CommunityToolkit.Maui.Markup.Sample.Models;
 global using CommunityToolkit.Maui.Markup.Sample.Pages;
 global using CommunityToolkit.Maui.Markup.Sample.Pages.Base;
-global using CommunityToolkit.Maui.Markup.Sample.Resources.Themes;
+global using CommunityToolkit.Maui.Markup.Sample.Resources;
 global using CommunityToolkit.Maui.Markup.Sample.Services;
 global using CommunityToolkit.Maui.Markup.Sample.ViewModels;
 global using CommunityToolkit.Maui.Markup.Sample.ViewModels.Base;
