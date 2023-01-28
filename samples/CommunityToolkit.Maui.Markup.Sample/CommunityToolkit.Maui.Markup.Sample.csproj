@@ -53,4 +53,14 @@
     <ProjectReference Include="..\..\src\CommunityToolkit.Maui.Markup.SourceGenerators\CommunityToolkit.Maui.Markup.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
+  <!-- Workaround for https://github.com/dotnet/maui/issues/7272 -->
+  <Target Name="_SetPublishFolderTypeNoneOnDocFileItems" BeforeTargets="_ComputePublishLocation">
+    <ItemGroup>
+      <ResolvedFileToPublish
+        Update="@(ResolvedFileToPublish)"
+        Condition="'%(ResolvedFileToPublish.Extension)' == '.xml' And '%(ResolvedFileToPublish.PublishFolderType)' == ''"
+        PublishFolderType="None" />
+    </ItemGroup>
+  </Target>
+
 </Project>
