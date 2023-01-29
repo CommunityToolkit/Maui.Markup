@@ -61,7 +61,7 @@ public static class TypedBindingExtensions
 	}
 
 	/// <summary>Bind to a specified property with inline conversion</summary>
-	public static TBindable dBind<TBindable, TBindingContext, TSource, TDest>(
+	public static TBindable Bind<TBindable, TBindingContext, TSource, TDest>(
 		this TBindable bindable,
 		BindableProperty targetProperty,
 		Expression<Func<TBindingContext, TSource>> getter,

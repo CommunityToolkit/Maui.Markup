@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
@@ -21,7 +15,6 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	static readonly IReadOnlyDictionary<string, Color> colors = typeof(Colors)
 		.GetFields(BindingFlags.Static | BindingFlags.Public)
 		.ToDictionary(c => c.Name, c => (Color)(c.GetValue(null) ?? throw new InvalidOperationException()));
-
 
 	ViewModel? viewModel;
 
@@ -294,6 +287,64 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		viewmodel.Model.Model.TextColor = textColor;
 		Assert.AreEqual(textColor, viewmodel.Model.Model.TextColor);
 		Assert.AreEqual(textColor, entry.GetValue(Entry.TextColorProperty));
+	}
+
+	[Test]
+	public async Task ConfirmReadOnlyTypedBindingWithConversion()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		bool didViewModelPropertyChangeFire = false;
+		int viewModelPropertyChangedEventCount = 0;
+		TaskCompletionSource<string?> viewModelPropertyChangedEventArgsTCS = new();
+
+		bool didSliderPropertyChangeFire = false;
+		int sliderPropertyChangedEventCount = 0;
+		TaskCompletionSource<string?> sliderPropertyChangedEventArgsTCS = new();
+
+		var slider = new Slider
+		{
+			BindingContext = viewModel
+		}.Bind(Slider.ThumbColorProperty,
+				static (ViewModel viewModel) => viewModel.Percentage,
+				convert: (double percentage) => percentage > 0.5 ? Colors.Green : Colors.Red);
+
+		slider.PropertyChanged += HandleSliderPropertyChanged;
+		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
+
+		BindingHelpers.AssertTypedBindingExists<Slider, ViewModel, double, Color>(
+			slider,
+			Slider.ThumbColorProperty,
+			BindingMode.Default,
+			viewModel,
+			percentage => percentage > 0.5 ? Colors.Green : Colors.Red);
+
+		viewModel.Percentage = 0.6;
+		var viewModelPropertyName = await viewModelPropertyChangedEventArgsTCS.Task;
+		var sliderPropertyName = await sliderPropertyChangedEventArgsTCS.Task;
+
+		Assert.True(didViewModelPropertyChangeFire);
+		Assert.AreEqual(nameof(ViewModel.Percentage), viewModelPropertyName);
+		Assert.AreEqual(1, viewModelPropertyChangedEventCount);
+
+		Assert.True(didSliderPropertyChangeFire);
+		Assert.AreEqual(nameof(Slider.ThumbColor), sliderPropertyName);
+		Assert.AreEqual(1, sliderPropertyChangedEventCount);
+		Assert.AreEqual(Colors.Green, slider.ThumbColor);
+
+		void HandleViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+		{
+			didViewModelPropertyChangeFire = true;
+			viewModelPropertyChangedEventCount++;
+			viewModelPropertyChangedEventArgsTCS.TrySetResult(e.PropertyName);
+		}
+
+		void HandleSliderPropertyChanged(object? sender, PropertyChangedEventArgs e)
+		{
+			didSliderPropertyChangeFire = true;
+			sliderPropertyChangedEventCount++;
+			sliderPropertyChangedEventArgsTCS.TrySetResult(e.PropertyName);
+		}
 	}
 
 	class ViewModel : INotifyPropertyChanged
