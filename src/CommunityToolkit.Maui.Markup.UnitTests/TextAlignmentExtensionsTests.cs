@@ -372,15 +372,17 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		[Test]
 		public void SupportPartialClasses()
 		{
-			Assert.IsInstanceOf<PartialClassControl>(
-				new PartialClassControl()
+			var partialClassControl = new PartialClassControl()
 				.TextStart()
 				.TextCenterHorizontal()
 				.TextEnd()
 				.TextTop()
 				.TextCenterVertical()
 				.TextBottom()
-				.TextCenter());
+				.TextCenter();
+
+			Assert.True(partialClassControl.IsPartial);
+			Assert.IsInstanceOf<PartialClassControl>(partialClassControl);
 		}
 
 		[Test]
