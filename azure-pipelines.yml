@@ -11,7 +11,7 @@ variables:
   PathToCommunityToolkitSampleCsproj: 'samples/CommunityToolkit.Maui.Markup.Sample/CommunityToolkit.Maui.Markup.Sample.csproj'
   PathToCommunityToolkitUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.UnitTests/CommunityToolkit.Maui.Markup.UnitTests.csproj'
   PathToCommunityToolkitSourceGeneratorsCsproj: 'src/CommunityToolkit.Maui.Markup.SourceGenerators/CommunityToolkit.Maui.Markup.SourceGenerators.csproj'
-  XcodeVersion: '14.1.0'
+  XcodeVersion: '14.2.0'
   ShouldCheckDependencies: true
   
 trigger:
@@ -91,28 +91,28 @@ jobs:
         inputs:
           solution: '$(PathToCommunityToolkitSourceGeneratorsCsproj)'
           configuration: 'Release'
-          msbuildArgs: '/restore'
+          msbuildArgs: '/restore /warnaserror'
 
       - task: VSBuild@1
         displayName: 'Build CommunityToolkit.Maui.Markup'
         inputs:
           solution: '$(PathToCommunityToolkitCsproj)'
           configuration: 'Release'
-          msbuildArgs: '/restore'
+          msbuildArgs: '/restore /warnaserror'
 
       - task: VSBuild@1
         displayName: 'Build CommunityToolkit.Maui.Markup.Sample'
         inputs:
           solution: '$(PathToCommunityToolkitSampleCsproj)'
           configuration: 'Release'
-          msbuildArgs: '/restore'
+          msbuildArgs: '/restore /warnaserror'
 
       - task: VSBuild@1
         displayName: 'Build CommunityToolkit.Maui.Markup.UnitTests'
         inputs:
           solution: '$(PathToCommunityToolkitUnitTestCsproj)'
           configuration: 'Release'
-          msbuildArgs: '/restore'
+          msbuildArgs: '/restore /warnaserror'
 
       # test
       - task: DotNetCoreCLI@2
@@ -212,7 +212,7 @@ jobs:
         inputs:
           targetType: 'inline'
           script: |
-            dotnet format $PathToSamplesSolution --verify-no-changes --exclude-diagnostics CA1416
+            dotnet format $PathToSamplesSolution -v diag --verify-no-changes --exclude-diagnostics CA1416
             status=$?
             [ $status -eq 0 ] && echo "No errors found"
             [ $status -ne 0 ] && echo "Formatting errors found. In the Windows Command Line, please run \`dotnet format $PathToSamplesSolution\`, then commit + push the newly formatted code"
@@ -244,7 +244,7 @@ jobs:
         inputs:
           targetType: 'inline'
           script: |
-            dotnet format $PathToSamplesSolution --verify-no-changes --exclude-diagnostics CA1416
+            dotnet format $PathToSamplesSolution -v diag --verify-no-changes --exclude-diagnostics CA1416
             status=$?
             [ $status -eq 0 ] && echo "No errors found"
             [ $status -ne 0 ] && echo "Formatting errors found. In the macOS Terminal, please run \`dotnet format $PathToSamplesSolution\`, then commit + push the newly formatted code"
@@ -289,22 +289,22 @@ jobs:
       - task: CmdLine@2
         displayName: 'Build CommunityToolkit.Maui.Markup.SourceGenerators'
         inputs:
-          script: dotnet build $(PathToCommunityToolkitSourceGeneratorsCsproj) -c Release
+          script: dotnet build $(PathToCommunityToolkitSourceGeneratorsCsproj) -c Release -warnaserror
 
       - task: CmdLine@2
         displayName: 'Build CommunityToolkit.Maui.Markup'
         inputs:
-          script: dotnet build $(PathToCommunityToolkitCsproj) -c Release
+          script: dotnet build $(PathToCommunityToolkitCsproj) -c Release -warnaserror
 
       - task: CmdLine@2
         displayName: 'Build CommunityToolkit.Maui.Markup.Sample'
         inputs:
-          script: dotnet build $(PathToCommunityToolkitSampleCsproj) -c Release
+          script: dotnet build $(PathToCommunityToolkitSampleCsproj) -c Release -warnaserror
 
       - task: CmdLine@2
         displayName: 'Build CommunityToolkit.Maui.Markup.UnitTests'
         inputs:
-          script: dotnet build $(PathToCommunityToolkitSampleCsproj) -c Release
+          script: dotnet build $(PathToCommunityToolkitSampleCsproj) -c Release -warnaserror
 
       # test
       - task: CmdLine@2

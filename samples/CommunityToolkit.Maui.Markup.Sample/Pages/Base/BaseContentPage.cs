@@ -7,7 +7,6 @@ abstract class BaseContentPage<T> : ContentPage where T : BaseViewModel
 		base.BindingContext = viewModel;
 
 		Title = pageTitle;
-		this.DynamicResource(ContentPage.BackgroundColorProperty, nameof(BaseTheme.PageBackgroundColor));
 	}
 
 	protected new T BindingContext => (T)base.BindingContext;
