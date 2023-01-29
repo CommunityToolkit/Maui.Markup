@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -77,7 +78,7 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 		}
 	}
 
-	static void Execute(SourceProductionContext context, TextAlignmentClassMetadata? textAlignmentClassMetadata)
+	static void Execute(SourceProductionContext context, [NotNull] TextAlignmentClassMetadata? textAlignmentClassMetadata)
 	{
 		if (textAlignmentClassMetadata is null)
 		{
