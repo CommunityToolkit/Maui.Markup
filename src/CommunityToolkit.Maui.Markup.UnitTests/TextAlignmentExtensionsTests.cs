@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
 using NUnit.Framework;
 using Unique.Namespace.To.Test.Interface;
 
@@ -375,6 +370,22 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		}
 
 		[Test]
+		public void SupportPartialClasses()
+		{
+			var partialClassControl = new PartialClassControl()
+				.TextStart()
+				.TextCenterHorizontal()
+				.TextEnd()
+				.TextTop()
+				.TextCenterVertical()
+				.TextBottom()
+				.TextCenter();
+
+			Assert.True(partialClassControl.IsPartial);
+			Assert.IsInstanceOf<PartialClassControl>(partialClassControl);
+		}
+
+		[Test]
 		public void SupportCustomTextAlignment()
 		{
 			Assert.IsInstanceOf<RightToLeftCustomTextAlignmentControl>(
@@ -482,6 +493,18 @@ namespace CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions
 		public TextAlignment HorizontalTextAlignment { get; set; }
 
 		public TextAlignment VerticalTextAlignment { get; set; }
+	}
+
+	partial class PartialClassControl : View, ITextAlignment
+	{
+		public TextAlignment HorizontalTextAlignment { get; set; }
+
+		public TextAlignment VerticalTextAlignment { get; set; }
+	}
+
+	partial class PartialClassControl
+	{
+		public bool IsPartial { get; } = true;
 	}
 }
 
