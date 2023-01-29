@@ -57,7 +57,7 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 				var iTextAlignmentInterfaceSymbol = compilation.GetTypeByMetadataName(iTextAlignmentInterface) ?? throw new Exception("There's no .NET MAUI referenced in the project.");
 				var mauiAssembly = compilation.SourceModule.ReferencedAssemblySymbols.Single(q => q.Name == mauiControlsAssembly);
 
-                return EquatableArray.AsEquatableArray(GetMauiInterfaceImplementors(mauiAssembly, iTextAlignmentInterfaceSymbol).ToImmutableArray());
+				return EquatableArray.AsEquatableArray(GetMauiInterfaceImplementors(mauiAssembly, iTextAlignmentInterfaceSymbol).ToImmutableArray());
 			});
 
 
@@ -79,10 +79,10 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 
 	static void Execute(SourceProductionContext context, TextAlignmentClassMetadata? textAlignmentClassMetadata)
 	{
-        if (textAlignmentClassMetadata is null)
-        {
-            throw new ArgumentNullException(nameof(textAlignmentClassMetadata));
-        }
+		if (textAlignmentClassMetadata is null)
+		{
+			throw new ArgumentNullException(nameof(textAlignmentClassMetadata));
+		}
 
 		var genericTypeParameters = GetGenericTypeParametersDeclarationString(textAlignmentClassMetadata.GenericArguments);
 		var genericArguments = GetGenericArgumentsString(textAlignmentClassMetadata.GenericArguments);
