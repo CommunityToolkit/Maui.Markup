@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
-using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Internals;
 using NUnit.Framework;
 
@@ -66,7 +63,6 @@ static class BindingHelpers
 		=> AssertTypedBindingExists<TBindable, TBindingContext, TSource, object?, TDest>(
 			bindable, targetProperty, expectedBindingMode, expectedSource, expectedConverter, expectedStringFormat: expectedFormat);
 
-
 	internal static void AssertTypedBindingExists<TBindable, TBindingContext, TSource, TParam, TDest>(
 		TBindable bindable,
 		BindableProperty targetProperty,
@@ -83,7 +79,14 @@ static class BindingHelpers
 
 		Assert.That(binding.Mode, Is.EqualTo(expectedBindingMode));
 
-		Assert.That(binding.Converter, Is.EqualTo(expectedConverter));
+		var funcConverter = expectedConverter switch
+		{
+			null => null,
+			_ => new FuncConverter<TSource, TDest, TParam>(expectedConverter, null)
+		};
+
+		Assert.That(binding.Converter?.ToString(), Is.EqualTo(funcConverter?.ToString()));
+
 		Assert.That(binding.ConverterParameter, Is.EqualTo(expectedConverterParameter));
 
 		Assert.IsInstanceOf<TBindingContext>(expectedSource);
@@ -207,7 +210,7 @@ static class BindingHelpers
 
 	internal static IValueConverter AssertConvert<TValue, TConvertedValue>(this IValueConverter converter, TValue value, object? parameter, TConvertedValue expectedConvertedValue, bool twoWay = false, bool backOnly = false, CultureInfo? culture = null)
 	{
-		Assert.That(converter.Convert(value, typeof(object), parameter, culture), Is.EqualTo(backOnly ? default(TConvertedValue) : expectedConvertedValue));
+		Assert.That(converter.Convert(value, typeof(object), parameter, culture), Is.EqualTo(backOnly ? default : expectedConvertedValue));
 		Assert.That(converter.ConvertBack(expectedConvertedValue, typeof(object), parameter, culture), Is.EqualTo(twoWay || backOnly ? value : default(TValue)));
 		return converter;
 	}
@@ -238,5 +241,5 @@ static class BindingHelpers
 	}
 
 	internal static IMultiValueConverter AssertConvert<TConvertedValue>(this IMultiValueConverter converter, object[] values, TConvertedValue expectedConvertedValue, bool twoWay = false, bool backOnly = false, CultureInfo? culture = null)
-	=> AssertConvert(converter, values, null, expectedConvertedValue, twoWay, backOnly, culture);
+		=> AssertConvert(converter, values, null, expectedConvertedValue, twoWay, backOnly, culture);
 }

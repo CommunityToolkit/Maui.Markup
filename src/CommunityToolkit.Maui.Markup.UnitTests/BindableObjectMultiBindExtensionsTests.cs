@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CommunityToolkit.Maui.Markup.UnitTests.Base;
-using Microsoft.Maui.Controls;
+﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests;

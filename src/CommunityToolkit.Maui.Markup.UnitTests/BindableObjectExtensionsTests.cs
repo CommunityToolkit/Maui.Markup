@@ -1,11 +1,6 @@
-﻿using System;
-using System.Linq;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using BindableObjectViews;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
-using Microsoft.Maui.ApplicationModel;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
 using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests

@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-using System.Runtime.Versioning;
 using Microsoft.Maui.Controls.Internals;
 
 namespace CommunityToolkit.Maui.Markup;
@@ -62,7 +61,7 @@ public static class TypedBindingExtensions
 	}
 
 	/// <summary>Bind to a specified property with inline conversion</summary>
-	public static TBindable Bind<TBindable, TBindingContext, TSource, TDest>(
+	public static TBindable dBind<TBindable, TBindingContext, TSource, TDest>(
 		this TBindable bindable,
 		BindableProperty targetProperty,
 		Expression<Func<TBindingContext, TSource>> getter,
@@ -136,7 +135,6 @@ public static class TypedBindingExtensions
 		TDest? targetNullValue = default,
 		TDest? fallbackValue = default) where TBindable : BindableObject
 	{
-
 		var getterFunc = convertExpressionToFunc(getter);
 
 		return Bind<TBindable, TBindingContext, TSource, TParam, TDest>(

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
-using Microsoft.Maui.Graphics;
 using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
-class FuncConverter : BaseMarkupTestFixture
+class FuncConverterTests : BaseMarkupTestFixture
 {
 	[Test]
 	public void TwoWayMultiWithParamAndCulture()

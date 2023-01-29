@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using CommunityToolkit.Maui.Markup.UnitTests.Base;
+﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
@@ -11,7 +6,6 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 	using CommunityToolkit.Maui.Markup.UnitTests.DefaultBindablePropertiesViews;
 	// These usings are placed here to avoid ambiguities
 	using Microsoft.Maui.Controls;
-	using Microsoft.Maui.Controls.Shapes;
 
 	[TestFixture]
 	class DefaultBindablePropertiesTests : BaseMarkupTestFixture

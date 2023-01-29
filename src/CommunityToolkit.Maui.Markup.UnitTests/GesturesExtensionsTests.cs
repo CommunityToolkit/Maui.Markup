@@ -1,8 +1,5 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
 using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests;
