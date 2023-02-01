@@ -5,13 +5,11 @@
 /// </summary>
 public static class BindableObjectExtensions
 {
-	const string bindingContextPath = Binding.SelfPath;
-
 	/// <summary>Bind to a specified property</summary>
 	public static TBindable Bind<TBindable>(
 		this TBindable bindable,
 		BindableProperty targetProperty,
-		string path = bindingContextPath,
+		string path = Binding.SelfPath,
 		BindingMode mode = BindingMode.Default,
 		IValueConverter? converter = null,
 		object? converterParameter = null,
@@ -35,7 +33,7 @@ public static class BindableObjectExtensions
 	public static TBindable Bind<TBindable, TSource, TDest>(
 		this TBindable bindable,
 		BindableProperty targetProperty,
-		string path = bindingContextPath,
+		string path = Binding.SelfPath,
 		BindingMode mode = BindingMode.Default,
 		Func<TSource?, TDest>? convert = null,
 		Func<TDest?, TSource>? convertBack = null,
@@ -60,7 +58,7 @@ public static class BindableObjectExtensions
 	public static TBindable Bind<TBindable, TSource, TParam, TDest>(
 		this TBindable bindable,
 		BindableProperty targetProperty,
-		string path = bindingContextPath,
+		string path = Binding.SelfPath,
 		BindingMode mode = BindingMode.Default,
 		Func<TSource?, TParam?, TDest>? convert = null,
 		Func<TDest?, TParam?, TSource>? convertBack = null,
@@ -85,7 +83,7 @@ public static class BindableObjectExtensions
 	/// <summary>Bind to the default property</summary>
 	public static TBindable Bind<TBindable>(
 		this TBindable bindable,
-		string path = bindingContextPath,
+		string path = Binding.SelfPath,
 		BindingMode mode = BindingMode.Default,
 		IValueConverter? converter = null,
 		object? converterParameter = null,
@@ -104,7 +102,7 @@ public static class BindableObjectExtensions
 	/// <summary>Bind to the default property with inline conversion</summary>
 	public static TBindable Bind<TBindable, TSource, TDest>(
 		this TBindable bindable,
-		string path = bindingContextPath,
+		string path = Binding.SelfPath,
 		BindingMode mode = BindingMode.Default,
 		Func<TSource?, TDest>? convert = null,
 		Func<TDest?, TSource>? convertBack = null,
@@ -125,7 +123,7 @@ public static class BindableObjectExtensions
 	/// <summary>Bind to the default property with inline conversion and conversion parameter</summary>
 	public static TBindable Bind<TBindable, TSource, TParam, TDest>(
 		this TBindable bindable,
-		string path = bindingContextPath,
+		string path = Binding.SelfPath,
 		BindingMode mode = BindingMode.Default,
 		Func<TSource?, TParam?, TDest>? convert = null,
 		Func<TDest?, TParam?, TSource>? convertBack = null,
@@ -151,9 +149,9 @@ public static class BindableObjectExtensions
 	/// <param name="parameterSource">Parameter Binding Source</param>
 	public static TBindable BindCommand<TBindable>(
 		this TBindable bindable,
-		string path = bindingContextPath,
+		string path = Binding.SelfPath,
 		object? source = null,
-		string? parameterPath = bindingContextPath,
+		string? parameterPath = Binding.SelfPath,
 		object? parameterSource = null) where TBindable : BindableObject
 	{
 		(var commandProperty, var parameterProperty) = DefaultBindableProperties.GetCommandAndCommandParameterProperty<TBindable>();
