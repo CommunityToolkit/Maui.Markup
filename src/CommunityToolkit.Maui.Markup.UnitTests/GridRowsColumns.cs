@@ -1,7 +1,4 @@
-﻿using System;
-using CommunityToolkit.Maui.Markup.UnitTests.Base;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
+﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using NUnit.Framework;
 using static CommunityToolkit.Maui.Markup.GridRowsColumns;
 

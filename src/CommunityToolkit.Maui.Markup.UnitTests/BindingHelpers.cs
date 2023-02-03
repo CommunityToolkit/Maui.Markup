@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
-using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Internals;
 using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests;
@@ -45,6 +43,57 @@ static class BindingHelpers
 		=> AssertBindingExists<TDest, object>(
 			bindable, targetProperty, path, mode, assertConverterInstanceIsAnyNotNull, converter, null,
 			stringFormat, source, targetNullValue, fallbackValue, assertConvert);
+
+	internal static void AssertTypedBindingExists<TBindable, TBindingContext, TSource>(
+		TBindable bindable,
+		BindableProperty targetProperty,
+		BindingMode expectedBindingMode,
+		TBindingContext expectedSource,
+		string? expectedFormat = null) where TBindable : BindableObject
+		=> AssertTypedBindingExists<TBindable, TBindingContext, TSource, object?, object?>(
+			bindable, targetProperty, expectedBindingMode, expectedSource, expectedStringFormat: expectedFormat);
+
+	internal static void AssertTypedBindingExists<TBindable, TBindingContext, TSource, TDest>(
+		TBindable bindable,
+		BindableProperty targetProperty,
+		BindingMode expectedBindingMode,
+		TBindingContext expectedSource,
+		Func<TSource?, TDest>? expectedConverter = null,
+		string? expectedFormat = null) where TBindable : BindableObject
+		=> AssertTypedBindingExists<TBindable, TBindingContext, TSource, object?, TDest>(
+			bindable, targetProperty, expectedBindingMode, expectedSource, expectedConverter, expectedStringFormat: expectedFormat);
+
+	internal static void AssertTypedBindingExists<TBindable, TBindingContext, TSource, TParam, TDest>(
+		TBindable bindable,
+		BindableProperty targetProperty,
+		BindingMode expectedBindingMode,
+		TBindingContext expectedSource,
+		Func<TSource?, TDest>? expectedConverter = null,
+		string? expectedStringFormat = null,
+		TDest? expectedTargetNullValue = default,
+		TDest? expectedFallbackValue = default,
+		TParam? expectedConverterParameter = default) where TBindable : BindableObject
+	{
+		var binding = GetTypedBinding(bindable, targetProperty) ?? throw new NullReferenceException();
+		Assert.That(binding, Is.Not.Null);
+
+		Assert.That(binding.Mode, Is.EqualTo(expectedBindingMode));
+
+		var funcConverter = expectedConverter switch
+		{
+			null => null,
+			_ => new FuncConverter<TSource, TDest, TParam>(expectedConverter, null)
+		};
+
+		Assert.That(binding.Converter?.ToString(), Is.EqualTo(funcConverter?.ToString()));
+
+		Assert.That(binding.ConverterParameter, Is.EqualTo(expectedConverterParameter));
+
+		Assert.IsInstanceOf<TBindingContext>(expectedSource);
+		Assert.That(binding.StringFormat, Is.EqualTo(expectedStringFormat));
+		Assert.That(binding.TargetNullValue, Is.EqualTo(expectedTargetNullValue));
+		Assert.That(binding.FallbackValue, Is.EqualTo(expectedFallbackValue));
+	}
 
 	internal static void AssertBindingExists<TDest, TParam>(
 		BindableObject bindable,
@@ -133,21 +182,20 @@ static class BindingHelpers
 		assertConvert?.Invoke(binding.Converter);
 	}
 
-	internal static Binding? GetBinding(BindableObject bindable, BindableProperty property) => GetBindingBase(bindable, property) as Binding;
+	internal static Binding? GetBinding(BindableObject bindable, BindableProperty property) => GetBindingBase<Binding>(bindable, property);
 
-	internal static MultiBinding? GetMultiBinding(BindableObject bindable, BindableProperty property) => GetBindingBase(bindable, property) as MultiBinding;
+	internal static TypedBindingBase? GetTypedBinding(BindableObject bindable, BindableProperty property) => GetBindingBase<TypedBindingBase>(bindable, property);
+
+	internal static MultiBinding? GetMultiBinding(BindableObject bindable, BindableProperty property) => GetBindingBase<MultiBinding>(bindable, property);
 
 	/// <remarks>
 	/// Note that we are only testing whether the Markup helpers create the correct bindings,
 	/// we are not testing the binding mechanism itself; this is why it is justified to access
 	/// private binding API's here for testing.
 	/// </remarks>
-	internal static BindingBase? GetBindingBase(BindableObject bindable, BindableProperty property)
+	internal static TBinding? GetBindingBase<TBinding>(BindableObject bindable, BindableProperty property) where TBinding : BindingBase
 	{
-		if (getContextMethodInfo is null)
-		{
-			getContextMethodInfo = typeof(BindableObject).GetMethod("GetContext", BindingFlags.NonPublic | BindingFlags.Instance);
-		}
+		getContextMethodInfo ??= typeof(BindableObject).GetMethod("GetContext", BindingFlags.NonPublic | BindingFlags.Instance);
 
 		var context = getContextMethodInfo?.Invoke(bindable, new object[] { property });
 		if (context is null)
@@ -155,17 +203,14 @@ static class BindingHelpers
 			return null;
 		}
 
-		if (bindingFieldInfo is null)
-		{
-			bindingFieldInfo = context?.GetType().GetField("Binding");
-		}
+		bindingFieldInfo ??= context?.GetType().GetField("Binding");
 
-		return bindingFieldInfo?.GetValue(context) as BindingBase;
+		return bindingFieldInfo?.GetValue(context) as TBinding;
 	}
 
 	internal static IValueConverter AssertConvert<TValue, TConvertedValue>(this IValueConverter converter, TValue value, object? parameter, TConvertedValue expectedConvertedValue, bool twoWay = false, bool backOnly = false, CultureInfo? culture = null)
 	{
-		Assert.That(converter.Convert(value, typeof(object), parameter, culture), Is.EqualTo(backOnly ? default(TConvertedValue) : expectedConvertedValue));
+		Assert.That(converter.Convert(value, typeof(object), parameter, culture), Is.EqualTo(backOnly ? default : expectedConvertedValue));
 		Assert.That(converter.ConvertBack(expectedConvertedValue, typeof(object), parameter, culture), Is.EqualTo(twoWay || backOnly ? value : default(TValue)));
 		return converter;
 	}
@@ -196,5 +241,5 @@ static class BindingHelpers
 	}
 
 	internal static IMultiValueConverter AssertConvert<TConvertedValue>(this IMultiValueConverter converter, object[] values, TConvertedValue expectedConvertedValue, bool twoWay = false, bool backOnly = false, CultureInfo? culture = null)
-	=> AssertConvert(converter, values, null, expectedConvertedValue, twoWay, backOnly, culture);
+		=> AssertConvert(converter, values, null, expectedConvertedValue, twoWay, backOnly, culture);
 }

@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 

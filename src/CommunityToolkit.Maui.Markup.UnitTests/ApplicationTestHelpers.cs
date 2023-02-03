@@ -1,8 +1,4 @@
-﻿using System;
-using Microsoft.Maui.ApplicationModel;
-using Microsoft.Maui.Controls;
-
-namespace CommunityToolkit.Maui.Markup.UnitTests;
+﻿namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 public static class ApplicationTestHelpers
 {
