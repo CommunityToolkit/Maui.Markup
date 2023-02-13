@@ -44,13 +44,13 @@ static class BindingHelpers
 			bindable, targetProperty, path, mode, assertConverterInstanceIsAnyNotNull, converter, null,
 			stringFormat, source, targetNullValue, fallbackValue, assertConvert);
 
-	internal static void AssertTypedBindingExists<TBindable, TBindingContext, TSource>(
+	internal static void AssertTypedBindingExists<TBindable, TBindingContext>(
 		TBindable bindable,
 		BindableProperty targetProperty,
 		BindingMode expectedBindingMode,
 		TBindingContext expectedSource,
 		string? expectedFormat = null) where TBindable : BindableObject
-		=> AssertTypedBindingExists<TBindable, TBindingContext, TSource, object?, object?>(
+		=> AssertTypedBindingExists<TBindable, TBindingContext, object?, object?, object?>(
 			bindable, targetProperty, expectedBindingMode, expectedSource, expectedStringFormat: expectedFormat);
 
 	internal static void AssertTypedBindingExists<TBindable, TBindingContext, TSource, TDest>(

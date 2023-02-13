@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Windows.Input;
 using Microsoft.Maui.Controls.Internals;
 
 namespace CommunityToolkit.Maui.Markup;
@@ -8,6 +9,108 @@ namespace CommunityToolkit.Maui.Markup;
 /// </summary>
 public static class TypedBindingExtensions
 {
+	/// <summary>Bind to the <typeparamref name="TBindable"/>'s default Command and CommandParameter properties </summary>
+	public static TBindable BindCommand<TBindable, TCommandBindingContext>(
+		this TBindable bindable,
+		Expression<Func<TCommandBindingContext, ICommand>> getter,
+		Action<TCommandBindingContext, ICommand>? setter = null,
+		TCommandBindingContext? source = default) where TBindable : BindableObject
+	{
+		return BindCommand<TBindable, TCommandBindingContext, object?, object?>(
+			bindable,
+			getter,
+			setter,
+			source);
+	}
+
+	/// <summary>Bind to the <typeparamref name="TBindable"/>'s default Command and CommandParameter properties </summary>
+	public static TBindable BindCommand<TBindable, TCommandBindingContext>(
+		this TBindable bindable,
+		Func<TCommandBindingContext, ICommand> getter,
+		(Func<TCommandBindingContext, object?>, string)[] handlers,
+		Action<TCommandBindingContext, ICommand>? setter = null,
+		TCommandBindingContext? source = default) where TBindable : BindableObject
+	{
+		return BindCommand<TBindable, TCommandBindingContext, object?, object?>(
+			bindable,
+			getter,
+			handlers,
+			setter,
+			source);
+	}
+
+	/// <summary>Bind to the <typeparamref name="TBindable"/>'s default Command and CommandParameter properties </summary>
+	public static TBindable BindCommand<TBindable, TCommandBindingContext, TParameterBindingContext, TParameterSource>(
+		this TBindable bindable,
+		Expression<Func<TCommandBindingContext, ICommand>> getter,
+		Action<TCommandBindingContext, ICommand>? setter = null,
+		TCommandBindingContext? source = default,
+		Expression<Func<TParameterBindingContext, TParameterSource>>? parameterGetter = null,
+		Action<TParameterBindingContext, TParameterSource>? parameterSetter = null,
+		TParameterBindingContext? parameterSource = default) where TBindable : BindableObject
+	{
+		(var commandProperty, var parameterProperty) = DefaultBindableProperties.GetCommandAndCommandParameterProperty<TBindable>();
+
+		Bind(bindable,
+			commandProperty,
+			getter,
+			setter,
+			BindingMode.Default,
+			source: source);
+
+		if (parameterGetter is not null)
+		{
+			Bind(
+				bindable,
+				parameterProperty,
+				parameterGetter,
+				parameterSetter,
+				BindingMode.Default,
+				source: parameterSource);
+		}
+
+		return bindable;
+	}
+
+	/// <summary>Bind to the <typeparamref name="TBindable"/>'s default Command and CommandParameter properties </summary>
+	public static TBindable BindCommand<TBindable, TCommandBindingContext, TParameterBindingContext, TParameterSource>(
+		this TBindable bindable,
+		Func<TCommandBindingContext, ICommand> getter,
+		(Func<TCommandBindingContext, object?>, string)[] handlers,
+		Action<TCommandBindingContext, ICommand>? setter = null,
+		TCommandBindingContext? source = default,
+		Func<TParameterBindingContext, TParameterSource>? parameterGetter = null,
+		(Func<TParameterBindingContext, object?>, string)[]? parameterHandlers = null,
+		Action<TParameterBindingContext, TParameterSource>? parameterSetter = null,
+		TParameterBindingContext? parameterSource = default) where TBindable : BindableObject
+	{
+		(var commandProperty, var parameterProperty) = DefaultBindableProperties.GetCommandAndCommandParameterProperty<TBindable>();
+
+		Bind(bindable,
+			commandProperty,
+			getter,
+			handlers,
+			setter,
+			BindingMode.Default,
+			source: source);
+
+		if (parameterGetter is not null)
+		{
+			ArgumentNullException.ThrowIfNull(parameterHandlers);
+
+			Bind(
+				bindable,
+				parameterProperty,
+				parameterGetter,
+				parameterHandlers,
+				parameterSetter,
+				BindingMode.Default,
+				source: parameterSource);
+		}
+
+		return bindable;
+	}
+
 	/// <summary>Bind to a specified property</summary>
 	public static TBindable Bind<TBindable, TBindingContext, TSource>(
 		this TBindable bindable,
@@ -137,7 +240,7 @@ public static class TypedBindingExtensions
 	{
 		var getterFunc = convertExpressionToFunc(getter);
 
-		return Bind<TBindable, TBindingContext, TSource, TParam, TDest>(
+		return Bind(
 				bindable,
 				targetProperty,
 				getterFunc,
