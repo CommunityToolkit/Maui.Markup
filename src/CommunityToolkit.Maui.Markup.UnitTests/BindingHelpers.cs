@@ -60,15 +60,23 @@ static class BindingHelpers
 		TBindingContext expectedSource,
 		Func<TSource?, TDest>? expectedConverter = null,
 		string? expectedFormat = null) where TBindable : BindableObject
-		=> AssertTypedBindingExists<TBindable, TBindingContext, TSource, object?, TDest>(
-			bindable, targetProperty, expectedBindingMode, expectedSource, expectedConverter, expectedStringFormat: expectedFormat);
+	{
+		var funcConverter = expectedConverter switch
+		{
+			null => null,
+			_ => new FuncConverter<TSource, TDest, object>(expectedConverter, null)
+		};
+
+		AssertTypedBindingExists<TBindable, TBindingContext, TSource, object?, TDest>(
+			bindable, targetProperty, expectedBindingMode, expectedSource, funcConverter, expectedStringFormat: expectedFormat);
+	}
 
 	internal static void AssertTypedBindingExists<TBindable, TBindingContext, TSource, TParam, TDest>(
 		TBindable bindable,
 		BindableProperty targetProperty,
 		BindingMode expectedBindingMode,
 		TBindingContext expectedSource,
-		Func<TSource?, TDest>? expectedConverter = null,
+		IValueConverter? expectedConverter = null,
 		string? expectedStringFormat = null,
 		TDest? expectedTargetNullValue = default,
 		TDest? expectedFallbackValue = default,
@@ -79,13 +87,7 @@ static class BindingHelpers
 
 		Assert.That(binding.Mode, Is.EqualTo(expectedBindingMode));
 
-		var funcConverter = expectedConverter switch
-		{
-			null => null,
-			_ => new FuncConverter<TSource, TDest, TParam>(expectedConverter, null)
-		};
-
-		Assert.That(binding.Converter?.ToString(), Is.EqualTo(funcConverter?.ToString()));
+		Assert.That(binding.Converter?.ToString(), Is.EqualTo(expectedConverter?.ToString()));
 
 		Assert.That(binding.ConverterParameter, Is.EqualTo(expectedConverterParameter));
 
