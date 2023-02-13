@@ -59,7 +59,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 
 		textCell.BindCommand(static (ViewModel vm) => vm.Command);
 
-		BindingHelpers.AssertTypedBindingExists(textCell, TextCell.CommandProperty, BindingMode.OneTime, viewModel);
+		BindingHelpers.AssertTypedBindingExists(textCell, TextCell.CommandProperty, BindingMode.Default, viewModel);
 		Assert.That(BindingHelpers.GetBinding(textCell, TextCell.CommandParameterProperty), Is.Null);
 	}
 
