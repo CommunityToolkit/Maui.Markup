@@ -8,7 +8,7 @@ namespace CommunityToolkit.Maui.Markup;
 /// </summary>
 public static partial class TypedBindingExtensions
 {
-	/// <summary>Bind to the <typeparamref name="TBindable"/>'s default Command and CommandParameter properties </summary>
+	/// <summary>Bind to the <typeparamref name="TBindable"/>'s default Command properties </summary>
 	public static TBindable BindCommand<TBindable, TCommandBindingContext>(
 		this TBindable bindable,
 		Func<TCommandBindingContext, ICommand> getter,
