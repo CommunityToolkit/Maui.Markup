@@ -161,4 +161,3 @@ public static partial class TypedBindingExtensions
 		return bindable;
 	}
 }
-
