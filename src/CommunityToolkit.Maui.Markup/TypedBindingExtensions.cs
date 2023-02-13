@@ -14,13 +14,14 @@ public static class TypedBindingExtensions
 		this TBindable bindable,
 		Expression<Func<TCommandBindingContext, ICommand>> getter,
 		Action<TCommandBindingContext, ICommand>? setter = null,
+		BindingMode mode = BindingMode.Default,
 		TCommandBindingContext? source = default) where TBindable : BindableObject
 	{
 		return BindCommand<TBindable, TCommandBindingContext, object?, object?>(
 			bindable,
 			getter,
 			setter,
-			source);
+			mode);
 	}
 
 	/// <summary>Bind to the <typeparamref name="TBindable"/>'s default Command and CommandParameter properties </summary>
@@ -29,6 +30,7 @@ public static class TypedBindingExtensions
 		Func<TCommandBindingContext, ICommand> getter,
 		(Func<TCommandBindingContext, object?>, string)[] handlers,
 		Action<TCommandBindingContext, ICommand>? setter = null,
+		BindingMode mode = BindingMode.Default,
 		TCommandBindingContext? source = default) where TBindable : BindableObject
 	{
 		return BindCommand<TBindable, TCommandBindingContext, object?, object?>(
@@ -36,7 +38,8 @@ public static class TypedBindingExtensions
 			getter,
 			handlers,
 			setter,
-			source);
+			source,
+			mode);
 	}
 
 	/// <summary>Bind to the <typeparamref name="TBindable"/>'s default Command and CommandParameter properties </summary>
@@ -45,9 +48,11 @@ public static class TypedBindingExtensions
 		Expression<Func<TCommandBindingContext, ICommand>> getter,
 		Action<TCommandBindingContext, ICommand>? setter = null,
 		TCommandBindingContext? source = default,
+		BindingMode commandBindingMode = BindingMode.Default,
 		Expression<Func<TParameterBindingContext, TParameterSource>>? parameterGetter = null,
 		Action<TParameterBindingContext, TParameterSource>? parameterSetter = null,
-		TParameterBindingContext? parameterSource = default) where TBindable : BindableObject
+		TParameterBindingContext? parameterSource = default,
+		BindingMode parameterBindingMode = BindingMode.Default) where TBindable : BindableObject
 	{
 		(var commandProperty, var parameterProperty) = DefaultBindableProperties.GetCommandAndCommandParameterProperty<TBindable>();
 
@@ -55,7 +60,7 @@ public static class TypedBindingExtensions
 			commandProperty,
 			getter,
 			setter,
-			BindingMode.Default,
+			commandBindingMode,
 			source: source);
 
 		if (parameterGetter is not null)
@@ -65,7 +70,7 @@ public static class TypedBindingExtensions
 				parameterProperty,
 				parameterGetter,
 				parameterSetter,
-				BindingMode.Default,
+				parameterBindingMode,
 				source: parameterSource);
 		}
 
@@ -79,10 +84,12 @@ public static class TypedBindingExtensions
 		(Func<TCommandBindingContext, object?>, string)[] handlers,
 		Action<TCommandBindingContext, ICommand>? setter = null,
 		TCommandBindingContext? source = default,
+		BindingMode commandBindingMode = BindingMode.Default,
 		Func<TParameterBindingContext, TParameterSource>? parameterGetter = null,
 		(Func<TParameterBindingContext, object?>, string)[]? parameterHandlers = null,
 		Action<TParameterBindingContext, TParameterSource>? parameterSetter = null,
-		TParameterBindingContext? parameterSource = default) where TBindable : BindableObject
+		TParameterBindingContext? parameterSource = default,
+		BindingMode parameterBindingMode = BindingMode.Default) where TBindable : BindableObject
 	{
 		(var commandProperty, var parameterProperty) = DefaultBindableProperties.GetCommandAndCommandParameterProperty<TBindable>();
 
@@ -91,7 +98,7 @@ public static class TypedBindingExtensions
 			getter,
 			handlers,
 			setter,
-			BindingMode.Default,
+			commandBindingMode,
 			source: source);
 
 		if (parameterGetter is not null)
@@ -104,7 +111,7 @@ public static class TypedBindingExtensions
 				parameterGetter,
 				parameterHandlers,
 				parameterSetter,
-				BindingMode.Default,
+				parameterBindingMode,
 				source: parameterSource);
 		}
 

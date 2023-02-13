@@ -57,9 +57,9 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 			BindingContext = viewModel
 		};
 
-		textCell.BindCommand((ViewModel vm) => vm.Command);
+		textCell.BindCommand(static (ViewModel vm) => vm.Command);
 
-		BindingHelpers.AssertTypedBindingExists(textCell, TextCell.CommandProperty, BindingMode.Default, viewModel);
+		BindingHelpers.AssertTypedBindingExists(textCell, TextCell.CommandProperty, BindingMode.OneTime, viewModel);
 		Assert.That(BindingHelpers.GetBinding(textCell, TextCell.CommandParameterProperty), Is.Null);
 	}
 
@@ -73,10 +73,14 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 			BindingContext = viewModel
 		};
 
-		textCell.BindCommand((ViewModel vm) => vm.Command, parameterGetter: (ViewModel vm) => vm.Id);
+		textCell.BindCommand(
+			static (ViewModel vm) => vm.Command,
+			commandBindingMode: BindingMode.OneTime,
+			parameterGetter: static (ViewModel vm) => vm.Id,
+			parameterBindingMode: BindingMode.OneWay);
 
-		BindingHelpers.AssertTypedBindingExists(textCell, TextCell.CommandProperty, BindingMode.Default, viewModel);
-		BindingHelpers.AssertTypedBindingExists(textCell, TextCell.CommandParameterProperty, BindingMode.Default, viewModel);
+		BindingHelpers.AssertTypedBindingExists(textCell, TextCell.CommandProperty, BindingMode.OneTime, viewModel);
+		BindingHelpers.AssertTypedBindingExists(textCell, TextCell.CommandParameterProperty, BindingMode.OneWay, viewModel);
 
 		Assert.AreEqual(textCell.Command, viewModel.Command);
 		Assert.AreEqual(textCell.CommandParameter, viewModel.Id);
