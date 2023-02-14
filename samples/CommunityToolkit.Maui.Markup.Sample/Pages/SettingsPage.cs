@@ -42,7 +42,7 @@ sealed class SettingsPage : BaseContentPage<SettingsViewModel>
 					.Bind(Entry.TextProperty, static (SettingsViewModel vm) => vm.NumberOfTopStoriesToFetch, static (SettingsViewModel vm, int text) => vm.NumberOfTopStoriesToFetch = text),
 
 				new Label()
-					.Bind<Label, int, int, string>(
+					.Bind(
 						Label.TextProperty,
 						binding1: new Binding { Source = SettingsService.MinimumStoriesToFetch },
 						binding2: new Binding { Source = SettingsService.MaximumStoriesToFetch },
