@@ -128,7 +128,7 @@ public static partial class TypedBindingExtensions
 		TDest? targetNullValue = default,
 		TDest? fallbackValue = default) where TBindable : BindableObject
 	{
-		var getterFunc = convertExpressionToFunc(getter);
+		var getterFunc = ConvertExpressionToFunc(getter);
 
 		return Bind(
 				bindable,
@@ -144,14 +144,36 @@ public static partial class TypedBindingExtensions
 				source,
 				targetNullValue,
 				fallbackValue);
+	}
 
-		static Func<TBindingContext, TSource> convertExpressionToFunc(in Expression<Func<TBindingContext, TSource>> expression) => expression.Compile();
+	/// <summary>Bind to a specified property with inline conversion and conversion parameter</summary>
+	public static TBindable Bind<TBindable, TBindingContext, TSource, TParam, TDest>(
+		this TBindable bindable,
+		BindableProperty targetProperty,
+		Expression<Func<TBindingContext, TSource>> getter,
+		Action<TBindingContext, TSource>? setter = null,
+		BindingMode mode = BindingMode.Default,
+		IValueConverter? converter = null,
+		TParam? converterParameter = default,
+		string? stringFormat = null,
+		TBindingContext? source = default,
+		TDest? targetNullValue = default,
+		TDest? fallbackValue = default) where TBindable : BindableObject
+	{
+		var getterFunc = ConvertExpressionToFunc(getter);
 
-		static string GetMemberName<T>(in Expression<T> expression) => expression.Body switch
-		{
-			MemberExpression m => m.Member.Name,
-			UnaryExpression u when u.Operand is MemberExpression m => m.Member.Name,
-			_ => throw new InvalidOperationException("Could not retreive member name")
-		};
+		return Bind(
+				bindable,
+				targetProperty,
+				getterFunc,
+				new (Func<TBindingContext, object?>, string)[] { ((TBindingContext b) => b, GetMemberName(getter)) },
+				setter,
+				mode,
+				converter,
+				converterParameter,
+				stringFormat,
+				source,
+				targetNullValue,
+				fallbackValue);
 	}
 }
