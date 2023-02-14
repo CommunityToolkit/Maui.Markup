@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using CommunityToolkit.Maui.Converters;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
@@ -289,8 +290,142 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		Assert.AreEqual(textColor, entry.GetValue(Entry.TextColorProperty));
 	}
 
+	[TestCase(false, false)]
+	[TestCase(false, true)]
+	[TestCase(true, false)]
+	[TestCase(true, true)]
+	public void ValueSetOnOneWayWithNestedPathBindingWithIValueConverter(bool setContextFirst, bool isDefault)
+	{
+		var label = new Label();
+		var bindingMode = isDefault ? BindingMode.Default : BindingMode.OneWay;
+
+		var viewmodel = new NestedViewModel
+		{
+			Model = new NestedViewModel
+			{
+				Model = new NestedViewModel()
+			}
+		};
+
+		var colorToHexRgbStringConverter = new ColorToHexRgbStringConverter();
+
+		if (setContextFirst)
+		{
+			label.BindingContext = viewmodel;
+			label.Bind<Label, NestedViewModel, Color?, string>(Label.TextProperty,
+							static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
+							new (Func<NestedViewModel, object?>, string)[]
+							{
+								(vm => vm, nameof(NestedViewModel.Model)),
+								(vm => vm.Model, nameof(NestedViewModel.Model)),
+								(vm => vm.Model.Model, nameof(NestedViewModel.Model.TextColor))
+							},
+							static (NestedViewModel vm, Color? color) =>
+							{
+								if (vm.Model?.Model?.TextColor is not null && color is not null)
+								{
+									vm.Model.Model.TextColor = color;
+								}
+							},
+							bindingMode,
+							converter: colorToHexRgbStringConverter);
+		}
+		else
+		{
+			label.Bind<Label, NestedViewModel, Color?, string>(Label.TextProperty,
+							static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
+							new (Func<NestedViewModel, object?>, string)[]
+							{
+								(vm => vm, nameof(NestedViewModel.Model)),
+								(vm => vm.Model, nameof(NestedViewModel.Model)),
+								(vm => vm.Model.Model, nameof(NestedViewModel.Model.TextColor))
+							},
+							static (NestedViewModel vm, Color? color) =>
+							{
+								if (vm.Model?.Model?.TextColor is not null && color is not null)
+								{
+									vm.Model.Model.TextColor = color;
+								}
+							},
+							bindingMode,
+							converter: colorToHexRgbStringConverter);
+
+			label.BindingContext = viewmodel;
+		}
+
+		Assert.AreEqual(ViewModel.DefaultColor, viewmodel.Model.Model.TextColor);
+		Assert.AreEqual(colorToHexRgbStringConverter.ConvertFrom(ViewModel.DefaultColor), label.GetValue(Label.TextProperty));
+
+		var textColor = Colors.Pink;
+
+		viewmodel.Model.Model.TextColor = textColor;
+		Assert.AreEqual(textColor, viewmodel.Model.Model.TextColor);
+		Assert.AreEqual(colorToHexRgbStringConverter.ConvertFrom(textColor), label.GetValue(Label.TextProperty));
+	}
+
 	[Test]
-	public async Task ConfirmReadOnlyTypedBindingWithConversion()
+	public async Task ConfirmReadOnlyTypedBindingWithIValueConverter()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		var colorToHexRgbStringConverter = new ColorToHexRgbStringConverter();
+		var updatedTextColor = Colors.Pink;
+
+		bool didViewModelPropertyChangeFire = false;
+		int viewModelPropertyChangedEventCount = 0;
+		TaskCompletionSource<string?> viewModelPropertyChangedEventArgsTCS = new();
+
+		bool didLabelPropertyChangeFire = false;
+		int labelPropertyChangedEventCount = 0;
+		TaskCompletionSource<string?> labelPropertyChangedEventArgsTCS = new();
+
+		var label = new Label
+		{
+			BindingContext = viewModel
+		}.Bind<Label, ViewModel, Color, string>(Label.TextProperty,
+				static (ViewModel viewModel) => viewModel.TextColor,
+				converter: colorToHexRgbStringConverter);
+
+		label.PropertyChanged += HandleLabelPropertyChanged;
+		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
+
+		BindingHelpers.AssertTypedBindingExists<Label, ViewModel, Color, object?, string>(
+			label,
+			Label.TextProperty,
+			BindingMode.Default,
+			viewModel,
+			expectedConverter: colorToHexRgbStringConverter);
+
+		viewModel.TextColor = updatedTextColor;
+		var viewModelPropertyName = await viewModelPropertyChangedEventArgsTCS.Task;
+		var labelPropertyName = await labelPropertyChangedEventArgsTCS.Task;
+
+		Assert.True(didViewModelPropertyChangeFire);
+		Assert.AreEqual(nameof(ViewModel.TextColor), viewModelPropertyName);
+		Assert.AreEqual(1, viewModelPropertyChangedEventCount);
+
+		Assert.True(didLabelPropertyChangeFire);
+		Assert.AreEqual(nameof(Label.Text), labelPropertyName);
+		Assert.AreEqual(1, labelPropertyChangedEventCount);
+		Assert.AreEqual(colorToHexRgbStringConverter.ConvertFrom(updatedTextColor), label.Text);
+
+		void HandleViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+		{
+			didViewModelPropertyChangeFire = true;
+			viewModelPropertyChangedEventCount++;
+			viewModelPropertyChangedEventArgsTCS.TrySetResult(e.PropertyName);
+		}
+
+		void HandleLabelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+		{
+			didLabelPropertyChangeFire = true;
+			labelPropertyChangedEventCount++;
+			labelPropertyChangedEventArgsTCS.TrySetResult(e.PropertyName);
+		}
+	}
+
+	[Test]
+	public async Task ConfirmReadOnlyTypedBindingWithFuncConversion()
 	{
 		ArgumentNullException.ThrowIfNull(viewModel);
 
