@@ -318,7 +318,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 							{
 								(vm => vm, nameof(NestedViewModel.Model)),
 								(vm => vm.Model, nameof(NestedViewModel.Model)),
-								(vm => vm.Model.Model, nameof(NestedViewModel.Model.TextColor))
+								(vm => vm.Model?.Model, nameof(NestedViewModel.Model.TextColor))
 							},
 							static (NestedViewModel vm, Color? color) =>
 							{
@@ -338,7 +338,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 							{
 								(vm => vm, nameof(NestedViewModel.Model)),
 								(vm => vm.Model, nameof(NestedViewModel.Model)),
-								(vm => vm.Model.Model, nameof(NestedViewModel.Model.TextColor))
+								(vm => vm.Model?.Model, nameof(NestedViewModel.Model.TextColor))
 							},
 							static (NestedViewModel vm, Color? color) =>
 							{
