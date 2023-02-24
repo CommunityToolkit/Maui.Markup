@@ -20,7 +20,7 @@ using CommunityToolkit.Maui.Markup;
 public static MauiApp CreateMauiApp()
 {
     var builder = MauiApp.CreateBuilder();
-    // Initialise the toolkit
+    // Initialize the toolkit
  	builder.UseMauiApp<App>().UseMauiCommunityToolkitMarkup();
     // the rest of your logic...
 }
