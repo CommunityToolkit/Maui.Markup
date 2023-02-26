@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using System.Windows.Input;
+using Microsoft.Maui.Controls.Internals;
 
 namespace CommunityToolkit.Maui.Markup;
 
@@ -113,6 +114,62 @@ public static partial class TypedBindingExtensions
 					fallbackValue);
 	}
 
+	/// <summary>Bind to a specified property with inline conversion</summary>
+	public static TBindable Bind<TBindable, TBindingContext, TSource, TDest>(
+		this TBindable bindable,
+		BindableProperty targetProperty,
+		Expression<Func<TBindingContext, TSource>> getter,
+		Action<TBindingContext, TSource>? setter = null,
+		BindingMode mode = BindingMode.Default,
+		IValueConverter? converter = null,
+		string? stringFormat = null,
+		TBindingContext? source = default,
+		TDest? targetNullValue = default,
+		TDest? fallbackValue = default) where TBindable : BindableObject
+	{
+		return Bind<TBindable, TBindingContext, TSource, object?, TDest>(
+					bindable,
+					targetProperty,
+					getter,
+					setter,
+					mode,
+					converter,
+					null,
+					stringFormat,
+					source,
+					targetNullValue,
+					fallbackValue);
+	}
+
+	/// <summary>Bind to a specified property with inline conversion</summary>
+	public static TBindable Bind<TBindable, TBindingContext, TSource, TDest>(
+		this TBindable bindable,
+		BindableProperty targetProperty,
+		Func<TBindingContext, TSource> getter,
+		(Func<TBindingContext, object?>, string)[] handlers,
+		Action<TBindingContext, TSource>? setter = null,
+		BindingMode mode = BindingMode.Default,
+		IValueConverter? converter = null,
+		string? stringFormat = null,
+		TBindingContext? source = default,
+		TDest? targetNullValue = default,
+		TDest? fallbackValue = default) where TBindable : BindableObject
+	{
+		return Bind<TBindable, TBindingContext, TSource, object?, TDest>(
+					bindable,
+					targetProperty,
+					getter,
+					handlers,
+					setter,
+					mode,
+					converter,
+					null,
+					stringFormat,
+					source,
+					targetNullValue,
+					fallbackValue);
+	}
+
 	/// <summary>Bind to a specified property with inline conversion and conversion parameter</summary>
 	public static TBindable Bind<TBindable, TBindingContext, TSource, TParam, TDest>(
 		this TBindable bindable,
@@ -176,4 +233,13 @@ public static partial class TypedBindingExtensions
 				targetNullValue,
 				fallbackValue);
 	}
+
+	static Func<TBindingContext, TSource> ConvertExpressionToFunc<TBindingContext, TSource>(in Expression<Func<TBindingContext, TSource>> expression) => expression.Compile();
+
+	static string GetMemberName<T>(in Expression<T> expression) => expression.Body switch
+	{
+		MemberExpression m => m.Member.Name,
+		UnaryExpression u when u.Operand is MemberExpression m => m.Member.Name,
+		_ => throw new InvalidOperationException("Could not retreive member name")
+	};
 }

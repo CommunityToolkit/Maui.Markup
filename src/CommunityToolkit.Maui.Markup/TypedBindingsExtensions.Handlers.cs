@@ -160,4 +160,33 @@ public static partial class TypedBindingExtensions
 
 		return bindable;
 	}
+
+	/// <summary>Bind to a specified property with inline conversion and conversion parameter</summary>
+	public static TBindable Bind<TBindable, TBindingContext, TSource, TParam, TDest>(
+		this TBindable bindable,
+		BindableProperty targetProperty,
+		Func<TBindingContext, TSource> getter,
+		(Func<TBindingContext, object?>, string)[] handlers,
+		Action<TBindingContext, TSource>? setter = null,
+		BindingMode mode = BindingMode.Default,
+		IValueConverter? converter = null,
+		TParam? converterParameter = default,
+		string? stringFormat = null,
+		TBindingContext? source = default,
+		TDest? targetNullValue = default,
+		TDest? fallbackValue = default) where TBindable : BindableObject
+	{
+		bindable.SetBinding(targetProperty, new TypedBinding<TBindingContext, TSource>(bindingContext => (getter(bindingContext), true), setter, handlers.Select(x => x.ToTuple()).ToArray())
+		{
+			Mode = mode,
+			Converter = converter,
+			ConverterParameter = converterParameter,
+			StringFormat = stringFormat,
+			Source = source,
+			TargetNullValue = targetNullValue,
+			FallbackValue = fallbackValue
+		});
+
+		return bindable;
+	}
 }
