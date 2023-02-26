@@ -42,7 +42,7 @@ schedules:
     - main
 
 jobs:      
-  - job: build_windows
+  - job: build_sample
     displayName: Build Library
     strategy:
       matrix:
@@ -71,7 +71,7 @@ jobs:
           Write-Host ("##vso[task.setvariable variable=NugetPackageVersion;]$fullVersionString")
           Write-Host "##vso[build.updatebuildnumber]$fullVersionString"
         displayName: Set NuGet Version to PR Version
-        condition: and(succeeded(), eq(variables['build.reason'], 'PullRequest'))
+        condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows_NT'), eq(variables['build.reason'], 'PullRequest'))
 
       - task: CmdLine@2
         displayName: 'Set Xcode v$(XcodeVersion)'
