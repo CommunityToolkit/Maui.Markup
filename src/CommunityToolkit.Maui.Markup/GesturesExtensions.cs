@@ -46,7 +46,7 @@ public static class GesturesExtensions
 																		object? commandSource = null,
 																		string? parameterPath = null,
 																		object? parameterSource = null,
-																		Microsoft.Maui.SwipeDirection? direction = null,
+																		SwipeDirection? direction = null,
 																		uint? threshold = null) where TGestureElement : IGestureRecognizers
 	{
 		var swipeGesture = gestureElement.BindGesture<TGestureElement, SwipeGestureRecognizer>(commandPath, commandSource, parameterPath, parameterSource);
@@ -174,7 +174,7 @@ public static class GesturesExtensions
 	/// <returns><paramref name="gestureElement"/></returns>
 	public static TGestureElement SwipeGesture<TGestureElement>(this TGestureElement gestureElement,
 																EventHandler<SwipedEventArgs>? onSwiped = null,
-																Microsoft.Maui.SwipeDirection? direction = null,
+																SwipeDirection? direction = null,
 																uint? threshold = null) where TGestureElement : IGestureRecognizers
 	{
 		var gestureRecognizer = new SwipeGestureRecognizer();
