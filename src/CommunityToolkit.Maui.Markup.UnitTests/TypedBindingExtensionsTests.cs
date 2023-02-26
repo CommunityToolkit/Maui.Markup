@@ -24,7 +24,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	{
 		base.Setup();
 		viewModel = new ViewModel();
-		System.Threading.Thread.CurrentThread.CurrentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+		Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
 	}
 
 	[TearDown]
@@ -32,6 +32,59 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	{
 		viewModel = null;
 		base.TearDown();
+	}
+
+	[Test]
+	public void BindCommandThrowsArgumentNullExceptionWhenParameterHandlersNull()
+	{
+		Assert.Throws<ArgumentNullException>(() =>
+		{
+			new Button()
+				.BindCommand<Button, ViewModel, object?, Color>(
+					(ViewModel vm) => vm.Command,
+					new (Func<ViewModel, object?>, string)[]
+					{
+						(vm => vm, nameof(ViewModel.Command)),
+					},
+					parameterGetter: _ => Colors.Black);
+		});
+	}
+
+	[Test]
+	public void BindCommandWithDefaults()
+	{
+		var textCell = new TextCell
+		{
+			BindingContext = viewModel
+		};
+
+		textCell.BindCommand(static (ViewModel vm) => vm.Command);
+
+		BindingHelpers.AssertTypedBindingExists(textCell, TextCell.CommandProperty, BindingMode.Default, viewModel);
+		Assert.That(BindingHelpers.GetBinding(textCell, TextCell.CommandParameterProperty), Is.Null);
+	}
+
+	[Test]
+	public void BindCommandWithParameters()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		var textCell = new TextCell
+		{
+			BindingContext = viewModel
+		};
+
+		textCell.BindCommand(
+			static (ViewModel vm) => vm.Command,
+			commandBindingMode: BindingMode.OneTime,
+			parameterGetter: static (ViewModel vm) => vm.Id,
+			parameterBindingMode: BindingMode.OneWay);
+
+		BindingHelpers.AssertTypedBindingExists(textCell, TextCell.CommandProperty, BindingMode.OneTime, viewModel);
+		BindingHelpers.AssertTypedBindingExists(textCell, TextCell.CommandParameterProperty, BindingMode.OneWay, viewModel);
+
+		Assert.AreEqual(textCell.Command, viewModel.Command);
+		Assert.AreEqual(textCell.CommandParameter, viewModel.Id);
 	}
 
 	[Test]
@@ -50,7 +103,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 
 		viewModel.PropertyChanged += HandlePropertyChanged;
 
-		BindingHelpers.AssertTypedBindingExists<Label, ViewModel, string>(label, Label.TextProperty, BindingMode.Default, viewModel, stringFormat);
+		BindingHelpers.AssertTypedBindingExists(label, Label.TextProperty, BindingMode.Default, viewModel, stringFormat);
 		Assert.AreEqual(string.Format(stringFormat, ViewModel.DefaultPercentage), label.Text);
 
 		label.Text = string.Format(stringFormat, 0.1);
@@ -89,7 +142,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
 		label.PropertyChanged += HandleLabelPropertyChanged;
 
-		BindingHelpers.AssertTypedBindingExists<Label, ViewModel, Color>(label, Label.TextColorProperty, BindingMode.Default, viewModel);
+		BindingHelpers.AssertTypedBindingExists(label, Label.TextColorProperty, BindingMode.Default, viewModel);
 		Assert.AreEqual(ViewModel.DefaultColor, label.TextColor);
 
 		viewModel.TextColor = Colors.Green;
@@ -138,7 +191,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
 		label.PropertyChanged += HandleLabelPropertyChanged;
 
-		BindingHelpers.AssertTypedBindingExists<Label, ViewModel, Color>(label, Label.TextColorProperty, BindingMode.OneTime, viewModel);
+		BindingHelpers.AssertTypedBindingExists(label, Label.TextColorProperty, BindingMode.OneTime, viewModel);
 		Assert.AreEqual(ViewModel.DefaultColor, label.TextColor);
 
 		viewModel.TextColor = Colors.Green;
@@ -184,7 +237,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		slider.PropertyChanged += HandleSliderPropertyChanged;
 		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
 
-		BindingHelpers.AssertTypedBindingExists<Slider, ViewModel, string>(slider, Slider.ValueProperty, BindingMode.Default, viewModel);
+		BindingHelpers.AssertTypedBindingExists(slider, Slider.ValueProperty, BindingMode.Default, viewModel);
 		Assert.AreEqual(ViewModel.DefaultPercentage, slider.Value);
 
 		slider.Value = 1;
