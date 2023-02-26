@@ -5,9 +5,7 @@ namespace CommunityToolkit.Maui.Markup;
 
 public static partial class GesturesExtensions
 {
-	/// <summary>
-	/// Add a <see cref="ClickGestureRecognizer"/> and bind to its Command and (optionally) CommandParameter properties</summary>
-	/// </summary>
+	/// <summary>Add a <see cref="ClickGestureRecognizer"/> and bind to its Command and (optionally) CommandParameter properties</summary>
 	public static TGestureElement BindClickGesture<TGestureElement, TCommandBindingContext, TParameterBindingContext, TParameterSource>(
 		this TGestureElement gestureElement,
 		Expression<Func<TCommandBindingContext, ICommand>> getter,
@@ -48,9 +46,7 @@ public static partial class GesturesExtensions
 				numberOfClicksRequired);
 	}
 
-	/// <summary>
-	/// Add a <see cref="ClickGestureRecognizer"/> and bind to its Command and (optionally) CommandParameter properties</summary>
-	/// </summary>
+	/// <summary>Add a <see cref="ClickGestureRecognizer"/> and bind to its Command and (optionally) CommandParameter properties</summary>
 	public static TGestureElement BindClickGesture<TGestureElement, TCommandBindingContext, TParameterBindingContext, TParameterSource>(
 		this TGestureElement gestureElement,
 		Func<TCommandBindingContext, ICommand> getter,
