@@ -24,7 +24,7 @@ sealed class NewsDetailPage : BaseContentPage<NewsDetailViewModel>
 					.Font(size: 20, family: "FontAwesome")
 					.Basis(50)
 					.Style(AppStyles.ButtonStyle)
-					.Bind(Button.CommandProperty, static (NewsDetailViewModel vm) => vm.OpenBrowserCommand, mode: BindingMode.OneWay)
+					.BindCommand(static (NewsDetailViewModel vm) => vm.OpenBrowserCommand, mode: BindingMode.OneWay)
 					.SemanticHint("Launches the news article in the devices browser."),
 
 				new Label()
