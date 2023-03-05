@@ -19,7 +19,7 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/communitytoolkit/Maui.Markup</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/communitytoolkit/Maui.Markup</RepositoryUrl>
-		<PackageReleaseNotes>First release of CommunityToolki.Maui.Markup</PackageReleaseNotes>
+		<PackageReleaseNotes>See https://github.com/CommunityToolkit/Maui.Markup/releases</PackageReleaseNotes>
 		<DefineConstants>$(DefineConstants);</DefineConstants>
 		<UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
 		<Title>CommunityToolkit.Maui.Markup</Title>
