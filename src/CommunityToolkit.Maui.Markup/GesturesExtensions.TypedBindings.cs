@@ -5,6 +5,24 @@ namespace CommunityToolkit.Maui.Markup;
 
 public static partial class GesturesExtensions
 {
+	/// <summary>Add a <see cref="ClickGestureRecognizer"/> and bind to its Command</summary>
+	public static TGestureElement BindClickGesture<TGestureElement, TCommandBindingContext>(
+		this TGestureElement gestureElement,
+		Expression<Func<TCommandBindingContext, ICommand>> getter,
+		Action<TCommandBindingContext, ICommand>? setter = null,
+		TCommandBindingContext? source = default,
+		BindingMode mode = BindingMode.Default,
+		int? numberOfClicksRequired = null) where TGestureElement : BindableObject, IGestureRecognizers
+	{
+		return BindClickGesture<TGestureElement, TCommandBindingContext, object?, object?>(
+				gestureElement,
+				getter,
+				setter,
+				source,
+				mode,
+				numberOfClicksRequired: numberOfClicksRequired);
+	}
+
 	/// <summary>Add a <see cref="ClickGestureRecognizer"/> and bind to its Command and (optionally) CommandParameter properties</summary>
 	public static TGestureElement BindClickGesture<TGestureElement, TCommandBindingContext, TParameterBindingContext, TParameterSource>(
 		this TGestureElement gestureElement,
@@ -46,6 +64,25 @@ public static partial class GesturesExtensions
 				numberOfClicksRequired);
 	}
 
+	/// <summary>Add a <see cref="ClickGestureRecognizer"/> and bind to its Command </summary>
+	public static TGestureElement BindClickGesture<TGestureElement, TCommandBindingContext>(
+		this TGestureElement gestureElement,
+		Func<TCommandBindingContext, ICommand> getter,
+		(Func<TCommandBindingContext, object?>, string)[] handlers,
+		Action<TCommandBindingContext, ICommand>? setter = null,
+		TCommandBindingContext? source = default,
+		BindingMode mode = BindingMode.Default,
+		int? numberOfClicksRequired = null) where TGestureElement : BindableObject, IGestureRecognizers
+	{
+		return gestureElement.BindClickGesture<TGestureElement, TCommandBindingContext, object?, object?>(
+											getter,
+											handlers,
+											setter,
+											source,
+											mode,
+											numberOfClicksRequired: numberOfClicksRequired);
+	}
+
 	/// <summary>Add a <see cref="ClickGestureRecognizer"/> and bind to its Command and (optionally) CommandParameter properties</summary>
 	public static TGestureElement BindClickGesture<TGestureElement, TCommandBindingContext, TParameterBindingContext, TParameterSource>(
 		this TGestureElement gestureElement,
@@ -74,6 +111,26 @@ public static partial class GesturesExtensions
 											parameterSource);
 
 		return gestureElement.ConfigureClickGesture(clickGesture, numberOfClicksRequired);
+	}
+
+	/// <summary>Add a <see cref="SwipeGestureRecognizer"/> and bind to its Command </summary>
+	public static TGestureElement BindSwipeGesture<TGestureElement, TCommandBindingContext>(
+		this TGestureElement gestureElement,
+		Expression<Func<TCommandBindingContext, ICommand>> getter,
+		Action<TCommandBindingContext, ICommand>? setter = null,
+		TCommandBindingContext? source = default,
+		BindingMode mode = BindingMode.Default,
+		SwipeDirection? direction = null,
+		uint? threshold = null) where TGestureElement : BindableObject, IGestureRecognizers
+	{
+		return BindSwipeGesture<TGestureElement, TCommandBindingContext, object?, object?>(
+				gestureElement,
+				getter,
+				setter,
+				source,
+				mode,
+				direction: direction,
+				threshold: threshold);
 	}
 
 	/// <summary>Add a <see cref="SwipeGestureRecognizer"/> and bind to its Command and (optionally) CommandParameter properties</summary>
@@ -119,6 +176,27 @@ public static partial class GesturesExtensions
 				threshold);
 	}
 
+	/// <summary>Add a <see cref="SwipeGestureRecognizer"/> and bind to its Command</summary>
+	public static TGestureElement BindSwipeGesture<TGestureElement, TCommandBindingContext>(
+		this TGestureElement gestureElement,
+		Func<TCommandBindingContext, ICommand> getter,
+		(Func<TCommandBindingContext, object?>, string)[] handlers,
+		Action<TCommandBindingContext, ICommand>? setter = null,
+		TCommandBindingContext? source = default,
+		BindingMode mode = BindingMode.Default,
+		SwipeDirection? direction = null,
+		uint? threshold = null) where TGestureElement : BindableObject, IGestureRecognizers
+	{
+		return gestureElement.BindSwipeGesture<TGestureElement, TCommandBindingContext, object?, object?>(
+											getter,
+											handlers,
+											setter,
+											source,
+											mode,
+											direction: direction,
+											threshold: threshold);
+	}
+
 	/// <summary>Add a <see cref="SwipeGestureRecognizer"/> and bind to its Command and (optionally) CommandParameter properties</summary>
 	public static TGestureElement BindSwipeGesture<TGestureElement, TCommandBindingContext, TParameterBindingContext, TParameterSource>(
 		this TGestureElement gestureElement,
@@ -148,6 +226,25 @@ public static partial class GesturesExtensions
 											parameterSource);
 
 		return gestureElement.ConfigureSwipeGesture(clickGesture, direction, threshold);
+	}
+
+	/// <summary>Adds a <see cref="TapGestureRecognizer"/> and bind its Command</summary>
+	public static TGestureElement BindTapGesture<TGestureElement, TCommandBindingContext>(
+		this TGestureElement gestureElement,
+		Expression<Func<TCommandBindingContext, ICommand>> getter,
+		Action<TCommandBindingContext, ICommand>? setter = null,
+		TCommandBindingContext? source = default,
+		BindingMode mode = BindingMode.Default,
+		int? numberOfTapsRequired = null) where TGestureElement : BindableObject, IGestureRecognizers
+	{
+
+		return BindTapGesture<TGestureElement, TCommandBindingContext, object?, object?>(
+				gestureElement,
+				getter,
+				setter,
+				source,
+				mode,
+				numberOfTapsRequired: numberOfTapsRequired);
 	}
 
 	/// <summary>Adds a <see cref="TapGestureRecognizer"/> and bind its Command and (optionally) CommandParameter properties</summary>
@@ -189,6 +286,25 @@ public static partial class GesturesExtensions
 				parameterBindingMode,
 				parameterSource,
 				numberOfTapsRequired);
+	}
+
+	/// <summary>Adds a <see cref="TapGestureRecognizer"/> and bind its Command </summary>
+	public static TGestureElement BindTapGesture<TGestureElement, TCommandBindingContext>(
+		this TGestureElement gestureElement,
+		Func<TCommandBindingContext, ICommand> getter,
+		(Func<TCommandBindingContext, object?>, string)[] handlers,
+		Action<TCommandBindingContext, ICommand>? setter = null,
+		TCommandBindingContext? source = default,
+		BindingMode mode = BindingMode.Default,
+		int? numberOfTapsRequired = null) where TGestureElement : BindableObject, IGestureRecognizers
+	{
+		return gestureElement.BindTapGesture<TGestureElement, TCommandBindingContext, object?, object?>(
+											getter,
+											handlers,
+											setter,
+											source,
+											mode,
+											numberOfTapsRequired: numberOfTapsRequired);
 	}
 
 	/// <summary>Adds a <see cref="TapGestureRecognizer"/> and bind its Command and (optionally) CommandParameter properties</summary>
