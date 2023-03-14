@@ -88,6 +88,38 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	}
 
 	[Test]
+	public async Task BindUsingRelativeBindingSourceSelf()
+	{
+		const int heightRequest = 200;
+		bool didPropertyChangeFire = false;
+		TaskCompletionSource<string?> propertyChangedEventArgsTCS = new();
+
+		var label = new Label().Bind(Label.TextProperty, static (Label view) => view.HeightRequest, source: RelativeBindingSource.Self);
+		label.PropertyChanged += HandlePropertyChanged;
+
+		Assert.AreEqual(label.HeightRequest.ToString(), label.Text);
+
+		label.HeightRequest = heightRequest;
+
+		var propertyName = await propertyChangedEventArgsTCS.Task.WaitAsync(TimeSpan.FromSeconds(3)).ConfigureAwait(false);
+
+		Assert.True(didPropertyChangeFire);
+		Assert.AreEqual(Label.TextProperty.PropertyName, propertyName);
+		Assert.AreEqual(heightRequest, label.HeightRequest);
+		Assert.AreEqual(label.HeightRequest.ToString(), label.Text);
+
+
+		void HandlePropertyChanged(object? sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == Label.TextProperty.PropertyName)
+			{
+				didPropertyChangeFire = true;
+				propertyChangedEventArgsTCS.SetResult(e.PropertyName);
+			}
+		}
+	}
+
+	[Test]
 	public async Task ConfirmStringFormat()
 	{
 		ArgumentNullException.ThrowIfNull(viewModel);
