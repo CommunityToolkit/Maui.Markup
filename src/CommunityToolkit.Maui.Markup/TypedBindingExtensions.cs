@@ -15,7 +15,7 @@ public static partial class TypedBindingExtensions
 		Expression<Func<TCommandBindingContext, ICommand>> getter,
 		Action<TCommandBindingContext, ICommand>? setter = null,
 		BindingMode mode = BindingMode.Default,
-		TCommandBindingContext? source = default) where TBindable : BindableObject
+		object? source = null) where TBindable : BindableObject
 	{
 		return BindCommand<TBindable, TCommandBindingContext, object?, object?>(
 			bindable,
@@ -30,12 +30,12 @@ public static partial class TypedBindingExtensions
 		this TBindable bindable,
 		Expression<Func<TCommandBindingContext, ICommand>> getter,
 		Action<TCommandBindingContext, ICommand>? setter = null,
-		TCommandBindingContext? source = default,
+		object? source = null,
 		BindingMode commandBindingMode = BindingMode.Default,
 		Expression<Func<TParameterBindingContext, TParameterSource>>? parameterGetter = null,
 		Action<TParameterBindingContext, TParameterSource>? parameterSetter = null,
 		BindingMode parameterBindingMode = BindingMode.Default,
-		TParameterBindingContext? parameterSource = default) where TBindable : BindableObject
+		object? parameterSource = null) where TBindable : BindableObject
 	{
 		(var commandProperty, var parameterProperty) = DefaultBindableProperties.GetCommandAndCommandParameterProperty<TBindable>();
 
@@ -68,7 +68,7 @@ public static partial class TypedBindingExtensions
 		Action<TBindingContext, TSource>? setter = null,
 		BindingMode mode = BindingMode.Default,
 		string? stringFormat = null,
-		TBindingContext? source = default) where TBindable : BindableObject
+		object? source = null) where TBindable : BindableObject
 	{
 		return Bind<TBindable, TBindingContext, TSource, object?, object?>(
 					bindable,
@@ -95,7 +95,7 @@ public static partial class TypedBindingExtensions
 		Func<TSource?, TDest>? convert = null,
 		Func<TDest?, TSource>? convertBack = null,
 		string? stringFormat = null,
-		TBindingContext? source = default,
+		object? source = null,
 		TDest? targetNullValue = default,
 		TDest? fallbackValue = default) where TBindable : BindableObject
 	{
@@ -123,7 +123,7 @@ public static partial class TypedBindingExtensions
 		BindingMode mode = BindingMode.Default,
 		IValueConverter? converter = null,
 		string? stringFormat = null,
-		TBindingContext? source = default,
+		object? source = null,
 		TDest? targetNullValue = default,
 		TDest? fallbackValue = default) where TBindable : BindableObject
 	{
@@ -151,7 +151,7 @@ public static partial class TypedBindingExtensions
 		BindingMode mode = BindingMode.Default,
 		IValueConverter? converter = null,
 		string? stringFormat = null,
-		TBindingContext? source = default,
+		object? source = null,
 		TDest? targetNullValue = default,
 		TDest? fallbackValue = default) where TBindable : BindableObject
 	{
@@ -181,7 +181,7 @@ public static partial class TypedBindingExtensions
 		Func<TDest?, TParam?, TSource>? convertBack = null,
 		TParam? converterParameter = default,
 		string? stringFormat = null,
-		TBindingContext? source = default,
+		object? source = null,
 		TDest? targetNullValue = default,
 		TDest? fallbackValue = default) where TBindable : BindableObject
 	{
@@ -213,7 +213,7 @@ public static partial class TypedBindingExtensions
 		IValueConverter? converter = null,
 		TParam? converterParameter = default,
 		string? stringFormat = null,
-		TBindingContext? source = default,
+		object? source = null,
 		TDest? targetNullValue = default,
 		TDest? fallbackValue = default) where TBindable : BindableObject
 	{
