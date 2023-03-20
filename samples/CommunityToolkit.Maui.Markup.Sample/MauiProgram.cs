@@ -3,6 +3,17 @@ using Refit;
 
 namespace CommunityToolkit.Maui.Markup.Sample;
 
+public class MyEntry : Entry, IEntry
+{
+	public string Type { get; set; } = string.Empty;
+}
+
+public interface IMyEntry
+{
+	public string Type { get; set; }	
+}
+
+
 public class MauiProgram
 {
 	public static MauiApp CreateMauiApp()
