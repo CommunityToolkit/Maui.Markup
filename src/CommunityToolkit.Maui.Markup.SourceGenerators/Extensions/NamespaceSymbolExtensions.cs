@@ -142,4 +142,23 @@ static class NamespaceSymbolExtensions
 
 		return result.ToString();
 	}
+	
+	internal static bool ContainsSymbolBaseType(this IEnumerable<INamedTypeSymbol> namedSymbolList, INamedTypeSymbol symbol)
+	{
+		INamedTypeSymbol? baseType = symbol.BaseType;
+
+		while (baseType is not null)
+		{
+			var doesListContainBaseType = namedSymbolList.Any(x => x.Equals(baseType, SymbolEqualityComparer.Default));
+
+			if (doesListContainBaseType)
+			{
+				return true;
+			}
+
+			baseType = baseType.BaseType;
+		}
+
+		return false;
+	}
 }
