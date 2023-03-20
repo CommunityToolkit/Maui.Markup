@@ -14,17 +14,22 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 	const string iTextAlignmentInterface = "Microsoft.Maui.ITextAlignment";
 	const string mauiControlsAssembly = "Microsoft.Maui.Controls";
 
+	static List<INamedTypeSymbol> mauiTypes = new();
+
 	public void Initialize(IncrementalGeneratorInitializationContext context)
 	{
+		//this didn't work on mac
+		System.Diagnostics.Debugger.Launch();
+		
 		// Get All Classes in User Library
 		var userGeneratedClassesProvider = context.SyntaxProvider.CreateSyntaxProvider(
 			static (syntaxNode, cancellationToken) => syntaxNode is ClassDeclarationSyntax { BaseList: not null },
 			static (context, cancellationToken) =>
 			{
-				var compilation = context.SemanticModel.Compilation;
+				Compilation compilation = context.SemanticModel.Compilation;
 
-				var iTextAlignmentInterfaceSymbol = compilation.GetTypeByMetadataName(iTextAlignmentInterface) ?? throw new Exception("There's no .NET MAUI referenced in the project.");
-				var classSymbol = context.SemanticModel.GetDeclaredSymbol((ClassDeclarationSyntax)context.Node, cancellationToken);
+				INamedTypeSymbol iTextAlignmentInterfaceSymbol = compilation.GetTypeByMetadataName(iTextAlignmentInterface) ?? throw new Exception("There's no .NET MAUI referenced in the project.");
+				INamedTypeSymbol? classSymbol = context.SemanticModel.GetDeclaredSymbol((ClassDeclarationSyntax)context.Node, cancellationToken);
 
 				if (classSymbol is null || classSymbol.DeclaringSyntaxReferences[0].GetSyntax(cancellationToken) != context.Node)
 				{
@@ -33,13 +38,28 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 					return null;
 				}
 
+				//Find maui types just once, since it can't change during each build
+				// could not debug to make sure this is just called once
+				// sadly work with SG on mac is (still) terrible
+				if (mauiTypes.Count is 0)
+				{
+					IAssemblySymbol mauiAssembly = compilation.SourceModule.ReferencedAssemblySymbols.Single(q => q.Name == mauiControlsAssembly);
+					mauiTypes.AddRange(ThisGetMauiInterfaceImplementors(mauiAssembly, iTextAlignmentInterfaceSymbol));
+					
+					static IEnumerable<INamedTypeSymbol> ThisGetMauiInterfaceImplementors(IAssemblySymbol mauiControlsAssemblySymbolProvider, INamedTypeSymbol itextAlignmentSymbol)
+					{
+						return mauiControlsAssemblySymbolProvider.GlobalNamespace.GetNamedTypeSymbols().Where(x =>
+							x.AllInterfaces.Contains(itextAlignmentSymbol, SymbolEqualityComparer.Default));
+					}
+				}
+				
 				while (classSymbol is not null)
 				{
-					if (classSymbol.ContainingAssembly.Name == mauiControlsAssembly)
+					if (classSymbol.ContainingAssembly.Name == mauiControlsAssembly || mauiTypes.ContainsSymbolBaseType(classSymbol))
 					{
 						break;
 					}
-
+					
 					if (classSymbol.Interfaces.Any(i => i.Equals(iTextAlignmentInterfaceSymbol, SymbolEqualityComparer.Default) || i.AllInterfaces.Contains(iTextAlignmentInterfaceSymbol, SymbolEqualityComparer.Default)))
 					{
 						return GenerateMetadata(classSymbol);
@@ -55,13 +75,13 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 		var mauiControlsAssemblySymbolProvider = context.CompilationProvider.Select(
 			static (compilation, token) =>
 			{
-				var iTextAlignmentInterfaceSymbol = compilation.GetTypeByMetadataName(iTextAlignmentInterface) ?? throw new Exception("There's no .NET MAUI referenced in the project.");
-				var mauiAssembly = compilation.SourceModule.ReferencedAssemblySymbols.Single(q => q.Name == mauiControlsAssembly);
+				INamedTypeSymbol iTextAlignmentInterfaceSymbol = compilation.GetTypeByMetadataName(iTextAlignmentInterface) ?? throw new Exception("There's no .NET MAUI referenced in the project.");
+				IAssemblySymbol mauiAssembly = compilation.SourceModule.ReferencedAssemblySymbols.Single(q => q.Name == mauiControlsAssembly);
 
 				return EquatableArray.AsEquatableArray(GetMauiInterfaceImplementors(mauiAssembly, iTextAlignmentInterfaceSymbol).ToImmutableArray());
 			});
-
-
+		
+		
 		// Here we Collect all the Classes candidates from the first pipeline
 		// Then we merge them with the Maui.Controls that implements the desired interfaces
 		// Then we make sure they are unique and the user control doesn't inherit from any Maui control that implements the desired interface already
