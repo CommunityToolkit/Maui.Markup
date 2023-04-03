@@ -85,61 +85,11 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				RecordClassContstraint,
 				RecordClassContstraint[],
 				RecordStructContstraint>()
-					.TextCenter<GenericPicker<ClassConstraintWithInterface,
-									ClassConstraint,
-									StructConstraint,
-									ClassConstraintWithInterface,
-									string,
-									int,
-									bool,
-									ClassConstraintWithInterface?,
-									ClassConstraint[],
-									ClassConstraintWithInterface,
-									RecordClassContstraint,
-									RecordClassContstraint[],
-									RecordStructContstraint>,
-									ClassConstraintWithInterface,
-									ClassConstraint,
-									StructConstraint,
-									ClassConstraintWithInterface,
-									string,
-									int,
-									bool,
-									ClassConstraintWithInterface?,
-									ClassConstraint[],
-									ClassConstraintWithInterface,
-									RecordClassContstraint,
-									RecordClassContstraint[],
-									RecordStructContstraint>();
+					.TextCenter();
 
 			Assert.AreEqual(TextAlignment.Center, textAlignmentView.HorizontalTextAlignment);
 
-			textAlignmentView.TextEnd<GenericPicker<ClassConstraintWithInterface,
-									ClassConstraint,
-									StructConstraint,
-									ClassConstraintWithInterface,
-									string,
-									int,
-									bool,
-									ClassConstraintWithInterface?,
-									ClassConstraint[],
-									ClassConstraintWithInterface,
-									RecordClassContstraint,
-									RecordClassContstraint[],
-									RecordStructContstraint>,
-									ClassConstraintWithInterface,
-									ClassConstraint,
-									StructConstraint,
-									ClassConstraintWithInterface,
-									string,
-									int,
-									bool,
-									ClassConstraintWithInterface?,
-									ClassConstraint[],
-									ClassConstraintWithInterface,
-									RecordClassContstraint,
-									RecordClassContstraint[],
-									RecordStructContstraint>();
+			textAlignmentView.TextEnd();
 
 			Assert.AreEqual(TextAlignment.End, textAlignmentView.HorizontalTextAlignment);
 		}
