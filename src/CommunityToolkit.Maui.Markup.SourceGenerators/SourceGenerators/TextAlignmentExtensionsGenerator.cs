@@ -33,22 +33,12 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 					return null;
 				}
 
-				while (classSymbol is not null)
+				if (!ShouldGenerateTextAlignmentExtension(classSymbol, iTextAlignmentInterfaceSymbol))
 				{
-					if (classSymbol.ContainingAssembly.Name == mauiControlsAssembly)
-					{
-						break;
-					}
-
-					if (classSymbol.Interfaces.Any(i => i.Equals(iTextAlignmentInterfaceSymbol, SymbolEqualityComparer.Default) || i.AllInterfaces.Contains(iTextAlignmentInterfaceSymbol, SymbolEqualityComparer.Default)))
-					{
-						return GenerateMetadata(classSymbol);
-					}
-
-					classSymbol = classSymbol.BaseType;
+					return null;
 				}
 
-				return null;
+				return GenerateMetadata(classSymbol);
 			}).Where(static m => m is not null);
 
 		// Get Microsoft.Maui.Controls Symbols that implements the desired interfaces
@@ -68,6 +58,18 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 		// Then we transform the ISymbol to be a type that we can compare and preserve the Incremental behavior of this Source Generator
 		context.RegisterSourceOutput(userGeneratedClassesProvider, Execute);
 		context.RegisterSourceOutput(mauiControlsAssemblySymbolProvider, ExecuteArray);
+	}
+
+	static bool ShouldGenerateTextAlignmentExtension(INamedTypeSymbol classSymbol, INamedTypeSymbol iTextAlignmentInterfaceSymbol)
+	{
+		return ImplementsInterfaceIgnoringBaseType(classSymbol, iTextAlignmentInterfaceSymbol) &&
+			DoesNotImplementInterface(classSymbol.BaseType, iTextAlignmentInterfaceSymbol);
+
+		static bool ImplementsInterfaceIgnoringBaseType(INamedTypeSymbol classSymbol, INamedTypeSymbol iTextAlignmentInterfaceSymbol)
+			=> classSymbol.Interfaces.Any(i => i.Equals(iTextAlignmentInterfaceSymbol, SymbolEqualityComparer.Default) || i.AllInterfaces.Contains(iTextAlignmentInterfaceSymbol, SymbolEqualityComparer.Default));
+
+		static bool DoesNotImplementInterface(INamedTypeSymbol? classSymbol, INamedTypeSymbol iTextAlignmentInterfaceSymbol)
+			=> classSymbol is null || !classSymbol.AllInterfaces.Any(i => i.Equals(iTextAlignmentInterfaceSymbol, SymbolEqualityComparer.Default));
 	}
 
 	static void ExecuteArray(SourceProductionContext context, EquatableArray<TextAlignmentClassMetadata> metadataArray)
@@ -331,7 +333,7 @@ namespace CommunityToolkit.Maui.Markup
 
 	static IEnumerable<TextAlignmentClassMetadata> GetMauiInterfaceImplementors(IAssemblySymbol mauiControlsAssemblySymbolProvider, INamedTypeSymbol itextAlignmentSymbol)
 	{
-		return mauiControlsAssemblySymbolProvider.GlobalNamespace.GetNamedTypeSymbols().Where(x => x.AllInterfaces.Contains(itextAlignmentSymbol, SymbolEqualityComparer.Default)).Select(GenerateMetadata);
+		return mauiControlsAssemblySymbolProvider.GlobalNamespace.GetNamedTypeSymbols().Where(x =>  ShouldGenerateTextAlignmentExtension(x, itextAlignmentSymbol)).Select(GenerateMetadata);
 	}
 
 	static string GetClassAccessModifier(INamedTypeSymbol namedTypeSymbol) => namedTypeSymbol.DeclaredAccessibility switch
