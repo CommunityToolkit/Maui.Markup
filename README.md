@@ -28,9 +28,9 @@ public static MauiApp CreateMauiApp()
 
 ## Documentation
 
-<img href="https://learn.microsoft.com/en-us/dotnet/communitytoolkit/maui/markup/markup" width="200" alt="image" src="https://user-images.githubusercontent.com/13558917/232885041-35b62d65-26d3-44a7-a525-5239ac811498.png">
+<a href="https://learn.microsoft.com/en-us/dotnet/communitytoolkit/maui/markup/markup"><img width="200" alt="image" src="https://user-images.githubusercontent.com/13558917/232885041-35b62d65-26d3-44a7-a525-5239ac811498.png"></a>
 
-All of the documentation for `CommunityToolkit.Maui.Markup` can be found on [Microsoft Learn](https://learn.microsoft.com/dotnet/communitytoolkit/maui/markup/markup):
+All of the documentation for `CommunityToolkit.Maui.Markup` can be found here on [Microsoft Learn](https://learn.microsoft.com/dotnet/communitytoolkit/maui/markup/markup):
 
 https://learn.microsoft.com/dotnet/communitytoolkit/maui/markup/markup
 
