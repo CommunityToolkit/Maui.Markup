@@ -26,6 +26,15 @@ public static MauiApp CreateMauiApp()
 }
 ```
 
+## Documentation
+
+<img href="https://learn.microsoft.com/en-us/dotnet/communitytoolkit/maui/markup/markup" width="200" alt="image" src="https://user-images.githubusercontent.com/13558917/232885041-35b62d65-26d3-44a7-a525-5239ac811498.png">
+
+All of the documentation for `CommunityToolkit.Maui.Markup` can be found on [Microsoft Learn](https://learn.microsoft.com/dotnet/communitytoolkit/maui/markup/markup):
+
+https://learn.microsoft.com/dotnet/communitytoolkit/maui/markup/markup
+
+
 ## Examples
 
 Here are some brief examples showing how common tasks can be achieved through the use of the Markup package.
