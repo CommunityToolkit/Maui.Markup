@@ -21,7 +21,7 @@ public static MauiApp CreateMauiApp()
 {
     var builder = MauiApp.CreateBuilder();
     // Initialise the toolkit
- 	builder.UseMauiApp<App>().UseMauiCommunityToolkitMarkup();
+    builder.UseMauiApp<App>().UseMauiCommunityToolkitMarkup();
     // the rest of your logic...
 }
 ```
@@ -32,30 +32,16 @@ Here are some brief examples showing how common tasks can be achieved through th
 
 ### Bindings
 
-First let's take a look at how a Binding could be defined without the Markup package:
+C# Markup allows us to define the binding fluently and therefore chain multiple methods together to reduce the verbosity of our code:
 
 ```csharp
-var entry = new Entry();
-entry.SetBinding(Entry.TextProperty, new Binding(nameof(ViewModel.RegistrationCode));
-```
-
-Markup allows us to define the binding fluently and therefore chain multiple methods together to reduce the verbosity of our code:
-
-```csharp
-new Entry().Bind(Entry.TextProperty, nameof(ViewModel.RegistrationCode))
+new Entry()
+    .Bind(Entry.TextProperty, static (ViewModel vm) => vm.RegistrationCode);
 ```
 
 For further details on the possible options for the `Bind` method refer to the [`BindableObject` extensions documentation](https://docs.microsoft.com/dotnet/communitytoolkit/maui/markup/extensions/bindable-object-extensions).
 
 ### Sizing
-
-First let's take a look at how an `Entry` could be sized without the Markup package:
-
-```csharp
-var entry = new Entry();
-entry.WidthRequest = 200;
-entry.HeightRequest = 40;
-```
 
 Markup allows us to define the sizing fluently and therefore chain multiple methods together to reduce the verbosity of our code:
 
@@ -105,7 +91,7 @@ class SampleContentPage : ContentPage
                  .TextColor(Colors.Black)
                  .Height(44)
                  .Margin(5, 5)
-                 .Bind(Entry.TextProperty, nameof(ViewModel.RegistrationCode))
+                 .Bind(Entry.TextProperty, static (ViewModel vm) vm => vm.RegistrationCode)
             }
         };
     }
