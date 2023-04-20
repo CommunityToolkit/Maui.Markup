@@ -33,12 +33,10 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 					return null;
 				}
 
-				if (!ShouldGenerateTextAlignmentExtension(classSymbol, iTextAlignmentInterfaceSymbol))
-				{
-					return null;
-				}
+				return ShouldGenerateTextAlignmentExtension(classSymbol, iTextAlignmentInterfaceSymbol)
+						? GenerateMetadata(classSymbol)
+						: null;
 
-				return GenerateMetadata(classSymbol);
 			}).Where(static m => m is not null);
 
 		// Get Microsoft.Maui.Controls Symbols that implements the desired interfaces
@@ -62,8 +60,8 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 
 	static bool ShouldGenerateTextAlignmentExtension(INamedTypeSymbol classSymbol, INamedTypeSymbol iTextAlignmentInterfaceSymbol)
 	{
-		return ImplementsInterfaceIgnoringBaseType(classSymbol, iTextAlignmentInterfaceSymbol) &&
-			DoesNotImplementInterface(classSymbol.BaseType, iTextAlignmentInterfaceSymbol);
+		return ImplementsInterfaceIgnoringBaseType(classSymbol, iTextAlignmentInterfaceSymbol)
+			    && DoesNotImplementInterface(classSymbol.BaseType, iTextAlignmentInterfaceSymbol);
 
 		static bool ImplementsInterfaceIgnoringBaseType(INamedTypeSymbol classSymbol, INamedTypeSymbol iTextAlignmentInterfaceSymbol)
 			=> classSymbol.Interfaces.Any(i => i.Equals(iTextAlignmentInterfaceSymbol, SymbolEqualityComparer.Default) || i.AllInterfaces.Contains(iTextAlignmentInterfaceSymbol, SymbolEqualityComparer.Default));
@@ -333,7 +331,7 @@ namespace CommunityToolkit.Maui.Markup
 
 	static IEnumerable<TextAlignmentClassMetadata> GetMauiInterfaceImplementors(IAssemblySymbol mauiControlsAssemblySymbolProvider, INamedTypeSymbol itextAlignmentSymbol)
 	{
-		return mauiControlsAssemblySymbolProvider.GlobalNamespace.GetNamedTypeSymbols().Where(x =>  ShouldGenerateTextAlignmentExtension(x, itextAlignmentSymbol)).Select(GenerateMetadata);
+		return mauiControlsAssemblySymbolProvider.GlobalNamespace.GetNamedTypeSymbols().Where(x => ShouldGenerateTextAlignmentExtension(x, itextAlignmentSymbol)).Select(GenerateMetadata);
 	}
 
 	static string GetClassAccessModifier(INamedTypeSymbol namedTypeSymbol) => namedTypeSymbol.DeclaredAccessibility switch
