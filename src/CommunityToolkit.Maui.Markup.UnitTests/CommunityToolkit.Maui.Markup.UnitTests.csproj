@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net7.0</TargetFrameworks>
@@ -14,7 +14,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <PackageReference Include="coverlet.collector" Version="3.2.0" PrivateAssets="all" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="CommunityToolkit.Maui" Version="5.0.0" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="5.1.0" />
   </ItemGroup>
 
   <ItemGroup>
