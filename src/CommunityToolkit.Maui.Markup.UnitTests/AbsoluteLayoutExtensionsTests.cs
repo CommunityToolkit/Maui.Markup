@@ -13,6 +13,21 @@ class AbsoluteLayoutExtensionsTest : BaseMarkupTestFixture<BoxView>
 		(AbsoluteLayout.LayoutFlagsProperty, AbsoluteLayoutFlags.PositionProportional));
 
 	[Test]
+	public void MultipleLayoutFlagsUsingBooleanLogic() => TestPropertiesSet(
+		b => b.LayoutFlags(AbsoluteLayoutFlags.PositionProportional | AbsoluteLayoutFlags.XProportional),
+		(AbsoluteLayout.LayoutFlagsProperty, AbsoluteLayoutFlags.PositionProportional | AbsoluteLayoutFlags.XProportional));
+
+	[Test]
+	public void MultipleLayoutFlagsUsingMultipleAPICalls() => TestPropertiesSet(
+		b => b.LayoutFlags(AbsoluteLayoutFlags.PositionProportional).LayoutFlags(AbsoluteLayoutFlags.XProportional),
+		(AbsoluteLayout.LayoutFlagsProperty, AbsoluteLayoutFlags.PositionProportional | AbsoluteLayoutFlags.XProportional));
+
+	[Test]
+	public void MultipleLayoutFlagsUsingParams() => TestPropertiesSet(
+		b => b.LayoutFlags(AbsoluteLayoutFlags.PositionProportional, AbsoluteLayoutFlags.XProportional),
+		(AbsoluteLayout.LayoutFlagsProperty, AbsoluteLayoutFlags.PositionProportional | AbsoluteLayoutFlags.XProportional));
+
+	[Test]
 	public void LayoutBoundsPositionOnlyDouble() => TestPropertiesSet(
 		b =>
 		{
