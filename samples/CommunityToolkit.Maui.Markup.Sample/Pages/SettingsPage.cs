@@ -11,6 +11,7 @@ sealed class SettingsPage : BaseContentPage<SettingsViewModel>
 			Children =
 			{
 				new Image().Source("dotnet_bot.png").Opacity(0.25).IsOpaque(false).Aspect(Aspect.AspectFit)
+					.ClearLayoutFlags()
 					.LayoutFlags(AbsoluteLayoutFlags.SizeProportional)
 					.LayoutFlags(AbsoluteLayoutFlags.PositionProportional)
 					.LayoutBounds(0.5, 0.5, 0.5, 0.5)
