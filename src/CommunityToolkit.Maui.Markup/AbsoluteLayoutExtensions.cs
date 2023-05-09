@@ -32,9 +32,7 @@ public static class AbsoluteLayoutExtensions
 	/// <returns></returns>
 	public static TBindable LayoutFlags<TBindable>(this TBindable bindable, AbsoluteLayoutFlags flag) where TBindable : BindableObject
 	{
-		var currentFlags = AbsoluteLayout.GetLayoutFlags(bindable);
-
-		AbsoluteLayout.SetLayoutFlags(bindable, currentFlags | flag);
+		AbsoluteLayout.SetLayoutFlags(bindable, flag);
 		return bindable;
 	}
 
@@ -47,7 +45,6 @@ public static class AbsoluteLayoutExtensions
 	/// <returns></returns>
 	public static TBindable LayoutFlags<TBindable>(this TBindable bindable, params AbsoluteLayoutFlags[] flags) where TBindable : BindableObject
 	{
-		var currentFlags = AbsoluteLayout.GetLayoutFlags(bindable);
 		var newFlags = AbsoluteLayoutFlags.None;
 
 		foreach(var flag in flags)
@@ -55,7 +52,7 @@ public static class AbsoluteLayoutExtensions
 			newFlags |= flag;
 		}
 
-		AbsoluteLayout.SetLayoutFlags(bindable, currentFlags | newFlags);
+		AbsoluteLayout.SetLayoutFlags(bindable, newFlags);
 		return bindable;
 	}
 
