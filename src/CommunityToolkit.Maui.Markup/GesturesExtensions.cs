@@ -5,7 +5,7 @@ namespace CommunityToolkit.Maui.Markup;
 /// <summary>
 /// Extension Methods for Element Gestures
 /// </summary>
-public static class GesturesExtensions
+public static partial class GesturesExtensions
 {
 	/// <summary>Add a <see cref="ClickGestureRecognizer"/> and bind to its Command and (optionally) CommandParameter properties</summary>
 	/// <param name="gestureElement">An <see cref="Element"/> implementing <see cref="IGestureRecognizers"/></param>
@@ -24,12 +24,7 @@ public static class GesturesExtensions
 	{
 		var clickGesture = gestureElement.BindGesture<TGestureElement, ClickGestureRecognizer>(commandPath, commandSource, parameterPath, parameterSource);
 
-		if (numberOfClicksRequired is not null)
-		{
-			clickGesture.NumberOfClicksRequired = numberOfClicksRequired.Value;
-		}
-
-		return gestureElement;
+		return gestureElement.ConfigureClickGesture(clickGesture, numberOfClicksRequired);
 	}
 
 	/// <summary>Add a <see cref="SwipeGestureRecognizer"/> and bind to its Command and (optionally) CommandParameter properties</summary>
@@ -51,17 +46,7 @@ public static class GesturesExtensions
 	{
 		var swipeGesture = gestureElement.BindGesture<TGestureElement, SwipeGestureRecognizer>(commandPath, commandSource, parameterPath, parameterSource);
 
-		if (direction is not null)
-		{
-			swipeGesture.Direction = direction.Value;
-		}
-
-		if (threshold is not null)
-		{
-			swipeGesture.Threshold = threshold.Value;
-		}
-
-		return gestureElement;
+		return gestureElement.ConfigureSwipeGesture(swipeGesture, direction, threshold);
 	}
 
 	/// <summary>Adds a <see cref="TapGestureRecognizer"/> and bind its Command and (optionally) CommandParameter properties</summary>
@@ -81,12 +66,7 @@ public static class GesturesExtensions
 	{
 		var tapGesture = gestureElement.BindGesture<TGestureElement, TapGestureRecognizer>(commandPath, commandSource, parameterPath, parameterSource);
 
-		if (numberOfTapsRequired is not null)
-		{
-			tapGesture.NumberOfTapsRequired = numberOfTapsRequired.Value;
-		}
-
-		return gestureElement;
+		return gestureElement.ConfigureTapGesture(tapGesture, numberOfTapsRequired);
 	}
 
 	/// <summary>
@@ -221,6 +201,48 @@ public static class GesturesExtensions
 		}
 
 		gestureElement.GestureRecognizers.Add(gestureRecognizer);
+
+		return gestureElement;
+	}
+
+	static TGestureElement ConfigureClickGesture<TGestureElement>(this TGestureElement gestureElement,
+																	ClickGestureRecognizer clickGesture,
+																	int? numberOfClicksRequired = null) where TGestureElement : IGestureRecognizers
+	{
+		if (numberOfClicksRequired is not null)
+		{
+			clickGesture.NumberOfClicksRequired = numberOfClicksRequired.Value;
+		}
+
+		return gestureElement;
+	}
+
+	static TGestureElement ConfigureSwipeGesture<TGestureElement>(this TGestureElement gestureElement,
+																	SwipeGestureRecognizer swipeGesture,
+																	SwipeDirection? direction = null,
+																	uint? threshold = null) where TGestureElement : IGestureRecognizers
+	{
+		if (direction is not null)
+		{
+			swipeGesture.Direction = direction.Value;
+		}
+
+		if (threshold is not null)
+		{
+			swipeGesture.Threshold = threshold.Value;
+		}
+
+		return gestureElement;
+	}
+
+	static TGestureElement ConfigureTapGesture<TGestureElement>(this TGestureElement gestureElement,
+															TapGestureRecognizer tapGesture,
+															int? numberOfTapsRequired = null) where TGestureElement : IGestureRecognizers
+	{
+		if (numberOfTapsRequired is not null)
+		{
+			tapGesture.NumberOfTapsRequired = numberOfTapsRequired.Value;
+		}
 
 		return gestureElement;
 	}
