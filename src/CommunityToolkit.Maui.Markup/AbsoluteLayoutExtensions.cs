@@ -39,6 +39,9 @@ public static class AbsoluteLayoutExtensions
 	/// <summary>
 	/// Set an <see cref="AbsoluteLayoutFlags"/> that indicates whether the layout bounds position and size values for a child are proportional to the size of the <see cref="AbsoluteLayout"/>.
 	/// </summary>
+	/// <remarks>
+	/// To clear existing <see cref="AbsoluteLayoutFlags"/>, use <see cref="ClearLayoutFlags{TBindable}(TBindable)"/>
+	/// </remarks>
 	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="bindable"></param>
 	/// <param name="flags"></param>
