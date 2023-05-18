@@ -255,6 +255,16 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 		public TextAlignment VerticalTextAlignment { get; set; } = TextAlignment.Center;
 	}
+
+	class MyEntry : Entry, IEntry
+	{
+		public string Type { get; set; } = string.Empty;
+	}
+
+	interface IMyEntry
+	{
+		public string Type { get; set; }
+	}
 }
 
 namespace CommunityToolkit.Maui.Markup.UnitTests

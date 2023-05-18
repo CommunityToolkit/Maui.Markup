@@ -11,7 +11,7 @@ variables:
   PathToCommunityToolkitSampleCsproj: 'samples/CommunityToolkit.Maui.Markup.Sample/CommunityToolkit.Maui.Markup.Sample.csproj'
   PathToCommunityToolkitUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.UnitTests/CommunityToolkit.Maui.Markup.UnitTests.csproj'
   PathToCommunityToolkitSourceGeneratorsCsproj: 'src/CommunityToolkit.Maui.Markup.SourceGenerators/CommunityToolkit.Maui.Markup.SourceGenerators.csproj'
-  XcodeVersion: '14.2.0'
+  XcodeVersion: '14.3.0'
   ShouldCheckDependencies: true
   
 trigger:
@@ -49,7 +49,7 @@ jobs:
         'Windows':
           image: 'windows-latest'
         'macOS':
-          image: 'macos-12'
+          image: 'macos-13'
     pool:
       vmImage: $(image)
     steps:

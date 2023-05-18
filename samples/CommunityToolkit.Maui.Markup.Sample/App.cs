@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Maui.Markup.Sample.Resources;
-
-namespace CommunityToolkit.Maui.Markup.Sample;
+﻿namespace CommunityToolkit.Maui.Markup.Sample;
 
 class App : Application
 {
@@ -10,6 +8,4 @@ class App : Application
 
 		MainPage = shell;
 	}
-
-
 }
