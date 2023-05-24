@@ -8,8 +8,24 @@ namespace CommunityToolkit.Maui.Markup;
 public static class AbsoluteLayoutExtensions
 {
 	/// <summary>
-	/// Set an <see cref="AbsoluteLayoutFlags"/> that indicates whether the layout bounds position and size values for a child are proportional to the size of the <see cref="AbsoluteLayout"/>.
+	/// Removes all <see cref="AbsoluteLayoutFlags"/>, reverting to the default configuraion of <see cref="AbsoluteLayoutFlags.None"/>.
 	/// </summary>
+	/// <typeparam name="TBindable"></typeparam>
+	/// <param name="bindable"></param>
+	/// <returns></returns>
+	public static TBindable ClearLayoutFlags<TBindable>(this TBindable bindable) where TBindable : BindableObject
+	{
+		AbsoluteLayout.SetLayoutFlags(bindable, AbsoluteLayoutFlags.None);
+		return bindable;
+	}
+
+	/// <summary>
+	/// Set an <see cref="AbsoluteLayoutFlags"/> that indicates whether the layout bounds position and size values for a child are proportional to the size of the <see cref="AbsoluteLayout"/>.
+	/// Appends <paramref name="flag"/> to existing <see cref="AbsoluteLayoutFlags"/>
+	/// </summary>
+	/// <remarks>
+	/// To clear existing <see cref="AbsoluteLayoutFlags"/>, use <see cref="ClearLayoutFlags{TBindable}(TBindable)"/>
+	/// </remarks>
 	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="bindable"></param>
 	/// <param name="flag"></param>
@@ -17,6 +33,29 @@ public static class AbsoluteLayoutExtensions
 	public static TBindable LayoutFlags<TBindable>(this TBindable bindable, AbsoluteLayoutFlags flag) where TBindable : BindableObject
 	{
 		AbsoluteLayout.SetLayoutFlags(bindable, flag);
+		return bindable;
+	}
+
+	/// <summary>
+	/// Set an <see cref="AbsoluteLayoutFlags"/> that indicates whether the layout bounds position and size values for a child are proportional to the size of the <see cref="AbsoluteLayout"/>.
+	/// </summary>
+	/// <remarks>
+	/// To clear existing <see cref="AbsoluteLayoutFlags"/>, use <see cref="ClearLayoutFlags{TBindable}(TBindable)"/>
+	/// </remarks>
+	/// <typeparam name="TBindable"></typeparam>
+	/// <param name="bindable"></param>
+	/// <param name="flags"></param>
+	/// <returns></returns>
+	public static TBindable LayoutFlags<TBindable>(this TBindable bindable, params AbsoluteLayoutFlags[] flags) where TBindable : BindableObject
+	{
+		var newFlags = AbsoluteLayoutFlags.None;
+
+		foreach(var flag in flags)
+		{
+			newFlags |= flag;
+		}
+
+		AbsoluteLayout.SetLayoutFlags(bindable, newFlags);
 		return bindable;
 	}
 
