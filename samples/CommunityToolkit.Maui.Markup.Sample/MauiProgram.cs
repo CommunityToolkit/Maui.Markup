@@ -33,6 +33,9 @@ public class MauiProgram
 		builder.Services.AddTransient<SettingsPage, SettingsViewModel>();
 		builder.Services.AddTransient<NewsDetailPage, NewsDetailViewModel>();
 
+		// C# Hot Reload Handler
+		builder.Services.AddSingleton<ICommunityToolkitHotReloadHandler, HotReloadHandler>();
+
 		return builder.Build();
 
 		static TimeSpan sleepDurationProvider(int attemptNumber) => TimeSpan.FromSeconds(Math.Pow(2, attemptNumber));
