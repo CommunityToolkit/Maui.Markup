@@ -31,9 +31,9 @@ public static class AppBuilderExtensions
 		return builder;
 	}
 
-	static void ReloadApplication(object? sender, EventArgs e)
+	static void ReloadApplication(object? sender, Type[]? e)
 	{
-		var hotReloadHandler = serviceProvider.GetService<ICommunityToolkitHotReloadHander>();
-		hotReloadHandler?.OnHotReload();
+		var hotReloadHandler = serviceProvider.GetService<ICommunityToolkitHotReloadHandler>();
+		hotReloadHandler?.OnHotReload(e);
 	}
 }

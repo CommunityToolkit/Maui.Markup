@@ -6,7 +6,7 @@ static class CommunityToolkitMetadataUpdateHandler
 {
 	static readonly WeakEventManager reloadApplicationEventHandler = new();
 
-	public static event EventHandler ReloadApplication
+	public static event EventHandler<Type[]?> ReloadApplication
 	{
 		add => reloadApplicationEventHandler.AddEventHandler(value);
 		remove => reloadApplicationEventHandler.RemoveEventHandler(value);
@@ -14,7 +14,11 @@ static class CommunityToolkitMetadataUpdateHandler
 
 	static void UpdateApplication(Type[]? types)
 	{
-		reloadApplicationEventHandler.HandleEvent(new object(), EventArgs.Empty, nameof(ReloadApplication));
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8604 // Possible null reference argument.
+		reloadApplicationEventHandler.HandleEvent(null, types, nameof(ReloadApplication));
+#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 	}
 }
 #endif
@@ -22,10 +26,10 @@ static class CommunityToolkitMetadataUpdateHandler
 /// <summary>
 /// Interface for handling C# Hot Reload requests
 /// </summary>
-public interface ICommunityToolkitHotReloadHander
+public interface ICommunityToolkitHotReloadHandler
 {
 	/// <summary>
 	/// Executes when C# Hot Reload is invoked
 	/// </summary>
-	void OnHotReload();
+	void OnHotReload(Type[]? types);
 }
