@@ -50,7 +50,7 @@ public static class AbsoluteLayoutExtensions
 	{
 		var newFlags = AbsoluteLayoutFlags.None;
 
-		foreach(var flag in flags)
+		foreach (var flag in flags)
 		{
 			newFlags |= flag;
 		}
