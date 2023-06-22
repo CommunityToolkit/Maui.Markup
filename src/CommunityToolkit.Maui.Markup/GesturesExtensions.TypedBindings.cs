@@ -375,4 +375,3 @@ public static partial class GesturesExtensions
 		return gestureRecognizer;
 	}
 }
-

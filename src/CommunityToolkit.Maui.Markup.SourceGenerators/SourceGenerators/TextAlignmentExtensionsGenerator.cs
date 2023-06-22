@@ -61,7 +61,7 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 	static bool ShouldGenerateTextAlignmentExtension(INamedTypeSymbol classSymbol, INamedTypeSymbol iTextAlignmentInterfaceSymbol)
 	{
 		return ImplementsInterfaceIgnoringBaseType(classSymbol, iTextAlignmentInterfaceSymbol)
-			    && DoesNotImplementInterface(classSymbol.BaseType, iTextAlignmentInterfaceSymbol);
+				&& DoesNotImplementInterface(classSymbol.BaseType, iTextAlignmentInterfaceSymbol);
 
 		static bool ImplementsInterfaceIgnoringBaseType(INamedTypeSymbol classSymbol, INamedTypeSymbol iTextAlignmentInterfaceSymbol)
 			=> classSymbol.Interfaces.Any(i => i.Equals(iTextAlignmentInterfaceSymbol, SymbolEqualityComparer.Default) || i.AllInterfaces.Contains(iTextAlignmentInterfaceSymbol, SymbolEqualityComparer.Default));
