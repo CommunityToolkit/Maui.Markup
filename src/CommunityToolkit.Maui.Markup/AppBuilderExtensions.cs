@@ -31,7 +31,7 @@ public static class AppBuilderExtensions
 		return builder;
 	}
 
-	static void ReloadApplication(object? sender, Type[]? e)
+	static void ReloadApplication(object? sender, IReadOnlyList<Type> e)
 	{
 		var hotReloadHandler = serviceProvider.GetService<ICommunityToolkitHotReloadHandler>();
 		hotReloadHandler?.OnHotReload(e);
