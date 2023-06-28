@@ -21,7 +21,7 @@ class HotReloadHandler : ICommunityToolkitHotReloadHandler
 
 					await mainPage.Dispatcher.DispatchAsync(async () =>
 					{
-						await Shell.Current.GoToAsync(type.Name, false);
+						await shell.GoToAsync(type.Name, false);
 						Shell.Current.Navigation.RemovePage(visiblePage);
 					});
 
