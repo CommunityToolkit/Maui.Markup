@@ -5,20 +5,6 @@
 /// </summary>
 public static class AppBuilderExtensions
 {
-	static IServiceProvider serviceProvider =>
-#if WINDOWS
-		MauiWinUIApplication.Current.Services;
-#elif ANDROID
-		MauiApplication.Current.Services;
-#elif IOS || MACCATALYST
-		MauiUIApplicationDelegate.Current.Services;
-#elif TIZEN
-#error Tizen IServiceProvider Not Yet Implemented
-		throw new NotImplementedException();
-#else
-		throw new InvalidOperationException($"{nameof(IServiceProvider)} requires a platform specific implementation");
-#endif
-
 	/// <summary>
 	/// Initializes the .NET MAUI Community Toolkit Markup Library
 	/// </summary>
@@ -38,7 +24,7 @@ public static class AppBuilderExtensions
 
 	static void ReloadApplication(object? sender, IReadOnlyList<Type> e)
 	{
-		var hotReloadHandler = serviceProvider.GetService<ICommunityToolkitHotReloadHandler>();
+		var hotReloadHandler = Application.Current?.Handler.MauiContext?.Services.GetService<ICommunityToolkitHotReloadHandler>();
 		hotReloadHandler?.OnHotReload(e);
 	}
 }
