@@ -14,6 +14,16 @@ class AppShell : Shell
 		Items.Add(newsPage);
 	}
 
+	public static string GetRoute(Type type)
+	{
+		if (!pageRouteMappingDictionary.TryGetValue(type, out var route))
+		{
+			throw new KeyNotFoundException($"No map for ${type} was found on navigation mappings. Please register your ViewModel in {nameof(AppShell)}.{nameof(pageRouteMappingDictionary)}");
+		}
+
+		return route;
+	}
+
 	public static string GetRoute<TPage, TViewModel>() where TPage : BaseContentPage<TViewModel>
 														where TViewModel : BaseViewModel
 	{

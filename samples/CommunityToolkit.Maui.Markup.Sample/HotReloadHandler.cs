@@ -26,15 +26,19 @@ class HotReloadHandler : ICommunityToolkitHotReloadHandler
 				{
 					if (window.Page is AppShell shell)
 					{
-						var visiblePage = shell.CurrentPage;
-
-						await currentPage.Dispatcher.DispatchAsync(async () =>
+						if (shell.CurrentPage is Page visiblePage
+							&& visiblePage.GetType() == type)
 						{
-							await shell.GoToAsync(type.Name, false);
-							shell.Navigation.RemovePage(visiblePage);
-						});
+							var currentPageShellRoute = AppShell.GetRoute(type);
 
-						break;
+							await currentPage.Dispatcher.DispatchAsync(async () =>
+							{
+								await shell.GoToAsync(currentPageShellRoute, false);
+								shell.Navigation.RemovePage(visiblePage);
+							});
+
+							break;
+						}
 					}
 					else
 					{
