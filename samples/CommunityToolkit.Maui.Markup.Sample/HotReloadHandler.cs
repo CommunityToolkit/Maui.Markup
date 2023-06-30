@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CommunityToolkit.Maui.Markup.Sample;
 
@@ -6,56 +7,65 @@ class HotReloadHandler : ICommunityToolkitHotReloadHandler
 {
 	public async void OnHotReload(IReadOnlyList<Type> types)
 	{
-		if (Application.Current?.MainPage is not Page mainPage)
+		if (Application.Current?.Windows is null)
 		{
+			Debug.WriteLine($"{nameof(HotReloadHandler)} Failed: {nameof(Application)}.{nameof(Application.Current)}.{nameof(Application.Current.Windows)} is null");
 			return;
 		}
 
-		foreach (var type in types)
+		foreach (var window in Application.Current.Windows)
 		{
-			if (type.IsSubclassOf(typeof(Page)))
+			if (window.Page is not Page currentPage)
 			{
-				if (mainPage is AppShell shell)
-				{
-					var visiblePage = shell.CurrentPage;
+				return;
+			}
 
-					await mainPage.Dispatcher.DispatchAsync(async () =>
-					{
-						await shell.GoToAsync(type.Name, false);
-						Shell.Current.Navigation.RemovePage(visiblePage);
-					});
-
-					break;
-				}
-				else
+			foreach (var type in types)
+			{
+				if (type.IsSubclassOf(typeof(Page)))
 				{
-					if (TryGetModalStackPage(out var modalPage))
+					if (window.Page is AppShell shell)
 					{
-						await mainPage.Dispatcher.DispatchAsync(async () =>
+						var visiblePage = shell.CurrentPage;
+
+						await currentPage.Dispatcher.DispatchAsync(async () =>
 						{
-							await mainPage.Navigation.PopModalAsync(false);
-							await mainPage.Navigation.PushModalAsync(modalPage, false);
+							await shell.GoToAsync(type.Name, false);
+							shell.Navigation.RemovePage(visiblePage);
 						});
+
+						break;
 					}
 					else
 					{
-						await mainPage.Dispatcher.DispatchAsync(async () =>
+						if (TryGetModalStackPage(window, out var modalPage))
 						{
-							await mainPage.Navigation.PopAsync(false);
-							await mainPage.Navigation.PushAsync(modalPage, false);
-						});
-					}
+							await currentPage.Dispatcher.DispatchAsync(async () =>
+							{
+								await currentPage.Navigation.PopModalAsync(false);
+								await currentPage.Navigation.PushModalAsync(modalPage, false);
+							});
+						}
+						else
+						{
+							await currentPage.Dispatcher.DispatchAsync(async () =>
+							{
+								await currentPage.Navigation.PopAsync(false);
+								await currentPage.Navigation.PushAsync(modalPage, false);
+							});
+						}
 
-					break;
+						break;
+					}
 				}
 			}
 		}
 	}
 
 
-	static bool TryGetModalStackPage([NotNullWhen(true)] out Page? page)
+	static bool TryGetModalStackPage(Window window, [NotNullWhen(true)] out Page? page)
 	{
-		page = Application.Current?.MainPage?.Navigation.ModalStack.LastOrDefault();
+		page = window.Navigation.ModalStack.LastOrDefault();
 		return page is not null;
 	}
 }
