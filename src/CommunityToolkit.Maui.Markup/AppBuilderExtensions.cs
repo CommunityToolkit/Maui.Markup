@@ -13,6 +13,7 @@ public static class AppBuilderExtensions
 #elif IOS || MACCATALYST
 		MauiUIApplicationDelegate.Current.Services;
 #elif TIZEN
+#error Tizen IServiceProvider Not Yet Implemented
 		throw new NotImplementedException();
 #else
 		throw new InvalidOperationException($"{nameof(IServiceProvider)} requires a platform specific implementation");
@@ -25,10 +26,14 @@ public static class AppBuilderExtensions
 	/// <returns><see cref="MauiAppBuilder"/> initialized for <see cref="CommunityToolkit.Maui.Markup"/></returns>
 	public static MauiAppBuilder UseMauiCommunityToolkitMarkup(this MauiAppBuilder builder)
 	{
-#if DEBUG
-		CommunityToolkitMetadataUpdateHandler.ReloadApplication += ReloadApplication;
-#endif
+		RegisterReloadApplicationEventHandler();
 		return builder;
+	}
+
+	[System.Diagnostics.Conditional("DEBUG")]
+	static void RegisterReloadApplicationEventHandler()
+	{
+		CommunityToolkitMetadataUpdateHandler.ReloadApplication += ReloadApplication;
 	}
 
 	static void ReloadApplication(object? sender, IReadOnlyList<Type> e)
