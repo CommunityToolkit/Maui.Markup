@@ -17,9 +17,14 @@ class AppShell : Shell
 	public static string GetRoute<TPage, TViewModel>() where TPage : BaseContentPage<TViewModel>
 														where TViewModel : BaseViewModel
 	{
-		if (!pageRouteMappingDictionary.TryGetValue(typeof(TPage), out var route))
+		return GetRoute(typeof(TPage));
+	}
+
+	public static string GetRoute(Type type)
+	{
+		if (!pageRouteMappingDictionary.TryGetValue(type, out var route))
 		{
-			throw new KeyNotFoundException($"No map for ${typeof(TPage)} was found on navigation mappings. Please register your ViewModel in {nameof(AppShell)}.{nameof(pageRouteMappingDictionary)}");
+			throw new KeyNotFoundException($"No map for ${type} was found on navigation mappings. Please register your ViewModel in {nameof(AppShell)}.{nameof(pageRouteMappingDictionary)}");
 		}
 
 		return route;

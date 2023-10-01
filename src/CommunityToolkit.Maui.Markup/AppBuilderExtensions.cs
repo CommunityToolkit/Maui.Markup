@@ -12,6 +12,19 @@ public static class AppBuilderExtensions
 	/// <returns><see cref="MauiAppBuilder"/> initialized for <see cref="CommunityToolkit.Maui.Markup"/></returns>
 	public static MauiAppBuilder UseMauiCommunityToolkitMarkup(this MauiAppBuilder builder)
 	{
+		RegisterReloadApplicationEventHandler();
 		return builder;
+	}
+
+	[System.Diagnostics.Conditional("DEBUG")]
+	static void RegisterReloadApplicationEventHandler()
+	{
+		CommunityToolkitMetadataUpdateHandler.ReloadApplication += ReloadApplication;
+	}
+
+	static void ReloadApplication(object? sender, IReadOnlyList<Type> e)
+	{
+		var hotReloadHandler = Application.Current?.Handler?.MauiContext?.Services.GetService<ICommunityToolkitHotReloadHandler>();
+		hotReloadHandler?.OnHotReload(e);
 	}
 }
