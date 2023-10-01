@@ -24,7 +24,7 @@ public static class AppBuilderExtensions
 
 	static void ReloadApplication(object? sender, IReadOnlyList<Type> e)
 	{
-		var hotReloadHandler = Application.Current?.Handler.MauiContext?.Services.GetService<ICommunityToolkitHotReloadHandler>();
+		var hotReloadHandler = Application.Current?.Handler?.MauiContext?.Services.GetService<ICommunityToolkitHotReloadHandler>();
 		hotReloadHandler?.OnHotReload(e);
 	}
 }
