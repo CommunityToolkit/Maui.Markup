@@ -9,7 +9,7 @@ class HotReloadHandler : ICommunityToolkitHotReloadHandler
 	{
 		if (Application.Current?.Windows is null)
 		{
-			Debug.WriteLine($"{nameof(HotReloadHandler)} Failed: {nameof(Application)}.{nameof(Application.Current)}.{nameof(Application.Current.Windows)} is null");
+			Trace.WriteLine($"{nameof(HotReloadHandler)} Failed: {nameof(Application)}.{nameof(Application.Current)}.{nameof(Application.Current.Windows)} is null");
 			return;
 		}
 
