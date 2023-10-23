@@ -84,7 +84,7 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 		{
 			throw new ArgumentNullException(nameof(textAlignmentClassMetadata));
 		}
-		
+
 		var className = typeof(TextAlignmentExtensionsGenerator).FullName;
 		var assemblyVersion = typeof(TextAlignmentExtensionsGenerator).Assembly.GetName().Version.ToString();
 
