@@ -207,6 +207,7 @@ public static partial class GesturesExtensions
 		return gestureElement;
 	}
 
+	[Obsolete($"{nameof(BindClickGesture)} is deprecated; please use ${nameof(BindTapGesture)} instead.")]
 	static TGestureElement ConfigureClickGesture<TGestureElement>(this TGestureElement gestureElement,
 																	ClickGestureRecognizer clickGesture,
 																	int? numberOfClicksRequired = null) where TGestureElement : IGestureRecognizers
