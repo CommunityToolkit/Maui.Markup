@@ -9,7 +9,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests;
 static class BindingHelpers
 {
 	static MethodInfo? getContextMethodInfo;
-	static FieldInfo? bindingFieldInfo;
+	static FieldInfo? bindingsFieldInfo;
 
 	internal static void AssertBindingExists(
 		BindableObject bindable,
@@ -146,8 +146,8 @@ static class BindingHelpers
 		TDest? fallbackValue = default,
 		Action<IMultiValueConverter>? assertConvert = null)
 		=> AssertBindingExists<TDest, object>(
-		bindable, targetProperty, bindings, converter, null, mode, assertConverterInstanceIsAnyNotNull,
-		stringFormat, targetNullValue, fallbackValue, assertConvert);
+			bindable, targetProperty, bindings, converter, null, mode, assertConverterInstanceIsAnyNotNull,
+			stringFormat, targetNullValue, fallbackValue, assertConvert);
 
 	internal static void AssertBindingExists<TDest, TParam>(
 		BindableObject bindable,
@@ -199,21 +199,26 @@ static class BindingHelpers
 	{
 		getContextMethodInfo ??= typeof(BindableObject).GetMethod("GetContext", BindingFlags.NonPublic | BindingFlags.Instance);
 
-		var context = getContextMethodInfo?.Invoke(bindable, new object[] { property });
+		var context = getContextMethodInfo?.Invoke(bindable, new object[]
+		{
+			property
+		});
 		if (context is null)
 		{
 			return null;
 		}
 
-		bindingFieldInfo ??= context?.GetType().GetField("Binding");
+		bindingsFieldInfo ??= context.GetType().GetField("Bindings");
 
-		return bindingFieldInfo?.GetValue(context) as TBinding;
+		var bindingsList = bindingsFieldInfo?.GetValue(context) as SortedList<SetterSpecificity, BindingBase>;
+
+		return (TBinding?)bindingsList?.First().Value;
 	}
 
 	internal static IValueConverter AssertConvert<TValue, TConvertedValue>(this IValueConverter converter, TValue value, object? parameter, TConvertedValue expectedConvertedValue, bool twoWay = false, bool backOnly = false, CultureInfo? culture = null)
 	{
-		Assert.That(converter.Convert(value, typeof(object), parameter, culture), Is.EqualTo(backOnly ? default : expectedConvertedValue));
-		Assert.That(converter.ConvertBack(expectedConvertedValue, typeof(object), parameter, culture), Is.EqualTo(twoWay || backOnly ? value : default(TValue)));
+		Assert.That(converter.Convert(value, typeof(object), parameter, culture ?? CultureInfo.InvariantCulture), Is.EqualTo(backOnly ? default : expectedConvertedValue));
+		Assert.That(converter.ConvertBack(expectedConvertedValue, typeof(object), parameter, culture ?? CultureInfo.InvariantCulture), Is.EqualTo(twoWay || backOnly ? value : default(TValue)));
 		return converter;
 	}
 

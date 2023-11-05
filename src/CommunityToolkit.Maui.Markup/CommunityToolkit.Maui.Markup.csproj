@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>$(NetVersion)</TargetFramework>
 		<UseMaui>true</UseMaui>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -39,6 +39,10 @@
 		<None Include="../../build/nuget.png" Pack="true" PackagePath="" />
 		<None Include="ReadMe.txt" pack="true" PackagePath="." />
 	</ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiPackageVersion)"/>
+  </ItemGroup>
 
   <ItemGroup>
 		<None Include="..\CommunityToolkit.Maui.Markup.SourceGenerators\bin\$(Configuration)\netstandard2.0\CommunityToolkit.Maui.Markup.SourceGenerators.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
