@@ -15,6 +15,7 @@ public static partial class GesturesExtensions
 	/// <param name="parameterSource">Binding source for Command Binding</param>
 	/// <param name="numberOfClicksRequired">Total number of clicks required to trigger <see cref="ICommand"/></param>
 	/// <returns><paramref name="gestureElement"/></returns>
+	[Obsolete($"{nameof(BindClickGesture)} is deprecated; please use ${nameof(BindTapGesture)} instead.")]
 	public static TGestureElement BindClickGesture<TGestureElement>(this TGestureElement gestureElement,
 																		string commandPath,
 																		object? commandSource = null,
@@ -76,6 +77,7 @@ public static partial class GesturesExtensions
 	/// <param name="onClicked"><see cref="Action"/>invoked once <paramref name="numberOfClicksRequired"/> threshold is reached</param>
 	/// <param name="numberOfClicksRequired">Total number of clicks required to trigger <paramref name="onClicked"/></param>
 	/// <returns><paramref name="gestureElement"/></returns>
+	[Obsolete($"{nameof(ClickGesture)} is deprecated; please use ${nameof(TapGesture)} instead.")]
 	public static TGestureElement ClickGesture<TGestureElement>(this TGestureElement gestureElement,
 																	Action onClicked,
 																	int? numberOfClicksRequired = null) where TGestureElement : IGestureRecognizers

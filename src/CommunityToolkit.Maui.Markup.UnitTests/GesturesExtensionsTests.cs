@@ -8,6 +8,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests;
 class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGestureElement : View, IGestureRecognizers, new()
 {
 	[Test]
+	[Obsolete($"{nameof(ClickGesture)} is now obsolete")]
 	public void BindClickGestureDefaults()
 	{
 		var gestureElement = new TGestureElement();
@@ -20,6 +21,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 	}
 
 	[Test]
+	[Obsolete($"{nameof(ClickGestureRecognizer)} is now obsolete")]
 	public void BindClickGesturePositionalParameters()
 	{
 		const int numberOfClicks = 2;
@@ -68,6 +70,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 	}
 
 	[Test]
+	[Obsolete($"{nameof(ClickGestureRecognizer)} is now obsolete")]
 	public void ClickGesture()
 	{
 		const int numberOfClicks = 2;
@@ -216,6 +219,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixture where TGestureElement : View, IGestureRecognizers, new()
 {
 	[Test]
+	[Obsolete($"{nameof(ClickGestureRecognizer)} is now obsolete")]
 	public void BindClickGestureDefaults()
 	{
 		var gestureElement = new TGestureElement
@@ -231,6 +235,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 	}
 
 	[Test]
+	[Obsolete($"{nameof(ClickGestureRecognizer)} is now obsolete")]
 	public void BindClickGestureDefaultsWithNestedBindings()
 	{
 		var guid = Guid.NewGuid();
@@ -255,6 +260,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 	}
 
 	[Test]
+	[Obsolete($"{nameof(ClickGestureRecognizer)} is now obsolete")]
 	public void BindClickGesturePositionalParameters()
 	{
 		const int numberOfClicks = 2;
@@ -281,6 +287,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 
 
 	[Test]
+	[Obsolete($"{nameof(ClickGestureRecognizer)} is now obsolete")]
 	public void BindClickGesturePositionalParametersWithNestedBindings()
 	{
 		const int numberOfClicks = 2;
