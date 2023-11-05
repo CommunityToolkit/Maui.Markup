@@ -85,11 +85,11 @@ public static class DefaultBindableProperties
 
 	static readonly Dictionary<string, (BindableProperty, BindableProperty)> bindableObjectTypeDefaultCommandAndParameterProperties = new()
 	{ // Key: full type name of BindableObject, Value: command property and corresponding commandParameter property
+		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(Button)}", (Button.CommandProperty, Button.CommandParameterProperty) },
+		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(TextCell)}", (TextCell.CommandProperty, TextCell.CommandParameterProperty) },
 #pragma warning disable CS0618
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ClickGestureRecognizer)}", (ClickGestureRecognizer.CommandProperty, ClickGestureRecognizer.CommandParameterProperty) },
 #pragma warning restore CS0618
-		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(Button)}", (Button.CommandProperty, Button.CommandParameterProperty) },
-		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(TextCell)}", (TextCell.CommandProperty, TextCell.CommandParameterProperty) },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ImageButton)}", (ImageButton.CommandProperty, ImageButton.CommandParameterProperty) },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(MenuItem)}", (MenuItem.CommandProperty, MenuItem.CommandParameterProperty) },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(RefreshView)}", (RefreshView.CommandProperty, RefreshView.CommandParameterProperty) },
