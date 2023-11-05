@@ -18,6 +18,9 @@ public static class DefaultBindableProperties
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(Button)}", Button.CommandProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(CarouselPage)}", Page.TitleProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(CheckBox)}", CheckBox.IsCheckedProperty },
+#pragma warning disable CS0618
+		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ClickGestureRecognizer)}", ClickGestureRecognizer.CommandProperty },
+#pragma warning disable CS0618
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(CollectionView)}", CollectionView.ItemsSourceProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ContentPage)}", Page.TitleProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ContentPresenter)}", ContentPresenter.ContentProperty },
@@ -82,6 +85,9 @@ public static class DefaultBindableProperties
 
 	static readonly Dictionary<string, (BindableProperty, BindableProperty)> bindableObjectTypeDefaultCommandAndParameterProperties = new()
 	{ // Key: full type name of BindableObject, Value: command property and corresponding commandParameter property
+#pragma warning disable CS0618
+		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ClickGestureRecognizer)}", (ClickGestureRecognizer.CommandProperty, ClickGestureRecognizer.CommandParameterProperty) },
+#pragma warning restore CS0618
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(Button)}", (Button.CommandProperty, Button.CommandParameterProperty) },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(TextCell)}", (TextCell.CommandProperty, TextCell.CommandParameterProperty) },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ImageButton)}", (ImageButton.CommandProperty, ImageButton.CommandParameterProperty) },
