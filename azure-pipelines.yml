@@ -1,9 +1,9 @@
 variables:
-  CurrentSemanticVersionBase: '1.0.0'
+  CurrentSemanticVersionBase: '99.0.0'
   PreviewNumber: $[counter(variables['CurrentSemanticVersionBase'], 1001)]
   CurrentSemanticVersion: '$(CurrentSemanticVersionBase)-preview$(PreviewNumber)'
   NugetPackageVersion: '$(CurrentSemanticVersion)'
-  NET_VERSION: '7.0.x'
+  NET_VERSION: '8.0.x'
   RunPoliCheck: false
   PathToLibrarySolution: 'src/CommunityToolkit.Maui.Markup.sln'
   PathToSamplesSolution: 'samples/CommunityToolkit.Maui.Markup.Sample.sln'
@@ -11,7 +11,7 @@ variables:
   PathToCommunityToolkitSampleCsproj: 'samples/CommunityToolkit.Maui.Markup.Sample/CommunityToolkit.Maui.Markup.Sample.csproj'
   PathToCommunityToolkitUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.UnitTests/CommunityToolkit.Maui.Markup.UnitTests.csproj'
   PathToCommunityToolkitSourceGeneratorsCsproj: 'src/CommunityToolkit.Maui.Markup.SourceGenerators/CommunityToolkit.Maui.Markup.SourceGenerators.csproj'
-  XcodeVersion: '14.3.1'
+  XcodeVersion: '15.0.1'
   ShouldCheckDependencies: true
   
 trigger:
@@ -84,6 +84,7 @@ jobs:
         inputs:
           packageType: 'sdk'
           version: '$(NET_VERSION)'
+          includePreviewVersions: true
 
       - task: CmdLine@2
         displayName: 'Install .NET MAUI Workload'
