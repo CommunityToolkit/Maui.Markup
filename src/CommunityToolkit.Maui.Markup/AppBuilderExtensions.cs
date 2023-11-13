@@ -18,6 +18,7 @@ public static class AppBuilderExtensions
 		{
 			RegisterReloadApplicationEventHandler();
 		}
+		
 		return builder;
 	}
 	
