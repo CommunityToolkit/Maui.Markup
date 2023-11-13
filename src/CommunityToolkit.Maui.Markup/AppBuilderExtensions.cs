@@ -1,4 +1,6 @@
-﻿namespace CommunityToolkit.Maui.Markup;
+﻿using System.Diagnostics;
+
+namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>
 /// <see cref="MauiAppBuilder"/> Extensions
@@ -12,11 +14,14 @@ public static class AppBuilderExtensions
 	/// <returns><see cref="MauiAppBuilder"/> initialized for <see cref="CommunityToolkit.Maui.Markup"/></returns>
 	public static MauiAppBuilder UseMauiCommunityToolkitMarkup(this MauiAppBuilder builder)
 	{
-		RegisterReloadApplicationEventHandler();
+		if (Debugger.IsAttached)
+		{
+			RegisterReloadApplicationEventHandler();
+		}
+		
 		return builder;
 	}
-
-	[System.Diagnostics.Conditional("DEBUG")]
+	
 	static void RegisterReloadApplicationEventHandler()
 	{
 		CommunityToolkitMetadataUpdateHandler.ReloadApplication += ReloadApplication;
