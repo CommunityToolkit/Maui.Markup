@@ -2,7 +2,7 @@
 <Project>
   <PropertyGroup>
     <NetVersion>net8.0</NetVersion>
-    <MauiPackageVersion>8.0.0-rc.2.9530</MauiPackageVersion>
+    <MauiPackageVersion>8.0.3</MauiPackageVersion>
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
