@@ -71,7 +71,7 @@ jobs:
           Write-Host ("##vso[task.setvariable variable=NugetPackageVersion;]$fullVersionString")
           Write-Host "##vso[build.updatebuildnumber]$fullVersionString"
         displayName: Set NuGet Version to PR Version
-        condition: and(succeeded(), eq(variables['Agent.OS'], 'Darwin'), eq(variables['build.reason'], 'PullRequest'))
+        condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows_NT'), eq(variables['build.reason'], 'PullRequest'))
 
       - task: CmdLine@2
         displayName: 'Set Xcode v$(XcodeVersion)'
@@ -180,7 +180,7 @@ jobs:
           SignClientUser: $(SignClientUser)
           SignClientSecret: $(SignClientSecret)
           ArtifactDirectory: $(Build.ArtifactStagingDirectory)
-        condition: and(succeeded(), eq(variables['Agent.OS'], 'Darwin'), not(eq(variables['build.reason'], 'PullRequest')), not(eq(variables['SignClientSecret'], '')), not(eq(variables['SignClientUser'], '')))
+        condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows_NT'), not(eq(variables['build.reason'], 'PullRequest')), not(eq(variables['SignClientSecret'], '')), not(eq(variables['SignClientUser'], '')))
 
       # publish the packages
       - task: PublishBuildArtifacts@1
