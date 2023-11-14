@@ -184,7 +184,7 @@ jobs:
 
       # publish the packages
       - task: PublishBuildArtifacts@1
-        condition: eq(variables['Agent.OS'], 'Windows_NT') # Only run this step on macOS
+        condition: eq(variables['Agent.OS'], 'Windows_NT') # Only run this step on Windows
         displayName: 'Publish NuGets'
         inputs:
           artifactName: nuget
