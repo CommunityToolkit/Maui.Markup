@@ -14,7 +14,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="coverlet.collector" Version="6.0.0" PrivateAssets="all" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="CommunityToolkit.Maui" Version="6.1.0" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
