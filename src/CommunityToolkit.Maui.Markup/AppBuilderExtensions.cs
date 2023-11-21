@@ -18,10 +18,10 @@ public static class AppBuilderExtensions
 		{
 			RegisterReloadApplicationEventHandler();
 		}
-		
+
 		return builder;
 	}
-	
+
 	static void RegisterReloadApplicationEventHandler()
 	{
 		CommunityToolkitMetadataUpdateHandler.ReloadApplication += ReloadApplication;
