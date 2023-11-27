@@ -83,7 +83,7 @@ class AbsoluteLayoutExtensionsTest : BaseMarkupTestFixture<BoxView>
 	public void ClearLayoutFlags()
 	{
 		var label = new Label().ClearLayoutFlags();
-		Assert.That(AbsoluteLayoutFlags.None, Is.EqualTo(label.GetPropertyIfSet(AbsoluteLayout.LayoutFlagsProperty, (AbsoluteLayoutFlags)(-1))));
+		Assert.That(label.GetPropertyIfSet(AbsoluteLayout.LayoutFlagsProperty, (AbsoluteLayoutFlags)(-1)), Is.EqualTo(AbsoluteLayoutFlags.None));
 	}
 
 	// Cannot use TestPropertiesSet() because ClearLayoutFlags sets AbsoluteLayout.LayoutFlagsProperty to its default 
@@ -91,6 +91,6 @@ class AbsoluteLayoutExtensionsTest : BaseMarkupTestFixture<BoxView>
 	public void ClearLayoutFlagsAfterSettingLayoutFlags()
 	{
 		var label = new Label().LayoutFlags(AbsoluteLayoutFlags.XProportional).ClearLayoutFlags();
-		Assert.That(AbsoluteLayoutFlags.None, Is.EqualTo(label.GetPropertyIfSet(AbsoluteLayout.LayoutFlagsProperty, AbsoluteLayoutFlags.XProportional)));
+		Assert.That(label.GetPropertyIfSet(AbsoluteLayout.LayoutFlagsProperty, AbsoluteLayoutFlags.XProportional), Is.EqualTo(AbsoluteLayoutFlags.None));
 	}
 }

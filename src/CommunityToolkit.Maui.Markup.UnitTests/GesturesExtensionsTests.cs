@@ -82,7 +82,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 		((ClickGestureRecognizer)gestureElement.GestureRecognizers[0]).SendClicked(null, ButtonsMask.Primary);
 
 		Assert.That(clicks, Is.GreaterThan(0));
-		Assert.That(1, Is.EqualTo(gestureElement.GestureRecognizers.Count));
+		Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
 		Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<ClickGestureRecognizer>());
 		Assert.That(((ClickGestureRecognizer)gestureElement.GestureRecognizers[0]).NumberOfClicksRequired, Is.EqualTo(numberOfClicks));
 	}
