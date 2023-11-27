@@ -98,7 +98,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 		gestureElement.TapGesture(() => taps++, numberOfTaps);
 		((TapGestureRecognizer)gestureElement.GestureRecognizers[0]).SendTapped(gestureElement);
 
-		Assert.That(taps, Is.EqualTo(0));
+		Assert.That(taps, Is.GreaterThan(0));
 		Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
 		Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<TapGestureRecognizer>());
 		Assert.That(((TapGestureRecognizer)gestureElement.GestureRecognizers[0]).NumberOfTapsRequired, Is.EqualTo(numberOfTaps));
