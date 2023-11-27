@@ -24,8 +24,12 @@ class StyleTests : BaseMarkupTestFixture
 		Assert.That(formsStyle.Setters.Count, Is.EqualTo(1));
 
 		var setter = formsStyle.Setters[0];
-		Assert.That(setter.Property, Is.EqualTo(Label.TextColorProperty));
-		Assert.That(setter.Value, Is.EqualTo(Colors.Red));
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(setter.Property, Is.EqualTo(Label.TextColorProperty));
+			Assert.That(setter.Value, Is.EqualTo(Colors.Red));
+		});
 	}
 
 	[Test]
@@ -39,12 +43,20 @@ class StyleTests : BaseMarkupTestFixture
 		Assert.That(formsStyle.Setters.Count, Is.EqualTo(2));
 
 		var setter1 = formsStyle.Setters[0];
-		Assert.That(setter1.Property, Is.EqualTo(Label.TextColorProperty));
-		Assert.That(setter1.Value, Is.EqualTo(Colors.Red));
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(setter1.Property, Is.EqualTo(Label.TextColorProperty));
+			Assert.That(setter1.Value, Is.EqualTo(Colors.Red));
+		});
 
 		var setter2 = formsStyle.Setters[1];
-		Assert.That(setter2.Property, Is.EqualTo(Label.TranslationXProperty));
-		Assert.That(setter2.Value, Is.EqualTo(8.0));
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(setter2.Property, Is.EqualTo(Label.TranslationXProperty));
+			Assert.That(setter2.Value, Is.EqualTo(8.0));
+		});
 	}
 
 	[Test]
@@ -86,8 +98,12 @@ class StyleTests : BaseMarkupTestFixture
 		Assert.That(formsStyle.Setters.Count, Is.EqualTo(1));
 
 		var setter = formsStyle.Setters[0];
-		Assert.That(setter.Property, Is.EqualTo(Label.TextColorProperty));
-		Assert.That(setter.Value, Is.EqualTo(Colors.Red));
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(setter.Property, Is.EqualTo(Label.TextColorProperty));
+			Assert.That(setter.Value, Is.EqualTo(Colors.Red));
+		});
 	}
 
 	[Test]
@@ -104,12 +120,20 @@ class StyleTests : BaseMarkupTestFixture
 		Assert.That(formsStyle.Setters.Count, Is.EqualTo(2));
 
 		var setter1 = formsStyle.Setters[0];
-		Assert.That(setter1.Property, Is.EqualTo(Label.TextColorProperty));
-		Assert.That(setter1.Value, Is.EqualTo(Colors.Red));
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(setter1.Property, Is.EqualTo(Label.TextColorProperty));
+			Assert.That(setter1.Value, Is.EqualTo(Colors.Red));
+		});
 
 		var setter2 = formsStyle.Setters[1];
-		Assert.That(setter2.Property, Is.EqualTo(Label.TranslationXProperty));
-		Assert.That(setter2.Value, Is.EqualTo(8.0));
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(setter2.Property, Is.EqualTo(Label.TranslationXProperty));
+			Assert.That(setter2.Value, Is.EqualTo(8.0));
+		});
 	}
 
 	[Test]
@@ -122,8 +146,11 @@ class StyleTests : BaseMarkupTestFixture
 
 		style.Add(behavior);
 
-		Assert.That(formsStyle.Behaviors.Count, Is.EqualTo(1));
-		Assert.That(ReferenceEquals(formsStyle.Behaviors[0], behavior));
+		Assert.Multiple(() =>
+		{
+			Assert.That(formsStyle.Behaviors.Count, Is.EqualTo(1));
+			Assert.That(ReferenceEquals(formsStyle.Behaviors[0], behavior));
+		});
 	}
 
 	[Test]
@@ -137,9 +164,12 @@ class StyleTests : BaseMarkupTestFixture
 
 		style.Add(behavior1, behavior2);
 
-		Assert.That(formsStyle.Behaviors.Count, Is.EqualTo(2));
-		Assert.That(ReferenceEquals(formsStyle.Behaviors[0], behavior1));
-		Assert.That(ReferenceEquals(formsStyle.Behaviors[1], behavior2));
+		Assert.Multiple(() =>
+		{
+			Assert.That(formsStyle.Behaviors.Count, Is.EqualTo(2));
+			Assert.That(ReferenceEquals(formsStyle.Behaviors[0], behavior1));
+			Assert.That(ReferenceEquals(formsStyle.Behaviors[1], behavior2));
+		});
 	}
 
 	[Test]
@@ -152,8 +182,11 @@ class StyleTests : BaseMarkupTestFixture
 
 		style.Add(trigger);
 
-		Assert.That(formsStyle.Triggers.Count, Is.EqualTo(1));
-		Assert.That(ReferenceEquals(formsStyle.Triggers[0], trigger));
+		Assert.Multiple(() =>
+		{
+			Assert.That(formsStyle.Triggers.Count, Is.EqualTo(1));
+			Assert.That(ReferenceEquals(formsStyle.Triggers[0], trigger));
+		});
 	}
 
 	[Test]
@@ -167,9 +200,12 @@ class StyleTests : BaseMarkupTestFixture
 
 		style.Add(trigger1, trigger2);
 
-		Assert.That(formsStyle.Triggers.Count, Is.EqualTo(2));
-		Assert.That(ReferenceEquals(formsStyle.Triggers[0], trigger1));
-		Assert.That(ReferenceEquals(formsStyle.Triggers[1], trigger2));
+		Assert.Multiple(() =>
+		{
+			Assert.That(formsStyle.Triggers.Count, Is.EqualTo(2));
+			Assert.That(ReferenceEquals(formsStyle.Triggers[0], trigger1));
+			Assert.That(ReferenceEquals(formsStyle.Triggers[1], trigger2));
+		});
 	}
 
 	[Test]
@@ -197,11 +233,14 @@ class StyleTests : BaseMarkupTestFixture
 			.Add(new Trigger(typeof(Label)))
 			.CanCascade(true);
 
-		Assert.That(style.MauiStyle.CanCascade, Is.True);
-		Assert.That(style.MauiStyle.Setters[0].Value, Is.EqualTo(Colors.Red));
-		Assert.That(style.MauiStyle.Behaviors[0], Is.InstanceOf<LabelBehavior>());
-		Assert.That(style.MauiStyle.Triggers[0], Is.InstanceOf<Trigger>());
-		Assert.That(style.MauiStyle.CanBeAppliedTo(typeof(Label)), Is.True);
+		Assert.Multiple(() =>
+		{
+			Assert.That(style.MauiStyle.CanCascade, Is.True);
+			Assert.That(style.MauiStyle.Setters[0].Value, Is.EqualTo(Colors.Red));
+			Assert.That(style.MauiStyle.Behaviors[0], Is.InstanceOf<LabelBehavior>());
+			Assert.That(style.MauiStyle.Triggers[0], Is.InstanceOf<Trigger>());
+			Assert.That(style.MauiStyle.CanBeAppliedTo(typeof(Label)), Is.True);
+		});
 	}
 
 	[TestCase(AppTheme.Light)]
@@ -235,8 +274,11 @@ class StyleTests : BaseMarkupTestFixture
 					.AppThemeBinding(Label.TextProperty, nameof(AppTheme.Light), nameof(AppTheme.Dark)),
 			(label) =>
 			{
-				Assert.That(label.TextColor, Is.EqualTo(expectedColor));
-				Assert.That(label.Text, Is.EqualTo(expectedText));
+				Assert.Multiple(() =>
+				{
+					Assert.That(label.TextColor, Is.EqualTo(expectedColor));
+					Assert.That(label.Text, Is.EqualTo(expectedText));
+				});
 			});
 	}
 

@@ -17,8 +17,12 @@ class ObjectExtensionsTests : BaseMarkupTestFixture
 	public void AssignCustomLabel()
 	{
 		var createdLabel = new CustomLabel().Assign(out Label assignedLabel).Assign(out CustomLabel assignedCustomLabel);
-		Assert.That(ReferenceEquals(createdLabel, assignedLabel));
-		Assert.That(ReferenceEquals(assignedCustomLabel, assignedLabel));
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(ReferenceEquals(createdLabel, assignedLabel));
+			Assert.That(ReferenceEquals(assignedCustomLabel, assignedLabel));
+		});
 	}
 
 	[Test]
@@ -29,11 +33,14 @@ class ObjectExtensionsTests : BaseMarkupTestFixture
 
 		var createdString = text.Invoke(_ => testString = text).Assign(out string assignedString);
 
-		Assert.That(testString, Is.Not.Null);
-		Assert.That(testString, Is.EqualTo(text));
-		Assert.That(assignedString, Is.EqualTo(text));
-		Assert.That(createdString, Is.EqualTo(text));
-		Assert.That(ReferenceEquals(createdString, assignedString));
+		Assert.Multiple(() =>
+		{
+			Assert.That(testString, Is.Not.Null);
+			Assert.That(testString, Is.EqualTo(text));
+			Assert.That(assignedString, Is.EqualTo(text));
+			Assert.That(createdString, Is.EqualTo(text));
+			Assert.That(ReferenceEquals(createdString, assignedString));
+		});
 	}
 
 	[Test]

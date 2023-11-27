@@ -15,8 +15,11 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 		label.Resources["TextKey"] = "ChangedTextValue";
 		label.Resources["ColorKey"] = Colors.Green;
 
-		Assert.That(label.Text, Is.EqualTo("TextValue"));
-		Assert.That(label.TextColor, Is.EqualTo(Colors.Green));
+		Assert.Multiple(() =>
+		{
+			Assert.That(label.Text, Is.EqualTo("TextValue"));
+			Assert.That(label.TextColor, Is.EqualTo(Colors.Green));
+		});
 	}
 
 	[Test]
@@ -41,9 +44,12 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 		NullEffect effect1 = new NullEffect(), effect2 = new NullEffect();
 		Bindable.Effects(effect1, effect2);
 
-		Assert.That(Bindable.Effects.Count, Is.EqualTo(2));
-		Assert.That(Bindable.Effects.Contains(effect1));
-		Assert.That(Bindable.Effects.Contains(effect2));
+		Assert.Multiple(() =>
+		{
+			Assert.That(Bindable.Effects.Count, Is.EqualTo(2));
+			Assert.That(Bindable.Effects.Contains(effect1));
+			Assert.That(Bindable.Effects.Contains(effect2));
+		});
 	}
 
 	[Test]
@@ -86,14 +92,20 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 	{
 		var label = new Label { Resources = new ResourceDictionary { { "TextKey", "TextValue" }, { "ColorKey", Colors.Green } } };
 
-		Assert.That(label.Text, Is.EqualTo(Label.TextProperty.DefaultValue));
-		Assert.That(label.TextColor, Is.EqualTo(Label.TextColorProperty.DefaultValue));
+		Assert.Multiple(() =>
+		{
+			Assert.That(label.Text, Is.EqualTo(Label.TextProperty.DefaultValue));
+			Assert.That(label.TextColor, Is.EqualTo(Label.TextColorProperty.DefaultValue));
+		});
 
 		label.DynamicResources((Label.TextProperty, "TextKey"),
 							   (Label.TextColorProperty, "ColorKey"));
 
-		Assert.That(label.Text, Is.EqualTo("TextValue"));
-		Assert.That(label.TextColor, Is.EqualTo(Colors.Green));
+		Assert.Multiple(() =>
+		{
+			Assert.That(label.Text, Is.EqualTo("TextValue"));
+			Assert.That(label.TextColor, Is.EqualTo(Colors.Green));
+		});
 
 		return label;
 	}

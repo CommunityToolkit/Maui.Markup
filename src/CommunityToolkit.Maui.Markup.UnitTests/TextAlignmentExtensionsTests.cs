@@ -153,8 +153,11 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 			var generatedPicker = genericPicker.TextEnd();
 
-			Assert.That(genericPicker.HorizontalTextAlignment, Is.EqualTo(TextAlignment.End));
-			Assert.That(generatedPicker, Is.InstanceOf<MyGenericPicker<string>>());
+			Assert.Multiple(() =>
+			{
+				Assert.That(genericPicker.HorizontalTextAlignment, Is.EqualTo(TextAlignment.End));
+				Assert.That(generatedPicker, Is.InstanceOf<MyGenericPicker<string>>());
+			});
 		}
 
 		[Test]
@@ -391,8 +394,11 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				.TextBottom()
 				.TextCenter();
 
-			Assert.That(partialClassControl.IsPartial, Is.True);
-			Assert.That(partialClassControl, Is.InstanceOf<PartialClassControl>());
+			Assert.Multiple(() =>
+			{
+				Assert.That(partialClassControl.IsPartial, Is.True);
+				Assert.That(partialClassControl, Is.InstanceOf<PartialClassControl>());
+			});
 		}
 
 		[Test]

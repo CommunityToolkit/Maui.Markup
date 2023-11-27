@@ -44,8 +44,12 @@ class VisualElementExtensionsTests : BaseMarkupTestFixture<BoxView>
 	{
 		Bindable.WidthRequest = Bindable.HeightRequest = 1;
 		Bindable.Size(2, 3);
-		Assert.That(Bindable.WidthRequest, Is.EqualTo(2));
-		Assert.That(Bindable.HeightRequest, Is.EqualTo(3));
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(Bindable.WidthRequest, Is.EqualTo(2));
+			Assert.That(Bindable.HeightRequest, Is.EqualTo(3));
+		});
 	}
 
 	[Test]
@@ -53,8 +57,12 @@ class VisualElementExtensionsTests : BaseMarkupTestFixture<BoxView>
 	{
 		Bindable.WidthRequest = Bindable.HeightRequest = 1;
 		Bindable.Size(2);
-		Assert.That(Bindable.WidthRequest, Is.EqualTo(2));
-		Assert.That(Bindable.HeightRequest, Is.EqualTo(2));
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(Bindable.WidthRequest, Is.EqualTo(2));
+			Assert.That(Bindable.HeightRequest, Is.EqualTo(2));
+		});
 	}
 
 	[Test]
@@ -62,8 +70,12 @@ class VisualElementExtensionsTests : BaseMarkupTestFixture<BoxView>
 	{
 		Bindable.MinimumWidthRequest = Bindable.MinimumHeightRequest = 1;
 		Bindable.MinSize(2, 3);
-		Assert.That(Bindable.MinimumWidthRequest, Is.EqualTo(2));
-		Assert.That(Bindable.MinimumHeightRequest, Is.EqualTo(3));
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(Bindable.MinimumWidthRequest, Is.EqualTo(2));
+			Assert.That(Bindable.MinimumHeightRequest, Is.EqualTo(3));
+		});
 	}
 
 	[Test]
@@ -71,8 +83,12 @@ class VisualElementExtensionsTests : BaseMarkupTestFixture<BoxView>
 	{
 		Bindable.MinimumWidthRequest = Bindable.MinimumHeightRequest = 1;
 		Bindable.MinSize(2);
-		Assert.That(Bindable.MinimumWidthRequest, Is.EqualTo(2));
-		Assert.That(Bindable.MinimumHeightRequest, Is.EqualTo(2));
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(Bindable.MinimumWidthRequest, Is.EqualTo(2));
+			Assert.That(Bindable.MinimumHeightRequest, Is.EqualTo(2));
+		});
 	}
 
 	[Test]
@@ -93,8 +109,12 @@ class VisualElementExtensionsTests : BaseMarkupTestFixture<BoxView>
 	public void Anchor()
 	{
 		Bindable.Anchor(50, 75);
-		Assert.That(Bindable.AnchorX, Is.EqualTo(50));
-		Assert.That(Bindable.AnchorY, Is.EqualTo(75));
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(Bindable.AnchorX, Is.EqualTo(50));
+			Assert.That(Bindable.AnchorY, Is.EqualTo(75));
+		});
 	}
 
 	[Test]
@@ -231,16 +251,24 @@ class VisualElementExtensionsTests : BaseMarkupTestFixture<BoxView>
 	public void Scale_Different()
 	{
 		Bindable.Scale(2, 3);
-		Assert.That(Bindable.ScaleX, Is.EqualTo(2));
-		Assert.That(Bindable.ScaleY, Is.EqualTo(3));
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(Bindable.ScaleX, Is.EqualTo(2));
+			Assert.That(Bindable.ScaleY, Is.EqualTo(3));
+		});
 	}
 
 	[Test]
 	public void Scale_Same()
 	{
 		Bindable.Scale(1.25);
-		Assert.That(Bindable.ScaleX, Is.EqualTo(1.25));
-		Assert.That(Bindable.ScaleY, Is.EqualTo(1.25));
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(Bindable.ScaleX, Is.EqualTo(1.25));
+			Assert.That(Bindable.ScaleY, Is.EqualTo(1.25));
+		});
 	}
 
 	[Test]

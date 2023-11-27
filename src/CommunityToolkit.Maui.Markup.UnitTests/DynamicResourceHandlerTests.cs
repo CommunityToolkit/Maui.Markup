@@ -21,14 +21,20 @@ public class DynamicResourceHandlerTests
 	{
 		var label = new Label { Resources = new ResourceDictionary { { "TextKey", "TextValue" }, { "ColorKey", Colors.Green } } };
 
-		Assert.That(label.Text, Is.EqualTo(Label.TextProperty.DefaultValue));
-		Assert.That(label.TextColor, Is.EqualTo(Label.TextColorProperty.DefaultValue));
+		Assert.Multiple(() =>
+		{
+			Assert.That(label.Text, Is.EqualTo(Label.TextProperty.DefaultValue));
+			Assert.That(label.TextColor, Is.EqualTo(Label.TextColorProperty.DefaultValue));
+		});
 
 		label.DynamicResources((Label.TextProperty, "TextKey"),
 							   (Label.TextColorProperty, "ColorKey"));
 
-		Assert.That(label.Text, Is.EqualTo("TextValue"));
-		Assert.That(label.TextColor, Is.EqualTo(Colors.Green));
+		Assert.Multiple(() =>
+		{
+			Assert.That(label.Text, Is.EqualTo("TextValue"));
+			Assert.That(label.TextColor, Is.EqualTo(Colors.Green));
+		});
 
 		return label;
 	}

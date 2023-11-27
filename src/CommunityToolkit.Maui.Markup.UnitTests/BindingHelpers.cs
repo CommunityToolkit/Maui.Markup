@@ -83,18 +83,21 @@ static class BindingHelpers
 		TParam? expectedConverterParameter = default) where TBindable : BindableObject
 	{
 		var binding = GetTypedBinding(bindable, targetProperty) ?? throw new NullReferenceException();
-		Assert.That(binding, Is.Not.Null);
 
-		Assert.That(binding.Mode, Is.EqualTo(expectedBindingMode));
+		Assert.Multiple(() =>
+		{
+			Assert.That(binding, Is.Not.Null);
+			Assert.That(binding.Mode, Is.EqualTo(expectedBindingMode));
 
-		Assert.That(binding.Converter?.ToString(), Is.EqualTo(expectedConverter?.ToString()));
+			Assert.That(binding.Converter?.ToString(), Is.EqualTo(expectedConverter?.ToString()));
 
-		Assert.That(binding.ConverterParameter, Is.EqualTo(expectedConverterParameter));
+			Assert.That(binding.ConverterParameter, Is.EqualTo(expectedConverterParameter));
 
-		Assert.That(expectedSource, Is.InstanceOf<TBindingContext>());
-		Assert.That(binding.StringFormat, Is.EqualTo(expectedStringFormat));
-		Assert.That(binding.TargetNullValue, Is.EqualTo(expectedTargetNullValue));
-		Assert.That(binding.FallbackValue, Is.EqualTo(expectedFallbackValue));
+			Assert.That(expectedSource, Is.InstanceOf<TBindingContext>());
+			Assert.That(binding.StringFormat, Is.EqualTo(expectedStringFormat));
+			Assert.That(binding.TargetNullValue, Is.EqualTo(expectedTargetNullValue));
+			Assert.That(binding.FallbackValue, Is.EqualTo(expectedFallbackValue));
+		});
 	}
 
 	internal static void AssertBindingExists<TDest, TParam>(
@@ -112,9 +115,13 @@ static class BindingHelpers
 		Action<IValueConverter>? assertConvert = null)
 	{
 		var binding = GetBinding(bindable, targetProperty) ?? throw new NullReferenceException();
-		Assert.That(binding, Is.Not.Null);
-		Assert.That(binding.Path, Is.EqualTo(path));
-		Assert.That(binding.Mode, Is.EqualTo(mode));
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(binding, Is.Not.Null);
+			Assert.That(binding.Path, Is.EqualTo(path));
+			Assert.That(binding.Mode, Is.EqualTo(mode));
+		});
 
 		if (assertConverterInstanceIsAnyNotNull)
 		{
@@ -125,11 +132,14 @@ static class BindingHelpers
 			Assert.That(binding.Converter, Is.EqualTo(converter));
 		}
 
-		Assert.That(binding.ConverterParameter, Is.EqualTo(converterParameter));
-		Assert.That(binding.StringFormat, Is.EqualTo(stringFormat));
-		Assert.That(binding.Source, Is.EqualTo(source));
-		Assert.That(binding.TargetNullValue, Is.EqualTo(targetNullValue));
-		Assert.That(binding.FallbackValue, Is.EqualTo(fallbackValue));
+		Assert.Multiple(() =>
+		{
+			Assert.That(binding.ConverterParameter, Is.EqualTo(converterParameter));
+			Assert.That(binding.StringFormat, Is.EqualTo(stringFormat));
+			Assert.That(binding.Source, Is.EqualTo(source));
+			Assert.That(binding.TargetNullValue, Is.EqualTo(targetNullValue));
+			Assert.That(binding.FallbackValue, Is.EqualTo(fallbackValue));
+		});
 
 		assertConvert?.Invoke(binding.Converter);
 	}
@@ -163,9 +173,13 @@ static class BindingHelpers
 		Action<IMultiValueConverter>? assertConvert = null)
 	{
 		var binding = GetMultiBinding(bindable, targetProperty) ?? throw new NullReferenceException();
-		Assert.That(binding, Is.Not.Null);
-		Assert.That(binding.Bindings.SequenceEqual(bindings), Is.True);
-		Assert.That(binding.Mode, Is.EqualTo(mode));
+		
+		Assert.Multiple(() =>
+		{
+			Assert.That(binding, Is.Not.Null);
+			Assert.That(binding.Bindings.SequenceEqual(bindings), Is.True);
+			Assert.That(binding.Mode, Is.EqualTo(mode));
+		});
 
 		if (assertConverterInstanceIsAnyNotNull)
 		{
@@ -176,10 +190,13 @@ static class BindingHelpers
 			Assert.That(binding.Converter, Is.EqualTo(converter));
 		}
 
-		Assert.That(binding.ConverterParameter, Is.EqualTo(converterParameter));
-		Assert.That(binding.StringFormat, Is.EqualTo(stringFormat));
-		Assert.That(binding.TargetNullValue, Is.EqualTo(targetNullValue));
-		Assert.That(binding.FallbackValue, Is.EqualTo(fallbackValue));
+		Assert.Multiple(() =>
+		{
+			Assert.That(binding.ConverterParameter, Is.EqualTo(converterParameter));
+			Assert.That(binding.StringFormat, Is.EqualTo(stringFormat));
+			Assert.That(binding.TargetNullValue, Is.EqualTo(targetNullValue));
+			Assert.That(binding.FallbackValue, Is.EqualTo(fallbackValue));
+		});
 
 		assertConvert?.Invoke(binding.Converter);
 	}
@@ -217,8 +234,11 @@ static class BindingHelpers
 
 	internal static IValueConverter AssertConvert<TValue, TConvertedValue>(this IValueConverter converter, TValue value, object? parameter, TConvertedValue expectedConvertedValue, bool twoWay = false, bool backOnly = false, CultureInfo? culture = null)
 	{
-		Assert.That(converter.Convert(value, typeof(object), parameter, culture ?? CultureInfo.InvariantCulture), Is.EqualTo(backOnly ? default : expectedConvertedValue));
-		Assert.That(converter.ConvertBack(expectedConvertedValue, typeof(object), parameter, culture ?? CultureInfo.InvariantCulture), Is.EqualTo(twoWay || backOnly ? value : default(TValue)));
+		Assert.Multiple(() =>
+		{
+			Assert.That(converter.Convert(value, typeof(object), parameter, culture ?? CultureInfo.InvariantCulture), Is.EqualTo(backOnly ? default : expectedConvertedValue));
+			Assert.That(converter.ConvertBack(expectedConvertedValue, typeof(object), parameter, culture ?? CultureInfo.InvariantCulture), Is.EqualTo(twoWay || backOnly ? value : default(TValue)));
+		});
 		return converter;
 	}
 

@@ -39,13 +39,21 @@ class FuncConverterTests : BaseMarkupTestFixture
 		.AssertConvert(new object[] { 'a', 2 }, true, "aaa", twoWay: true, culture: expectedCulture)
 		.AssertConvert(new object[] { 'b', 4 }, false, "bbbb", twoWay: true, culture: expectedCulture);
 
-		Assert.That(convertCulture, Is.EqualTo(expectedCulture));
-		Assert.That(convertBackCulture, Is.EqualTo(expectedCulture));
+		Assert.Multiple(() =>
+		{
+			Assert.That(convertCulture, Is.EqualTo(expectedCulture));
+			Assert.That(convertBackCulture, Is.EqualTo(expectedCulture));
 
-		Assert.That(converter.Convert(new object[] { 'a', 2 }, null, null, CultureInfo.InvariantCulture), Is.EqualTo("aa"));
+			Assert.That(converter.Convert(new object[] { 'a', 2 }, null, null, CultureInfo.InvariantCulture), Is.EqualTo("aa"));
+		});
+
 		var backValues = converter.ConvertBack(null, null, null, CultureInfo.InvariantCulture);
-		Assert.That((char)backValues[0], Is.EqualTo('\0'));
-		Assert.That((int)backValues[1], Is.EqualTo(0));
+
+		Assert.Multiple(() =>
+		{
+			Assert.That((char)backValues[0], Is.EqualTo('\0'));
+			Assert.That((int)backValues[1], Is.EqualTo(0));
+		});
 	}
 
 	[Test]
@@ -76,8 +84,12 @@ class FuncConverterTests : BaseMarkupTestFixture
 
 		Assert.That(converter.Convert(new object[] { 'a', 2 }, null, null, CultureInfo.InvariantCulture), Is.EqualTo("aa"));
 		var backValues = converter.ConvertBack(null, null, null, CultureInfo.InvariantCulture);
-		Assert.That((char)backValues[0], Is.EqualTo('\0'));
-		Assert.That((int)backValues[1], Is.EqualTo(0));
+		
+		Assert.Multiple(() =>
+		{
+			Assert.That((char)backValues[0], Is.EqualTo('\0'));
+			Assert.That((int)backValues[1], Is.EqualTo(0));
+		});
 	}
 
 	[Test]
@@ -102,9 +114,14 @@ class FuncConverterTests : BaseMarkupTestFixture
 		.AssertConvert(new object[] { 'b', 4 }, false, "bbbb", twoWay: true);
 
 		Assert.That(converter.Convert(new object[] { 'a', 2 }, null, null, CultureInfo.InvariantCulture), Is.EqualTo("aa"));
+
 		var backValues = converter.ConvertBack(null, null, null, CultureInfo.InvariantCulture);
-		Assert.That((char)backValues[0], Is.EqualTo('\0'));
-		Assert.That((int)backValues[1], Is.EqualTo(0));
+
+		Assert.Multiple(() =>
+		{
+			Assert.That((char)backValues[0], Is.EqualTo('\0'));
+			Assert.That((int)backValues[1], Is.EqualTo(0));
+		});
 	}
 
 	[Test]
@@ -127,11 +144,14 @@ class FuncConverterTests : BaseMarkupTestFixture
 		.AssertConvert(true, 0.5f, Colors.Red.MultiplyAlpha(0.5f), twoWay: true, culture: expectedCulture)
 		.AssertConvert(false, 0.2f, Colors.Green.MultiplyAlpha(0.2f), twoWay: true, culture: expectedCulture);
 
-		Assert.That(convertCulture, Is.EqualTo(expectedCulture));
-		Assert.That(convertBackCulture, Is.EqualTo(expectedCulture));
+		Assert.Multiple(() =>
+		{
+			Assert.That(convertCulture, Is.EqualTo(expectedCulture));
+			Assert.That(convertBackCulture, Is.EqualTo(expectedCulture));
 
-		Assert.That(converter.Convert(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(Colors.Green.MultiplyAlpha(default)));
-		Assert.That(converter.ConvertBack(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(default(bool)));
+			Assert.That(converter.Convert(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(Colors.Green.MultiplyAlpha(default)));
+			Assert.That(converter.ConvertBack(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(default(bool)));
+		});
 	}
 
 	[Test]
@@ -143,8 +163,11 @@ class FuncConverterTests : BaseMarkupTestFixture
 		.AssertConvert(true, 0.5f, Colors.Red.MultiplyAlpha(0.5f), twoWay: true)
 		.AssertConvert(false, 0.2f, Colors.Green.MultiplyAlpha(0.2f), twoWay: true);
 
-		Assert.That(converter.Convert(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(Colors.Green.MultiplyAlpha(default)));
-		Assert.That(converter.ConvertBack(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(default(bool)));
+		Assert.Multiple(() =>
+		{
+			Assert.That(converter.Convert(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(Colors.Green.MultiplyAlpha(default)));
+			Assert.That(converter.ConvertBack(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(default(bool)));
+		});
 	}
 
 	[Test]
@@ -156,8 +179,11 @@ class FuncConverterTests : BaseMarkupTestFixture
 		.AssertConvert(true, Colors.Red, twoWay: true)
 		.AssertConvert(false, Colors.Green, twoWay: true);
 
-		Assert.That(converter.Convert(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(Colors.Green));
-		Assert.That(converter.ConvertBack(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(default(bool)));
+		Assert.Multiple(() =>
+		{
+			Assert.That(converter.Convert(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(Colors.Green));
+			Assert.That(converter.ConvertBack(null, typeof(object), null, CultureInfo.InvariantCulture), Is.EqualTo(default(bool)));
+		});
 	}
 
 	[Test]
@@ -312,9 +338,13 @@ class FuncConverterTests : BaseMarkupTestFixture
 	{
 		var c = NotConverter.Instance;
 		c = NotConverter.Instance; // 2nd time to test instance reuse
-		Assert.That((bool?)c.Convert(false, null, null, null), Is.True);
-		Assert.That((bool?)c.Convert(true, null, null, null), Is.False);
-		Assert.That((bool?)c.ConvertBack(false, null, null, null), Is.True);
-		Assert.That((bool?)c.ConvertBack(true, null, null, null), Is.False);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That((bool?)c.Convert(false, null, null, null), Is.True);
+			Assert.That((bool?)c.Convert(true, null, null, null), Is.False);
+			Assert.That((bool?)c.ConvertBack(false, null, null, null), Is.True);
+			Assert.That((bool?)c.ConvertBack(true, null, null, null), Is.False);
+		});
 	}
 }
