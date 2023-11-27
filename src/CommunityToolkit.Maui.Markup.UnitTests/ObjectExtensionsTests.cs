@@ -29,10 +29,10 @@ class ObjectExtensionsTests : BaseMarkupTestFixture
 
 		var createdString = text.Invoke(_ => testString = text).Assign(out string assignedString);
 
-		Assert.NotNull(testString);
-		Assert.AreEqual(text, testString);
-		Assert.AreEqual(text, assignedString);
-		Assert.AreEqual(text, createdString);
+		Assert.That(testString, Is.Not.Null);
+		Assert.That(testString, Is.EqualTo(text));
+		Assert.That(assignedString, Is.EqualTo(text));
+		Assert.That(createdString, Is.EqualTo(text));
 		Assert.That(ReferenceEquals(createdString, assignedString));
 	}
 

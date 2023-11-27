@@ -87,16 +87,16 @@ class ItemsViewTests : BaseMarkupTestFixture<CollectionView>
 	[Test]
 	public void DerivedFromCarouselViewTest()
 	{
-		Assert.IsInstanceOf<DerivedFromCarouselView>(
-			new DerivedFromCarouselView()
-			.EmptyView(new BoxView { BackgroundColor = Colors.Green })
-			.EmptyViewTemplate(new DataTemplate(() => new BoxView { BackgroundColor = Colors.Red }))
-			.ItemsSource(new[] { "Hello", "World" })
-			.ScrollBarVisibility(ScrollBarVisibility.Never)
-			.RemainingItemsThreshold(10)
-			.RemainingItemsThresholdReachedCommand(new Command<string>(text => text = text[..1]), "Hello World")
-			.ItemTemplate(new DataTemplate(() => new Label()))
-			.ItemsUpdatingScrollMode(ItemsUpdatingScrollMode.KeepScrollOffset));
+		Assert.That(new DerivedFromCarouselView()
+						.EmptyView(new BoxView { BackgroundColor = Colors.Green })
+						.EmptyViewTemplate(new DataTemplate(() => new BoxView { BackgroundColor = Colors.Red }))
+						.ItemsSource(new[] { "Hello", "World" })
+						.ScrollBarVisibility(ScrollBarVisibility.Never)
+						.RemainingItemsThreshold(10)
+						.RemainingItemsThresholdReachedCommand(new Command<string>(text => text = text[..1]), "Hello World")
+						.ItemTemplate(new DataTemplate(() => new Label()))
+						.ItemsUpdatingScrollMode(ItemsUpdatingScrollMode.KeepScrollOffset),
+					Is.InstanceOf<DerivedFromCarouselView>());
 	}
 
 	class DerivedFromCarouselView : CarouselView

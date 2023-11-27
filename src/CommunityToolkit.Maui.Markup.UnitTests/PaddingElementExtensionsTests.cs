@@ -29,11 +29,11 @@ class PaddingElementExtensionsTests<TPaddingElement> : BaseMarkupTestFixture<TPa
 	[Test]
 	public void SupportDerivedFrom()
 	{
-		Assert.IsInstanceOf<DerivedFrom>(
-			new DerivedFrom()
-			.Padding(1)
-			.Padding(1, 2)
-			.Paddings(left: 1, top: 2, right: 3, bottom: 4));
+		Assert.That(new DerivedFrom()
+						.Padding(1)
+						.Padding(1, 2)
+						.Paddings(left: 1, top: 2, right: 3, bottom: 4),
+					Is.InstanceOf<DerivedFrom>());
 	}
 
 	class DerivedFrom : ContentView { }

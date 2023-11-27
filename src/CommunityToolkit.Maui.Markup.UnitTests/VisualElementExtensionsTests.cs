@@ -276,17 +276,17 @@ class VisualElementExtensionsTests : BaseMarkupTestFixture<BoxView>
 	[Test]
 	public void SupportDerivedFromBoxView()
 	{
-		Assert.IsInstanceOf<DerivedFromBoxView>(
-			new DerivedFromBoxView()
-			.Height(2)
-			.Width(2)
-			.MinHeight(2)
-			.MinWidth(2)
-			.Size(2, 3)
-			.Size(2)
-			.MinSize(2, 3)
-			.MinSize(2)
-			.Style(new Style<DerivedFromBoxView>()));
+		Assert.That(new DerivedFromBoxView()
+								.Height(2)
+								.Width(2)
+								.MinHeight(2)
+								.MinWidth(2)
+								.Size(2, 3)
+								.Size(2)
+								.MinSize(2, 3)
+								.MinSize(2)
+								.Style(new Style<DerivedFromBoxView>()),
+					Is.InstanceOf<DerivedFromBoxView>());
 	}
 
 	[Test]

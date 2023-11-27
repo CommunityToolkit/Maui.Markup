@@ -72,21 +72,21 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		[Test]
 		public void SupportDerivedFromView()
 		{
-			Assert.IsInstanceOf<DerivedFromView>(
-				new DerivedFromView()
-				.Start()
-				.CenterHorizontal()
-				.FillHorizontal()
-				.End()
-				.Top()
-				.Bottom()
-				.CenterVertical()
-				.FillVertical()
-				.Center()
-				.Fill()
-				.Margin(new Thickness(1))
-				.Margin(1, 2)
-				.Margins(left: 1, top: 2, right: 3, bottom: 4));
+			Assert.That(new DerivedFromView()
+						.Start()
+						.CenterHorizontal()
+						.FillHorizontal()
+						.End()
+						.Top()
+						.Bottom()
+						.CenterVertical()
+						.FillVertical()
+						.Center()
+						.Fill()
+						.Margin(new Thickness(1))
+						.Margin(1, 2)
+						.Margins(left: 1, top: 2, right: 3, bottom: 4),
+						Is.InstanceOf<DerivedFromView>());
 		}
 
 		class DerivedFromView : BoxView { }

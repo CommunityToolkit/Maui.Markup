@@ -12,13 +12,13 @@ class ImageExtensionTests : BaseMarkupTestFixture<Image>
 	{
 		var image = new Image();
 
-		Assert.Null(image.Source);
-		Assert.IsNotInstanceOf<FileImageSource>(image.Source);
+		Assert.That(image.Source, Is.Null);
+		Assert.That(image.Source, Is.Not.InstanceOf<FileImageSource>());
 
 		image.Source(resourceToLoad);
 
-		Assert.IsInstanceOf<FileImageSource>(image.Source);
-		Assert.False(image.Source.IsEmpty);
+		Assert.That(image.Source, Is.InstanceOf<FileImageSource>());
+		Assert.That(image.Source.IsEmpty, Is.False);
 	}
 
 	[Test]
@@ -36,11 +36,11 @@ class ImageExtensionTests : BaseMarkupTestFixture<Image>
 	[Test]
 	public void SupportDerivedFromImage()
 	{
-		Assert.IsInstanceOf<DerivedFromImage>(
-			new DerivedFromImage()
-			.Source(resourceToLoad)
-			.Aspect(Aspect.Center)
-			.IsOpaque(true));
+		Assert.That(new DerivedFromImage()
+					.Source(resourceToLoad)
+					.Aspect(Aspect.Center)
+					.IsOpaque(true),
+			Is.InstanceOf<DerivedFromImage>());
 	}
 
 	class DerivedFromImage : Image

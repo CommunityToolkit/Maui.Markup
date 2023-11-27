@@ -91,7 +91,7 @@ static class BindingHelpers
 
 		Assert.That(binding.ConverterParameter, Is.EqualTo(expectedConverterParameter));
 
-		Assert.IsInstanceOf<TBindingContext>(expectedSource);
+		Assert.That(expectedSource, Is.InstanceOf<TBindingContext>());
 		Assert.That(binding.StringFormat, Is.EqualTo(expectedStringFormat));
 		Assert.That(binding.TargetNullValue, Is.EqualTo(expectedTargetNullValue));
 		Assert.That(binding.FallbackValue, Is.EqualTo(expectedFallbackValue));

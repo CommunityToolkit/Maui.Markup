@@ -16,7 +16,7 @@ class LabelExtensionsRightToLeftTests : BaseMarkupTestFixture<Label>
 		=> TestPropertiesSet(l => l.TextRight(), (Label.HorizontalTextAlignmentProperty, TextAlignment.End, TextAlignment.Start));
 
 	[Test]
-	public void SupportDerivedFromLabel() => Assert.IsInstanceOf<DerivedFromLabel>(new DerivedFromLabel().TextLeft().TextRight());
+	public void SupportDerivedFromLabel() => Assert.That(new DerivedFromLabel().TextLeft().TextRight(), Is.InstanceOf<DerivedFromLabel>());
 
 	class DerivedFromLabel : Label { }
 }

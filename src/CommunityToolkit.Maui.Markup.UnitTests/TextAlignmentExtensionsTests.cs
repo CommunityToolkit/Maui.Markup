@@ -43,29 +43,29 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		[Test]
 		public void PublicTextAlignmentView()
 		{
-			Assert.IsInstanceOf<PublicTextAlignmentView>(
-				new PublicTextAlignmentView()
-				.TextStart()
-				.TextCenterHorizontal()
-				.TextEnd()
-				.TextTop()
-				.TextCenterVertical()
-				.TextBottom()
-				.TextCenter());
+			Assert.That(new PublicTextAlignmentView()
+							.TextStart()
+							.TextCenterHorizontal()
+							.TextEnd()
+							.TextTop()
+							.TextCenterVertical()
+							.TextBottom()
+							.TextCenter(),
+						Is.InstanceOf<PublicTextAlignmentView>());
 		}
 
 		[Test]
 		public void InternalTextAlignmentView()
 		{
-			Assert.IsInstanceOf<InternalTextAlignmentView>(
-				new InternalTextAlignmentView()
-				.TextStart()
-				.TextCenterHorizontal()
-				.TextEnd()
-				.TextTop()
-				.TextCenterVertical()
-				.TextBottom()
-				.TextCenter());
+			Assert.That(new InternalTextAlignmentView()
+							.TextStart()
+							.TextCenterHorizontal()
+							.TextEnd()
+							.TextTop()
+							.TextCenterVertical()
+							.TextBottom()
+							.TextCenter(),
+						Is.InstanceOf<InternalTextAlignmentView>());
 		}
 
 		[Test]
@@ -112,7 +112,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 									RecordClassContstraint[],
 									RecordStructContstraint>();
 
-			Assert.AreEqual(TextAlignment.Center, textAlignmentView.HorizontalTextAlignment);
+			Assert.That(textAlignmentView.HorizontalTextAlignment, Is.EqualTo(TextAlignment.Center));
 
 			textAlignmentView.TextEnd<GenericPicker<ClassConstraintWithInterface,
 									ClassConstraint,
@@ -141,7 +141,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 									RecordClassContstraint[],
 									RecordStructContstraint>();
 
-			Assert.AreEqual(TextAlignment.End, textAlignmentView.HorizontalTextAlignment);
+			Assert.That(textAlignmentView.HorizontalTextAlignment, Is.EqualTo(TextAlignment.End));
 		}
 
 		[Test]
@@ -149,12 +149,12 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		{
 			var genericPicker = new MyGenericPicker<string>();
 
-			Assert.AreEqual(TextAlignment.Start, genericPicker.HorizontalTextAlignment);
+			Assert.That(genericPicker.HorizontalTextAlignment, Is.EqualTo(TextAlignment.Start));
 
 			var generatedPicker = genericPicker.TextEnd();
 
-			Assert.AreEqual(TextAlignment.End, genericPicker.HorizontalTextAlignment);
-			Assert.IsInstanceOf<MyGenericPicker<string>>(generatedPicker);
+			Assert.That(genericPicker.HorizontalTextAlignment, Is.EqualTo(TextAlignment.End));
+			Assert.That(generatedPicker, Is.InstanceOf<MyGenericPicker<string>>());
 		}
 
 		[Test]
@@ -162,53 +162,53 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		{
 			var genericPicker = new MoreGenericPicker<string>();
 
-			Assert.AreEqual(TextAlignment.Start, genericPicker.HorizontalTextAlignment);
+			Assert.That(genericPicker.HorizontalTextAlignment, Is.EqualTo(TextAlignment.Start));
 
 			genericPicker.TextEnd();
 
-			Assert.AreEqual(TextAlignment.End, genericPicker.HorizontalTextAlignment);
+			Assert.That(genericPicker.HorizontalTextAlignment, Is.EqualTo(TextAlignment.End));
 		}
 
 		[Test]
 		public void BrandNewControlShouldHaveHisOwnExtensionMethod()
 		{
 			var brandNewControl = new BrandNewControl();
-			Assert.AreEqual(TextAlignment.Start, brandNewControl.HorizontalTextAlignment);
+			Assert.That(brandNewControl.HorizontalTextAlignment, Is.EqualTo(TextAlignment.Start));
 
 			brandNewControl.TextEnd();
 
-			Assert.AreEqual(TextAlignment.End, brandNewControl.HorizontalTextAlignment);
+			Assert.That(brandNewControl.HorizontalTextAlignment, Is.EqualTo(TextAlignment.End));
 		}
 
 		[Test]
 		public void SupportDerivedFromBindable()
 		{
-			Assert.IsInstanceOf<DerivedFromSearchBar>(
-				new DerivedFromSearchBar()
-				.TextStart()
-				.TextCenterHorizontal()
-				.TextEnd()
-				.TextTop()
-				.TextCenterVertical()
-				.TextBottom()
-				.TextCenter()
-				.FontSize(8.0)
-				.Bold()
-				.Italic());
+			Assert.That(new DerivedFromSearchBar()
+							.TextStart()
+							.TextCenterHorizontal()
+							.TextEnd()
+							.TextTop()
+							.TextCenterVertical()
+							.TextBottom()
+							.TextCenter()
+							.FontSize(8.0)
+							.Bold()
+							.Italic(),
+						Is.InstanceOf<DerivedFromSearchBar>());
 		}
 
 		[Test]
 		public void SupportCustomTextAlignment()
 		{
-			Assert.IsInstanceOf<CustomTextAlignmentControl>(
-				new CustomTextAlignmentControl()
-				.TextStart()
-				.TextCenterHorizontal()
-				.TextEnd()
-				.TextTop()
-				.TextCenterVertical()
-				.TextBottom()
-				.TextCenter());
+			Assert.That(new CustomTextAlignmentControl()
+							.TextStart()
+							.TextCenterHorizontal()
+							.TextEnd()
+							.TextTop()
+							.TextCenterVertical()
+							.TextBottom()
+							.TextCenter(),
+						Is.InstanceOf<CustomTextAlignmentControl>());
 		}
 
 		[Test]
@@ -218,7 +218,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			{
 				if (control.Assembly == typeof(Button).Assembly)
 				{
-					Assert.False(generatedType.IsPublic);
+					Assert.That(generatedType.IsPublic, Is.False);
 				}
 			}
 		}
@@ -232,7 +232,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			{
 				if (control.Assembly == executingAssembly)
 				{
-					Assert.AreEqual(control.IsPublic, generatedType.IsPublic);
+					Assert.That(control.IsPublic, Is.EqualTo(generatedType.IsPublic));
 				}
 			}
 		}
@@ -278,50 +278,50 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		public void TextLeft()
 		{
 			Bindable.TextEnd();
-			Assert.AreEqual(TextAlignment.End, Bindable.HorizontalTextAlignment);
+			Assert.That(Bindable.HorizontalTextAlignment, Is.EqualTo(TextAlignment.End));
 
 			Bindable.TextLeft();
-			Assert.AreEqual(TextAlignment.Start, Bindable.HorizontalTextAlignment);
+			Assert.That(Bindable.HorizontalTextAlignment, Is.EqualTo(TextAlignment.Start));
 		}
 
 		[Test]
 		public void TextRight()
 		{
-			Assert.AreEqual(TextAlignment.Start, Bindable.HorizontalTextAlignment);
+			Assert.That(Bindable.HorizontalTextAlignment, Is.EqualTo(TextAlignment.Start));
 
 			Bindable.TextRight();
-			Assert.AreEqual(TextAlignment.End, Bindable.HorizontalTextAlignment);
+			Assert.That(Bindable.HorizontalTextAlignment, Is.EqualTo(TextAlignment.End));
 		}
 
 		[Test]
 		public void SupportDerivedFromBindable()
 		{
-			Assert.IsInstanceOf<DerivedFromEntry>(
-				new DerivedFromEntry()
-				.TextStart()
-				.TextCenterHorizontal()
-				.TextEnd()
-				.TextTop()
-				.TextCenterVertical()
-				.TextBottom()
-				.TextCenter()
-				.FontSize(8.0)
-				.Bold()
-				.Italic());
+			Assert.That(new DerivedFromEntry()
+							.TextStart()
+							.TextCenterHorizontal()
+							.TextEnd()
+							.TextTop()
+							.TextCenterVertical()
+							.TextBottom()
+							.TextCenter()
+							.FontSize(8.0)
+							.Bold()
+							.Italic(),
+						Is.InstanceOf<DerivedFromEntry>());
 		}
 
 		[Test]
 		public void SupportCustomTextAlignment()
 		{
-			Assert.IsInstanceOf<LeftToRightCustomTextAlignmentControl>(
-				new LeftToRightCustomTextAlignmentControl()
-				.TextStart()
-				.TextCenterHorizontal()
-				.TextEnd()
-				.TextTop()
-				.TextCenterVertical()
-				.TextBottom()
-				.TextCenter());
+			Assert.That(new LeftToRightCustomTextAlignmentControl()
+						.TextStart()
+						.TextCenterHorizontal()
+						.TextEnd()
+						.TextTop()
+						.TextCenterVertical()
+						.TextBottom()
+						.TextCenter(),
+						Is.InstanceOf<LeftToRightCustomTextAlignmentControl>());
 		}
 
 		class DerivedFromEntry : Entry { }
@@ -347,36 +347,36 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		public void TextRight()
 		{
 			Bindable.TextEnd();
-			Assert.AreEqual(TextAlignment.End, Bindable.HorizontalTextAlignment);
+			Assert.That(Bindable.HorizontalTextAlignment, Is.EqualTo(TextAlignment.End));
 
 			Bindable.TextRight();
-			Assert.AreEqual(TextAlignment.Start, Bindable.HorizontalTextAlignment);
+			Assert.That(Bindable.HorizontalTextAlignment, Is.EqualTo(TextAlignment.Start));
 		}
 
 		[Test]
 		public void TextLeft()
 		{
-			Assert.AreEqual(TextAlignment.Start, Bindable.HorizontalTextAlignment);
+			Assert.That(Bindable.HorizontalTextAlignment, Is.EqualTo(TextAlignment.Start));
 
 			Bindable.TextLeft();
-			Assert.AreEqual(TextAlignment.End, Bindable.HorizontalTextAlignment);
+			Assert.That(Bindable.HorizontalTextAlignment, Is.EqualTo(TextAlignment.End));
 		}
 
 		[Test]
 		public void SupportDerivedFromBindable()
 		{
-			Assert.IsInstanceOf<DerivedFromEditor>(
-				new DerivedFromEditor()
-				.TextStart()
-				.TextCenterHorizontal()
-				.TextEnd()
-				.TextTop()
-				.TextCenterVertical()
-				.TextBottom()
-				.TextCenter()
-				.FontSize(8.0)
-				.Bold()
-				.Italic());
+			Assert.That(new DerivedFromEditor()
+							.TextStart()
+							.TextCenterHorizontal()
+							.TextEnd()
+							.TextTop()
+							.TextCenterVertical()
+							.TextBottom()
+							.TextCenter()
+							.FontSize(8.0)
+							.Bold()
+							.Italic(),
+						Is.InstanceOf<DerivedFromEditor>());
 		}
 
 		[Test]
@@ -391,22 +391,22 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				.TextBottom()
 				.TextCenter();
 
-			Assert.True(partialClassControl.IsPartial);
-			Assert.IsInstanceOf<PartialClassControl>(partialClassControl);
+			Assert.That(partialClassControl.IsPartial, Is.True);
+			Assert.That(partialClassControl, Is.InstanceOf<PartialClassControl>());
 		}
 
 		[Test]
 		public void SupportCustomTextAlignment()
 		{
-			Assert.IsInstanceOf<RightToLeftCustomTextAlignmentControl>(
-				new RightToLeftCustomTextAlignmentControl()
-				.TextStart()
-				.TextCenterHorizontal()
-				.TextEnd()
-				.TextTop()
-				.TextCenterVertical()
-				.TextBottom()
-				.TextCenter());
+			Assert.That(new RightToLeftCustomTextAlignmentControl()
+							.TextStart()
+							.TextCenterHorizontal()
+							.TextEnd()
+							.TextTop()
+							.TextCenterVertical()
+							.TextBottom()
+							.TextCenter(),
+						Is.InstanceOf<RightToLeftCustomTextAlignmentControl>());
 		}
 
 		class DerivedFromEditor : Editor { }

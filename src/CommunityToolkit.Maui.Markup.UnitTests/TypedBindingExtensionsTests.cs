@@ -83,8 +83,8 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		BindingHelpers.AssertTypedBindingExists(textCell, TextCell.CommandProperty, BindingMode.OneTime, viewModel);
 		BindingHelpers.AssertTypedBindingExists(textCell, TextCell.CommandParameterProperty, BindingMode.OneWay, viewModel);
 
-		Assert.AreEqual(textCell.Command, viewModel.Command);
-		Assert.AreEqual(textCell.CommandParameter, viewModel.Id);
+		Assert.That(viewModel.Command, Is.EqualTo(textCell.Command));
+		Assert.That(viewModel.Id, Is.EqualTo(textCell.CommandParameter));
 	}
 
 	[Test]
@@ -104,17 +104,17 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		viewModel.PropertyChanged += HandlePropertyChanged;
 
 		BindingHelpers.AssertTypedBindingExists(label, Label.TextProperty, BindingMode.Default, viewModel, stringFormat);
-		Assert.AreEqual(string.Format(stringFormat, ViewModel.DefaultPercentage), label.Text);
+		Assert.That(label.Text, Is.EqualTo(string.Format(stringFormat, ViewModel.DefaultPercentage)));
 
 		label.Text = string.Format(stringFormat, 0.1);
-		Assert.AreEqual("0.1%", label.Text);
-		Assert.AreEqual(ViewModel.DefaultPercentage, viewModel.Percentage);
+		Assert.That(label.Text, Is.EqualTo("0.1%"));
+		Assert.That(viewModel.Percentage, Is.EqualTo(ViewModel.DefaultPercentage));
 
 		viewModel.Percentage = 0.6;
 		var propertyName = await propertyChangedEventArgsTCS.Task;
 
-		Assert.True(didPropertyChangeFire);
-		Assert.AreEqual(nameof(ViewModel.Percentage), propertyName);
+		Assert.That(didPropertyChangeFire, Is.True);
+		Assert.That(propertyName, Is.EqualTo(nameof(ViewModel.Percentage)));
 
 		void HandlePropertyChanged(object? sender, PropertyChangedEventArgs e)
 		{
@@ -143,24 +143,24 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		label.PropertyChanged += HandleLabelPropertyChanged;
 
 		BindingHelpers.AssertTypedBindingExists(label, Label.TextColorProperty, BindingMode.Default, viewModel);
-		Assert.AreEqual(ViewModel.DefaultColor, label.TextColor);
+		Assert.That(label.TextColor, Is.EqualTo(ViewModel.DefaultColor));
 
 		viewModel.TextColor = Colors.Green;
 		var viewModelPropertyName = await viewModelPropertyChangedEventArgsTCS.Task;
 		var labelPropertyName = await labelPropertyChangedEventArgsTCS.Task;
 
-		Assert.True(didViewModelPropertyChangeFire);
-		Assert.AreEqual(nameof(ViewModel.TextColor), viewModelPropertyName);
+		Assert.That(didViewModelPropertyChangeFire, Is.True);
+		Assert.That(viewModelPropertyName, Is.EqualTo(nameof(ViewModel.TextColor)));
 
-		Assert.True(didLabelPropertyChangeFire);
-		Assert.AreEqual(nameof(Label.TextColor), labelPropertyName);
+		Assert.That(didLabelPropertyChangeFire, Is.True);
+		Assert.That(labelPropertyName, Is.EqualTo(nameof(Label.TextColor)));
 
-		Assert.AreEqual(Colors.Green, viewModel.TextColor);
-		Assert.AreEqual(Colors.Green, label.GetValue(Label.TextColorProperty));
+		Assert.That(viewModel.TextColor, Is.EqualTo(Colors.Green));
+		Assert.That(label.GetValue(Label.TextColorProperty), Is.EqualTo(Colors.Green));
 
 		label.TextColor = Colors.Red;
-		Assert.AreEqual(Colors.Red, label.TextColor);
-		Assert.AreEqual(Colors.Green, viewModel.TextColor);
+		Assert.That(label.TextColor, Is.EqualTo(Colors.Red));
+		Assert.That(viewModel.TextColor, Is.EqualTo(Colors.Green));
 
 		void HandleViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
 		{
@@ -192,18 +192,18 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		label.PropertyChanged += HandleLabelPropertyChanged;
 
 		BindingHelpers.AssertTypedBindingExists(label, Label.TextColorProperty, BindingMode.OneTime, viewModel);
-		Assert.AreEqual(ViewModel.DefaultColor, label.TextColor);
+		Assert.That(label.TextColor, Is.EqualTo(ViewModel.DefaultColor));
 
 		viewModel.TextColor = Colors.Green;
-		Assert.AreEqual(Colors.Green, viewModel.TextColor);
-		Assert.AreEqual(ViewModel.DefaultColor, label.GetValue(Label.TextColorProperty));
+		Assert.That(viewModel.TextColor, Is.EqualTo(Colors.Green));
+		Assert.That(label.GetValue(Label.TextColorProperty), Is.EqualTo(ViewModel.DefaultColor));
 
 		label.TextColor = Colors.Red;
-		Assert.AreEqual(Colors.Red, label.TextColor);
-		Assert.AreEqual(Colors.Green, viewModel.TextColor);
+		Assert.That(label.TextColor, Is.EqualTo(Colors.Red));
+		Assert.That(viewModel.TextColor, Is.EqualTo(Colors.Green));
 
-		Assert.True(didViewModelPropertyChangeFire);
-		Assert.True(didLabelPropertyChangeFire);
+		Assert.That(didViewModelPropertyChangeFire, Is.True);
+		Assert.That(didLabelPropertyChangeFire, Is.True);
 
 		void HandleViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
 		{
@@ -238,26 +238,26 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
 
 		BindingHelpers.AssertTypedBindingExists(slider, Slider.ValueProperty, BindingMode.Default, viewModel);
-		Assert.AreEqual(ViewModel.DefaultPercentage, slider.Value);
+		Assert.That(slider.Value, Is.EqualTo(ViewModel.DefaultPercentage));
 
 		slider.Value = 1;
-		Assert.AreEqual(1, slider.Value);
-		Assert.AreEqual(1, viewModel.Percentage);
+		Assert.That(slider.Value, Is.EqualTo(1));
+		Assert.That(viewModel.Percentage, Is.EqualTo(1));
 
 		viewModel.Percentage = 0.6;
 		var viewModelPropertyName = await viewModelPropertyChangedEventArgsTCS.Task;
 		var sliderPropertyName = await sliderPropertyChangedEventArgsTCS.Task;
 
-		Assert.True(didViewModelPropertyChangeFire);
-		Assert.AreEqual(nameof(ViewModel.Percentage), viewModelPropertyName);
-		Assert.AreEqual(2, viewModelPropertyChangedEventCount);
+		Assert.That(didViewModelPropertyChangeFire, Is.True);
+		Assert.That(viewModelPropertyName, Is.EqualTo(nameof(ViewModel.Percentage)));
+		Assert.That(viewModelPropertyChangedEventCount, Is.EqualTo(2));
 
-		Assert.True(didSliderPropertyChangeFire);
-		Assert.AreEqual(nameof(Slider.Value), sliderPropertyName);
-		Assert.AreEqual(2, sliderPropertyChangedEventCount);
+		Assert.That(didSliderPropertyChangeFire, Is.True);
+		Assert.That(sliderPropertyName, Is.EqualTo(nameof(Slider.Value)));
+		Assert.That(sliderPropertyChangedEventCount, Is.EqualTo(2));
 
-		Assert.AreEqual(0.6, slider.Value);
-		Assert.AreEqual(0.6, viewModel.Percentage);
+		Assert.That(slider.Value, Is.EqualTo(0.6));
+		Assert.That(viewModel.Percentage, Is.EqualTo(0.6));
 
 		void HandleViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
 		{
@@ -295,52 +295,52 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		{
 			entry.BindingContext = viewmodel;
 			entry.Bind(Entry.TextColorProperty,
-							static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
-							new (Func<NestedViewModel, object?>, string)[]
-							{
-								(vm => vm, nameof(NestedViewModel.Model)),
-								(vm => vm.Model, nameof(NestedViewModel.Model)),
-								(vm => vm.Model?.Model, nameof(NestedViewModel.Model.TextColor))
-							},
-							static (NestedViewModel vm, Color? color) =>
-							{
-								if (vm.Model?.Model?.TextColor is not null && color is not null)
-								{
-									vm.Model.Model.TextColor = color;
-								}
-							},
-							bindingMode);
+				static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
+				new (Func<NestedViewModel, object?>, string)[]
+				{
+					(vm => vm, nameof(NestedViewModel.Model)),
+					(vm => vm.Model, nameof(NestedViewModel.Model)),
+					(vm => vm.Model?.Model, nameof(NestedViewModel.Model.TextColor))
+				},
+				static (NestedViewModel vm, Color? color) =>
+				{
+					if (vm.Model?.Model?.TextColor is not null && color is not null)
+					{
+						vm.Model.Model.TextColor = color;
+					}
+				},
+				bindingMode);
 		}
 		else
 		{
 			entry.Bind(Entry.TextColorProperty,
-							static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
-							new (Func<NestedViewModel, object?>, string)[]
-							{
-								(vm => vm, nameof(NestedViewModel.Model)),
-								(vm => vm.Model, nameof(NestedViewModel.Model)),
-								(vm => vm.Model?.Model, nameof(NestedViewModel.Model.TextColor))
-							},
-							static (NestedViewModel vm, Color? color) =>
-							{
-								if (vm.Model?.Model?.TextColor is not null && color is not null)
-								{
-									vm.Model.Model.TextColor = color;
-								}
-							},
-							bindingMode);
+				static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
+				new (Func<NestedViewModel, object?>, string)[]
+				{
+					(vm => vm, nameof(NestedViewModel.Model)),
+					(vm => vm.Model, nameof(NestedViewModel.Model)),
+					(vm => vm.Model?.Model, nameof(NestedViewModel.Model.TextColor))
+				},
+				static (NestedViewModel vm, Color? color) =>
+				{
+					if (vm.Model?.Model?.TextColor is not null && color is not null)
+					{
+						vm.Model.Model.TextColor = color;
+					}
+				},
+				bindingMode);
 
 			entry.BindingContext = viewmodel;
 		}
 
-		Assert.AreEqual(ViewModel.DefaultColor, viewmodel.Model.Model.TextColor);
-		Assert.AreEqual(ViewModel.DefaultColor, entry.GetValue(Entry.TextColorProperty));
+		Assert.That(viewmodel.Model.Model.TextColor, Is.EqualTo(ViewModel.DefaultColor));
+		Assert.That(entry.GetValue(Entry.TextColorProperty), Is.EqualTo(ViewModel.DefaultColor));
 
 		var textColor = Colors.Pink;
 
 		viewmodel.Model.Model.TextColor = textColor;
-		Assert.AreEqual(textColor, viewmodel.Model.Model.TextColor);
-		Assert.AreEqual(textColor, entry.GetValue(Entry.TextColorProperty));
+		Assert.That(viewmodel.Model.Model.TextColor, Is.EqualTo(textColor));
+		Assert.That(entry.GetValue(Entry.TextColorProperty), Is.EqualTo(textColor));
 	}
 
 	[TestCase(false, false)]
@@ -366,54 +366,54 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		{
 			label.BindingContext = viewmodel;
 			label.Bind<Label, NestedViewModel, Color?, string>(Label.TextProperty,
-							static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
-							new (Func<NestedViewModel, object?>, string)[]
-							{
-								(vm => vm, nameof(NestedViewModel.Model)),
-								(vm => vm.Model, nameof(NestedViewModel.Model)),
-								(vm => vm.Model?.Model, nameof(NestedViewModel.Model.TextColor))
-							},
-							static (NestedViewModel vm, Color? color) =>
-							{
-								if (vm.Model?.Model?.TextColor is not null && color is not null)
-								{
-									vm.Model.Model.TextColor = color;
-								}
-							},
-							bindingMode,
-							converter: colorToHexRgbStringConverter);
+				static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
+				new (Func<NestedViewModel, object?>, string)[]
+				{
+					(vm => vm, nameof(NestedViewModel.Model)),
+					(vm => vm.Model, nameof(NestedViewModel.Model)),
+					(vm => vm.Model?.Model, nameof(NestedViewModel.Model.TextColor))
+				},
+				static (NestedViewModel vm, Color? color) =>
+				{
+					if (vm.Model?.Model?.TextColor is not null && color is not null)
+					{
+						vm.Model.Model.TextColor = color;
+					}
+				},
+				bindingMode,
+				converter: colorToHexRgbStringConverter);
 		}
 		else
 		{
 			label.Bind<Label, NestedViewModel, Color?, string>(Label.TextProperty,
-							static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
-							new (Func<NestedViewModel, object?>, string)[]
-							{
-								(vm => vm, nameof(NestedViewModel.Model)),
-								(vm => vm.Model, nameof(NestedViewModel.Model)),
-								(vm => vm.Model?.Model, nameof(NestedViewModel.Model.TextColor))
-							},
-							static (NestedViewModel vm, Color? color) =>
-							{
-								if (vm.Model?.Model?.TextColor is not null && color is not null)
-								{
-									vm.Model.Model.TextColor = color;
-								}
-							},
-							bindingMode,
-							converter: colorToHexRgbStringConverter);
+				static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
+				new (Func<NestedViewModel, object?>, string)[]
+				{
+					(vm => vm, nameof(NestedViewModel.Model)),
+					(vm => vm.Model, nameof(NestedViewModel.Model)),
+					(vm => vm.Model?.Model, nameof(NestedViewModel.Model.TextColor))
+				},
+				static (NestedViewModel vm, Color? color) =>
+				{
+					if (vm.Model?.Model?.TextColor is not null && color is not null)
+					{
+						vm.Model.Model.TextColor = color;
+					}
+				},
+				bindingMode,
+				converter: colorToHexRgbStringConverter);
 
 			label.BindingContext = viewmodel;
 		}
 
-		Assert.AreEqual(ViewModel.DefaultColor, viewmodel.Model.Model.TextColor);
-		Assert.AreEqual(colorToHexRgbStringConverter.ConvertFrom(ViewModel.DefaultColor), label.GetValue(Label.TextProperty));
+		Assert.That(viewmodel.Model.Model.TextColor, Is.EqualTo(ViewModel.DefaultColor));
+		Assert.That(label.GetValue(Label.TextProperty), Is.EqualTo(colorToHexRgbStringConverter.ConvertFrom(ViewModel.DefaultColor)));
 
 		var textColor = Colors.Pink;
 
 		viewmodel.Model.Model.TextColor = textColor;
-		Assert.AreEqual(textColor, viewmodel.Model.Model.TextColor);
-		Assert.AreEqual(colorToHexRgbStringConverter.ConvertFrom(textColor), label.GetValue(Label.TextProperty));
+		Assert.That(viewmodel.Model.Model.TextColor, Is.EqualTo(textColor));
+		Assert.That(label.GetValue(Label.TextProperty), Is.EqualTo(colorToHexRgbStringConverter.ConvertFrom(textColor)));
 	}
 
 	[Test]
@@ -436,8 +436,8 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		{
 			BindingContext = viewModel
 		}.Bind<Label, ViewModel, Color, string>(Label.TextProperty,
-				static (ViewModel viewModel) => viewModel.TextColor,
-				converter: colorToHexRgbStringConverter);
+			static (ViewModel viewModel) => viewModel.TextColor,
+			converter: colorToHexRgbStringConverter);
 
 		label.PropertyChanged += HandleLabelPropertyChanged;
 		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
@@ -453,14 +453,14 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		var viewModelPropertyName = await viewModelPropertyChangedEventArgsTCS.Task;
 		var labelPropertyName = await labelPropertyChangedEventArgsTCS.Task;
 
-		Assert.True(didViewModelPropertyChangeFire);
-		Assert.AreEqual(nameof(ViewModel.TextColor), viewModelPropertyName);
-		Assert.AreEqual(1, viewModelPropertyChangedEventCount);
+		Assert.That(didViewModelPropertyChangeFire, Is.True);
+		Assert.That(viewModelPropertyName, Is.EqualTo(nameof(ViewModel.TextColor)));
+		Assert.That(viewModelPropertyChangedEventCount, Is.EqualTo(1));
 
-		Assert.True(didLabelPropertyChangeFire);
-		Assert.AreEqual(nameof(Label.Text), labelPropertyName);
-		Assert.AreEqual(1, labelPropertyChangedEventCount);
-		Assert.AreEqual(colorToHexRgbStringConverter.ConvertFrom(updatedTextColor), label.Text);
+		Assert.That(didLabelPropertyChangeFire, Is.True);
+		Assert.That(labelPropertyName, Is.EqualTo(nameof(Label.Text)));
+		Assert.That(labelPropertyChangedEventCount, Is.EqualTo(1));
+		Assert.That(colorToHexRgbStringConverter.ConvertFrom(updatedTextColor), Is.EqualTo(label.Text));
 
 		void HandleViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
 		{
@@ -494,8 +494,8 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		{
 			BindingContext = viewModel
 		}.Bind(Slider.ThumbColorProperty,
-				static (ViewModel viewModel) => viewModel.Percentage,
-				convert: (double percentage) => percentage > 0.5 ? Colors.Green : Colors.Red);
+			static (ViewModel viewModel) => viewModel.Percentage,
+			convert: (double percentage) => percentage > 0.5 ? Colors.Green : Colors.Red);
 
 		slider.PropertyChanged += HandleSliderPropertyChanged;
 		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
@@ -511,14 +511,14 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		var viewModelPropertyName = await viewModelPropertyChangedEventArgsTCS.Task;
 		var sliderPropertyName = await sliderPropertyChangedEventArgsTCS.Task;
 
-		Assert.True(didViewModelPropertyChangeFire);
-		Assert.AreEqual(nameof(ViewModel.Percentage), viewModelPropertyName);
-		Assert.AreEqual(1, viewModelPropertyChangedEventCount);
+		Assert.That(didViewModelPropertyChangeFire, Is.True);
+		Assert.That(viewModelPropertyName, Is.EqualTo(nameof(ViewModel.Percentage)));
+		Assert.That(viewModelPropertyChangedEventCount, Is.EqualTo(1));
 
-		Assert.True(didSliderPropertyChangeFire);
-		Assert.AreEqual(nameof(Slider.ThumbColor), sliderPropertyName);
-		Assert.AreEqual(1, sliderPropertyChangedEventCount);
-		Assert.AreEqual(Colors.Green, slider.ThumbColor);
+		Assert.That(didSliderPropertyChangeFire, Is.True);
+		Assert.That(sliderPropertyName, Is.EqualTo(nameof(Slider.ThumbColor)));
+		Assert.That(sliderPropertyChangedEventCount, Is.EqualTo(1));
+		Assert.That(slider.ThumbColor, Is.EqualTo(Colors.Green));
 
 		void HandleViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
 		{

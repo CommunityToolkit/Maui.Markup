@@ -46,18 +46,6 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			=> Assert.That(DefaultBindableProperties.GetDefaultProperty<MenuFlyoutItem>(), Is.Not.Null);
 
 		[Test]
-		public void GetDefaultBindableCommandPropertiesForBuiltInType()
-			=> Assert.That(DefaultBindableProperties.GetCommandAndCommandParameterProperty<Button>(), Is.Not.Null);
-
-		[Test]
-		public void GetDefaultBindableCommandPropertiesForDerivedType()
-			=> Assert.That(DefaultBindableProperties.GetCommandAndCommandParameterProperty<DerivedFromButton>(), Is.Not.Null);
-
-		[Test]
-		public void GetDefaultBindableCommandPropertiesForMauiDerivedType()
-			=> Assert.That(DefaultBindableProperties.GetCommandAndCommandParameterProperty<MenuFlyoutItem>(), Is.Not.Null);
-
-		[Test]
 		public void GetDefaultBindableCommandPropertiesForUnsupportedType()
 			=> Assert.Throws<ArgumentException>(
 				() => DefaultBindableProperties.GetDefaultProperty<CustomView>(),

@@ -28,14 +28,14 @@ class LabelTextTests : BaseMarkupTestFixture<Label>
 	[Test]
 	public void SupportDerivedFromLabel()
 	{
-		Assert.IsInstanceOf<DerivedFromLabel>(
-			new DerivedFromLabel()
-			.Effects(new NullEffect())
-			.FontSize(8)
-			.Bold()
-			.Italic()
-			.Text("Hello World", new Color(255, 255, 128, 1))
-			.Font("AFontName", 8, true, true));
+		Assert.That(new DerivedFromLabel()
+					.Effects(new NullEffect())
+					.FontSize(8)
+					.Bold()
+					.Italic()
+					.Text("Hello World", new Color(255, 255, 128, 1))
+					.Font("AFontName", 8, true, true),
+					Is.InstanceOf<DerivedFromLabel>());
 	}
 
 	class DerivedFromLabel : Label
@@ -68,14 +68,14 @@ class ButtonTextTests : BaseMarkupTestFixture<Button>
 	[Test]
 	public void SupportDerivedFromButton()
 	{
-		Assert.IsInstanceOf<DerivedFromButton>(
-			new DerivedFromButton()
-			.Effects(new NullEffect())
-			.FontSize(8)
-			.Bold()
-			.Italic()
-			.Text("Hello World", new Color(255, 255, 128, 1))
-			.Font("AFontName", 8, true, true));
+		Assert.That(new DerivedFromButton()
+						.Effects(new NullEffect())
+						.FontSize(8)
+						.Bold()
+						.Italic()
+						.Text("Hello World", new Color(255, 255, 128, 1))
+						.Font("AFontName", 8, true, true),
+					Is.InstanceOf<DerivedFromButton>());
 	}
 
 	class DerivedFromButton : Button
@@ -100,10 +100,10 @@ class MenuItemTextTests : BaseMarkupTestFixture<MenuItem>
 	[Test]
 	public void SupportDerivedFromButton()
 	{
-		Assert.IsInstanceOf<DerivedFromMenuItem>(
-			new DerivedFromMenuItem()
-			.Effects(new NullEffect())
-			.Text("Hello World"));
+		Assert.That(new DerivedFromMenuItem()
+						.Effects(new NullEffect())
+						.Text("Hello World"),
+					Is.InstanceOf<DerivedFromMenuItem>());
 	}
 
 	class DerivedFromMenuItem : MenuItem
@@ -136,14 +136,14 @@ class EditorTextTests : BaseMarkupTestFixture<Editor>
 	[Test]
 	public void SupportDerivedFromEnditor()
 	{
-		Assert.IsInstanceOf<DerivedFromEditor>(
-			new DerivedFromEditor()
-			.Effects(new NullEffect())
-			.FontSize(8)
-			.Bold()
-			.Italic()
-			.Text("Hello World", new Color(255, 255, 128, 1))
-			.Font("AFontName", 8, true, true));
+		Assert.That(new DerivedFromEditor()
+						.Effects(new NullEffect())
+						.FontSize(8)
+						.Bold()
+						.Italic()
+						.Text("Hello World", new Color(255, 255, 128, 1))
+						.Font("AFontName", 8, true, true),
+					Is.InstanceOf<DerivedFromEditor>());
 	}
 
 	class DerivedFromEditor : Editor
@@ -176,14 +176,14 @@ class EntryTextTests : BaseMarkupTestFixture<Entry>
 	[Test]
 	public void SupportDerivedFromEntry()
 	{
-		Assert.IsInstanceOf<DerivedFromEntry>(
-			new DerivedFromEntry()
-			.Effects(new NullEffect())
-			.FontSize(8)
-			.Bold()
-			.Italic()
-			.Text("Hello World", new Color(255, 255, 128, 1))
-			.Font("AFontName", 8, true, true));
+		Assert.That(new DerivedFromEntry()
+						.Effects(new NullEffect())
+						.FontSize(8)
+						.Bold()
+						.Italic()
+						.Text("Hello World", new Color(255, 255, 128, 1))
+						.Font("AFontName", 8, true, true),
+					Is.InstanceOf<DerivedFromEntry>());
 	}
 
 	class DerivedFromEntry : Entry
@@ -216,14 +216,14 @@ class SearchBarTextTests : BaseMarkupTestFixture<SearchBar>
 	[Test]
 	public void SupportDerivedFromSearchBar()
 	{
-		Assert.IsInstanceOf<DerivedFromSearchBar>(
-			new DerivedFromSearchBar()
-			.Effects(new NullEffect())
-			.FontSize(8)
-			.Bold()
-			.Italic()
-			.Text("Hello World", new Color(255, 255, 128, 1))
-			.Font("AFontName", 8, true, true));
+		Assert.That(new DerivedFromSearchBar()
+						.Effects(new NullEffect())
+						.FontSize(8)
+						.Bold()
+						.Italic()
+						.Text("Hello World", new Color(255, 255, 128, 1))
+						.Font("AFontName", 8, true, true),
+					Is.InstanceOf<DerivedFromSearchBar>());
 	}
 
 	class DerivedFromSearchBar : SearchBar

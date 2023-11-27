@@ -53,9 +53,9 @@ class StyleTests : BaseMarkupTestFixture
 		var style = new Style<Label>();
 		Style formsStyle = style;
 
-		Assert.IsFalse(formsStyle.ApplyToDerivedTypes);
+		Assert.That(formsStyle.ApplyToDerivedTypes, Is.False);
 		style.ApplyToDerivedTypes(true);
-		Assert.IsTrue(formsStyle.ApplyToDerivedTypes);
+		Assert.That(formsStyle.ApplyToDerivedTypes, Is.True);
 	}
 
 	[Test]
@@ -178,9 +178,9 @@ class StyleTests : BaseMarkupTestFixture
 		var style = new Style<Label>();
 		Style formsStyle = style;
 
-		Assert.IsFalse(formsStyle.CanCascade);
+		Assert.That(formsStyle.CanCascade, Is.False);
 		style.CanCascade(true);
-		Assert.IsTrue(formsStyle.CanCascade);
+		Assert.That(formsStyle.CanCascade, Is.True);
 	}
 
 	[Test]
@@ -197,11 +197,11 @@ class StyleTests : BaseMarkupTestFixture
 			.Add(new Trigger(typeof(Label)))
 			.CanCascade(true);
 
-		Assert.IsTrue(style.MauiStyle.CanCascade);
-		Assert.AreEqual(Colors.Red, style.MauiStyle.Setters[0].Value);
-		Assert.IsInstanceOf<LabelBehavior>(style.MauiStyle.Behaviors[0]);
-		Assert.IsInstanceOf<Trigger>(style.MauiStyle.Triggers[0]);
-		Assert.IsTrue(style.MauiStyle.CanBeAppliedTo(typeof(Label)));
+		Assert.That(style.MauiStyle.CanCascade, Is.True);
+		Assert.That(style.MauiStyle.Setters[0].Value, Is.EqualTo(Colors.Red));
+		Assert.That(style.MauiStyle.Behaviors[0], Is.InstanceOf<LabelBehavior>());
+		Assert.That(style.MauiStyle.Triggers[0], Is.InstanceOf<Trigger>());
+		Assert.That(style.MauiStyle.CanBeAppliedTo(typeof(Label)), Is.True);
 	}
 
 	[TestCase(AppTheme.Light)]
@@ -216,7 +216,7 @@ class StyleTests : BaseMarkupTestFixture
 			() => new Label()
 					.Style(new Style<Label>().AddAppThemeBinding(Label.TextColorProperty, Colors.Purple, Colors.Orange))
 					.AppThemeBinding(Label.TextProperty, nameof(AppTheme.Light), nameof(AppTheme.Dark)),
-			(label) => Assert.AreEqual(expectedColor, label.TextColor));
+			(label) => Assert.That(label.TextColor, Is.EqualTo(expectedColor)));
 	}
 
 	[TestCase(AppTheme.Light)]
@@ -235,8 +235,8 @@ class StyleTests : BaseMarkupTestFixture
 					.AppThemeBinding(Label.TextProperty, nameof(AppTheme.Light), nameof(AppTheme.Dark)),
 			(label) =>
 			{
-				Assert.AreEqual(expectedColor, label.TextColor);
-				Assert.AreEqual(expectedText, label.Text);
+				Assert.That(label.TextColor, Is.EqualTo(expectedColor));
+				Assert.That(label.Text, Is.EqualTo(expectedText));
 			});
 	}
 
