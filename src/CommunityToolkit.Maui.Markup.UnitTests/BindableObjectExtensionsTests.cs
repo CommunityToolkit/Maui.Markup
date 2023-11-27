@@ -690,42 +690,42 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		[Test]
 		public void SupportDerivedElements()
 		{
-			Assert.IsInstanceOf<DerivedFromLabel>(
-				new DerivedFromLabel()
-				.Bind(nameof(viewModel.Text))
-				.Bind(
-					nameof(viewModel.Text),
-					convert: (string? text) => $"'{text}'")
-				.Bind(
-					nameof(viewModel.Text),
-					convert: (string? text, int? repeat) =>
-					{
-						ArgumentNullException.ThrowIfNull(text);
-						ArgumentNullException.ThrowIfNull(repeat);
+			Assert.That(new DerivedFromLabel()
+						.Bind(nameof(viewModel.Text))
+						.Bind(
+							nameof(viewModel.Text),
+							convert: (string? text) => $"'{text}'")
+						.Bind(
+							nameof(viewModel.Text),
+							convert: (string? text, int? repeat) =>
+							{
+								ArgumentNullException.ThrowIfNull(text);
+								ArgumentNullException.ThrowIfNull(repeat);
 
-						return string.Concat(Enumerable.Repeat($"'{text.Trim('\'')}'", repeat.Value));
-					})
-				.Bind(
-					DerivedFromLabel.TextColorProperty,
-					nameof(viewModel.TextColor))
-				.Bind(
-					DerivedFromLabel.BackgroundColorProperty,
-					nameof(viewModel.IsRed),
-					convert: (bool? isRed) => isRed.HasValue && isRed.Value ? Colors.Black : Colors.Transparent)
-				.Bind(
-					Label.TextColorProperty,
-					nameof(viewModel.IsRed),
-					convert: (bool? isRed, float? alpha) =>
-					{
-						ArgumentNullException.ThrowIfNull(alpha);
+								return string.Concat(Enumerable.Repeat($"'{text.Trim('\'')}'", repeat.Value));
+							})
+						.Bind(
+							DerivedFromLabel.TextColorProperty,
+							nameof(viewModel.TextColor))
+						.Bind(
+							DerivedFromLabel.BackgroundColorProperty,
+							nameof(viewModel.IsRed),
+							convert: (bool? isRed) => isRed.HasValue && isRed.Value ? Colors.Black : Colors.Transparent)
+						.Bind(
+							Label.TextColorProperty,
+							nameof(viewModel.IsRed),
+							convert: (bool? isRed, float? alpha) =>
+							{
+								ArgumentNullException.ThrowIfNull(alpha);
 
-						return (isRed.HasValue && isRed.Value ? Colors.Red : Colors.Green).MultiplyAlpha(alpha.Value);
-					})
-				.Invoke(l => l.Text = nameof(SupportDerivedElements))
-				.Assign(out DerivedFromLabel assignDerivedFromLabel));
+								return (isRed.HasValue && isRed.Value ? Colors.Red : Colors.Green).MultiplyAlpha(alpha.Value);
+							})
+						.Invoke(l => l.Text = nameof(SupportDerivedElements))
+						.Assign(out DerivedFromLabel assignDerivedFromLabel),
+				Is.InstanceOf<DerivedFromLabel>());
 
-			Assert.IsInstanceOf<DerivedFromTextCell>(new DerivedFromTextCell().BindCommand(nameof(viewModel.Command)));
-			Assert.IsInstanceOf<DerivedFromLabel>(assignDerivedFromLabel);
+			Assert.That(new DerivedFromTextCell().BindCommand(nameof(viewModel.Command)), Is.InstanceOf<DerivedFromTextCell>());
+			Assert.That(assignDerivedFromLabel, Is.InstanceOf<DerivedFromLabel>());
 		}
 
 		[TestCase(AppTheme.Light)]
@@ -738,7 +738,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			ApplicationTestHelpers.PerformAppThemeBasedTest(
 				appTheme,
 				() => new Label().AppThemeColorBinding(Label.TextColorProperty, Colors.Purple, Colors.Orange),
-				(label) => Assert.AreEqual(expectedColor, label.TextColor));
+				(label) => Assert.That(label.TextColor, Is.EqualTo(expectedColor)));
 		}
 
 		[TestCase(AppTheme.Light)]
@@ -754,7 +754,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			ApplicationTestHelpers.PerformAppThemeBasedTest(
 				appTheme,
 				() => new Label().AppThemeBinding(Label.TextProperty, light, dark),
-				(label) => Assert.AreEqual(expectedText, label.Text));
+				(label) => Assert.That(label.Text, Is.EqualTo(expectedText)));
 		}
 
 		class ViewModel

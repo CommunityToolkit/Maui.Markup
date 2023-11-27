@@ -33,19 +33,19 @@ class LabelExtensionsTests : BaseMarkupTestFixture<Label>
 	[Test]
 	public void SupportDerivedFromBindable()
 	{
-		Assert.IsInstanceOf<DerivedFromLabel>(
-			new DerivedFromLabel()
-			.TextStart()
-			.TextCenterHorizontal()
-			.TextEnd()
-			.TextTop()
-			.TextCenterVertical()
-			.TextBottom()
-			.TextCenter()
-			.FontSize(8.0)
-			.Bold()
-			.Italic()
-			.FormattedText());
+		Assert.That(new DerivedFromLabel()
+					.TextStart()
+					.TextCenterHorizontal()
+					.TextEnd()
+					.TextTop()
+					.TextCenterVertical()
+					.TextBottom()
+					.TextCenter()
+					.FontSize(8.0)
+					.Bold()
+					.Italic()
+					.FormattedText(),
+					Is.InstanceOf<DerivedFromLabel>());
 	}
 
 	class DerivedFromLabel : Label { }

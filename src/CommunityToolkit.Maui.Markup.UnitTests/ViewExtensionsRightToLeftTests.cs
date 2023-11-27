@@ -18,7 +18,7 @@ class ViewExtensionsRightToLeftTests : BaseMarkupTestFixture<BoxView>
 	[Test]
 	public void SupportDerivedFromView()
 	{
-		Assert.IsInstanceOf<DerivedFromView>(new DerivedFromView().Left().Right());
+		Assert.That(new DerivedFromView().Left().Right(), Is.InstanceOf<DerivedFromView>());
 	}
 
 	class DerivedFromView : BoxView { }

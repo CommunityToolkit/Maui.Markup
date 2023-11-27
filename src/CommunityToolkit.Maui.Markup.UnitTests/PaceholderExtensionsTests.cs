@@ -20,11 +20,11 @@ class PaceholderExtensionsTests : BaseMarkupTestFixture<Entry>
 	[Test]
 	public void SupportDerivedFromEditor()
 	{
-		Assert.IsInstanceOf<DerivedFromEditor>(
-			new DerivedFromEditor()
-			.Placeholder("Hello World")
-			.PlaceholderColor(Colors.Blue)
-			.Placeholder("Hello World 2", Colors.Red));
+		Assert.That(new DerivedFromEditor()
+					.Placeholder("Hello World")
+					.PlaceholderColor(Colors.Blue)
+					.Placeholder("Hello World 2", Colors.Red),
+					Is.InstanceOf<DerivedFromEditor>());
 	}
 
 	class DerivedFromEditor : Editor

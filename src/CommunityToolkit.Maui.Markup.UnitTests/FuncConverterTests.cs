@@ -312,9 +312,9 @@ class FuncConverterTests : BaseMarkupTestFixture
 	{
 		var c = NotConverter.Instance;
 		c = NotConverter.Instance; // 2nd time to test instance reuse
-		Assert.IsTrue((bool?)c.Convert(false, null, null, null));
-		Assert.IsFalse((bool?)c.Convert(true, null, null, null));
-		Assert.IsTrue((bool?)c.ConvertBack(false, null, null, null));
-		Assert.IsFalse((bool?)c.ConvertBack(true, null, null, null));
+		Assert.That((bool?)c.Convert(false, null, null, null), Is.True);
+		Assert.That((bool?)c.Convert(true, null, null, null), Is.False);
+		Assert.That((bool?)c.ConvertBack(false, null, null, null), Is.True);
+		Assert.That((bool?)c.ConvertBack(true, null, null, null), Is.False);
 	}
 }
