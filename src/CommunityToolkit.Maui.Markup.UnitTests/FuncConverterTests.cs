@@ -84,7 +84,7 @@ class FuncConverterTests : BaseMarkupTestFixture
 
 		Assert.That(converter.Convert(new object[] { 'a', 2 }, null, null, CultureInfo.InvariantCulture), Is.EqualTo("aa"));
 		var backValues = converter.ConvertBack(null, null, null, CultureInfo.InvariantCulture);
-		
+
 		Assert.Multiple(() =>
 		{
 			Assert.That((char)backValues[0], Is.EqualTo('\0'));

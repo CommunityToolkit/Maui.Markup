@@ -173,7 +173,7 @@ static class BindingHelpers
 		Action<IMultiValueConverter>? assertConvert = null)
 	{
 		var binding = GetMultiBinding(bindable, targetProperty) ?? throw new NullReferenceException();
-		
+
 		Assert.Multiple(() =>
 		{
 			Assert.That(binding, Is.Not.Null);
