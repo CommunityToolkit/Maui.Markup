@@ -7,15 +7,22 @@
 public class Style<T> where T : BindableObject
 {
 	/// <summary>
-	/// FormsStyle
+	/// Converts <see cref="CommunityToolkit.Maui.Markup.Style{T}"/> to <see cref="Microsoft.Maui.Controls.Style"/>
 	/// </summary>
 	/// <param name="style"></param>
 	public static implicit operator Style(Style<T> style) => style.MauiStyle;
 
 	/// <summary>
+	/// Converts <see cref="Microsoft.Maui.Controls.Style"/> to <see cref="CommunityToolkit.Maui.Markup.Style{T}"/>
+	/// </summary>
+	/// <param name="style"></param>
+	/// <returns></returns>
+	public static implicit operator Style<T>(Style style) => new(style);
+
+	/// <summary>
 	/// Initialize Style
 	/// </summary>
-	/// <param name="property">"The <see cref="BindableProperty"/> to style </param>
+	/// <param name="property">"The <see cref="BindableProperty"/> to mauiStyle </param>
 	/// <param name="value">"The value for the <see cref="BindableProperty"/> </param>
 	public Style(BindableProperty property, object value) : this((property, value))
 	{
@@ -30,6 +37,20 @@ public class Style<T> where T : BindableObject
 	{
 		MauiStyle = new Style(typeof(T));
 		Add(setters);
+	}
+
+	/// <summary>
+	/// Initialize Style
+	/// </summary>
+	/// <param name="mauiStyle"></param>
+	public Style(Style mauiStyle)
+	{
+		if (!mauiStyle.TargetType.IsAssignableTo(typeof(T)))
+		{
+			throw new ArgumentException($"Invalid type. The Type used in {nameof(mauiStyle)}.{nameof(mauiStyle.TargetType)} ({mauiStyle.TargetType.FullName}) must be assignable to the Type used in {nameof(Style<T>)} ({typeof(T).FullName})", nameof(mauiStyle));
+		}
+
+		MauiStyle = new Style(typeof(T));
 	}
 
 	/// <summary>
@@ -62,7 +83,7 @@ public class Style<T> where T : BindableObject
 	/// <summary>
 	/// Add Setters
 	/// </summary>
-	/// <param name="property">"The <see cref="BindableProperty"/> to style </param>
+	/// <param name="property">"The <see cref="BindableProperty"/> to mauiStyle </param>
 	/// <param name="value">"The value for the <see cref="BindableProperty"/> </param>
 	/// <returns>Style with added setters</returns>
 	public Style<T> Add(BindableProperty property, object value)
@@ -89,13 +110,17 @@ public class Style<T> where T : BindableObject
 	/// <summary>
 	/// Adds the supplied <paramref name="light"/> and <paramref name="dark"/> values in an <see cref="AppThemeBinding"/>.
 	/// </summary>
-	/// <param name="property">"The <see cref="BindableProperty"/> to style </param>
+	/// <param name="property">"The <see cref="BindableProperty"/> to mauiStyle </param>
 	/// <param name="light">"The light value for the <see cref="BindableProperty"/> </param>
 	/// <param name="dark">"The dark value for the <see cref="BindableProperty"/> </param>
 	/// <returns>Style with added setters</returns>
 	public Style<T> AddAppThemeBinding(BindableProperty property, object light, object dark)
 	{
-		MauiStyle.Setters.Add(property, new AppThemeBinding { Light = light, Dark = dark });
+		MauiStyle.Setters.Add(property, new AppThemeBinding
+		{
+			Light = light,
+			Dark = dark
+		});
 		return this;
 	}
 
