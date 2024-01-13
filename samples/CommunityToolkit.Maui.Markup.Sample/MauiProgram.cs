@@ -39,7 +39,7 @@ public class MauiProgram
 
 		return builder.Build();
 	}
-    
+
 	sealed class MobileHttpRetryStrategyOptions : HttpRetryStrategyOptions
 	{
 		public MobileHttpRetryStrategyOptions()
