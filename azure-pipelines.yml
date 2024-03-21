@@ -89,7 +89,7 @@ jobs:
       - task: CmdLine@2
         displayName: 'Install .NET MAUI Workload'
         inputs:
-            script : 'dotnet workload install maui'
+          script : 'dotnet workload install maui'
 
       - pwsh: |
           Invoke-WebRequest 'https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.ps1' -OutFile 'workload-install.ps1'
@@ -102,7 +102,7 @@ jobs:
       - task: CmdLine@2
         displayName: 'Display dotnet --info'
         inputs:
-            script: dotnet --info
+          script: dotnet --info
 
 
       # build
