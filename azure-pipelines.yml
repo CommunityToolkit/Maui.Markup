@@ -89,14 +89,21 @@ jobs:
       - task: CmdLine@2
         displayName: 'Install .NET MAUI Workload'
         inputs:
-            script : |
-              dotnet --info
-              dotnet workload install maui
+            script : 'dotnet workload install maui'
 
       - pwsh: |
           Invoke-WebRequest 'https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.ps1' -OutFile 'workload-install.ps1'
           .\workload-install.ps1
         displayName: Install Tizen Workload
+
+      # Print Information on the .NET SDK Used By the CI Build Host
+      # These logs are useful information when debugging CI Builds
+      # Note: This step doesn't execute nor modify any code; it is strictly used for logging + debugging purposes
+      - task: CmdLine@2
+        displayName: 'Display dotnet --info'
+        inputs:
+          script: dotnet --info
+
 
       # build
       - task: CmdLine@2
@@ -185,7 +192,7 @@ jobs:
         condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows_NT'), not(eq(variables['build.reason'], 'PullRequest')), not(eq(variables['SignClientSecret'], '')), not(eq(variables['SignClientUser'], '')))
 
       # publish the packages
-      - task: PublishBuildArtifacts@1
+      - task: PublishBuildArtifacts@2
         condition: eq(variables['Agent.OS'], 'Windows_NT') # Only run this step on Windows
         displayName: 'Publish NuGets'
         inputs:
