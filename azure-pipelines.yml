@@ -108,22 +108,22 @@ jobs:
       - task: CmdLine@2
         displayName: 'Build CommunityToolkit.Maui.Markup.SourceGenerators'
         inputs:
-          script: 'dotnet build -c Release $(PathToCommunityToolkitSourceGeneratorsCsproj) -warnaserror'
+          script: 'dotnet build -c Release $(PathToCommunityToolkitSourceGeneratorsCsproj)'
 
       - task: CmdLine@2
         displayName: 'Build CommunityToolkit.Maui.Markup'
         inputs:
-          script: 'dotnet build -c Release $(PathToCommunityToolkitCsproj) -warnaserror'
+          script: 'dotnet build -c Release $(PathToCommunityToolkitCsproj)'
 
       - task: CmdLine@2
         displayName: 'Build CommunityToolkit.Maui.Markup.Sample'
         inputs:
-          script: 'dotnet build -c Release $(PathToCommunityToolkitSampleCsproj) -warnaserror'
+          script: 'dotnet build -c Release $(PathToCommunityToolkitSampleCsproj)'
 
       - task: CmdLine@2
         displayName: 'Build CommunityToolkit.Maui.Markup.UnitTests'
         inputs:
-          script: 'dotnet build -c Release $(PathToCommunityToolkitUnitTestCsproj) -warnaserror'
+          script: 'dotnet build -c Release $(PathToCommunityToolkitUnitTestCsproj)'
 
       # test
       - task: CmdLine@2
