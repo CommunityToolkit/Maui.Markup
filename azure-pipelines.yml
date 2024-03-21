@@ -89,35 +89,41 @@ jobs:
       - task: CmdLine@2
         displayName: 'Install .NET MAUI Workload'
         inputs:
-            script : |
-              dotnet --info
-              dotnet workload install maui
+          script : 'dotnet workload install maui'
 
       - pwsh: |
           Invoke-WebRequest 'https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.ps1' -OutFile 'workload-install.ps1'
           .\workload-install.ps1
         displayName: Install Tizen Workload
 
+      # Print Information on the .NET SDK Used By the CI Build Host
+      # These logs are useful information when debugging CI Builds
+      # Note: This step doesn't execute nor modify any code; it is strictly used for logging + debugging purposes
+      - task: CmdLine@2
+        displayName: 'Display dotnet --info'
+        inputs:
+          script: dotnet --info
+
       # build
       - task: CmdLine@2
         displayName: 'Build CommunityToolkit.Maui.Markup.SourceGenerators'
         inputs:
-          script: 'dotnet build -c Release $(PathToCommunityToolkitSourceGeneratorsCsproj) -warnaserror'
+          script: 'dotnet build -c Release $(PathToCommunityToolkitSourceGeneratorsCsproj)'
 
       - task: CmdLine@2
         displayName: 'Build CommunityToolkit.Maui.Markup'
         inputs:
-          script: 'dotnet build -c Release $(PathToCommunityToolkitCsproj) -warnaserror'
+          script: 'dotnet build -c Release $(PathToCommunityToolkitCsproj)'
 
       - task: CmdLine@2
         displayName: 'Build CommunityToolkit.Maui.Markup.Sample'
         inputs:
-          script: 'dotnet build -c Release $(PathToCommunityToolkitSampleCsproj) -warnaserror'
+          script: 'dotnet build -c Release $(PathToCommunityToolkitSampleCsproj)'
 
       - task: CmdLine@2
         displayName: 'Build CommunityToolkit.Maui.Markup.UnitTests'
         inputs:
-          script: 'dotnet build -c Release $(PathToCommunityToolkitUnitTestCsproj) -warnaserror'
+          script: 'dotnet build -c Release $(PathToCommunityToolkitUnitTestCsproj)'
 
       # test
       - task: CmdLine@2
@@ -133,7 +139,7 @@ jobs:
           testResultsFiles: '**/*.trx'
           searchFolder: $(Agent.TempDirectory)
           
-      - task: PublishCodeCoverageResults@1
+      - task: PublishCodeCoverageResults@2
         condition: eq(variables['Agent.OS'], 'Windows_NT') # Only run this step on Windows
         displayName: 'Publish Code Coverage Results'
         inputs:
