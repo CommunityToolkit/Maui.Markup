@@ -102,7 +102,7 @@ jobs:
       - task: CmdLine@2
         displayName: 'Display dotnet --info'
         inputs:
-          script: dotnet --info
+            script: dotnet --info
 
 
       # build
