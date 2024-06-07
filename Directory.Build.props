@@ -3,7 +3,7 @@
   <PropertyGroup>
     <NetVersion>net8.0</NetVersion>
     <MauiPackageVersion>8.0.14</MauiPackageVersion>
-    <MauiCommunityToolkitPackageVersion>9.0.0</MauiCommunityToolkitPackageVersion>
+    <MauiCommunityToolkitPackageVersion>9.0.1</MauiCommunityToolkitPackageVersion>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
