@@ -23,16 +23,16 @@ public class InitializeBindings : BaseTest
 	[Benchmark(Baseline = true)]
 	public void InitializeDefaultBindings()
 	{
-		defaultBindingsLabel.SetBinding(Label.TextProperty, nameof(LabelViewModel.Text));
-		defaultBindingsLabel.SetBinding(Label.TextColorProperty, nameof(LabelViewModel.TextColor));
+		defaultBindingsLabel.SetBinding(Label.TextProperty, nameof(LabelViewModel.Text), mode: BindingMode.TwoWay);
+		defaultBindingsLabel.SetBinding(Label.TextColorProperty, nameof(LabelViewModel.TextColor), mode: BindingMode.TwoWay);
 	}
 	
 	[Benchmark]
 	public void InitializeDefaultBindingsMarkup()
 	{
 		defaultMarkupBindingsLabel
-			.Bind(Label.TextProperty, nameof(LabelViewModel.Text))
-			.Bind(Label.TextColorProperty, nameof(LabelViewModel.TextColor));
+			.Bind(Label.TextProperty, nameof(LabelViewModel.Text), mode: BindingMode.TwoWay)
+			.Bind(Label.TextColorProperty, nameof(LabelViewModel.TextColor), mode: BindingMode.TwoWay);
 	}
 	
 	[Benchmark]
@@ -40,8 +40,12 @@ public class InitializeBindings : BaseTest
 	{
 		typedMarkupBindingsLabel
 			.Bind(Label.TextProperty,
-				getter: (LabelViewModel vm) => vm.Text)
+				getter: (LabelViewModel vm) => vm.Text,
+				setter: (LabelViewModel vm, string text) => vm.Text = text,
+				mode: BindingMode.TwoWay)
 			.Bind(Label.TextColorProperty,
-				getter: (LabelViewModel vm) => vm.TextColor);
+				getter: (LabelViewModel vm) => vm.TextColor,
+				setter: (LabelViewModel vm, Color textColor) => vm.TextColor = textColor,
+				mode: BindingMode.TwoWay);
 	}
 }
