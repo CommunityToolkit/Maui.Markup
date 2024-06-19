@@ -3,6 +3,8 @@
 
 **/.vscode*
 
+**/.meteor*
+
 ### fastlane ###
 # fastlane - A streamlined workflow tool for Cocoa deployment
 
