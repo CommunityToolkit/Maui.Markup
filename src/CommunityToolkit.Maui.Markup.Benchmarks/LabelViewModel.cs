@@ -2,7 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace CommunityToolkit.Maui.Markup.Benchmarks;
 
-partial class LabelViewModel : ObservableObject
+public partial class LabelViewModel : ObservableObject
 {
 	[ObservableProperty]
 	string text = string.Empty;

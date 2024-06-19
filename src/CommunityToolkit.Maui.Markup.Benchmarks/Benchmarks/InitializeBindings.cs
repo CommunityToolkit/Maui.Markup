@@ -21,14 +21,14 @@ public class InitializeBindings : BaseTest
 	};
 
 	[Benchmark(Baseline = true)]
-	public void DefaultBindings()
+	public void InitializeDefaultBindings()
 	{
 		defaultBindingsLabel.SetBinding(Label.TextProperty, nameof(LabelViewModel.Text));
 		defaultBindingsLabel.SetBinding(Label.TextColorProperty, nameof(LabelViewModel.TextColor));
 	}
 	
 	[Benchmark]
-	public void DefaultBindingsMarkup()
+	public void InitializeDefaultBindingsMarkup()
 	{
 		defaultMarkupBindingsLabel
 			.Bind(Label.TextProperty, nameof(LabelViewModel.Text))
@@ -36,7 +36,7 @@ public class InitializeBindings : BaseTest
 	}
 	
 	[Benchmark]
-	public void TypedBindingsMarkup()
+	public void InitializeTypedBindingsMarkup()
 	{
 		typedMarkupBindingsLabel
 			.Bind(Label.TextProperty,
