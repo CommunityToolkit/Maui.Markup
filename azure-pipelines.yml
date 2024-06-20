@@ -158,7 +158,7 @@ jobs:
       - task: PublishPipelineArtifact@1
         condition: eq(variables['Agent.OS'], 'Windows_NT') # Only run this step on Windows
         inputs:
-          targetPath: '$(Build.SourcesDirectory)/artifacts/BenchmarkDotNet.Artifacts'
+          targetPath: '$(Build.SourcesDirectory)/**/BenchmarkDotNet.Artifacts'
           artifact: 'benchmark-results'
           publishLocation: 'pipeline'
 
