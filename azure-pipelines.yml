@@ -12,7 +12,7 @@ variables:
   PathToCommunityToolkitUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.UnitTests/CommunityToolkit.Maui.Markup.UnitTests.csproj'
   PathToCommunityToolkitBenchmarkCsproj: 'src/CommunityToolkit.Maui.Markup.Benchmarks/CommunityToolkit.Maui.Markup.Benchmarks.csproj'
   PathToCommunityToolkitSourceGeneratorsCsproj: 'src/CommunityToolkit.Maui.Markup.SourceGenerators/CommunityToolkit.Maui.Markup.SourceGenerators.csproj'
-  XcodeVersion: '15.3.0'
+  XcodeVersion: '15.2.0'
   ShouldCheckDependencies: true
   
 trigger:
@@ -55,8 +55,10 @@ jobs:
       vmImage: $(image)
     steps:
       - script: |
-          sudo xcode-select -s /Applications/Xcode_$(XcodeVersion).app
+          sudo xcode-select -s /Applications/Xcode_$(XcodeVersion).app 
+          sudo xcode-select -p
         displayName: 'Set Xcode v$(XcodeVersion)'
+        condition: eq(variables['Agent.OS'], 'Darwin') # Only run this step on macOS
 
       - task: UseDotNet@2
         displayName: 'Install .NET SDK'
@@ -119,11 +121,11 @@ jobs:
         displayName: Set NuGet Version to PR Version
         condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows_NT'), eq(variables['build.reason'], 'PullRequest'))
 
-      - task: CmdLine@2
+      - script: |
+          sudo xcode-select -s /Applications/Xcode_$(XcodeVersion).app 
+          sudo xcode-select -p
         displayName: 'Set Xcode v$(XcodeVersion)'
         condition: eq(variables['Agent.OS'], 'Darwin') # Only run this step on macOS
-        inputs:
-          script: echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(XcodeVersion).app;sudo xcode-select --switch /Applications/Xcode_$(XcodeVersion).app/Contents/Developer
 
       - task: UseDotNet@2
         displayName: 'Install .NET SDK'
@@ -250,11 +252,11 @@ jobs:
     pool:
       vmImage: $(image)
     steps:
-      - task: CmdLine@2
+      - script: |
+          sudo xcode-select -s /Applications/Xcode_$(XcodeVersion).app 
+          sudo xcode-select -p
         displayName: 'Set Xcode v$(XcodeVersion)'
         condition: eq(variables['Agent.OS'], 'Darwin') # Only run this step on macOS
-        inputs:
-          script: echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(XcodeVersion).app;sudo xcode-select --switch /Applications/Xcode_$(XcodeVersion).app/Contents/Developer
 
       - task: UseDotNet@2
         displayName: 'Install .NET SDK'
