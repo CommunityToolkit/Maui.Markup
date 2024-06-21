@@ -283,17 +283,15 @@ jobs:
         inputs:
           script: dotnet --info
 
-      - task: DotNetCoreCLI@2
+      - task: CmdLine@2
         displayName: 'Run Benchmarks'
         inputs:
-          command: 'custom'
-          custom: 'run'
-          arguments: '--project $(PathToCommunityToolkitBenchmarkCsproj) --configuration Release'
+          script : 'dotnet run $(PathToCommunityToolkitBenchmarkCsproj) -c Release'
 
       - task: PublishPipelineArtifact@1
         condition: eq(variables['Agent.OS'], 'Windows_NT') # Only run this step on Windows
         displayName: 'Publish Benchmark Artifacts'
         inputs:
-          targetPath: '\src\CommunityToolkit.Maui.Markup.Benchmarks\BenchmarkDotNet.Artifacts\'
+          targetPath: 'src\CommunityToolkit.Maui.Markup.Benchmarks\BenchmarkDotNet.Artifacts\'
           artifact: 'benchmark-results'
           publishLocation: 'pipeline'
