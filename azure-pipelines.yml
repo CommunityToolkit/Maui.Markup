@@ -50,15 +50,13 @@ jobs:
         'Windows':
           image: 'windows-latest'
         'macOS':
-          image: 'macos-14-large'
+          image: 'macos-14'
     pool:
       vmImage: $(image)
     steps:
-      - task: CmdLine@2
+      - script: |
+          sudo xcode-select -s /Applications/Xcode_<version_number>.app
         displayName: 'Set Xcode v$(XcodeVersion)'
-        condition: eq(variables['Agent.OS'], 'Darwin') # Only run this step on macOS
-        inputs:
-          script: echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(XcodeVersion).app;sudo xcode-select --switch /Applications/Xcode_$(XcodeVersion).app/Contents/Developer
 
       - task: UseDotNet@2
         displayName: 'Install .NET SDK'
@@ -97,7 +95,7 @@ jobs:
         'Windows':
           image: 'windows-latest'
         'macOS':
-          image: 'macos-14-large'
+          image: 'macos-14'
     pool:
       vmImage: $(image)
     steps:
@@ -248,7 +246,7 @@ jobs:
         'Windows':
           image: 'windows-latest'
         'macOS':
-          image: 'macos-14-large'
+          image: 'macos-14'
     pool:
       vmImage: $(image)
     steps:
