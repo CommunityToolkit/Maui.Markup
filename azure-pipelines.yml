@@ -55,7 +55,7 @@ jobs:
       vmImage: $(image)
     steps:
       - script: |
-          sudo xcode-select -s /Applications/Xcode_<version_number>.app
+          sudo xcode-select -s /Applications/Xcode_$(XcodeVersion).app
         displayName: 'Set Xcode v$(XcodeVersion)'
 
       - task: UseDotNet@2
