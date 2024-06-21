@@ -50,7 +50,7 @@ jobs:
         'Windows':
           image: 'windows-latest'
         'macOS':
-          image: 'macos-14'
+          image: 'macos-latest-large'
     pool:
       vmImage: $(image)
     steps:
@@ -88,7 +88,7 @@ jobs:
       - task: CmdLine@2
         displayName: 'Build CommunityToolkit.Maui.Markup.Sample'
         inputs:
-          script: 'dotnet build -c Release $(PathToCommunityToolkitSampleCsproj) /p:EnableCodeSigning=false'
+          script: 'dotnet build -c Release $(PathToCommunityToolkitSampleCsproj)'
 
   - job: build_library
     displayName: Build Library
@@ -97,7 +97,7 @@ jobs:
         'Windows':
           image: 'windows-latest'
         'macOS':
-          image: 'macos-14'
+          image: 'macos-latest-large'
     pool:
       vmImage: $(image)
     steps:
@@ -248,7 +248,7 @@ jobs:
         'Windows':
           image: 'windows-latest'
         'macOS':
-          image: 'macos-14'
+          image: 'macos-latest-large'
     pool:
       vmImage: $(image)
     steps:
