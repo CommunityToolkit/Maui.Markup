@@ -50,7 +50,7 @@ jobs:
         'Windows':
           image: 'windows-latest'
         'macOS':
-          image: 'macos-latest-large'
+          image: 'macos-14-large'
     pool:
       vmImage: $(image)
     steps:
@@ -97,7 +97,7 @@ jobs:
         'Windows':
           image: 'windows-latest'
         'macOS':
-          image: 'macos-latest-large'
+          image: 'macos-14-large'
     pool:
       vmImage: $(image)
     steps:
@@ -248,7 +248,7 @@ jobs:
         'Windows':
           image: 'windows-latest'
         'macOS':
-          image: 'macos-latest-large'
+          image: 'macos-14-large'
     pool:
       vmImage: $(image)
     steps:
