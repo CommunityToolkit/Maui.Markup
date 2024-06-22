@@ -9,12 +9,12 @@ public class InitializeBindings : BaseTest
 	{
 		BindingContext = new LabelViewModel()
 	};
-	
+
 	readonly Label defaultMarkupBindingsLabel = new()
 	{
 		BindingContext = new LabelViewModel()
 	};
-	
+
 	readonly Label typedMarkupBindingsLabel = new()
 	{
 		BindingContext = new LabelViewModel()
@@ -26,7 +26,7 @@ public class InitializeBindings : BaseTest
 		defaultBindingsLabel.SetBinding(Label.TextProperty, nameof(LabelViewModel.Text), mode: BindingMode.TwoWay);
 		defaultBindingsLabel.SetBinding(Label.TextColorProperty, nameof(LabelViewModel.TextColor), mode: BindingMode.TwoWay);
 	}
-	
+
 	[Benchmark]
 	public void InitializeDefaultBindingsMarkup()
 	{
@@ -34,7 +34,7 @@ public class InitializeBindings : BaseTest
 			.Bind(Label.TextProperty, nameof(LabelViewModel.Text), mode: BindingMode.TwoWay)
 			.Bind(Label.TextColorProperty, nameof(LabelViewModel.TextColor), mode: BindingMode.TwoWay);
 	}
-	
+
 	[Benchmark]
 	public void InitializeTypedBindingsMarkup()
 	{

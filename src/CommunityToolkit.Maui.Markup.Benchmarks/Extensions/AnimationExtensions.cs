@@ -45,7 +45,7 @@ static class AnimationExtensions
 				{
 					return AnimationManager;
 				}
-				
+
 				if (serviceType == typeof(IDispatcher))
 				{
 					return new MockDispatcherProvider().GetForCurrentThread();
