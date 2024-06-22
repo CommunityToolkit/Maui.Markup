@@ -46,7 +46,7 @@ public abstract class BaseTest
 			.UseMauiApp<MockApplication>();
 
 		appBuilder.Services.AddSingleton<IDispatcher>(_ => new MockDispatcherProvider().GetForCurrentThread());
-		
+
 		var mauiApp = appBuilder.Build();
 
 		var application = mauiApp.Services.GetRequiredService<IApplication>();

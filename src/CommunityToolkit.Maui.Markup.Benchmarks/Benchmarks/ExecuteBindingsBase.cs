@@ -5,7 +5,7 @@ namespace CommunityToolkit.Maui.Markup.Benchmarks;
 public abstract class ExecuteBindingsBase : BaseTest
 {
 	protected const string helloWorldText = "Hello World";
-	
+
 	protected ExecuteBindingsBase()
 	{
 		DefaultBindingsLabel = new()
@@ -17,16 +17,16 @@ public abstract class ExecuteBindingsBase : BaseTest
 		DefaultBindingsLabel.EnableAnimations();
 
 		DefaultMarkupBindingsLabel = new Label
-			{
-				BindingContext = DefaultMarkupBindingsLabelViewModel
-			}.Bind(Label.TextProperty, nameof(LabelViewModel.Text), mode: BindingMode.TwoWay)
+		{
+			BindingContext = DefaultMarkupBindingsLabelViewModel
+		}.Bind(Label.TextProperty, nameof(LabelViewModel.Text), mode: BindingMode.TwoWay)
 			.Bind(Label.TextColorProperty, nameof(LabelViewModel.TextColor), mode: BindingMode.TwoWay);
 		DefaultMarkupBindingsLabel.EnableAnimations();
 
 		TypedMarkupBindingsLabel = new Label
-			{
-				BindingContext = TypedMarkupBindingsLabelViewModel
-			}.Bind(Label.TextProperty,
+		{
+			BindingContext = TypedMarkupBindingsLabelViewModel
+		}.Bind(Label.TextProperty,
 				getter: (LabelViewModel vm) => vm.Text,
 				setter: (LabelViewModel vm, string text) => vm.Text = text,
 				mode: BindingMode.TwoWay)
@@ -36,12 +36,12 @@ public abstract class ExecuteBindingsBase : BaseTest
 				mode: BindingMode.TwoWay);
 		TypedMarkupBindingsLabel.EnableAnimations();
 	}
-	
+
 	protected LabelViewModel DefaultBindingsLabelViewModel { get; } = new();
 	protected LabelViewModel DefaultMarkupBindingsLabelViewModel { get; } = new();
 	protected LabelViewModel TypedMarkupBindingsLabelViewModel { get; } = new();
-	
+
 	protected Label DefaultBindingsLabel { get; }
-	protected Label DefaultMarkupBindingsLabel{ get; } 
-	protected Label TypedMarkupBindingsLabel{ get; }
+	protected Label DefaultMarkupBindingsLabel { get; }
+	protected Label TypedMarkupBindingsLabel { get; }
 }
