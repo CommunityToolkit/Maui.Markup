@@ -1,11 +1,11 @@
 <!--
- Hello, and thank you for your interest in contributing to the .NET MAUI Markup Toolkit! 
+ Hello, and thank you for your interest in contributing to the .NET MAUI Toolkit! 
 
  Before you submit please check that this work relates to one of the following:
  - Bug fix
-    If you haven't yet opened an Issue that reports the bug in detail, provides a reproduction sample, and has been verified + reproduced by a member of the .NET MAUI Markup Toolkit core team, please do that before submitting a Pull Request.
+    If you haven't yet opened an Issue that reports the bug in detail, provides a reproduction sample, and has been verified + reproduced by a member of the .NET MAUI Toolkit core team, please do that before submitting a Pull Request.
  - Feature/Proposal
-    If you haven't yet submitted a Proposal that has been Championed by a .NET MAUI Markup core team member, please instead open a Discussion at https://github.com/communitytoolkit/maui.markup/discussions/new where we can discuss the pros/cons of the feature and its implementation. 
+    If you haven't yet submitted a Proposal that has been Championed by a .NET MAUI core team member, please instead open a Discussion at https://github.com/communitytoolkit/maui/discussions/new where we can discuss the pros/cons of the feature and its implementation. 
  Any PR submitted that does not fit with the above options will be closed.
  -->
 
@@ -28,8 +28,8 @@
  - [ ] Has tests (if omitted, state reason in description)
  - [ ] Has samples (if omitted, state reason in description)
  - [ ] Rebased on top of `main` at time of PR
- - [ ] Changes adhere to [coding standard](https://github.com/CommunityToolkit/Maui.Markup/blob/main/CONTRIBUTING.md#contributing-code---best-practices)
- - [ ] Documentation created or updated: https://github.com/MicrosoftDocs/CommunityToolkit/pulls/XYZ <!-- Replace XYZ with your docs PR #. The checkbox will be automatically checked once the docs PR has been merged -->
+ - [ ] Changes adhere to [coding standard](https://github.com/CommunityToolkit/Maui/blob/main/CONTRIBUTING.md#contributing-code---best-practices)
+ - [ ] Documentation created or updated: https://github.com/MicrosoftDocs/CommunityToolkit/pulls <!-- Replace this link to the direct link to your Pull Request in the MicrosoftDocs/CommunityToolkit repo  -->
 
 
  ### Additional information ###
