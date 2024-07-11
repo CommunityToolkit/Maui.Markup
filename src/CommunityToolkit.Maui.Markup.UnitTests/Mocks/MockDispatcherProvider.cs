@@ -1,8 +1,4 @@
-﻿using System;
-using System.Threading;
-using Microsoft.Maui.Dispatching;
-
-namespace CommunityToolkit.Maui.Markup.UnitTests.Mocks;
+﻿namespace CommunityToolkit.Maui.Markup.UnitTests.Mocks;
 
 // Inspired by https://github.com/dotnet/maui/blob/main/src/Core/tests/UnitTests/TestClasses/DispatcherStub.cs
 sealed class MockDispatcherProvider : IDispatcherProvider, IDisposable
@@ -17,11 +13,9 @@ sealed class MockDispatcherProvider : IDispatcherProvider, IDisposable
 
 	sealed class DispatcherMock : IDispatcher
 	{
-		public DispatcherMock() => ManagedThreadId = Environment.CurrentManagedThreadId;
-
 		public bool IsDispatchRequired => false;
 
-		public int ManagedThreadId { get; }
+		public int ManagedThreadId { get; } = Environment.CurrentManagedThreadId;
 
 		public IDispatcherTimer CreateTimer() => throw new NotImplementedException();
 
