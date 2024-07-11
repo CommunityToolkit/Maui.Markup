@@ -50,7 +50,7 @@ public class Style<T> where T : BindableObject
 			throw new ArgumentException($"Invalid type. The Type used in {nameof(mauiStyle)}.{nameof(mauiStyle.TargetType)} ({mauiStyle.TargetType.FullName}) must be assignable to the Type used in {nameof(Style<T>)} ({typeof(T).FullName})", nameof(mauiStyle));
 		}
 
-		MauiStyle = new Style(typeof(T));
+		MauiStyle = mauiStyle;
 	}
 
 	/// <summary>
