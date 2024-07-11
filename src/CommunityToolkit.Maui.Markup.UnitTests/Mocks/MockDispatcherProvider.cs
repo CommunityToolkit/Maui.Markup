@@ -27,6 +27,5 @@ sealed class MockDispatcherProvider : IDispatcherProvider, IDisposable
 
 			return true;
 		}
-
 	}
 }

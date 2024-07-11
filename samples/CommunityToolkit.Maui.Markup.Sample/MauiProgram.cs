@@ -1,4 +1,5 @@
-﻿using Polly;
+﻿using Microsoft.Extensions.Http.Resilience;
+using Polly;
 using Refit;
 
 namespace CommunityToolkit.Maui.Markup.Sample;
@@ -26,7 +27,7 @@ public class MauiProgram
 		builder.Services.AddSingleton<HackerNewsAPIService>();
 		builder.Services.AddRefitClient<IHackerNewsApi>()
 							.ConfigureHttpClient(client => client.BaseAddress = new Uri("https://hacker-news.firebaseio.com/v0"))
-							.AddTransientHttpErrorPolicy(builder => builder.WaitAndRetryAsync(3, sleepDurationProvider));
+							.AddStandardResilienceHandler(options => options.Retry = new MobileHttpRetryStrategyOptions());
 
 		// Pages + View Models
 		builder.Services.AddTransient<NewsPage, NewsViewModel>();
@@ -37,7 +38,16 @@ public class MauiProgram
 		builder.Services.AddSingleton<ICommunityToolkitHotReloadHandler, HotReloadHandler>();
 
 		return builder.Build();
+	}
 
-		static TimeSpan sleepDurationProvider(int attemptNumber) => TimeSpan.FromSeconds(Math.Pow(2, attemptNumber));
+	sealed class MobileHttpRetryStrategyOptions : HttpRetryStrategyOptions
+	{
+		public MobileHttpRetryStrategyOptions()
+		{
+			BackoffType = DelayBackoffType.Exponential;
+			MaxRetryAttempts = 3;
+			UseJitter = true;
+			Delay = TimeSpan.FromSeconds(2);
+		}
 	}
 }
