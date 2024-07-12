@@ -7,7 +7,36 @@ namespace CommunityToolkit.Maui.Markup.UnitTests;
 class StyleTests : BaseMarkupTestFixture
 {
 	[Test]
-	public void ImplicitCast()
+	public void ImplicitCastToStyleT()
+	{
+		var formsStyle = new Style(typeof(Label));
+		var style = (Style<Label>)formsStyle;
+
+		Assert.That(ReferenceEquals(style.MauiStyle, formsStyle));
+	}
+	
+	[Test]
+	public void ImplicitCastToStyleTUsingBaseClass()
+	{
+		var formsStyle = new Style(typeof(Label))
+		{
+			Behaviors =
+			{
+				new LabelBehavior()
+			}
+		};
+		
+		var style = (Style<View>)formsStyle;
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(formsStyle.Behaviors[0], Is.InstanceOf<LabelBehavior>());
+			Assert.That(style.MauiStyle.Behaviors[0], Is.InstanceOf<LabelBehavior>());
+		});
+	}
+	
+	[Test]
+	public void ImplicitCastFromStyleT()
 	{
 		Style<Label> style = new();
 		Style formsStyle = style;
@@ -248,12 +277,15 @@ class StyleTests : BaseMarkupTestFixture
 	[TestCase(AppTheme.Unspecified)]
 	public void AddAppThemeBindingCorrectlySetsPropertyToChangeBasedOnApplicationsAppTheme(AppTheme appTheme)
 	{
-		var expectedColor = appTheme == AppTheme.Dark ? Colors.Orange : Colors.Purple;
+		var darkThemeColor = Colors.Orange;
+		var otherThemeColor = Colors.Purple;
+		
+		var expectedColor = appTheme == AppTheme.Dark ? darkThemeColor : otherThemeColor;
 
 		ApplicationTestHelpers.PerformAppThemeBasedTest(
 			appTheme,
 			() => new Label()
-					.Style(new Style<Label>().AddAppThemeBinding(Label.TextColorProperty, Colors.Purple, Colors.Orange))
+					.Style(new Style<Label>().AddAppThemeBinding(Label.TextColorProperty, otherThemeColor, darkThemeColor))
 					.AppThemeBinding(Label.TextProperty, nameof(AppTheme.Light), nameof(AppTheme.Dark)),
 			(label) => Assert.That(label.TextColor, Is.EqualTo(expectedColor)));
 	}
@@ -263,13 +295,16 @@ class StyleTests : BaseMarkupTestFixture
 	[TestCase(AppTheme.Unspecified)]
 	public void AddAppThemeBindingsCorrectlySetsPropertiesToChangeBasedOnApplicationsAppTheme(AppTheme appTheme)
 	{
-		var expectedColor = appTheme == AppTheme.Dark ? Colors.Orange : Colors.Purple;
+		var darkThemeColor = Colors.Orange;
+		var otherThemeColor = Colors.Purple;
+		
+		var expectedColor = appTheme == AppTheme.Dark ? darkThemeColor : otherThemeColor;
 		var expectedText = appTheme == AppTheme.Dark ? nameof(AppTheme.Dark) : nameof(AppTheme.Light);
 
 		ApplicationTestHelpers.PerformAppThemeBasedTest(
 			appTheme,
 			() => new Label()
-					.Style(new Style<Label>().AddAppThemeBindings((Label.TextColorProperty, Colors.Purple, Colors.Orange),
+					.Style(new Style<Label>().AddAppThemeBindings((Label.TextColorProperty, otherThemeColor, darkThemeColor),
 													(Label.TextProperty, nameof(AppTheme.Light), nameof(AppTheme.Dark))))
 					.AppThemeBinding(Label.TextProperty, nameof(AppTheme.Light), nameof(AppTheme.Dark)),
 			(label) =>
@@ -282,5 +317,29 @@ class StyleTests : BaseMarkupTestFixture
 			});
 	}
 
-	class LabelBehavior : Behavior<Label> { }
+	[Test]
+	public void InvalidMauiStyleInitializationShouldThrowException()
+	{
+		var buttonStyle = new Style(typeof(Button));
+		Assert.Throws<ArgumentException>(() => new Style<Label>(buttonStyle));
+	}
+	
+	[Test]
+	public void InvalidMauiStyleCastShouldThrowException()
+	{
+		var buttonStyle = new Style(typeof(Button));
+		Assert.Throws<ArgumentException>(() =>
+		{
+			var style = (Style<Label>)buttonStyle;
+		});
+	}
+	
+	[Test]
+	public void ValidMauiStyleInitializationDoesNotThrowException()
+	{
+		var buttonStyle = new Style(typeof(Button));
+		Assert.DoesNotThrow(() => new Style<Button>(buttonStyle));
+	}
+
+	class LabelBehavior : Behavior<Label>;
 }

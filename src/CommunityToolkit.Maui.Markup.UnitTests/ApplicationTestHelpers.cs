@@ -1,4 +1,5 @@
-﻿namespace CommunityToolkit.Maui.Markup.UnitTests;
+﻿using CommunityToolkit.Maui.Markup.UnitTests.Mocks;
+namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 public static class ApplicationTestHelpers
 {
@@ -11,19 +12,28 @@ public static class ApplicationTestHelpers
 	public static void PerformAppThemeBasedTest<TBindable>(
 		AppTheme appTheme,
 		Func<TBindable> setAppThemeValue,
-		Action<TBindable> assertResult) where TBindable : BindableObject
+		Action<TBindable> assertResult) where TBindable : View
 	{
 		try
 		{
-			_ = new Application();
+			var appBuilder = MauiApp.CreateBuilder()
+				.UseMauiCommunityToolkit()
+				.UseMauiApp<MockApplication>();
 
+			var mauiApp = appBuilder.Build();
+
+			var application = mauiApp.Services.GetRequiredService<IApplication>();
+			
 			var bindable = setAppThemeValue();
 
-			var current = Application.Current;
+			ArgumentNullException.ThrowIfNull(Application.Current);
+			
+			Application.Current.MainPage = new ContentPage
+			{
+				Content = bindable
+			};
 
-			ArgumentNullException.ThrowIfNull(current);
-
-			current.UserAppTheme = appTheme;
+			Application.Current.UserAppTheme = appTheme;
 
 			assertResult.Invoke(bindable);
 		}
