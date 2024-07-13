@@ -23,11 +23,11 @@ public static class ApplicationTestHelpers
 			var mauiApp = appBuilder.Build();
 
 			var application = mauiApp.Services.GetRequiredService<IApplication>();
-			
+
 			var bindable = setAppThemeValue();
 
 			ArgumentNullException.ThrowIfNull(Application.Current);
-			
+
 			Application.Current.MainPage = new ContentPage
 			{
 				Content = bindable

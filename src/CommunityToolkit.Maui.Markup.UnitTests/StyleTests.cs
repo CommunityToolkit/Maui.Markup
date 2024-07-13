@@ -14,7 +14,7 @@ class StyleTests : BaseMarkupTestFixture
 
 		Assert.That(ReferenceEquals(style.MauiStyle, formsStyle));
 	}
-	
+
 	[Test]
 	public void ImplicitCastToStyleTUsingBaseClass()
 	{
@@ -25,7 +25,7 @@ class StyleTests : BaseMarkupTestFixture
 				new LabelBehavior()
 			}
 		};
-		
+
 		var style = (Style<View>)formsStyle;
 
 		Assert.Multiple(() =>
@@ -34,7 +34,7 @@ class StyleTests : BaseMarkupTestFixture
 			Assert.That(style.MauiStyle.Behaviors[0], Is.InstanceOf<LabelBehavior>());
 		});
 	}
-	
+
 	[Test]
 	public void ImplicitCastFromStyleT()
 	{
@@ -279,7 +279,7 @@ class StyleTests : BaseMarkupTestFixture
 	{
 		var darkThemeColor = Colors.Orange;
 		var otherThemeColor = Colors.Purple;
-		
+
 		var expectedColor = appTheme == AppTheme.Dark ? darkThemeColor : otherThemeColor;
 
 		ApplicationTestHelpers.PerformAppThemeBasedTest(
@@ -297,7 +297,7 @@ class StyleTests : BaseMarkupTestFixture
 	{
 		var darkThemeColor = Colors.Orange;
 		var otherThemeColor = Colors.Purple;
-		
+
 		var expectedColor = appTheme == AppTheme.Dark ? darkThemeColor : otherThemeColor;
 		var expectedText = appTheme == AppTheme.Dark ? nameof(AppTheme.Dark) : nameof(AppTheme.Light);
 
@@ -323,7 +323,7 @@ class StyleTests : BaseMarkupTestFixture
 		var buttonStyle = new Style(typeof(Button));
 		Assert.Throws<ArgumentException>(() => new Style<Label>(buttonStyle));
 	}
-	
+
 	[Test]
 	public void InvalidMauiStyleCastShouldThrowException()
 	{
@@ -333,7 +333,7 @@ class StyleTests : BaseMarkupTestFixture
 			var style = (Style<Label>)buttonStyle;
 		});
 	}
-	
+
 	[Test]
 	public void ValidMauiStyleInitializationDoesNotThrowException()
 	{
