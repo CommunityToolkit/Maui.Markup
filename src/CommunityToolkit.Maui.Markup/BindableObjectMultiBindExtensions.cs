@@ -16,16 +16,18 @@ public static class BindableObjectMultiBindExtensions
 		BindingMode mode = BindingMode.Default,
 		string? stringFormat = null,
 		TDest? targetNullValue = default,
-		TDest? fallbackValue = default) where TBindable : BindableObject
-	=> bindable.Bind(
-		targetProperty,
-		new List<BindingBase> { binding1, binding2 },
-		new FuncMultiConverter<TSource1, TSource2, TDest>(convert, convertBack),
-		null,
-		mode,
-		stringFormat,
-		targetNullValue,
-		fallbackValue);
+		TDest? fallbackValue = default)
+		where TBindable : BindableObject
+		
+		=> bindable.Bind(
+			targetProperty,
+			[binding1, binding2],
+			new FuncMultiConverter<TSource1, TSource2, TDest>(convert, convertBack),
+			null,
+			mode,
+			stringFormat,
+			targetNullValue,
+			fallbackValue);
 
 	/// <summary>Bind to a specified property with 2 bindings, an inline convertor and a converter parameter</summary>
 	public static TBindable Bind<TBindable, TSource1, TSource2, TParam, TDest>(
@@ -39,16 +41,18 @@ public static class BindableObjectMultiBindExtensions
 		BindingMode mode = BindingMode.Default,
 		string? stringFormat = null,
 		TDest? targetNullValue = default,
-		TDest? fallbackValue = default) where TBindable : BindableObject
-	=> bindable.Bind(
-		targetProperty,
-		new List<BindingBase> { binding1, binding2 },
-		new FuncMultiConverterWithParam<TSource1, TSource2, TDest, TParam>(convert, convertBack),
-		converterParameter,
-		mode,
-		stringFormat,
-		targetNullValue,
-		fallbackValue);
+		TDest? fallbackValue = default)
+		where TBindable : BindableObject
+		
+		=> bindable.Bind(
+			targetProperty,
+			[binding1, binding2],
+			new FuncMultiConverterWithParam<TSource1, TSource2, TDest, TParam>(convert, convertBack),
+			converterParameter,
+			mode,
+			stringFormat,
+			targetNullValue,
+			fallbackValue);
 
 	/// <summary>Bind to a specified property with 3 bindings and an inline convertor</summary>
 	public static TBindable Bind<TBindable, TSource1, TSource2, TSource3, TDest>(
@@ -62,16 +66,21 @@ public static class BindableObjectMultiBindExtensions
 		BindingMode mode = BindingMode.Default,
 		string? stringFormat = null,
 		TDest? targetNullValue = default,
-		TDest? fallbackValue = default) where TBindable : BindableObject
-	=> bindable.Bind(
-		targetProperty,
-		new List<BindingBase> { binding1, binding2, binding3 },
-		new FuncMultiConverter<TSource1, TSource2, TSource3, TDest>(convert, convertBack),
-		null,
-		mode,
-		stringFormat,
-		targetNullValue,
-		fallbackValue);
+		TDest? fallbackValue = default)
+		where TBindable : BindableObject
+		
+		=> bindable.Bind(
+			targetProperty,
+			[
+				binding1, binding2,
+				binding3
+			],
+			new FuncMultiConverter<TSource1, TSource2, TSource3, TDest>(convert, convertBack),
+			null,
+			mode,
+			stringFormat,
+			targetNullValue,
+			fallbackValue);
 
 	/// <summary>Bind to a specified property with 3 bindings, an inline convertor and a convertor parameter</summary>
 	public static TBindable Bind<TBindable, TSource1, TSource2, TSource3, TParam, TDest>(
@@ -86,16 +95,21 @@ public static class BindableObjectMultiBindExtensions
 		BindingMode mode = BindingMode.Default,
 		string? stringFormat = null,
 		TDest? targetNullValue = default,
-		TDest? fallbackValue = default) where TBindable : BindableObject
-	=> bindable.Bind(
-		targetProperty,
-		new List<BindingBase> { binding1, binding2, binding3 },
-		new FuncMultiConverterWithParam<TSource1, TSource2, TSource3, TDest, TParam>(convert, convertBack),
-		converterParameter,
-		mode,
-		stringFormat,
-		targetNullValue,
-		fallbackValue);
+		TDest? fallbackValue = default)
+		where TBindable : BindableObject
+		
+		=> bindable.Bind(
+			targetProperty,
+			[
+				binding1, binding2,
+				binding3
+			],
+			new FuncMultiConverterWithParam<TSource1, TSource2, TSource3, TDest, TParam>(convert, convertBack),
+			converterParameter,
+			mode,
+			stringFormat,
+			targetNullValue,
+			fallbackValue);
 
 	/// <summary>Bind to a specified property with 4 bindings and an inline convertor</summary>
 	public static TBindable Bind<TBindable, TSource1, TSource2, TSource3, TSource4, TDest>(
@@ -110,16 +124,21 @@ public static class BindableObjectMultiBindExtensions
 		BindingMode mode = BindingMode.Default,
 		string? stringFormat = null,
 		TDest? targetNullValue = default,
-		TDest? fallbackValue = default) where TBindable : BindableObject
-	=> bindable.Bind(
-		targetProperty,
-		new List<BindingBase> { binding1, binding2, binding3, binding4 },
-		new FuncMultiConverter<TSource1, TSource2, TSource3, TSource4, TDest>(convert, convertBack),
-		null,
-		mode,
-		stringFormat,
-		targetNullValue,
-		fallbackValue);
+		TDest? fallbackValue = default)
+		where TBindable : BindableObject
+		
+		=> bindable.Bind(
+			targetProperty,
+			[
+				binding1, binding2,
+				binding3, binding4
+			],
+			new FuncMultiConverter<TSource1, TSource2, TSource3, TSource4, TDest>(convert, convertBack),
+			null,
+			mode,
+			stringFormat,
+			targetNullValue,
+			fallbackValue);
 
 	/// <summary>Bind to a specified property with 4 bindings, an inline convertor and a converter parameter</summary>
 	public static TBindable Bind<TBindable, TSource1, TSource2, TSource3, TSource4, TParam, TDest>(
@@ -135,16 +154,21 @@ public static class BindableObjectMultiBindExtensions
 		BindingMode mode = BindingMode.Default,
 		string? stringFormat = null,
 		TDest? targetNullValue = default,
-		TDest? fallbackValue = default) where TBindable : BindableObject
-	=> bindable.Bind(
-		targetProperty,
-		new List<BindingBase> { binding1, binding2, binding3, binding4 },
-		new FuncMultiConverterWithParam<TSource1, TSource2, TSource3, TSource4, TDest, TParam>(convert, convertBack),
-		converterParameter,
-		mode,
-		stringFormat,
-		targetNullValue,
-		fallbackValue);
+		TDest? fallbackValue = default)
+		where TBindable : BindableObject
+		
+		=> bindable.Bind(
+			targetProperty,
+			[
+				binding1, binding2,
+				binding3, binding4
+			],
+			new FuncMultiConverterWithParam<TSource1, TSource2, TSource3, TSource4, TDest, TParam>(convert, convertBack),
+			converterParameter,
+			mode,
+			stringFormat,
+			targetNullValue,
+			fallbackValue);
 
 	/// <summary>Bind to a specified property with multiple bindings and a multi convertor</summary>
 	public static TBindable Bind<TBindable>(

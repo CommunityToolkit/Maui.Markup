@@ -534,7 +534,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		var slider = new Slider
 		{
 			BindingContext = viewModel
-		}.Bind(Slider.ThumbColorProperty,
+		}.Bind<Slider, ViewModel, double, Color>(Slider.ThumbColorProperty,
 			static (ViewModel viewModel) => viewModel.Percentage,
 			convert: (double percentage) => percentage > 0.5 ? Colors.Green : Colors.Red);
 
@@ -578,12 +578,78 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 			sliderPropertyChangedEventArgsTCS.TrySetResult(e.PropertyName);
 		}
 	}
+	
+	[Test]
+	public async Task ConfirmReadOnlyTypedBindingWithFuncConversionUsingValueType()
+	{
+		const double heightAdjustment = 5;
+		const double updatedHeight = 600;
+		
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		bool didViewModelPropertyChangeFire = false;
+		int viewModelPropertyChangedEventCount = 0;
+		TaskCompletionSource<string?> viewModelPropertyChangedEventArgsTCS = new();
+
+		bool didSliderPropertyChangeFire = false;
+		int sliderPropertyChangedEventCount = 0;
+		TaskCompletionSource<string?> sliderPropertyChangedEventArgsTCS = new();
+
+		var slider = new Slider
+		{
+			BindingContext = viewModel
+		}.Bind(Slider.HeightRequestProperty,
+			static (ViewModel viewModel) => viewModel.HeightRequest,
+			convert: static (double height) => height + heightAdjustment);
+
+		slider.PropertyChanged += HandleSliderPropertyChanged;
+		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
+
+		BindingHelpers.AssertTypedBindingExists<Slider, ViewModel, double, double>(
+			slider,
+			Slider.HeightRequestProperty,
+			BindingMode.Default,
+			viewModel,
+			height => height + heightAdjustment);
+
+		viewModel.HeightRequest = updatedHeight;
+		var viewModelPropertyName = await viewModelPropertyChangedEventArgsTCS.Task;
+		var sliderPropertyName = await sliderPropertyChangedEventArgsTCS.Task;
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(didViewModelPropertyChangeFire, Is.True);
+			Assert.That(viewModelPropertyName, Is.EqualTo(nameof(ViewModel.HeightRequest)));
+			Assert.That(viewModelPropertyChangedEventCount, Is.EqualTo(1));
+
+			Assert.That(didSliderPropertyChangeFire, Is.True);
+			Assert.That(sliderPropertyName, Is.EqualTo(nameof(Slider.HeightRequest)));
+			Assert.That(sliderPropertyChangedEventCount, Is.EqualTo(1));
+			
+			Assert.That(slider.HeightRequest, Is.EqualTo(updatedHeight + heightAdjustment));
+		});
+
+		void HandleViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+		{
+			didViewModelPropertyChangeFire = true;
+			viewModelPropertyChangedEventCount++;
+			viewModelPropertyChangedEventArgsTCS.TrySetResult(e.PropertyName);
+		}
+
+		void HandleSliderPropertyChanged(object? sender, PropertyChangedEventArgs e)
+		{
+			didSliderPropertyChangeFire = true;
+			sliderPropertyChangedEventCount++;
+			sliderPropertyChangedEventArgsTCS.TrySetResult(e.PropertyName);
+		}
+	}
 
 	class ViewModel : INotifyPropertyChanged
 	{
 		public const double DefaultPercentage = 0.5;
+		public const double DefaultHeightRequest = 500;
 
-		double percentage = DefaultPercentage;
+		double percentage = DefaultPercentage, heightRequest = DefaultHeightRequest;
 		Color textColor = DefaultColor;
 
 		public ViewModel()
@@ -600,6 +666,12 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		public ICommand Command { get; }
 
 		public event PropertyChangedEventHandler? PropertyChanged;
+		
+		public double HeightRequest
+		{
+			get => heightRequest;
+			set => SetProperty(ref heightRequest, value);
+		}
 
 		public double Percentage
 		{

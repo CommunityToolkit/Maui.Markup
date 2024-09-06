@@ -114,7 +114,6 @@ public static partial class TypedBindingExtensions
 		TDest? fallbackValue = default)
 		where TBindable : BindableObject
 		where TBindingContext : class?
-		where TDest : class?
 	{
 		return Bind<TBindable, TBindingContext, TSource, object?, TDest>(
 			bindable,
@@ -148,9 +147,8 @@ public static partial class TypedBindingExtensions
 		TDest? targetNullValue = default,
 		TDest? fallbackValue = default)
 		where TBindable : BindableObject
-		where TParam : class?
 		where TBindingContext : class?
-		where TDest : class?
+		
 	{
 		var converter = (convert, convertBack) switch
 		{
@@ -187,9 +185,8 @@ public static partial class TypedBindingExtensions
 		TDest? targetNullValue = default,
 		TDest? fallbackValue = default)
 		where TBindable : BindableObject
-		where TParam : class?
 		where TBindingContext : class?
-		where TDest : class?
+		
 
 	{
 		bindable.SetBinding(targetProperty, new TypedBinding<TBindingContext, TSource>(bindingContext => (getter(bindingContext), true), setter, handlers.Select(x => x.ToTuple()).ToArray())

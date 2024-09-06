@@ -127,9 +127,12 @@ public class FuncMultiConverter<TDest, TParam> : IMultiValueConverter
 /// <param name="convertBack">
 /// The <see cref="Func{TDest, ValueTuple}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.ConvertBack" /> method.
 /// </param>
-public class FuncMultiConverter<TSource1, TSource2, TDest>(Func<ValueTuple<TSource1?, TSource2?>, TDest>? convert = null,
-							Func<TDest?, ValueTuple<TSource1, TSource2>>? convertBack = null) : FuncMultiConverter<TDest, object>(convert is null ? default : values => convert((To<TSource1>(values[0]), To<TSource2>(values[1]))),
+public class FuncMultiConverter<TSource1, TSource2, TDest>(
+	Func<ValueTuple<TSource1?, TSource2?>, TDest>? convert = null,
+	Func<TDest?, ValueTuple<TSource1, TSource2>>? convertBack = null)
+	: FuncMultiConverter<TDest, object>(convert is null ? default : values => convert((To<TSource1>(values[0]), To<TSource2>(values[1]))),
 		convertBack is null ? default : value => ToObjects(convertBack(value)))
+	
 {
 	static T? To<T>(object? value) => value != null ? (T)value : default;
 
@@ -152,9 +155,12 @@ public class FuncMultiConverter<TSource1, TSource2, TDest>(Func<ValueTuple<TSour
 /// <param name="convertBack">
 /// The <see cref="Func{TDest, ValueTuple}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.ConvertBack" /> method.
 /// </param>
-public class FuncMultiConverter<TSource1, TSource2, TSource3, TDest>(Func<ValueTuple<TSource1?, TSource2?, TSource3?>, TDest>? convert = null,
-							Func<TDest?, ValueTuple<TSource1, TSource2, TSource3>>? convertBack = null) : FuncMultiConverter<TDest, object>(convert is null ? default : values => convert((To<TSource1>(values[0]), To<TSource2>(values[1]), To<TSource3>(values[2]))),
+public class FuncMultiConverter<TSource1, TSource2, TSource3, TDest>(
+	Func<ValueTuple<TSource1?, TSource2?, TSource3?>, TDest>? convert = null,
+	Func<TDest?, ValueTuple<TSource1, TSource2, TSource3>>? convertBack = null)
+	: FuncMultiConverter<TDest, object>(convert is null ? default : values => convert((To<TSource1>(values[0]), To<TSource2>(values[1]), To<TSource3>(values[2]))),
 		convertBack is null ? default : value => ToObjects(convertBack(value)))
+	
 {
 	static T? To<T>(object? value) => value != null ? (T)value : default;
 
@@ -178,9 +184,12 @@ public class FuncMultiConverter<TSource1, TSource2, TSource3, TDest>(Func<ValueT
 /// <param name="convertBack">
 /// The <see cref="Func{TDest, ValueTuple}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.ConvertBack" /> method.
 /// </param>
-public class FuncMultiConverter<TSource1, TSource2, TSource3, TSource4, TDest>(Func<ValueTuple<TSource1?, TSource2?, TSource3?, TSource4?>, TDest>? convert = null,
-							Func<TDest?, ValueTuple<TSource1, TSource2, TSource3, TSource4>>? convertBack = null) : FuncMultiConverter<TDest, object>(convert is null ? default : values => convert((To<TSource1>(values[0]), To<TSource2>(values[1]), To<TSource3>(values[2]), To<TSource4>(values[3]))),
+public class FuncMultiConverter<TSource1, TSource2, TSource3, TSource4, TDest>(
+	Func<ValueTuple<TSource1?, TSource2?, TSource3?, TSource4?>, TDest>? convert = null,
+	Func<TDest?, ValueTuple<TSource1, TSource2, TSource3, TSource4>>? convertBack = null)
+	: FuncMultiConverter<TDest, object>(convert is null ? default : values => convert((To<TSource1>(values[0]), To<TSource2>(values[1]), To<TSource3>(values[2]), To<TSource4>(values[3]))),
 		convertBack is null ? default : value => ToObjects(convertBack(value)))
+	
 {
 	static T? To<T>(object? value) => value != null ? (T)value : default;
 
@@ -203,10 +212,12 @@ public class FuncMultiConverter<TSource1, TSource2, TSource3, TSource4, TDest>(F
 /// <param name="convertBack">
 /// The <see cref="Func{TDest, TParam, ValueTuple}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.ConvertBack" /> method.
 /// </param>
-public class FuncMultiConverterWithParam<TSource1, TSource2, TDest, TParam>(Func<ValueTuple<TSource1?, TSource2?>, TParam?, TDest>? convert = null,
-									Func<TDest?, TParam?, ValueTuple<TSource1, TSource2>>? convertBack = null) 
+public class FuncMultiConverterWithParam<TSource1, TSource2, TDest, TParam>(
+	Func<ValueTuple<TSource1?, TSource2?>, TParam?, TDest>? convert = null,
+	Func<TDest?, TParam?, ValueTuple<TSource1, TSource2>>? convertBack = null)
 	: FuncMultiConverter<TDest, TParam>(convert is null ? default : (values, param) => convert((To<TSource1>(values[0]), To<TSource2>(values[1])), param),
 		convertBack is null ? default : (value, param) => ToObjects(convertBack(value, param)))
+	
 {
 	static T? To<T>(object? value) => value != null ? (T)value : default;
 
@@ -230,10 +241,12 @@ public class FuncMultiConverterWithParam<TSource1, TSource2, TDest, TParam>(Func
 /// <param name="convertBack">
 /// The <see cref="Func{TDest, TParam, ValueTuple}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.ConvertBack" /> method.
 /// </param>
-public class FuncMultiConverterWithParam<TSource1, TSource2, TSource3, TDest, TParam>(Func<ValueTuple<TSource1?, TSource2?, TSource3?>, TParam?, TDest>? convert = null,
-									Func<TDest?, TParam?, ValueTuple<TSource1, TSource2, TSource3>>? convertBack = null) 
+public class FuncMultiConverterWithParam<TSource1, TSource2, TSource3, TDest, TParam>(
+	Func<ValueTuple<TSource1?, TSource2?, TSource3?>, TParam?, TDest>? convert = null,
+	Func<TDest?, TParam?, ValueTuple<TSource1, TSource2, TSource3>>? convertBack = null)
 	: FuncMultiConverter<TDest, TParam>(convert is null ? default : (values, param) => convert((To<TSource1?>(values[0]), To<TSource2?>(values[1]), To<TSource3?>(values[2])), param),
 		convertBack is null ? default : (value, param) => ToObjects(convertBack(value, param)))
+	
 {
 	static T? To<T>(object? value) => value != null ? (T)value : default;
 
@@ -258,10 +271,12 @@ public class FuncMultiConverterWithParam<TSource1, TSource2, TSource3, TDest, TP
 /// <param name="convertBack">
 /// The <see cref="Func{TDest, TParam, ValueTuple}" /> implementation that will provide the conversion for the underlying <see cref="IMultiValueConverter.ConvertBack" /> method.
 /// </param>
-public class FuncMultiConverterWithParam<TSource1, TSource2, TSource3, TSource4, TDest, TParam>(Func<ValueTuple<TSource1?, TSource2?, TSource3?, TSource4?>, TParam?, TDest>? convert = null,
-									Func<TDest?, TParam?, ValueTuple<TSource1, TSource2, TSource3, TSource4>>? convertBack = null) 
+public class FuncMultiConverterWithParam<TSource1, TSource2, TSource3, TSource4, TDest, TParam>(
+	Func<ValueTuple<TSource1?, TSource2?, TSource3?, TSource4?>, TParam?, TDest>? convert = null,
+	Func<TDest?, TParam?, ValueTuple<TSource1, TSource2, TSource3, TSource4>>? convertBack = null)
 	: FuncMultiConverter<TDest, TParam>(convert is null ? default : (values, param) => convert((To<TSource1>(values[0]), To<TSource2>(values[1]), To<TSource3>(values[2]), To<TSource4>(values[3])), param),
 		convertBack is null ? default : (value, param) => ToObjects(convertBack(value, param)))
+	
 {
 	static T? To<T>(object? value) => value != null ? (T)value : default;
 

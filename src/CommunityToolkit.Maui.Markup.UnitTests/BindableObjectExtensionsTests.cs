@@ -88,6 +88,28 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				assertConvert: c => c.AssertConvert<bool?, Color>(true, Colors.Red).AssertConvert<bool?, Color>(false, Colors.Transparent)
 			);
 		}
+		
+		[Test]
+		public void BindSpecifiedPropertyWithInlineOneWayConvertUsingValueTypeAndDefaults()
+		{
+			const double additionalHeight = 5;
+			
+			var label = new Label();
+			label.Bind(
+				Label.HeightRequestProperty,
+				nameof(viewModel.HeightRequest),
+				convert: (double heightRequest) => heightRequest + additionalHeight
+			);
+
+			BindingHelpers.AssertBindingExists(
+				label,
+				Label.HeightRequestProperty,
+				nameof(viewModel.HeightRequest),
+				targetNullValue: 0.0,
+				assertConverterInstanceIsAnyNotNull: true,
+				assertConvert: c => c.AssertConvert<double, double>(0, additionalHeight)
+			);
+		}
 
 		[Test]
 		public void BindSpecifiedPropertyWithInlineOneWayParameterizedConvertAndDefaults()
@@ -759,7 +781,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				label => Assert.That(label.Text, Is.EqualTo(expectedText)));
 		}
 
-		class ViewModel
+		sealed class ViewModel
 		{
 			public Guid Id { get; set; }
 
@@ -770,6 +792,8 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			public Color TextColor { get; set; } = Colors.Transparent;
 
 			public bool IsRed { get; set; }
+			
+			public double HeightRequest { get; set; }
 		}
 	}
 }

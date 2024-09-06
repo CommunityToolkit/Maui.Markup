@@ -40,7 +40,8 @@ public static class BindableObjectExtensions
 		string? stringFormat = null,
 		object? source = null,
 		TDest? targetNullValue = default,
-		TDest? fallbackValue = default) where TBindable : BindableObject
+		TDest? fallbackValue = default) 
+		where TBindable : BindableObject
 	{
 		var converter = new FuncConverter<TSource, TDest, object>(convert, convertBack);
 		bindable.SetBinding(

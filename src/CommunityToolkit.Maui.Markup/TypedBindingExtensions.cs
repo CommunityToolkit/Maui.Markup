@@ -13,7 +13,7 @@ public static partial class TypedBindingExtensions
 		Expression<Func<TCommandBindingContext, ICommand>> getter,
 		Action<TCommandBindingContext, ICommand>? setter = null,
 		BindingMode mode = BindingMode.Default,
-		TCommandBindingContext? source = default) 
+		TCommandBindingContext? source = default)
 		where TBindable : BindableObject
 		where TCommandBindingContext : class?
 	{
@@ -103,7 +103,6 @@ public static partial class TypedBindingExtensions
 		TDest? fallbackValue = default)
 		where TBindable : BindableObject
 		where TBindingContext : class?
-		where TDest : class?
 	{
 		return Bind<TBindable, TBindingContext, TSource, object?, TDest>(
 			bindable,
@@ -134,7 +133,7 @@ public static partial class TypedBindingExtensions
 		TDest? fallbackValue = default)
 		where TBindable : BindableObject
 		where TBindingContext : class?
-		where TDest : class?
+
 	{
 		return Bind<TBindable, TBindingContext, TSource, object?, TDest>(
 			bindable,
@@ -165,7 +164,7 @@ public static partial class TypedBindingExtensions
 		TDest? fallbackValue = default)
 		where TBindable : BindableObject
 		where TBindingContext : class?
-		where TDest : class?
+
 	{
 		return Bind<TBindable, TBindingContext, TSource, object?, TDest>(
 			bindable,
@@ -198,8 +197,7 @@ public static partial class TypedBindingExtensions
 		TDest? fallbackValue = default)
 		where TBindable : BindableObject
 		where TBindingContext : class?
-		where TParam : class?
-		where TDest : class?
+
 	{
 		var getterFunc = ConvertExpressionToFunc(getter);
 
@@ -234,8 +232,7 @@ public static partial class TypedBindingExtensions
 		TDest? fallbackValue = default)
 		where TBindable : BindableObject
 		where TBindingContext : class?
-		where TParam : class?
-		where TDest : class?
+
 	{
 		var getterFunc = ConvertExpressionToFunc(getter);
 
