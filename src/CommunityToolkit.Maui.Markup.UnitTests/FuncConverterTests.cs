@@ -99,18 +99,15 @@ class FuncConverterTests : BaseMarkupTestFixture
 		var converter = new FuncMultiConverter<string, bool>(
 			values =>
 			{
-				var c = (char)values[0];
-				var l = (int)values[1];
-				return new string(c, l);
+				var c = (char?)values[0];
+				var l = (int?)values[1];
+				return new string(c ?? new(), l ?? 0);
 			},
 			text =>
-			{
-				return
-				[
-					text?.Length > 0 ? text[0] : '\0',
-						text?.Length ?? 0
-				];
-			})
+			[
+				text?.Length > 0 ? text[0] : '\0',
+				text?.Length ?? 0
+			])
 		.AssertConvert(['a', 2], true, "aa", twoWay: true)
 		.AssertConvert(['b', 4], false, "bbbb", twoWay: true);
 

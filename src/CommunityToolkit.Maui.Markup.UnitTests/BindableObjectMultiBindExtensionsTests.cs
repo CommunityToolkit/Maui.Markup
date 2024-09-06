@@ -415,10 +415,10 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 	{
 		ArgumentNullException.ThrowIfNull(testBindings);
 
-		Func<object[], string>? convert = null;
+		Func<object?[], string>? convert = null;
 		if (testConvert)
 		{
-			convert = (object[] v) => Format(0, v[0], v[1], v[2], v[3], v[4]);
+			convert = v => Format(0, v[0], v[1], v[2], v[3], v[4]);
 		}
 
 		Func<string?, object[]>? convertBack = null;
