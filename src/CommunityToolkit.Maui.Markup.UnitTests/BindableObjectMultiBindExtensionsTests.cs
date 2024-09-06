@@ -17,23 +17,27 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 
 		viewModel = new ViewModel();
 
-		testBindings = new List<BindingBase>
-		{
+		testBindings =
+		[
 			new Binding(nameof(viewModel.Text)),
 			new Binding(nameof(viewModel.Id)),
+
 			new Binding(nameof(viewModel.IsDone)),
 			new Binding(nameof(viewModel.Fraction)),
-			new Binding(nameof(viewModel.Count))
-		};
 
-		testConvertValues = new List<object>
-		{
+			new Binding(nameof(viewModel.Count))
+		];
+
+		testConvertValues =
+		[
 			"Hi",
 			Guid.Parse("{272383A4-92E3-46BA-99DC-438D81E039AB}"),
+
 			true,
 			0.5,
+
 			3
-		};
+		];
 	}
 
 	[TearDown]
@@ -149,7 +153,7 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 		}
 		else if (!testConvert && testConvertBack)
 		{
-			label.Bind<Label, string?, Guid, int?, string>(
+			label.Bind(
 				Label.TextProperty,
 				testBindings[0], testBindings[1],
 				convertBack: (string? formatted, int? parameter) =>
@@ -203,7 +207,7 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 		}
 		else if (!testConvert && testConvertBack)
 		{
-			label.Bind<Label, string?, Guid, bool, string>(
+			label.Bind(
 				Label.TextProperty,
 				testBindings[0], testBindings[1], testBindings[2],
 				convertBack: (string? formatted) =>
@@ -425,7 +429,7 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 				ArgumentNullException.ThrowIfNull(formatted);
 
 				var result = Unformat(0, formatted);
-				return new object[] { result.Text ?? string.Empty, result.Id, result.IsDone, result.Fraction, result.Count };
+				return [result.Text ?? string.Empty, result.Id, result.IsDone, result.Fraction, result.Count];
 			};
 		}
 
@@ -455,7 +459,7 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 				ArgumentNullException.ThrowIfNull(text);
 
 				var unformattedResult = Unformat(parameter, text);
-				return new object[] { unformattedResult.Text ?? string.Empty, unformattedResult.Id, unformattedResult.IsDone, unformattedResult.Fraction, unformattedResult.Count };
+				return [unformattedResult.Text ?? string.Empty, unformattedResult.Id, unformattedResult.IsDone, unformattedResult.Fraction, unformattedResult.Count];
 			};
 		}
 

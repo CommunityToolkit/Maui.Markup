@@ -41,11 +41,11 @@ public class InitializeBindings : BaseTest
 		typedMarkupBindingsLabel
 			.Bind(Label.TextProperty,
 				getter: (LabelViewModel vm) => vm.Text,
-				setter: (LabelViewModel vm, string text) => vm.Text = text,
+				setter: (vm, text) => vm.Text = text,
 				mode: BindingMode.TwoWay)
 			.Bind(Label.TextColorProperty,
 				getter: (LabelViewModel vm) => vm.TextColor,
-				setter: (LabelViewModel vm, Color textColor) => vm.TextColor = textColor,
+				setter: (vm, textColor) => vm.TextColor = textColor,
 				mode: BindingMode.TwoWay);
 	}
 }

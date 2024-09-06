@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using Microsoft.CodeAnalysis;
-
 namespace CommunityToolkit.Maui.Markup.SourceGenerators;
 
 static class NamespaceSymbolExtensions
@@ -61,9 +58,6 @@ static class NamespaceSymbolExtensions
 					break;
 				case INamedTypeSymbol namedTypeSymbol:
 					result.Append(namedTypeSymbol.GetFullTypeString());
-					break;
-				default:
-					//Maybe should handle this somehow, maybe inject SourceProductionContext and call ReportDiagnostic on it?
 					break;
 			}
 
@@ -135,7 +129,7 @@ static class NamespaceSymbolExtensions
 
 			if (constraints.Length > 0)
 			{
-				result.Append($"where " + typeParameterSymbol.Name + " : " + constraints + " \n\t");
+				result.Append("where " + typeParameterSymbol.Name + " : " + constraints + " \n\t");
 				constraints.Clear();
 			}
 		}

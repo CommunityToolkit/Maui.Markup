@@ -1,6 +1,5 @@
 ﻿using Android.App;
 using Android.Runtime;
-
 namespace CommunityToolkit.Maui.Markup.Sample;
 
 [Application]

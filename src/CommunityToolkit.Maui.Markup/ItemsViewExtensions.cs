@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Windows.Input;
-
 namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>

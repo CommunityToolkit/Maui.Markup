@@ -1,7 +1,6 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.Maui.Controls.Internals;
-
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 class UnitExpressionSearch : ExpressionVisitor, IExpressionSearch

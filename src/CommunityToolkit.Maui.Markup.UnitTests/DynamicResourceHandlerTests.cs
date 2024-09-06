@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 public class DynamicResourceHandlerTests

@@ -36,14 +36,14 @@
 // SOFTWARE.
 #endregion
 
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 #if !ISEXTERNALINIT_DISABLE
 #nullable enable
 #pragma warning disable
 
 namespace System.Runtime.CompilerServices
 {
-	using global::System.Diagnostics;
-	using global::System.Diagnostics.CodeAnalysis;
 
 	/// <summary>
 	///     Reserved to be used by the compiler for tracking metadata.

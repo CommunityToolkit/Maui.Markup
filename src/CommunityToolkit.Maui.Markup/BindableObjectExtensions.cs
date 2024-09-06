@@ -154,7 +154,7 @@ public static class BindableObjectExtensions
 		string? parameterPath = Binding.SelfPath,
 		object? parameterSource = null) where TBindable : BindableObject
 	{
-		(var commandProperty, var parameterProperty) = DefaultBindableProperties.GetCommandAndCommandParameterProperty<TBindable>();
+		var (commandProperty, parameterProperty) = DefaultBindableProperties.GetCommandAndCommandParameterProperty<TBindable>();
 
 		bindable.SetBinding(commandProperty, new Binding(path: path, source: source));
 

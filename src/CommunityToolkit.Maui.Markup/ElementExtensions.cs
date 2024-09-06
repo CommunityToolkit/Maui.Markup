@@ -1,5 +1,4 @@
 ﻿using Microsoft.Maui.Controls.Internals;
-
 namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>
@@ -79,9 +78,9 @@ public static class ElementExtensions
 	/// <returns>Element with added Effects</returns>
 	public static TElement Effects<TElement>(this TElement element, params Effect[] effects) where TElement : Element
 	{
-		for (var i = 0; i < effects.Length; i++)
+		foreach (var effect in effects)
 		{
-			element.Effects.Add(effects[i]);
+			element.Effects.Add(effect);
 		}
 
 		return element;
@@ -227,7 +226,7 @@ public static class ElementExtensions
 
 			default:
 				throw new NotSupportedException($"{typeof(TBindable)} is not supported");
-		};
+		}
 
 		return bindable;
 	}

@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using NUnit.Framework;
-
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
@@ -287,7 +286,7 @@ class StyleTests : BaseMarkupTestFixture
 			() => new Label()
 					.Style(new Style<Label>().AddAppThemeBinding(Label.TextColorProperty, otherThemeColor, darkThemeColor))
 					.AppThemeBinding(Label.TextProperty, nameof(AppTheme.Light), nameof(AppTheme.Dark)),
-			(label) => Assert.That(label.TextColor, Is.EqualTo(expectedColor)));
+			label => Assert.That(label.TextColor, Is.EqualTo(expectedColor)));
 	}
 
 	[TestCase(AppTheme.Light)]
@@ -307,7 +306,7 @@ class StyleTests : BaseMarkupTestFixture
 					.Style(new Style<Label>().AddAppThemeBindings((Label.TextColorProperty, otherThemeColor, darkThemeColor),
 													(Label.TextProperty, nameof(AppTheme.Light), nameof(AppTheme.Dark))))
 					.AppThemeBinding(Label.TextProperty, nameof(AppTheme.Light), nameof(AppTheme.Dark)),
-			(label) =>
+			label =>
 			{
 				Assert.Multiple(() =>
 				{

@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using NUnit.Framework;
-
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 class ImageExtensionTests : BaseMarkupTestFixture<Image>

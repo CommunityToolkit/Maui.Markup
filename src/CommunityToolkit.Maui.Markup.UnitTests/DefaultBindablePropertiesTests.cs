@@ -1,11 +1,10 @@
-﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
+﻿using System.Windows.Input;
+using CommunityToolkit.Maui.Markup.UnitTests.Base;
+using CommunityToolkit.Maui.Markup.UnitTests.DefaultBindablePropertiesViews;
 using NUnit.Framework;
-
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
-	using CommunityToolkit.Maui.Markup.UnitTests.DefaultBindablePropertiesViews;
 	// These usings are placed here to avoid ambiguities
-	using Microsoft.Maui.Controls;
 
 	[TestFixture]
 	class DefaultBindablePropertiesTests : BaseMarkupTestFixture
@@ -81,8 +80,6 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 namespace CommunityToolkit.Maui.Markup.UnitTests.DefaultBindablePropertiesViews // This namespace simulates derived controls defined in a separate app, for use in the tests in this file only
 {
 	// These usings are placed here to avoid ambiguities
-	using System.Windows.Input;
-	using Microsoft.Maui.Controls;
 
 	class DerivedFromBoxView : BoxView
 	{
@@ -98,7 +95,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests.DefaultBindablePropertiesViews 
 
 	class CustomViewWithText : View
 	{
-		public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(CustomViewWithText), default(string));
+		public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(CustomViewWithText));
 
 		public string Text
 		{
@@ -109,8 +106,8 @@ namespace CommunityToolkit.Maui.Markup.UnitTests.DefaultBindablePropertiesViews 
 
 	class CustomViewWithCommand : View
 	{
-		public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(CustomViewWithCommand), default(ICommand));
-		public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(CustomViewWithCommand), default(object));
+		public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(CustomViewWithCommand));
+		public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(CustomViewWithCommand));
 
 		public ICommand Command
 		{

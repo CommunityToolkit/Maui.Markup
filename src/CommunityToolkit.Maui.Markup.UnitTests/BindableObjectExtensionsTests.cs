@@ -2,7 +2,6 @@
 using BindableObjectViews;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using NUnit.Framework;
-
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
 	[TestFixture]
@@ -194,7 +193,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				fallbackValue
 			);
 
-			BindingHelpers.AssertBindingExists<string>(
+			BindingHelpers.AssertBindingExists(
 				button,
 				targetProperty: Button.TextProperty,
 				path: nameof(viewModel.Text),
@@ -235,7 +234,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				fallbackValue
 			);
 
-			BindingHelpers.AssertBindingExists<string, int>(
+			BindingHelpers.AssertBindingExists(
 				button,
 				targetProperty: Button.TextProperty,
 				path: nameof(viewModel.Text),
@@ -263,7 +262,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				Button.TextProperty,
 				nameof(viewModel.Text),
 				BindingMode.TwoWay,
-				(string? text) => $"'{text?.Trim('\'')}'",
+				text => $"'{text?.Trim('\'')}'",
 				text =>
 				{
 					ArgumentNullException.ThrowIfNull(text);
@@ -323,7 +322,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				fallbackValue
 			);
 
-			BindingHelpers.AssertBindingExists<string, int>(
+			BindingHelpers.AssertBindingExists(
 				button,
 				targetProperty: Button.TextProperty,
 				path: nameof(viewModel.Text),
@@ -547,7 +546,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				fallbackValue
 			);
 
-			BindingHelpers.AssertBindingExists<string, int>(
+			BindingHelpers.AssertBindingExists(
 				label,
 				targetProperty: Label.TextProperty,
 				path: nameof(viewModel.Text),
@@ -574,7 +573,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			label.Bind(
 				nameof(viewModel.Text),
 				BindingMode.TwoWay,
-				(string? text) => $"'{text?.Trim('\'')}'",
+				text => $"'{text?.Trim('\'')}'",
 				text =>
 				{
 					ArgumentNullException.ThrowIfNull(text);
@@ -633,7 +632,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				fallbackValue
 			);
 
-			BindingHelpers.AssertBindingExists<string, int>(
+			BindingHelpers.AssertBindingExists(
 				label,
 				targetProperty: Label.TextProperty,
 				path: nameof(viewModel.Text),
@@ -741,7 +740,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			ApplicationTestHelpers.PerformAppThemeBasedTest(
 				appTheme,
 				() => new Label().AppThemeColorBinding(Label.TextColorProperty, Colors.Purple, Colors.Orange),
-				(label) => Assert.That(label.TextColor, Is.EqualTo(expectedColor)));
+				label => Assert.That(label.TextColor, Is.EqualTo(expectedColor)));
 		}
 
 		[TestCase(AppTheme.Light)]
@@ -757,7 +756,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			ApplicationTestHelpers.PerformAppThemeBasedTest(
 				appTheme,
 				() => new Label().AppThemeBinding(Label.TextProperty, light, dark),
-				(label) => Assert.That(label.Text, Is.EqualTo(expectedText)));
+				label => Assert.That(label.Text, Is.EqualTo(expectedText)));
 		}
 
 		class ViewModel

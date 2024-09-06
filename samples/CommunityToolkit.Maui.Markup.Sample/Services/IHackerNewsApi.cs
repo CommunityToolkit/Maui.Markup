@@ -1,5 +1,4 @@
 ﻿using Refit;
-
 namespace CommunityToolkit.Maui.Markup.Sample.Services;
 
 interface IHackerNewsApi

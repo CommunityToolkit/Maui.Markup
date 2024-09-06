@@ -1,4 +1,7 @@
-﻿[assembly: System.Reflection.Metadata.MetadataUpdateHandler(typeof(CommunityToolkit.Maui.Markup.CommunityToolkitMetadataUpdateHandler))]
+﻿using System.Diagnostics;
+using System.Reflection.Metadata;
+using CommunityToolkit.Maui.Markup;
+[assembly: MetadataUpdateHandler(typeof(CommunityToolkitMetadataUpdateHandler))]
 namespace CommunityToolkit.Maui.Markup;
 
 static class CommunityToolkitMetadataUpdateHandler
@@ -11,7 +14,7 @@ static class CommunityToolkitMetadataUpdateHandler
 		remove => reloadApplicationEventHandler.RemoveEventHandler(value);
 	}
 
-	[System.Diagnostics.Conditional("DEBUG")]
+	[Conditional("DEBUG")]
 	static void UpdateApplication(Type[]? types)
 	{
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.

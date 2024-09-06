@@ -3,7 +3,6 @@ using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions;
 using NUnit.Framework;
 using Unique.Namespace.To.Test.Interface;
-
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
 	[TestFixture]
@@ -272,7 +271,6 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
-	using CommunityToolkit.Maui.Markup.LeftToRight;
 
 	[TestFixture]
 	class LeftToRightTextAlignmentExtensionsTests : BaseMarkupTestFixture<Picker>
@@ -283,7 +281,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			Bindable.TextEnd();
 			Assert.That(Bindable.HorizontalTextAlignment, Is.EqualTo(TextAlignment.End));
 
-			Bindable.TextLeft();
+			LeftToRight.TextAlignmentExtensions_Picker.TextLeft(Bindable);
 			Assert.That(Bindable.HorizontalTextAlignment, Is.EqualTo(TextAlignment.Start));
 		}
 
@@ -292,7 +290,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		{
 			Assert.That(Bindable.HorizontalTextAlignment, Is.EqualTo(TextAlignment.Start));
 
-			Bindable.TextRight();
+			LeftToRight.TextAlignmentExtensions_Picker.TextRight(Bindable);
 			Assert.That(Bindable.HorizontalTextAlignment, Is.EqualTo(TextAlignment.End));
 		}
 
@@ -340,7 +338,6 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
-	using CommunityToolkit.Maui.Markup.RightToLeft;
 
 	[TestFixture]
 	class RightToLeftTextAlignmentExtensionsTests : BaseMarkupTestFixture<Picker>
@@ -352,7 +349,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			Bindable.TextEnd();
 			Assert.That(Bindable.HorizontalTextAlignment, Is.EqualTo(TextAlignment.End));
 
-			Bindable.TextRight();
+			RightToLeft.TextAlignmentExtensions_Picker.TextRight(Bindable);
 			Assert.That(Bindable.HorizontalTextAlignment, Is.EqualTo(TextAlignment.Start));
 		}
 
@@ -361,7 +358,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		{
 			Assert.That(Bindable.HorizontalTextAlignment, Is.EqualTo(TextAlignment.Start));
 
-			Bindable.TextLeft();
+			RightToLeft.TextAlignmentExtensions_Picker.TextLeft(Bindable);
 			Assert.That(Bindable.HorizontalTextAlignment, Is.EqualTo(TextAlignment.End));
 		}
 

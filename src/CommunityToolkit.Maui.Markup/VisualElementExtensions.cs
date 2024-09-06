@@ -1,5 +1,4 @@
 ﻿using Microsoft.Maui.Controls.Shapes;
-
 namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>

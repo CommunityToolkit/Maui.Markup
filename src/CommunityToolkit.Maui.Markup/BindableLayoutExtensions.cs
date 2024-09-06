@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-
+using ILayout = Microsoft.Maui.ILayout;
 namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>
@@ -14,7 +14,7 @@ public static class BindableLayoutExtensions
 	/// <param name="layout"></param>
 	/// <param name="view"></param>
 	/// <returns>Layout with Empty View</returns>
-	public static TLayout EmptyView<TLayout>(this TLayout layout, object view) where TLayout : BindableObject, Microsoft.Maui.ILayout
+	public static TLayout EmptyView<TLayout>(this TLayout layout, object view) where TLayout : BindableObject, ILayout
 	{
 		BindableLayout.SetEmptyView(layout, view);
 		return layout;
@@ -27,7 +27,7 @@ public static class BindableLayoutExtensions
 	/// <param name="layout"></param>
 	/// <param name="template"></param>
 	/// <returns>Layout with Empty View Tempalte</returns>
-	public static TLayout EmptyViewTemplate<TLayout>(this TLayout layout, DataTemplate template) where TLayout : BindableObject, Microsoft.Maui.ILayout
+	public static TLayout EmptyViewTemplate<TLayout>(this TLayout layout, DataTemplate template) where TLayout : BindableObject, ILayout
 	{
 		BindableLayout.SetEmptyViewTemplate(layout, template);
 		return layout;
@@ -39,7 +39,7 @@ public static class BindableLayoutExtensions
 	/// <param name="layout"></param>
 	/// <param name="loadTemplate"></param>
 	/// <returns>Layout with Empty View Tempalte</returns>
-	public static TLayout EmptyViewTemplate<TLayout>(this TLayout layout, Func<object> loadTemplate) where TLayout : BindableObject, Microsoft.Maui.ILayout =>
+	public static TLayout EmptyViewTemplate<TLayout>(this TLayout layout, Func<object> loadTemplate) where TLayout : BindableObject, ILayout =>
 		layout.EmptyViewTemplate(new DataTemplate(loadTemplate));
 
 	/// <summary>
@@ -49,7 +49,7 @@ public static class BindableLayoutExtensions
 	/// <param name="layout"></param>
 	/// <param name="source"></param>
 	/// <returns>Layout with Item Source</returns>
-	public static TLayout ItemsSource<TLayout>(this TLayout layout, IEnumerable source) where TLayout : BindableObject, Microsoft.Maui.ILayout
+	public static TLayout ItemsSource<TLayout>(this TLayout layout, IEnumerable source) where TLayout : BindableObject, ILayout
 	{
 		BindableLayout.SetItemsSource(layout, source);
 		return layout;
@@ -62,7 +62,7 @@ public static class BindableLayoutExtensions
 	/// <param name="layout"></param>
 	/// <param name="template"></param>
 	/// <returns>Layout with Item Template</returns>
-	public static TLayout ItemTemplate<TLayout>(this TLayout layout, DataTemplate template) where TLayout : BindableObject, Microsoft.Maui.ILayout
+	public static TLayout ItemTemplate<TLayout>(this TLayout layout, DataTemplate template) where TLayout : BindableObject, ILayout
 	{
 		BindableLayout.SetItemTemplate(layout, template);
 		return layout;
@@ -75,7 +75,7 @@ public static class BindableLayoutExtensions
 	/// <param name="layout"></param>
 	/// <param name="loadTemplate"></param>
 	/// <returns>Layout with Item Template</returns>
-	public static TLayout ItemTemplate<TLayout>(this TLayout layout, Func<object> loadTemplate) where TLayout : BindableObject, Microsoft.Maui.ILayout =>
+	public static TLayout ItemTemplate<TLayout>(this TLayout layout, Func<object> loadTemplate) where TLayout : BindableObject, ILayout =>
 		layout.ItemTemplate(new DataTemplate(loadTemplate));
 
 	/// <summary>
@@ -85,7 +85,7 @@ public static class BindableLayoutExtensions
 	/// <param name="layout"></param>
 	/// <param name="selector"></param>
 	/// <returns>Layout with Item Template Selector</returns>
-	public static TLayout ItemTemplateSelector<TLayout>(this TLayout layout, DataTemplateSelector selector) where TLayout : BindableObject, Microsoft.Maui.ILayout
+	public static TLayout ItemTemplateSelector<TLayout>(this TLayout layout, DataTemplateSelector selector) where TLayout : BindableObject, ILayout
 	{
 		BindableLayout.SetItemTemplateSelector(layout, selector);
 		return layout;

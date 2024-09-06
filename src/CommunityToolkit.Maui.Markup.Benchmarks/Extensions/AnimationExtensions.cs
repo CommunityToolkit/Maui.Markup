@@ -1,7 +1,7 @@
 using CommunityToolkit.Maui.Markup.Benchmarks.Mocks;
 using Microsoft.Maui.Animations;
 using Microsoft.Maui.Handlers;
-
+using Animation = Microsoft.Maui.Animations.Animation;
 namespace CommunityToolkit.Maui.Markup.Benchmarks.Extensions;
 
 static class AnimationExtensions
@@ -84,7 +84,7 @@ static class AnimationExtensions
 
 		class TestAnimationManager : IAnimationManager
 		{
-			readonly List<Microsoft.Maui.Animations.Animation> animations = [];
+			readonly List<Animation> animations = [];
 
 			public TestAnimationManager(ITicker ticker)
 			{
@@ -98,7 +98,7 @@ static class AnimationExtensions
 
 			public ITicker Ticker { get; }
 
-			public void Add(Microsoft.Maui.Animations.Animation animation)
+			public void Add(Animation animation)
 			{
 				animations.Add(animation);
 				if (AutoStartTicker && !Ticker.IsRunning)
@@ -107,7 +107,7 @@ static class AnimationExtensions
 				}
 			}
 
-			public void Remove(Microsoft.Maui.Animations.Animation animation)
+			public void Remove(Animation animation)
 			{
 				animations.Remove(animation);
 				if (!animations.Any())
@@ -126,7 +126,7 @@ static class AnimationExtensions
 					Ticker.Stop();
 				}
 
-				void AnimationTick(Microsoft.Maui.Animations.Animation animation)
+				void AnimationTick(Animation animation)
 				{
 					if (animation.HasFinished)
 					{

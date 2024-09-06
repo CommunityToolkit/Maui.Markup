@@ -1,5 +1,4 @@
 ﻿using System.Windows.Input;
-
 namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>

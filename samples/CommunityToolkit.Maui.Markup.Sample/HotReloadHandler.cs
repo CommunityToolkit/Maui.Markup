@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-
 namespace CommunityToolkit.Maui.Markup.Sample;
 
 class HotReloadHandler : ICommunityToolkitHotReloadHandler

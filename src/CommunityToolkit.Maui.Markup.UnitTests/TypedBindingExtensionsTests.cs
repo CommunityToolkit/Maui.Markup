@@ -6,7 +6,6 @@ using System.Windows.Input;
 using CommunityToolkit.Maui.Converters;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
@@ -42,10 +41,9 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 			new Button()
 				.BindCommand<Button, ViewModel, object?, Color>(
 					(ViewModel vm) => vm.Command,
-					new (Func<ViewModel, object?>, string)[]
-					{
-						(vm => vm, nameof(ViewModel.Command)),
-					},
+					[
+						(vm => vm, nameof(ViewModel.Command))
+					],
 					parameterGetter: _ => Colors.Black);
 		});
 	}
@@ -203,7 +201,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		var label = new Label
 		{
 			BindingContext = viewModel
-		}.Bind(Label.TextColorProperty, static (ViewModel viewModel) => viewModel.TextColor, static (ViewModel viewModel, Color color) => viewModel.TextColor = color, BindingMode.OneTime);
+		}.Bind(Label.TextColorProperty, static (ViewModel viewModel) => viewModel.TextColor, static (viewModel, color) => viewModel.TextColor = color, BindingMode.OneTime);
 
 		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
 		label.PropertyChanged += HandleLabelPropertyChanged;
@@ -327,12 +325,11 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 			entry.BindingContext = viewmodel;
 			entry.Bind(Entry.TextColorProperty,
 				static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
-				new (Func<NestedViewModel, object?>, string)[]
-				{
+				[
 					(vm => vm, nameof(NestedViewModel.Model)),
 					(vm => vm.Model, nameof(NestedViewModel.Model)),
 					(vm => vm.Model?.Model, nameof(NestedViewModel.Model.TextColor))
-				},
+				],
 				static (NestedViewModel vm, Color? color) =>
 				{
 					if (vm.Model?.Model?.TextColor is not null && color is not null)
@@ -346,12 +343,11 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		{
 			entry.Bind(Entry.TextColorProperty,
 				static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
-				new (Func<NestedViewModel, object?>, string)[]
-				{
+				[
 					(vm => vm, nameof(NestedViewModel.Model)),
 					(vm => vm.Model, nameof(NestedViewModel.Model)),
 					(vm => vm.Model?.Model, nameof(NestedViewModel.Model.TextColor))
-				},
+				],
 				static (NestedViewModel vm, Color? color) =>
 				{
 					if (vm.Model?.Model?.TextColor is not null && color is not null)
@@ -405,12 +401,11 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 			label.BindingContext = viewmodel;
 			label.Bind<Label, NestedViewModel, Color?, string>(Label.TextProperty,
 				static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
-				new (Func<NestedViewModel, object?>, string)[]
-				{
+				[
 					(vm => vm, nameof(NestedViewModel.Model)),
 					(vm => vm.Model, nameof(NestedViewModel.Model)),
 					(vm => vm.Model?.Model, nameof(NestedViewModel.Model.TextColor))
-				},
+				],
 				static (NestedViewModel vm, Color? color) =>
 				{
 					if (vm.Model?.Model?.TextColor is not null && color is not null)
@@ -425,12 +420,11 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		{
 			label.Bind<Label, NestedViewModel, Color?, string>(Label.TextProperty,
 				static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
-				new (Func<NestedViewModel, object?>, string)[]
-				{
+				[
 					(vm => vm, nameof(NestedViewModel.Model)),
 					(vm => vm.Model, nameof(NestedViewModel.Model)),
 					(vm => vm.Model?.Model, nameof(NestedViewModel.Model.TextColor))
-				},
+				],
 				static (NestedViewModel vm, Color? color) =>
 				{
 					if (vm.Model?.Model?.TextColor is not null && color is not null)

@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using Microsoft.Maui.Controls.Shapes;
 using NUnit.Framework;
-
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
@@ -145,22 +144,22 @@ class VisualElementExtensionsTests : BaseMarkupTestFixture<BoxView>
 	[Test]
 	public void FlowDirection_LeftToRight()
 	{
-		Bindable.FlowDirection(Microsoft.Maui.FlowDirection.LeftToRight);
-		Assert.That(Bindable.FlowDirection, Is.EqualTo(Microsoft.Maui.FlowDirection.LeftToRight));
+		Bindable.FlowDirection(FlowDirection.LeftToRight);
+		Assert.That(Bindable.FlowDirection, Is.EqualTo(FlowDirection.LeftToRight));
 	}
 
 	[Test]
 	public void FlowDirection_RightToLeft()
 	{
-		Bindable.FlowDirection(Microsoft.Maui.FlowDirection.RightToLeft);
-		Assert.That(Bindable.FlowDirection, Is.EqualTo(Microsoft.Maui.FlowDirection.RightToLeft));
+		Bindable.FlowDirection(FlowDirection.RightToLeft);
+		Assert.That(Bindable.FlowDirection, Is.EqualTo(FlowDirection.RightToLeft));
 	}
 
 	[Test]
 	public void FlowDirection_MatchParent()
 	{
-		Bindable.FlowDirection(Microsoft.Maui.FlowDirection.MatchParent);
-		Assert.That(Bindable.FlowDirection, Is.EqualTo(Microsoft.Maui.FlowDirection.MatchParent));
+		Bindable.FlowDirection(FlowDirection.MatchParent);
+		Assert.That(Bindable.FlowDirection, Is.EqualTo(FlowDirection.MatchParent));
 	}
 
 	[Test]

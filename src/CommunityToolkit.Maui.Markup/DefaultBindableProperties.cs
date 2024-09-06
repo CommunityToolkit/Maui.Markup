@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-
 namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>
@@ -114,7 +113,7 @@ public static class DefaultBindableProperties
 	}
 
 	/// <summary>
-	/// Registeres Command and CommandParameter Properties
+	/// Registers Command and CommandParameter Properties
 	/// </summary>
 	/// <param name="propertyPairs"></param>
 	public static void RegisterForCommand(params (BindableProperty commandProperty, BindableProperty parameterProperty)[] propertyPairs)
@@ -157,15 +156,15 @@ public static class DefaultBindableProperties
 
 		do
 		{
-			var bindableObjectTypeName = bindableObjectType?.FullName;
+			var bindableObjectTypeName = bindableObjectType.FullName;
 			if (bindableObjectTypeName is not null && bindableObjectTypeDefaultProperty.TryGetValue(bindableObjectTypeName, out defaultBindableProperty))
 			{
 				return true;
 			}
 
-			bindableObjectType = bindableObjectType?.GetTypeInfo().BaseType;
+			bindableObjectType = bindableObjectType.GetTypeInfo().BaseType;
 		}
-		while (bindableObjectType is not null && bindableObjectType.GetType() != typeof(BindableObject));
+		while (bindableObjectType is not null && bindableObjectType != typeof(BindableObject));
 
 		return false;
 	}
@@ -208,9 +207,9 @@ public static class DefaultBindableProperties
 				return true;
 			}
 
-			bindableObjectType = bindableObjectType?.GetTypeInfo().BaseType;
+			bindableObjectType = bindableObjectType.GetTypeInfo().BaseType;
 		}
-		while (bindableObjectType is not null && bindableObjectType.GetType() != typeof(BindableObject));
+		while (bindableObjectType is not null && bindableObjectType != typeof(BindableObject));
 
 		return false;
 	}

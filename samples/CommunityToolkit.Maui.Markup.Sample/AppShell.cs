@@ -2,12 +2,11 @@
 
 class AppShell : Shell
 {
-	static readonly IReadOnlyDictionary<Type, string> pageRouteMappingDictionary = new Dictionary<Type, string>(new[]
-	{
+	static readonly IReadOnlyDictionary<Type, string> pageRouteMappingDictionary = new Dictionary<Type, string>([
 		CreateRoutePageMapping<NewsPage, NewsViewModel>(),
 		CreateRoutePageMapping<SettingsPage, SettingsViewModel>(),
-		CreateRoutePageMapping<NewsDetailPage, NewsDetailViewModel>(),
-	});
+		CreateRoutePageMapping<NewsDetailPage, NewsDetailViewModel>()
+	]);
 
 	public AppShell(NewsPage newsPage)
 	{

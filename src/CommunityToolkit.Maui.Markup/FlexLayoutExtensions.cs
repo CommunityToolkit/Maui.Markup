@@ -1,5 +1,4 @@
 ﻿using Microsoft.Maui.Layouts;
-
 namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>

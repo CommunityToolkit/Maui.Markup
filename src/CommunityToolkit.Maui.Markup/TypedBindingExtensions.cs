@@ -1,7 +1,5 @@
 ﻿using System.Linq.Expressions;
 using System.Windows.Input;
-using Microsoft.Maui.Controls.Internals;
-
 namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>
@@ -15,7 +13,9 @@ public static partial class TypedBindingExtensions
 		Expression<Func<TCommandBindingContext, ICommand>> getter,
 		Action<TCommandBindingContext, ICommand>? setter = null,
 		BindingMode mode = BindingMode.Default,
-		TCommandBindingContext? source = default) where TBindable : BindableObject
+		TCommandBindingContext? source = default) 
+		where TBindable : BindableObject
+		where TCommandBindingContext : class?
 	{
 		return BindCommand<TBindable, TCommandBindingContext, object?, object?>(
 			bindable,
@@ -35,9 +35,12 @@ public static partial class TypedBindingExtensions
 		Expression<Func<TParameterBindingContext, TParameterSource>>? parameterGetter = null,
 		Action<TParameterBindingContext, TParameterSource>? parameterSetter = null,
 		BindingMode parameterBindingMode = BindingMode.Default,
-		TParameterBindingContext? parameterSource = default) where TBindable : BindableObject
+		TParameterBindingContext? parameterSource = default)
+		where TBindable : BindableObject
+		where TCommandBindingContext : class?
+		where TParameterBindingContext : class?
 	{
-		(var commandProperty, var parameterProperty) = DefaultBindableProperties.GetCommandAndCommandParameterProperty<TBindable>();
+		var (commandProperty, parameterProperty) = DefaultBindableProperties.GetCommandAndCommandParameterProperty<TBindable>();
 
 		Bind(bindable,
 			commandProperty,
@@ -68,21 +71,21 @@ public static partial class TypedBindingExtensions
 		Action<TBindingContext, TSource>? setter = null,
 		BindingMode mode = BindingMode.Default,
 		string? stringFormat = null,
-		TBindingContext? source = default) where TBindable : BindableObject
+		TBindingContext? source = default)
+		where TBindable : BindableObject
+		where TBindingContext : class?
 	{
 		return Bind<TBindable, TBindingContext, TSource, object?, object?>(
-					bindable,
-					targetProperty,
-					getter,
-					setter,
-					mode,
-					null,
-					null,
-					null,
-					stringFormat,
-					source,
-					null,
-					null);
+			bindable,
+			targetProperty,
+			getter,
+			setter,
+			mode,
+			null,
+			null,
+			null,
+			stringFormat,
+			source);
 	}
 
 	/// <summary>Bind to a specified property with inline conversion</summary>
@@ -97,21 +100,24 @@ public static partial class TypedBindingExtensions
 		string? stringFormat = null,
 		TBindingContext? source = default,
 		TDest? targetNullValue = default,
-		TDest? fallbackValue = default) where TBindable : BindableObject
+		TDest? fallbackValue = default)
+		where TBindable : BindableObject
+		where TBindingContext : class?
+		where TDest : class?
 	{
 		return Bind<TBindable, TBindingContext, TSource, object?, TDest>(
-					bindable,
-					targetProperty,
-					getter,
-					setter,
-					mode,
-					convert is null ? null : (source, _) => convert(source),
-					convertBack is null ? null : (dest, _) => convertBack(dest),
-					null,
-					stringFormat,
-					source,
-					targetNullValue,
-					fallbackValue);
+			bindable,
+			targetProperty,
+			getter,
+			setter,
+			mode,
+			convert is null ? null : (sourceType, _) => convert(sourceType),
+			convertBack is null ? null : (dest, _) => convertBack(dest),
+			null,
+			stringFormat,
+			source,
+			targetNullValue,
+			fallbackValue);
 	}
 
 	/// <summary>Bind to a specified property with inline conversion</summary>
@@ -125,20 +131,23 @@ public static partial class TypedBindingExtensions
 		string? stringFormat = null,
 		TBindingContext? source = default,
 		TDest? targetNullValue = default,
-		TDest? fallbackValue = default) where TBindable : BindableObject
+		TDest? fallbackValue = default)
+		where TBindable : BindableObject
+		where TBindingContext : class?
+		where TDest : class?
 	{
 		return Bind<TBindable, TBindingContext, TSource, object?, TDest>(
-					bindable,
-					targetProperty,
-					getter,
-					setter,
-					mode,
-					converter,
-					null,
-					stringFormat,
-					source,
-					targetNullValue,
-					fallbackValue);
+			bindable,
+			targetProperty,
+			getter,
+			setter,
+			mode,
+			converter,
+			null,
+			stringFormat,
+			source,
+			targetNullValue,
+			fallbackValue);
 	}
 
 	/// <summary>Bind to a specified property with inline conversion</summary>
@@ -153,21 +162,24 @@ public static partial class TypedBindingExtensions
 		string? stringFormat = null,
 		TBindingContext? source = default,
 		TDest? targetNullValue = default,
-		TDest? fallbackValue = default) where TBindable : BindableObject
+		TDest? fallbackValue = default)
+		where TBindable : BindableObject
+		where TBindingContext : class?
+		where TDest : class?
 	{
 		return Bind<TBindable, TBindingContext, TSource, object?, TDest>(
-					bindable,
-					targetProperty,
-					getter,
-					handlers,
-					setter,
-					mode,
-					converter,
-					null,
-					stringFormat,
-					source,
-					targetNullValue,
-					fallbackValue);
+			bindable,
+			targetProperty,
+			getter,
+			handlers,
+			setter,
+			mode,
+			converter,
+			null,
+			stringFormat,
+			source,
+			targetNullValue,
+			fallbackValue);
 	}
 
 	/// <summary>Bind to a specified property with inline conversion and conversion parameter</summary>
@@ -183,24 +195,28 @@ public static partial class TypedBindingExtensions
 		string? stringFormat = null,
 		TBindingContext? source = default,
 		TDest? targetNullValue = default,
-		TDest? fallbackValue = default) where TBindable : BindableObject
+		TDest? fallbackValue = default)
+		where TBindable : BindableObject
+		where TBindingContext : class?
+		where TParam : class?
+		where TDest : class?
 	{
 		var getterFunc = ConvertExpressionToFunc(getter);
 
 		return Bind(
-				bindable,
-				targetProperty,
-				getterFunc,
-				new (Func<TBindingContext, object?>, string)[] { ((TBindingContext b) => b, GetMemberName(getter)) },
-				setter,
-				mode,
-				convert,
-				convertBack,
-				converterParameter,
-				stringFormat,
-				source,
-				targetNullValue,
-				fallbackValue);
+			bindable,
+			targetProperty,
+			getterFunc,
+			[(b => b, GetMemberName(getter))],
+			setter,
+			mode,
+			convert,
+			convertBack,
+			converterParameter,
+			stringFormat,
+			source,
+			targetNullValue,
+			fallbackValue);
 	}
 
 	/// <summary>Bind to a specified property with inline conversion and conversion parameter</summary>
@@ -215,23 +231,27 @@ public static partial class TypedBindingExtensions
 		string? stringFormat = null,
 		TBindingContext? source = default,
 		TDest? targetNullValue = default,
-		TDest? fallbackValue = default) where TBindable : BindableObject
+		TDest? fallbackValue = default)
+		where TBindable : BindableObject
+		where TBindingContext : class?
+		where TParam : class?
+		where TDest : class?
 	{
 		var getterFunc = ConvertExpressionToFunc(getter);
 
 		return Bind(
-				bindable,
-				targetProperty,
-				getterFunc,
-				new (Func<TBindingContext, object?>, string)[] { ((TBindingContext b) => b, GetMemberName(getter)) },
-				setter,
-				mode,
-				converter,
-				converterParameter,
-				stringFormat,
-				source,
-				targetNullValue,
-				fallbackValue);
+			bindable,
+			targetProperty,
+			getterFunc,
+			[(b => b, GetMemberName(getter))],
+			setter,
+			mode,
+			converter,
+			converterParameter,
+			stringFormat,
+			source,
+			targetNullValue,
+			fallbackValue);
 	}
 
 	static Func<TBindingContext, TSource> ConvertExpressionToFunc<TBindingContext, TSource>(in Expression<Func<TBindingContext, TSource>> expression) => expression.Compile();
@@ -239,7 +259,7 @@ public static partial class TypedBindingExtensions
 	static string GetMemberName<T>(in Expression<T> expression) => expression.Body switch
 	{
 		MemberExpression m => m.Member.Name,
-		UnaryExpression u when u.Operand is MemberExpression m => m.Member.Name,
-		_ => throw new InvalidOperationException("Could not retreive member name")
+		UnaryExpression { Operand: MemberExpression m } => m.Member.Name,
+		_ => throw new InvalidOperationException("Could not retrieve member name")
 	};
 }

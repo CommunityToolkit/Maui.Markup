@@ -1,4 +1,5 @@
-﻿namespace CommunityToolkit.Maui.Markup;
+﻿using IImage = Microsoft.Maui.IImage;
+namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>
 /// Extension methods for IImage
@@ -25,7 +26,7 @@ public static class ImageExtensions
 	/// <param name="bindable">The <see cref="BindableObject"/> on which to set the <see cref="Microsoft.Maui.IImage.Aspect"/> Property</param>
 	/// <param name="aspect">The <see cref="Microsoft.Maui.Aspect"/> vaue</param>
 	/// <returns></returns>
-	public static TBindable Aspect<TBindable>(this TBindable bindable, Aspect aspect) where TBindable : BindableObject, Microsoft.Maui.IImage
+	public static TBindable Aspect<TBindable>(this TBindable bindable, Aspect aspect) where TBindable : BindableObject, IImage
 	{
 		bindable.SetValue(ImageElement.AspectProperty, aspect);
 		return bindable;
@@ -38,7 +39,7 @@ public static class ImageExtensions
 	/// <param name="bindable">The <see cref="BindableObject"/> on which to set the <see cref="Microsoft.Maui.IImage.IsOpaque"/> Property</param>
 	/// <param name="isOpaque">The <see cref="bool"/> vaue</param>
 	/// <returns></returns>
-	public static TBindable IsOpaque<TBindable>(this TBindable bindable, bool isOpaque) where TBindable : BindableObject, Microsoft.Maui.IImage
+	public static TBindable IsOpaque<TBindable>(this TBindable bindable, bool isOpaque) where TBindable : BindableObject, IImage
 	{
 		bindable.SetValue(ImageElement.IsOpaqueProperty, isOpaque);
 		return bindable;

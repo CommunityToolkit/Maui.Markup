@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-
 namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>

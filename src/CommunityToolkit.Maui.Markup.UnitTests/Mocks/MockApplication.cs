@@ -1,6 +1,5 @@
 using Microsoft.Maui.Controls.Internals;
 using Microsoft.Maui.Handlers;
-
 namespace CommunityToolkit.Maui.Markup.UnitTests.Mocks;
 
 class MockApplication : Application, IPlatformApplication
