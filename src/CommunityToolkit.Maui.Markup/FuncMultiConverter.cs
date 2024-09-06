@@ -259,7 +259,7 @@ public class FuncMultiConverterWithParam<TSource1, TSource2, TSource3, TDest, TP
 									Func<TDest?, TParam?, ValueTuple<TSource1, TSource2, TSource3>>? convertBack = null) : FuncMultiConverter<TDest, TParam>(convert is null ? default : (values, param) => convert((To<TSource1>(values[0]), To<TSource2>(values[1]), To<TSource3>(values[2])), param),
 		convertBack is null ? default : (value, param) => ToObjects(convertBack(value, param)))
 {
-	static T To<T>(object value) => (T)value;
+	static T? To<T>(object? value) => value != null ? (T)value : default;
 
 	static object?[] ToObjects(ValueTuple<TSource1, TSource2, TSource3> values) => [values.Item1, values.Item2, values.Item3];
 }
