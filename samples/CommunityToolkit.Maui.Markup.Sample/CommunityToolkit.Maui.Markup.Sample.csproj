@@ -29,6 +29,14 @@
     <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)' == 'Release' 
+                  AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'tizen'
+                  AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'android'">
+    <!-- Ahead-of-time compilation is not yet supported net8.0-tizen -->
+    <!-- Cross-OS native compilation is not supported net8.0-android -->
+    <PublishAot>true</PublishAot>
+  </PropertyGroup>
+
   <ItemGroup>
     <!-- App Icon -->
     <MauiIcon Include="Resources\appicon.svg" ForegroundFile="Resources\appiconfg.svg" Color="#512BD4" />
