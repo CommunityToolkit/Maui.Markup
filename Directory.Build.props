@@ -59,7 +59,8 @@
       IL2110,IL2111,IL2112,IL2113,IL2114,IL2115,IL2116,IL2117,IL2118,IL2119,
       IL2120,IL2121,IL2122,
       IL3050,IL3051,IL3052,IL3053,IL3054,IL3055,IL3056
-      </WarningsAsErrors>  </PropertyGroup>
+      </WarningsAsErrors>  
+  </PropertyGroup>
 
   <ItemGroup>
     <InternalsVisibleTo Include="CommunityToolkit.Maui.Markup.UnitTests" />
