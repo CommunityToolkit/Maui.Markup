@@ -216,9 +216,7 @@ static class BindingHelpers
 	{
 		getContextMethodInfo ??= typeof(BindableObject).GetMethod("GetContext", BindingFlags.NonPublic | BindingFlags.Instance);
 
-		var context = getContextMethodInfo?.Invoke(bindable, [
-			property
-		]);
+		var context = getContextMethodInfo?.Invoke(bindable, [property]);
 		if (context is null)
 		{
 			return null;
