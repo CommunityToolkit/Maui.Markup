@@ -18,7 +18,7 @@ public static class BindableObjectMultiBindExtensions
 		TDest? targetNullValue = default,
 		TDest? fallbackValue = default)
 		where TBindable : BindableObject
-		
+
 		=> bindable.Bind(
 			targetProperty,
 			[binding1, binding2],
@@ -43,7 +43,7 @@ public static class BindableObjectMultiBindExtensions
 		TDest? targetNullValue = default,
 		TDest? fallbackValue = default)
 		where TBindable : BindableObject
-		
+
 		=> bindable.Bind(
 			targetProperty,
 			[binding1, binding2],
@@ -68,11 +68,12 @@ public static class BindableObjectMultiBindExtensions
 		TDest? targetNullValue = default,
 		TDest? fallbackValue = default)
 		where TBindable : BindableObject
-		
+
 		=> bindable.Bind(
 			targetProperty,
 			[
-				binding1, binding2,
+				binding1,
+				binding2,
 				binding3
 			],
 			new FuncMultiConverter<TSource1, TSource2, TSource3, TDest>(convert, convertBack),
@@ -97,11 +98,12 @@ public static class BindableObjectMultiBindExtensions
 		TDest? targetNullValue = default,
 		TDest? fallbackValue = default)
 		where TBindable : BindableObject
-		
+
 		=> bindable.Bind(
 			targetProperty,
 			[
-				binding1, binding2,
+				binding1,
+				binding2,
 				binding3
 			],
 			new FuncMultiConverterWithParam<TSource1, TSource2, TSource3, TDest, TParam>(convert, convertBack),
@@ -126,12 +128,14 @@ public static class BindableObjectMultiBindExtensions
 		TDest? targetNullValue = default,
 		TDest? fallbackValue = default)
 		where TBindable : BindableObject
-		
+
 		=> bindable.Bind(
 			targetProperty,
 			[
-				binding1, binding2,
-				binding3, binding4
+				binding1,
+				binding2,
+				binding3,
+				binding4
 			],
 			new FuncMultiConverter<TSource1, TSource2, TSource3, TSource4, TDest>(convert, convertBack),
 			null,
@@ -156,12 +160,14 @@ public static class BindableObjectMultiBindExtensions
 		TDest? targetNullValue = default,
 		TDest? fallbackValue = default)
 		where TBindable : BindableObject
-		
+
 		=> bindable.Bind(
 			targetProperty,
 			[
-				binding1, binding2,
-				binding3, binding4
+				binding1,
+				binding2,
+				binding3,
+				binding4
 			],
 			new FuncMultiConverterWithParam<TSource1, TSource2, TSource3, TSource4, TDest, TParam>(convert, convertBack),
 			converterParameter,

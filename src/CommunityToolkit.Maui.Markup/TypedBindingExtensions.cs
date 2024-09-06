@@ -133,7 +133,6 @@ public static partial class TypedBindingExtensions
 		TDest? fallbackValue = default)
 		where TBindable : BindableObject
 		where TBindingContext : class?
-
 	{
 		return Bind<TBindable, TBindingContext, TSource, object?, TDest>(
 			bindable,

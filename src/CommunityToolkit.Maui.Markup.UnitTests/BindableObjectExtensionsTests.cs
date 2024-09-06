@@ -88,12 +88,12 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				assertConvert: c => c.AssertConvert<bool?, Color>(true, Colors.Red).AssertConvert<bool?, Color>(false, Colors.Transparent)
 			);
 		}
-		
+
 		[Test]
 		public void BindSpecifiedPropertyWithInlineOneWayConvertUsingValueTypeAndDefaults()
 		{
 			const double additionalHeight = 5;
-			
+
 			var label = new Label();
 			label.Bind(
 				Label.HeightRequestProperty,
@@ -792,7 +792,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			public Color TextColor { get; set; } = Colors.Transparent;
 
 			public bool IsRed { get; set; }
-			
+
 			public double HeightRequest { get; set; }
 		}
 	}

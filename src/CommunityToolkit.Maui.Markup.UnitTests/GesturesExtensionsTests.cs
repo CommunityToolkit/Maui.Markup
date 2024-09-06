@@ -278,7 +278,8 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		gestureElement.BindClickGesture(
 			static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
 			[
-				(vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
+				(vm => vm, nameof(ViewModel.NestedCommand)),
+				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
 			],
 			mode: BindingMode.OneTime);
 
@@ -338,13 +339,15 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		gestureElement.BindClickGesture(
 			static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
 			[
-				(vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
+				(vm => vm, nameof(ViewModel.NestedCommand)),
+				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
 			],
 			commandBindingMode: BindingMode.OneTime,
 			parameterGetter: static (ViewModel vm) => vm.NestedCommand.Id,
 			parameterHandlers:
 			[
-				(vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.Id))
+				(vm => vm, nameof(ViewModel.NestedCommand)),
+				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.Id))
 			],
 			numberOfClicksRequired: numberOfClicks);
 
@@ -391,7 +394,8 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		gestureElement.BindTapGesture(
 			static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
 			[
-				(vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
+				(vm => vm, nameof(ViewModel.NestedCommand)),
+				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
 			],
 			mode: BindingMode.OneTime);
 
@@ -456,13 +460,15 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		gestureElement.BindTapGesture(
 			static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
 			[
-				(vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
+				(vm => vm, nameof(ViewModel.NestedCommand)),
+				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
 			],
 			commandBindingMode: BindingMode.OneTime,
 			parameterGetter: static (ViewModel vm) => vm.NestedCommand.Id,
 			parameterHandlers:
 			[
-				(vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.Id))
+				(vm => vm, nameof(ViewModel.NestedCommand)),
+				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.Id))
 			],
 			numberOfTapsRequired: numberOfTaps);
 
@@ -505,7 +511,8 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		gestureElement.BindSwipeGesture(
 			static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
 			[
-				(vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
+				(vm => vm, nameof(ViewModel.NestedCommand)),
+				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
 			],
 			mode: BindingMode.OneTime);
 
@@ -574,13 +581,15 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		gestureElement.BindSwipeGesture(
 			static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
 			[
-				(vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
+				(vm => vm, nameof(ViewModel.NestedCommand)),
+				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
 			],
 			commandBindingMode: BindingMode.OneTime,
 			parameterGetter: static (ViewModel vm) => vm.NestedCommand.Id,
 			parameterHandlers:
 			[
-				(vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.Id))
+				(vm => vm, nameof(ViewModel.NestedCommand)),
+				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.Id))
 			],
 			direction: direction,
 			threshold: threshold);

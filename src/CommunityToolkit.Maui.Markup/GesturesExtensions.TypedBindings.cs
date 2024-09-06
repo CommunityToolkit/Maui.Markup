@@ -12,7 +12,7 @@ public static partial class GesturesExtensions
 		Action<TCommandBindingContext, ICommand>? setter = null,
 		TCommandBindingContext? source = default,
 		BindingMode mode = BindingMode.Default,
-		int? numberOfClicksRequired = null) 
+		int? numberOfClicksRequired = null)
 		where TGestureElement : BindableObject, IGestureRecognizers
 		where TCommandBindingContext : class?
 	{
@@ -37,7 +37,7 @@ public static partial class GesturesExtensions
 		Action<TParameterBindingContext, TParameterSource>? parameterSetter = null,
 		BindingMode parameterBindingMode = BindingMode.Default,
 		TParameterBindingContext? parameterSource = default,
-		int? numberOfClicksRequired = null) 
+		int? numberOfClicksRequired = null)
 		where TGestureElement : BindableObject, IGestureRecognizers
 		where TCommandBindingContext : class?
 		where TParameterBindingContext : class?
@@ -84,7 +84,7 @@ public static partial class GesturesExtensions
 		Action<TCommandBindingContext, ICommand>? setter = null,
 		TCommandBindingContext? source = default,
 		BindingMode mode = BindingMode.Default,
-		int? numberOfClicksRequired = null) 
+		int? numberOfClicksRequired = null)
 		where TGestureElement : BindableObject, IGestureRecognizers
 		where TCommandBindingContext : class?
 	{
@@ -111,7 +111,7 @@ public static partial class GesturesExtensions
 		Action<TParameterBindingContext, TParameterSource>? parameterSetter = null,
 		BindingMode parameterBindingMode = BindingMode.Default,
 		TParameterBindingContext? parameterSource = default,
-		int? numberOfClicksRequired = null) 
+		int? numberOfClicksRequired = null)
 		where TGestureElement : BindableObject, IGestureRecognizers
 		where TCommandBindingContext : class?
 		where TParameterBindingContext : class?
@@ -139,7 +139,7 @@ public static partial class GesturesExtensions
 		TCommandBindingContext? source = default,
 		BindingMode mode = BindingMode.Default,
 		SwipeDirection? direction = null,
-		uint? threshold = null) 
+		uint? threshold = null)
 		where TGestureElement : BindableObject, IGestureRecognizers
 		where TCommandBindingContext : class?
 	{
@@ -165,7 +165,7 @@ public static partial class GesturesExtensions
 		BindingMode parameterBindingMode = BindingMode.Default,
 		TParameterBindingContext? parameterSource = default,
 		SwipeDirection? direction = null,
-		uint? threshold = null) 
+		uint? threshold = null)
 		where TGestureElement : BindableObject, IGestureRecognizers
 		where TCommandBindingContext : class?
 		where TParameterBindingContext : class?
@@ -213,7 +213,7 @@ public static partial class GesturesExtensions
 		TCommandBindingContext? source = default,
 		BindingMode mode = BindingMode.Default,
 		SwipeDirection? direction = null,
-		uint? threshold = null) 
+		uint? threshold = null)
 		where TGestureElement : BindableObject, IGestureRecognizers
 		where TCommandBindingContext : class?
 	{
@@ -241,7 +241,7 @@ public static partial class GesturesExtensions
 		BindingMode parameterBindingMode = BindingMode.Default,
 		TParameterBindingContext? parameterSource = default,
 		SwipeDirection? direction = null,
-		uint? threshold = null) 
+		uint? threshold = null)
 		where TGestureElement : BindableObject, IGestureRecognizers
 		where TCommandBindingContext : class?
 		where TParameterBindingContext : class?
@@ -268,7 +268,7 @@ public static partial class GesturesExtensions
 		Action<TCommandBindingContext, ICommand>? setter = null,
 		TCommandBindingContext? source = default,
 		BindingMode mode = BindingMode.Default,
-		int? numberOfTapsRequired = null) 
+		int? numberOfTapsRequired = null)
 		where TGestureElement : BindableObject, IGestureRecognizers
 		where TCommandBindingContext : class?
 	{
@@ -293,7 +293,7 @@ public static partial class GesturesExtensions
 		Action<TParameterBindingContext, TParameterSource>? parameterSetter = null,
 		BindingMode parameterBindingMode = BindingMode.Default,
 		TParameterBindingContext? parameterSource = default,
-		int? numberOfTapsRequired = null) 
+		int? numberOfTapsRequired = null)
 		where TGestureElement : BindableObject, IGestureRecognizers
 		where TCommandBindingContext : class?
 		where TParameterBindingContext : class?
@@ -339,7 +339,7 @@ public static partial class GesturesExtensions
 		Action<TCommandBindingContext, ICommand>? setter = null,
 		TCommandBindingContext? source = default,
 		BindingMode mode = BindingMode.Default,
-		int? numberOfTapsRequired = null) 
+		int? numberOfTapsRequired = null)
 		where TGestureElement : BindableObject, IGestureRecognizers
 		where TCommandBindingContext : class?
 	{
@@ -365,7 +365,7 @@ public static partial class GesturesExtensions
 		Action<TParameterBindingContext, TParameterSource>? parameterSetter = null,
 		BindingMode parameterBindingMode = BindingMode.Default,
 		TParameterBindingContext? parameterSource = default,
-		int? numberOfTapsRequired = null) 
+		int? numberOfTapsRequired = null)
 		where TGestureElement : BindableObject, IGestureRecognizers
 		where TCommandBindingContext : class?
 		where TParameterBindingContext : class?

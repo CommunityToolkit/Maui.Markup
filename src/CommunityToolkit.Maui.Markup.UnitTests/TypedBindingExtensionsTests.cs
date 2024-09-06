@@ -578,13 +578,13 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 			sliderPropertyChangedEventArgsTCS.TrySetResult(e.PropertyName);
 		}
 	}
-	
+
 	[Test]
 	public async Task ConfirmReadOnlyTypedBindingWithFuncConversionUsingValueType()
 	{
 		const double heightAdjustment = 5;
 		const double updatedHeight = 600;
-		
+
 		ArgumentNullException.ThrowIfNull(viewModel);
 
 		bool didViewModelPropertyChangeFire = false;
@@ -625,7 +625,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 			Assert.That(didSliderPropertyChangeFire, Is.True);
 			Assert.That(sliderPropertyName, Is.EqualTo(nameof(Slider.HeightRequest)));
 			Assert.That(sliderPropertyChangedEventCount, Is.EqualTo(1));
-			
+
 			Assert.That(slider.HeightRequest, Is.EqualTo(updatedHeight + heightAdjustment));
 		});
 
@@ -666,7 +666,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		public ICommand Command { get; }
 
 		public event PropertyChangedEventHandler? PropertyChanged;
-		
+
 		public double HeightRequest
 		{
 			get => heightRequest;

@@ -14,7 +14,7 @@ public static partial class TypedBindingExtensions
 		(Func<TCommandBindingContext, object?>, string)[] handlers,
 		Action<TCommandBindingContext, ICommand>? setter = null,
 		BindingMode mode = BindingMode.Default,
-		TCommandBindingContext? source = default) 
+		TCommandBindingContext? source = default)
 		where TBindable : BindableObject
 		where TCommandBindingContext : class?
 	{
@@ -39,7 +39,7 @@ public static partial class TypedBindingExtensions
 		(Func<TParameterBindingContext, object?>, string)[]? parameterHandlers = null,
 		Action<TParameterBindingContext, TParameterSource>? parameterSetter = null,
 		TParameterBindingContext? parameterSource = default,
-		BindingMode parameterBindingMode = BindingMode.Default) 
+		BindingMode parameterBindingMode = BindingMode.Default)
 		where TBindable : BindableObject
 		where TCommandBindingContext : class?
 		where TParameterBindingContext : class?
@@ -148,7 +148,7 @@ public static partial class TypedBindingExtensions
 		TDest? fallbackValue = default)
 		where TBindable : BindableObject
 		where TBindingContext : class?
-		
+
 	{
 		var converter = (convert, convertBack) switch
 		{
@@ -186,7 +186,7 @@ public static partial class TypedBindingExtensions
 		TDest? fallbackValue = default)
 		where TBindable : BindableObject
 		where TBindingContext : class?
-		
+
 
 	{
 		bindable.SetBinding(targetProperty, new TypedBinding<TBindingContext, TSource>(bindingContext => (getter(bindingContext), true), setter, handlers.Select(x => x.ToTuple()).ToArray())
