@@ -256,6 +256,6 @@ public static partial class TypedBindingExtensions
 	{
 		MemberExpression m => m.Member.Name,
 		UnaryExpression { Operand: MemberExpression m } => m.Member.Name,
-		_ => throw new InvalidOperationException("Could not retrieve member name")
+		_ => throw new InvalidOperationException("Invalid getter. The `getter` parameter must point directly to a property in the ViewModel and cannot add additional logic")
 	};
 }

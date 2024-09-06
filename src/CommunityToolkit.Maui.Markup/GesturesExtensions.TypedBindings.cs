@@ -49,13 +49,10 @@ public static partial class GesturesExtensions
 			_ => ConvertExpressionToFunc(parameterGetter)
 		};
 
-		var parameterGetterHandlers = parameterGetter switch
+		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = parameterGetter switch
 		{
 			null => null,
-			_ => new (Func<TParameterBindingContext, object?>, string)[]
-			{
-				(b => b, GetMemberName(parameterGetter))
-			}
+			_ => [(b => b, GetMemberName(parameterGetter))]
 		};
 
 		return BindClickGesture(
@@ -177,13 +174,10 @@ public static partial class GesturesExtensions
 			_ => ConvertExpressionToFunc(parameterGetter)
 		};
 
-		var parameterGetterHandlers = parameterGetter switch
+		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = parameterGetter switch
 		{
 			null => null,
-			_ => new (Func<TParameterBindingContext, object?>, string)[]
-			{
-				(b => b, GetMemberName(parameterGetter))
-			}
+			_ => [(b => b, GetMemberName(parameterGetter))]
 		};
 
 		return BindSwipeGesture(
@@ -305,13 +299,10 @@ public static partial class GesturesExtensions
 			_ => ConvertExpressionToFunc(parameterGetter)
 		};
 
-		var parameterGetterHandlers = parameterGetter switch
+		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = parameterGetter switch
 		{
 			null => null,
-			_ => new (Func<TParameterBindingContext, object?>, string)[]
-			{
-				(b => b, GetMemberName(parameterGetter))
-			}
+			_ => [(b => b, GetMemberName(parameterGetter))]
 		};
 
 		return BindTapGesture(
@@ -391,7 +382,7 @@ public static partial class GesturesExtensions
 	{
 		MemberExpression m => m.Member.Name,
 		UnaryExpression { Operand: MemberExpression m } => m.Member.Name,
-		_ => throw new InvalidOperationException("Could not retrieve member name")
+		_ => throw new InvalidOperationException("Invalid getter. The `getter` parameter must point directly to a property in the ViewModel and cannot add additional logic")
 	};
 
 	static TGestureRecognizer BindGesture<TGestureRecognizer, TGestureElement, TCommandBindingContext, TParameterBindingContext, TParameterSource>(
