@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using Microsoft.Maui.Controls.Internals;
+
 namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>
@@ -148,7 +149,6 @@ public static partial class TypedBindingExtensions
 		TDest? fallbackValue = default)
 		where TBindable : BindableObject
 		where TBindingContext : class?
-
 	{
 		var converter = (convert, convertBack) switch
 		{
@@ -186,8 +186,6 @@ public static partial class TypedBindingExtensions
 		TDest? fallbackValue = default)
 		where TBindable : BindableObject
 		where TBindingContext : class?
-
-
 	{
 		bindable.SetBinding(targetProperty, new TypedBinding<TBindingContext, TSource>(bindingContext => (getter(bindingContext), true), setter, handlers.Select(x => x.ToTuple()).ToArray())
 		{
