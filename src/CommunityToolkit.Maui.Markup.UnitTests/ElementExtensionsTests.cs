@@ -31,7 +31,7 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 		var effect1 = new NullEffect();
 		Bindable.Effects(effect1);
 
-		Assert.That(Bindable.Effects.Count, Is.EqualTo(1));
+		Assert.That(Bindable.Effects, Has.Count.EqualTo(1));
 		Assert.That(Bindable.Effects.Contains(effect1));
 	}
 
@@ -41,12 +41,12 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 		Bindable.Effects.Clear();
 		Assume.That(Bindable.Effects.Count, Is.EqualTo(0));
 
-		NullEffect effect1 = new NullEffect(), effect2 = new NullEffect();
+		NullEffect effect1 = new(), effect2 = new();
 		Bindable.Effects(effect1, effect2);
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(Bindable.Effects.Count, Is.EqualTo(2));
+			Assert.That(Bindable.Effects, Has.Count.EqualTo(2));
 			Assert.That(Bindable.Effects.Contains(effect1));
 			Assert.That(Bindable.Effects.Contains(effect2));
 		});

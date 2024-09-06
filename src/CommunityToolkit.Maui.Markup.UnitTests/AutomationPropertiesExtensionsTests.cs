@@ -12,7 +12,7 @@ class AutomationPropertiesExtensionsTests : BaseMarkupTestFixture<Label>
 		const bool isExcluded = true;
 		Bindable.AutomationExcludedWithChildren(isExcluded);
 
-		Assert.That(AutomationProperties.GetExcludedWithChildren(Bindable) == isExcluded);
+		Assert.That(AutomationProperties.GetExcludedWithChildren(Bindable), Is.EqualTo(isExcluded));
 	}
 
 	[Test]
@@ -21,6 +21,6 @@ class AutomationPropertiesExtensionsTests : BaseMarkupTestFixture<Label>
 		const bool isInTree = false;
 		Bindable.AutomationIsInAccessibleTree(isInTree);
 
-		Assert.That(AutomationProperties.GetIsInAccessibleTree(Bindable) == isInTree);
+		Assert.That(AutomationProperties.GetIsInAccessibleTree(Bindable), Is.EqualTo(isInTree));
 	}
 }

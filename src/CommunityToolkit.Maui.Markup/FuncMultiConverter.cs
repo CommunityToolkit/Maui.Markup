@@ -127,7 +127,7 @@ public class FuncMultiConverter<TSource1, TSource2, TDest> : FuncMultiConverter<
 {
 	static T? To<T>(object? value) => value != null ? (T)value : default;
 
-	static object?[] ToObjects(ValueTuple<TSource1, TSource2> values) => new object?[] { values.Item1, values.Item2 };
+	static object?[] ToObjects(ValueTuple<TSource1, TSource2> values) => [values.Item1, values.Item2];
 
 	/// <summary>
 	/// Initializes a new instance of <see cref="FuncMultiConverter{TSource1, TSource2, TDest}" />.
@@ -157,7 +157,7 @@ public class FuncMultiConverter<TSource1, TSource2, TSource3, TDest> : FuncMulti
 {
 	static T? To<T>(object? value) => value != null ? (T)value : default;
 
-	static object?[] ToObjects(ValueTuple<TSource1, TSource2, TSource3> values) => new object?[] { values.Item1, values.Item2, values.Item3 };
+	static object?[] ToObjects(ValueTuple<TSource1, TSource2, TSource3> values) => [values.Item1, values.Item2, values.Item3];
 
 	/// <summary>
 	/// Initializes a new instance of <see cref="FuncMultiConverter{TSource1, TSource2, TSource3, TDest}" />.
@@ -189,7 +189,7 @@ public class FuncMultiConverter<TSource1, TSource2, TSource3, TSource4, TDest> :
 {
 	static T? To<T>(object? value) => value != null ? (T)value : default;
 
-	static object?[] ToObjects(ValueTuple<TSource1, TSource2, TSource3, TSource4> values) => new object?[] { values.Item1, values.Item2, values.Item3, values.Item4 };
+	static object?[] ToObjects(ValueTuple<TSource1, TSource2, TSource3, TSource4> values) => [values.Item1, values.Item2, values.Item3, values.Item4];
 
 	/// <summary>
 	/// Initializes a new instance of <see cref="FuncMultiConverter{TSource1, TSource2, TSource3, TSource4, TDest}" />.
@@ -220,7 +220,7 @@ public class FuncMultiConverterWithParam<TSource1, TSource2, TDest, TParam> : Fu
 {
 	static T? To<T>(object? value) => value != null ? (T)value : default;
 
-	static object?[] ToObjects(ValueTuple<TSource1, TSource2> values) => new object?[] { values.Item1, values.Item2 };
+	static object?[] ToObjects(ValueTuple<TSource1, TSource2> values) => [values.Item1, values.Item2];
 
 	/// <summary>
 	/// Initializes a new instance of <see cref="FuncMultiConverter{TSource1, TSource2, TDest, TParam}" />.
@@ -251,7 +251,7 @@ public class FuncMultiConverterWithParam<TSource1, TSource2, TSource3, TDest, TP
 {
 	static T? To<T>(object value) => value != null ? (T)value : default;
 
-	static object?[] ToObjects(ValueTuple<TSource1, TSource2, TSource3> values) => new object?[] { values.Item1, values.Item2, values.Item3 };
+	static object?[] ToObjects(ValueTuple<TSource1, TSource2, TSource3> values) => [values.Item1, values.Item2, values.Item3];
 
 	/// <summary>
 	/// Initializes a new instance of <see cref="FuncMultiConverter{TSource1, TSource2, TSource3, TDest, TParam}" />.
@@ -284,7 +284,7 @@ public class FuncMultiConverterWithParam<TSource1, TSource2, TSource3, TSource4,
 {
 	static T? To<T>(object? value) => value != null ? (T)value : default;
 
-	static object?[] ToObjects(ValueTuple<TSource1, TSource2, TSource3, TSource4> values) => new object?[] { values.Item1, values.Item2, values.Item3, values.Item4 };
+	static object?[] ToObjects(ValueTuple<TSource1, TSource2, TSource3, TSource4> values) => [values.Item1, values.Item2, values.Item3, values.Item4];
 
 	/// <summary>
 	/// Initializes a new instance of <see cref="FuncMultiConverterWithParam{TSource1, TSource2, TSource3, TSource4, TDest, TParam}" />.
