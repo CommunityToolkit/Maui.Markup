@@ -245,13 +245,22 @@ sealed class TypedBinding<TSource, TProperty> : TypedBindingBase
 
 		void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
 		{
+			ArgumentNullException.ThrowIfNull(sender);
+			
 			if (!string.IsNullOrEmpty(e.PropertyName)
 				&& string.CompareOrdinal(e.PropertyName, PropertyName) is not 0)
 			{
 				return;
 			}
 
-			(sender as BindableObject)?.Dispatcher.DispatchIfRequired(() => binding.Apply(false));
+			if (IPlatformApplication.Current?.Services.GetRequiredApplicationDispatcher() is IDispatcher dispatcher)
+			{
+				dispatcher.DispatchIfRequired(() => binding.Apply(false));
+			}
+			else
+			{
+				binding.Apply(false);
+			}
 		}
 	}
 
