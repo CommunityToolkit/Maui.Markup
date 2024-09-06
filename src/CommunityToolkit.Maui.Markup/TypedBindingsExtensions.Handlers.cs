@@ -156,7 +156,7 @@ public static partial class TypedBindingExtensions
 			_ => new FuncConverter<TSource, TDest, TParam>(convert, convertBack)
 		};
 
-		bindable.SetBinding(targetProperty, new TypedBinding<TBindingContext, TSource>(bindingContext => (getter(bindingContext), true), setter, handlers.Select(x => x.ToTuple()).ToArray())
+		bindable.SetBinding(targetProperty, new TypedBinding<TBindingContext, TSource>(getter, setter, handlers)
 		{
 			Mode = mode,
 			Converter = converter,
@@ -187,7 +187,7 @@ public static partial class TypedBindingExtensions
 		where TBindable : BindableObject
 		where TBindingContext : class?
 	{
-		bindable.SetBinding(targetProperty, new TypedBinding<TBindingContext, TSource>(bindingContext => (getter(bindingContext), true), setter, handlers.Select(x => x.ToTuple()).ToArray())
+		bindable.SetBinding(targetProperty, new TypedBinding<TBindingContext, TSource>(getter, setter, handlers)
 		{
 			Mode = mode,
 			Converter = converter,
