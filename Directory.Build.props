@@ -13,7 +13,10 @@
     <GenerateErrorForMissingTargetingPacks>false</GenerateErrorForMissingTargetingPacks>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
-    <IsTrimmable>false</IsTrimmable>
+    
+    <!-- https://learn.microsoft.com/dotnet/core/deploying/native-aot/?tabs=net8plus%2Cwindows -->
+    <StripSymbols>false</StripSymbols>
+    <TrimmerSingleWarn>false</TrimmerSingleWarn>
 
     <!-- WarningsAsErrors
      CS0419: Ambiguous reference in cref attribute 
