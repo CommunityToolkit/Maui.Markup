@@ -40,7 +40,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		{
 			new Button()
 				.BindCommand<Button, ViewModel, object?, Color>(
-					(ViewModel vm) => vm.Command,
+					vm => vm.Command,
 					[
 						(vm => vm, nameof(ViewModel.Command))
 					],
@@ -254,7 +254,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		var slider = new Slider
 		{
 			BindingContext = viewModel
-		}.Bind(Slider.ValueProperty, static (ViewModel viewModel) => viewModel.Percentage, static (ViewModel viewModel, double temperature) => viewModel.Percentage = temperature);
+		}.Bind(Slider.ValueProperty, static (ViewModel viewModel) => viewModel.Percentage, static (viewModel, temperature) => viewModel.Percentage = temperature);
 
 		slider.PropertyChanged += HandleSliderPropertyChanged;
 		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
@@ -324,7 +324,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		{
 			entry.BindingContext = viewmodel;
 			entry.Bind(Entry.TextColorProperty,
-				static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
+				static vm => vm.Model?.Model?.TextColor,
 				[
 					(vm => vm, nameof(NestedViewModel.Model)),
 					(vm => vm.Model, nameof(NestedViewModel.Model)),
@@ -342,7 +342,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		else
 		{
 			entry.Bind(Entry.TextColorProperty,
-				static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
+				static vm => vm.Model?.Model?.TextColor,
 				[
 					(vm => vm, nameof(NestedViewModel.Model)),
 					(vm => vm.Model, nameof(NestedViewModel.Model)),
@@ -474,7 +474,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		{
 			BindingContext = viewModel
 		}.Bind<Label, ViewModel, Color, string>(Label.TextProperty,
-			static (ViewModel viewModel) => viewModel.TextColor,
+			static viewModel => viewModel.TextColor,
 			converter: colorToHexRgbStringConverter);
 
 		label.PropertyChanged += HandleLabelPropertyChanged;
@@ -534,9 +534,9 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		var slider = new Slider
 		{
 			BindingContext = viewModel
-		}.Bind<Slider, ViewModel, double, Color>(Slider.ThumbColorProperty,
+		}.Bind(Slider.ThumbColorProperty,
 			static (ViewModel viewModel) => viewModel.Percentage,
-			convert: (double percentage) => percentage > 0.5 ? Colors.Green : Colors.Red);
+			convert: percentage => percentage > 0.5 ? Colors.Green : Colors.Red);
 
 		slider.PropertyChanged += HandleSliderPropertyChanged;
 		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
@@ -659,7 +659,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 
 		public static Color DefaultColor { get; } = Colors.Transparent;
 
-		public bool IsRed => TextColor == Colors.Red;
+		public bool IsRed => Equals(TextColor, Colors.Red);
 
 		public Guid Id { get; } = Guid.NewGuid();
 

@@ -139,7 +139,7 @@ sealed class TypedBinding<TSource, TProperty> : TypedBindingBase
 
 	// ApplyCore is as slim as it should be:
 	// Setting  100000 values						: 17ms.
-	// ApplyCore  100000 (w/o INPC, w/o unnapply)	: 20ms.
+	// ApplyCore  100000 (w/o INPC, w/o unapply)	: 20ms.
 	void ApplyCore(object sourceObject, BindableObject target, BindableProperty property, bool fromTarget, SetterSpecificity specificity)
 	{
 		var isTSource = sourceObject is TSource;
@@ -199,9 +199,10 @@ sealed class TypedBinding<TSource, TProperty> : TypedBindingBase
 
 		public PropertyChangedProxy(Func<TSource, object?> partGetter, string propertyName, BindingBase binding)
 		{
+			this.binding = binding;
+			
 			PartGetter = partGetter;
 			PropertyName = propertyName;
-			this.binding = binding;
 			Listener = new BindingExpression.WeakPropertyChangedProxy();
 			//avoid GC collection, keep a ref to the OnPropertyChanged handler
 			handler = OnPropertyChanged;
@@ -217,12 +218,7 @@ sealed class TypedBinding<TSource, TProperty> : TypedBindingBase
 		{
 			get
 			{
-				if (Listener?.TryGetSource(out var target) is true)
-				{
-					return target;
-				}
-
-				return null;
+				return Listener?.TryGetSource(out var target) is true ? target : null;
 			}
 			set
 			{

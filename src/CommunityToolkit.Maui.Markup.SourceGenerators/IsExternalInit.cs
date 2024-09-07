@@ -35,16 +35,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 #endregion
-
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 #if !ISEXTERNALINIT_DISABLE
 #nullable enable
 #pragma warning disable
 
 namespace System.Runtime.CompilerServices
 {
-
+	using System.Diagnostics;
+	using System.Diagnostics.CodeAnalysis;
 	/// <summary>
 	///     Reserved to be used by the compiler for tracking metadata.
 	///     This class should not be used by developers in source code.

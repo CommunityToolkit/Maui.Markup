@@ -18,15 +18,13 @@ class UnitExpressionSearch : ExpressionVisitor, IExpressionSearch
 
 	protected override Expression VisitMember(MemberExpression node)
 	{
-		if (node.Expression is ConstantExpression expression
-			&& node.Member is FieldInfo info)
+		if (node is { Expression: ConstantExpression expression, Member: FieldInfo info })
 		{
 			var container = expression.Value;
 			var value = info.GetValue(container);
 
 			if (targeType?.IsInstanceOfType(value) is true
-				&& results is not null
-				&& value is not null)
+				&& results is not null)
 			{
 				results.Add(value);
 			}
