@@ -1,4 +1,6 @@
-﻿namespace CommunityToolkit.Maui.Markup.Sample;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace CommunityToolkit.Maui.Markup.Sample;
 
 class AppShell : Shell
 {
@@ -29,7 +31,7 @@ class AppShell : Shell
 		return route;
 	}
 
-	static KeyValuePair<Type, string> CreateRoutePageMapping<TPage, TViewModel>() where TPage : BaseContentPage<TViewModel>
+	static KeyValuePair<Type, string> CreateRoutePageMapping<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] TPage, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] TViewModel>() where TPage : BaseContentPage<TViewModel>
 																					where TViewModel : BaseViewModel
 	{
 		var route = CreateRoute();
