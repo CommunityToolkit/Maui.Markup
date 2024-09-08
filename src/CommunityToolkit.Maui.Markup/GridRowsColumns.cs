@@ -127,9 +127,9 @@ public static class GridRowsColumns
 	/// <returns>Count of enum values</returns>
 	/// <exception cref="ArgumentNullException"></exception>
 	/// <exception cref="InvalidOperationException"></exception>
-	public static int All<TEnum>() where TEnum : Enum
+	public static int All<TEnum>() where TEnum : struct, Enum
 	{
-		var values = Enum.GetValues(typeof(TEnum)) ?? throw new ArgumentNullException(nameof(TEnum));
+		var values = Enum.GetValues<TEnum>();
 		int span = 1 + (int)(values.GetValue(values.Length - 1) ?? throw new InvalidOperationException("Value Not Found"));
 
 		return span;
@@ -141,9 +141,9 @@ public static class GridRowsColumns
 	/// <typeparam name="TEnum"></typeparam>
 	/// <returns>Last value in Enum</returns>
 	/// <exception cref="InvalidOperationException"></exception>
-	public static int Last<TEnum>() where TEnum : Enum
+	public static int Last<TEnum>() where TEnum : struct, Enum
 	{
-		var values = Enum.GetValues(typeof(TEnum));
+		var values = Enum.GetValues<TEnum>();
 		int last = (int)(values.GetValue(values.Length - 1) ?? throw new InvalidOperationException("Value Not Found"));
 
 		return last;
