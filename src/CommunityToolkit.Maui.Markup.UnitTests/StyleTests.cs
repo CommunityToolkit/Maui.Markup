@@ -50,7 +50,7 @@ class StyleTests : BaseMarkupTestFixture
 		var style = new Style<Label>(Label.TextColorProperty, Colors.Red);
 		Style formsStyle = style;
 
-		Assert.That(formsStyle.Setters.Count, Is.EqualTo(1));
+		Assert.That(formsStyle.Setters, Has.Count.EqualTo(1));
 
 		var setter = formsStyle.Setters[0];
 
@@ -69,7 +69,7 @@ class StyleTests : BaseMarkupTestFixture
 			(Label.TranslationXProperty, 8.0));
 		Style formsStyle = style;
 
-		Assert.That(formsStyle.Setters.Count, Is.EqualTo(2));
+		Assert.That(formsStyle.Setters, Has.Count.EqualTo(2));
 
 		var setter1 = formsStyle.Setters[0];
 
@@ -124,7 +124,7 @@ class StyleTests : BaseMarkupTestFixture
 
 		style.Add(Label.TextColorProperty, Colors.Red);
 
-		Assert.That(formsStyle.Setters.Count, Is.EqualTo(1));
+		Assert.That(formsStyle.Setters, Has.Count.EqualTo(1));
 
 		var setter = formsStyle.Setters[0];
 
@@ -146,7 +146,7 @@ class StyleTests : BaseMarkupTestFixture
 			(Label.TextColorProperty, Colors.Red),
 			(Label.TranslationXProperty, 8.0));
 
-		Assert.That(formsStyle.Setters.Count, Is.EqualTo(2));
+		Assert.That(formsStyle.Setters, Has.Count.EqualTo(2));
 
 		var setter1 = formsStyle.Setters[0];
 
@@ -177,7 +177,7 @@ class StyleTests : BaseMarkupTestFixture
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(formsStyle.Behaviors.Count, Is.EqualTo(1));
+			Assert.That(formsStyle.Behaviors, Has.Count.EqualTo(1));
 			Assert.That(ReferenceEquals(formsStyle.Behaviors[0], behavior));
 		});
 	}
@@ -195,7 +195,7 @@ class StyleTests : BaseMarkupTestFixture
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(formsStyle.Behaviors.Count, Is.EqualTo(2));
+			Assert.That(formsStyle.Behaviors, Has.Count.EqualTo(2));
 			Assert.That(ReferenceEquals(formsStyle.Behaviors[0], behavior1));
 			Assert.That(ReferenceEquals(formsStyle.Behaviors[1], behavior2));
 		});
@@ -213,7 +213,7 @@ class StyleTests : BaseMarkupTestFixture
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(formsStyle.Triggers.Count, Is.EqualTo(1));
+			Assert.That(formsStyle.Triggers, Has.Count.EqualTo(1));
 			Assert.That(ReferenceEquals(formsStyle.Triggers[0], trigger));
 		});
 	}
@@ -231,7 +231,7 @@ class StyleTests : BaseMarkupTestFixture
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(formsStyle.Triggers.Count, Is.EqualTo(2));
+			Assert.That(formsStyle.Triggers, Has.Count.EqualTo(2));
 			Assert.That(ReferenceEquals(formsStyle.Triggers[0], trigger1));
 			Assert.That(ReferenceEquals(formsStyle.Triggers[1], trigger2));
 		});

@@ -11,7 +11,7 @@ class UnitExpressionSearch : ExpressionVisitor, IExpressionSearch
 
 	public List<T?> FindObjects<T>(Expression expression) where T : class
 	{
-		results = new List<object>();
+		results = [];
 		targeType = typeof(T);
 		Visit(expression);
 		return results.Select(o => o as T).ToList();

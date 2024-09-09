@@ -54,7 +54,7 @@ public static partial class GesturesExtensions
 		return BindClickGesture(
 				gestureElement,
 				getterFunc,
-				new (Func<TCommandBindingContext, object?>, string)[] { ((TCommandBindingContext b) => b, GetMemberName(getter)) },
+				[((TCommandBindingContext b) => b, GetMemberName(getter))],
 				setter,
 				source,
 				commandBindingMode,
@@ -167,7 +167,7 @@ public static partial class GesturesExtensions
 		return BindSwipeGesture(
 				gestureElement,
 				getterFunc,
-				new (Func<TCommandBindingContext, object?>, string)[] { ((TCommandBindingContext b) => b, GetMemberName(getter)) },
+				[((TCommandBindingContext b) => b, GetMemberName(getter))],
 				setter,
 				source,
 				commandBindingMode,
@@ -280,7 +280,7 @@ public static partial class GesturesExtensions
 		return BindTapGesture(
 				gestureElement,
 				getterFunc,
-				new (Func<TCommandBindingContext, object?>, string)[] { ((TCommandBindingContext b) => b, GetMemberName(getter)) },
+				[((TCommandBindingContext b) => b, GetMemberName(getter))],
 				setter,
 				source,
 				commandBindingMode,

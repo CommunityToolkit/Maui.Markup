@@ -30,21 +30,21 @@ class FuncConverterTests : BaseMarkupTestFixture
 			(text, addOne, culture) =>
 			{
 				convertBackCulture = culture;
-				return new object[]
-				{
-						text?.Length > 0 ? text[0] : '\0',
-						(text?.Length ?? 0) - (addOne ? 1 : 0)
-				};
+				return
+				[
+					text?.Length > 0 ? text[0] : '\0',
+					(text?.Length ?? 0) - (addOne ? 1 : 0)
+				];
 			})
-		.AssertConvert(new object[] { 'a', 2 }, true, "aaa", twoWay: true, culture: expectedCulture)
-		.AssertConvert(new object[] { 'b', 4 }, false, "bbbb", twoWay: true, culture: expectedCulture);
+		.AssertConvert(['a', 2], true, "aaa", twoWay: true, culture: expectedCulture)
+		.AssertConvert(['b', 4], false, "bbbb", twoWay: true, culture: expectedCulture);
 
 		Assert.Multiple(() =>
 		{
 			Assert.That(convertCulture, Is.EqualTo(expectedCulture));
 			Assert.That(convertBackCulture, Is.EqualTo(expectedCulture));
 
-			Assert.That(converter.Convert(new object[] { 'a', 2 }, null, null, CultureInfo.InvariantCulture), Is.EqualTo("aa"));
+			Assert.That(converter.Convert(['a', 2], null, null, CultureInfo.InvariantCulture), Is.EqualTo("aa"));
 		});
 
 		var backValues = converter.ConvertBack(null, null, null, CultureInfo.InvariantCulture);
@@ -74,15 +74,16 @@ class FuncConverterTests : BaseMarkupTestFixture
 			},
 			(text, addOne) =>
 			{
-				return new object[] {
-						text?.Length > 0 ? text[0] : '\0',
-						(text?.Length ?? 0) - (addOne ? 1 : 0)
-				};
+				return
+				[
+					text?.Length > 0 ? text[0] : '\0',
+					(text?.Length ?? 0) - (addOne ? 1 : 0)
+				];
 			})
-		.AssertConvert(new object[] { 'a', 2 }, true, "aaa", twoWay: true)
-		.AssertConvert(new object[] { 'b', 4 }, false, "bbbb", twoWay: true);
+		.AssertConvert(['a', 2], true, "aaa", twoWay: true)
+		.AssertConvert(['b', 4], false, "bbbb", twoWay: true);
 
-		Assert.That(converter.Convert(new object[] { 'a', 2 }, null, null, CultureInfo.InvariantCulture), Is.EqualTo("aa"));
+		Assert.That(converter.Convert(['a', 2], null, null, CultureInfo.InvariantCulture), Is.EqualTo("aa"));
 		var backValues = converter.ConvertBack(null, null, null, CultureInfo.InvariantCulture);
 
 		Assert.Multiple(() =>
@@ -105,15 +106,16 @@ class FuncConverterTests : BaseMarkupTestFixture
 			},
 			(text) =>
 			{
-				return new object[] {
-						text?.Length > 0 ? text[0] : '\0',
-						text?.Length ?? 0
-				};
+				return
+				[
+					text?.Length > 0 ? text[0] : '\0',
+					text?.Length ?? 0
+				];
 			})
-		.AssertConvert(new object[] { 'a', 2 }, true, "aa", twoWay: true)
-		.AssertConvert(new object[] { 'b', 4 }, false, "bbbb", twoWay: true);
+		.AssertConvert(['a', 2], true, "aa", twoWay: true)
+		.AssertConvert(['b', 4], false, "bbbb", twoWay: true);
 
-		Assert.That(converter.Convert(new object[] { 'a', 2 }, null, null, CultureInfo.InvariantCulture), Is.EqualTo("aa"));
+		Assert.That(converter.Convert(['a', 2], null, null, CultureInfo.InvariantCulture), Is.EqualTo("aa"));
 
 		var backValues = converter.ConvertBack(null, null, null, CultureInfo.InvariantCulture);
 
