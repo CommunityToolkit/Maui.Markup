@@ -34,6 +34,11 @@ class FuncConverterTests : BaseMarkupTestFixture
 					text?.Length > 0 ? text[0] : '\0',
 					(text?.Length ?? 0) - (addOne ? 1 : 0)
 				];
+				return
+				[
+					text?.Length > 0 ? text[0] : '\0',
+					(text?.Length ?? 0) - (addOne ? 1 : 0)
+				];
 			})
 		.AssertConvert(['a', 2], true, "aaa", twoWay: true, culture: expectedCulture)
 		.AssertConvert(['b', 4], false, "bbbb", twoWay: true, culture: expectedCulture);
@@ -73,6 +78,11 @@ class FuncConverterTests : BaseMarkupTestFixture
 			},
 			(text, addOne) =>
 			{
+				return
+				[
+					text?.Length > 0 ? text[0] : '\0',
+					(text?.Length ?? 0) - (addOne ? 1 : 0)
+				];
 				return
 				[
 					text?.Length > 0 ? text[0] : '\0',

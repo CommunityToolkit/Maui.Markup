@@ -56,6 +56,18 @@ public static partial class GesturesExtensions
 		};
 
 		return BindClickGesture(
+				gestureElement,
+				getterFunc,
+				[((TCommandBindingContext b) => b, GetMemberName(getter))],
+				setter,
+				source,
+				commandBindingMode,
+				parameterGetterFunc,
+				parameterGetterHandlers,
+				parameterSetter,
+				parameterBindingMode,
+				parameterSource,
+				numberOfClicksRequired);
 			gestureElement,
 			getterFunc,
 			[

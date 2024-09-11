@@ -330,6 +330,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 					(vm => vm.Model, nameof(NestedViewModel.Model)),
 					(vm => vm.Model?.Model, nameof(NestedViewModel.Model.TextColor))
 				],
+				],
 				static (NestedViewModel vm, Color? color) =>
 				{
 					if (vm.Model?.Model?.TextColor is not null && color is not null)
@@ -347,6 +348,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 					(vm => vm, nameof(NestedViewModel.Model)),
 					(vm => vm.Model, nameof(NestedViewModel.Model)),
 					(vm => vm.Model?.Model, nameof(NestedViewModel.Model.TextColor))
+				],
 				],
 				static (NestedViewModel vm, Color? color) =>
 				{
@@ -402,9 +404,11 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 			label.Bind<Label, NestedViewModel, Color?, string>(Label.TextProperty,
 				static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
 				[
+				[
 					(vm => vm, nameof(NestedViewModel.Model)),
 					(vm => vm.Model, nameof(NestedViewModel.Model)),
 					(vm => vm.Model?.Model, nameof(NestedViewModel.Model.TextColor))
+				],
 				],
 				static (NestedViewModel vm, Color? color) =>
 				{
@@ -421,9 +425,11 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 			label.Bind<Label, NestedViewModel, Color?, string>(Label.TextProperty,
 				static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
 				[
+				[
 					(vm => vm, nameof(NestedViewModel.Model)),
 					(vm => vm.Model, nameof(NestedViewModel.Model)),
 					(vm => vm.Model?.Model, nameof(NestedViewModel.Model.TextColor))
+				],
 				],
 				static (NestedViewModel vm, Color? color) =>
 				{

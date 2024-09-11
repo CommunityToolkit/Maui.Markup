@@ -214,9 +214,7 @@ static class BindingHelpers
 	{
 		getContextMethodInfo ??= typeof(BindableObject).GetMethod("GetContext", BindingFlags.NonPublic | BindingFlags.Instance);
 
-		var context = getContextMethodInfo?.Invoke(bindable, [
-			property
-		]);
+		var context = getContextMethodInfo?.Invoke(bindable, [property]);
 		if (context is null)
 		{
 			return null;
@@ -250,7 +248,7 @@ static class BindingHelpers
 
 		if (twoWay || backOnly)
 		{
-			Assert.That(convertedBackValues.Length, Is.EqualTo(values.Length));
+			Assert.That(convertedBackValues, Has.Length.EqualTo(values.Length));
 			for (var i = 0; i < values.Length; i++)
 			{
 				Assert.That(convertedBackValues[i], Is.EqualTo(values[i]));

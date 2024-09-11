@@ -26,7 +26,7 @@ sealed partial class NewsViewModel : BaseViewModel, IDisposable
 		remove => pullToRefreshEventManager.RemoveEventHandler(value);
 	}
 
-	public ObservableCollection<StoryModel> TopStoryCollection { get; } = new();
+	public ObservableCollection<StoryModel> TopStoryCollection { get; } = [];
 
 	public void Dispose()
 	{

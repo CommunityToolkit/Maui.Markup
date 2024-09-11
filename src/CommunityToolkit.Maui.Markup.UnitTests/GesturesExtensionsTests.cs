@@ -14,7 +14,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 
 		gestureElement.BindClickGesture(nameof(ViewModel.SetGuidCommand));
 
-		Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+		Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 		Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<ClickGestureRecognizer>());
 		BindingHelpers.AssertBindingExists((ClickGestureRecognizer)gestureElement.GestureRecognizers[0], ClickGestureRecognizer.CommandProperty, nameof(ViewModel.SetGuidCommand));
 	}
@@ -33,7 +33,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<ClickGestureRecognizer>());
 			Assert.That(((ClickGestureRecognizer)gestureElement.GestureRecognizers[0]).NumberOfClicksRequired, Is.EqualTo(numberOfClicks));
 		});
@@ -49,7 +49,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 
 		gestureElement.BindTapGesture(nameof(ViewModel.SetGuidCommand));
 
-		Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+		Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 		Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<TapGestureRecognizer>());
 		BindingHelpers.AssertBindingExists((TapGestureRecognizer)gestureElement.GestureRecognizers[0], TapGestureRecognizer.CommandProperty, nameof(ViewModel.SetGuidCommand));
 	}
@@ -67,7 +67,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<TapGestureRecognizer>());
 			Assert.That(((TapGestureRecognizer)gestureElement.GestureRecognizers[0]).NumberOfTapsRequired, Is.EqualTo(numberOfTaps));
 		});
@@ -90,7 +90,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 		Assert.Multiple(() =>
 		{
 			Assert.That(clicks, Is.GreaterThan(0));
-			Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<ClickGestureRecognizer>());
 			Assert.That(((ClickGestureRecognizer)gestureElement.GestureRecognizers[0]).NumberOfClicksRequired, Is.EqualTo(numberOfClicks));
 		});
@@ -110,7 +110,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 		Assert.Multiple(() =>
 		{
 			Assert.That(taps, Is.GreaterThan(0));
-			Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<TapGestureRecognizer>());
 			Assert.That(((TapGestureRecognizer)gestureElement.GestureRecognizers[0]).NumberOfTapsRequired, Is.EqualTo(numberOfTaps));
 		});
@@ -123,7 +123,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 
 		gestureElement.BindSwipeGesture(nameof(ViewModel.SetGuidCommand));
 
-		Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+		Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 		Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<SwipeGestureRecognizer>());
 		BindingHelpers.AssertBindingExists((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0], SwipeGestureRecognizer.CommandProperty, nameof(ViewModel.SetGuidCommand));
 	}
@@ -142,7 +142,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<SwipeGestureRecognizer>());
 			Assert.That(((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0]).Direction, Is.EqualTo(direction));
 			Assert.That(((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0]).Threshold, Is.EqualTo(threshold));
@@ -166,7 +166,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 		Assert.Multiple(() =>
 		{
 			Assert.That(panCount, Is.EqualTo(1));
-			Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<PanGestureRecognizer>());
 			Assert.That(((PanGestureRecognizer)gestureElement.GestureRecognizers[0]).TouchPoints, Is.EqualTo(touchPoints));
 		});
@@ -187,7 +187,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 		Assert.Multiple(() =>
 		{
 			Assert.That(pinchCount, Is.EqualTo(1));
-			Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(pinchCount));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(pinchCount));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<PinchGestureRecognizer>());
 		});
 
@@ -209,7 +209,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 		Assert.Multiple(() =>
 		{
 			Assert.That(swipeCount, Is.EqualTo(1));
-			Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<SwipeGestureRecognizer>());
 			Assert.That(((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0]).Direction, Is.EqualTo(direction));
 			Assert.That(((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0]).Threshold, Is.EqualTo(threshold));
@@ -228,7 +228,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(2));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(2));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<PanGestureRecognizer>());
 			Assert.That(gestureElement.GestureRecognizers[1], Is.InstanceOf<SwipeGestureRecognizer>());
 		});
@@ -257,7 +257,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<ClickGestureRecognizer>());
 		});
 
@@ -281,11 +281,15 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 				(vm => vm, nameof(ViewModel.NestedCommand)),
 				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
 			],
+			[
+				(vm => vm, nameof(ViewModel.NestedCommand)),
+				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
+			],
 			mode: BindingMode.OneTime);
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<ClickGestureRecognizer>());
 		});
 
@@ -313,7 +317,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<ClickGestureRecognizer>());
 			Assert.That(((ClickGestureRecognizer)gestureElement.GestureRecognizers[0]).NumberOfClicksRequired, Is.EqualTo(numberOfClicks));
 		});
@@ -337,11 +341,11 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		object parameterSource = gestureElement.BindingContext;
 
 		gestureElement.BindClickGesture(
-			static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
-			[
-				(vm => vm, nameof(ViewModel.NestedCommand)),
-				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
-			],
+			getter: static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
+			handlers: new (Func<ViewModel, object?>, string)[]
+			{
+				(vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
+			},
 			commandBindingMode: BindingMode.OneTime,
 			parameterGetter: static (ViewModel vm) => vm.NestedCommand.Id,
 			parameterHandlers:
@@ -353,7 +357,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<ClickGestureRecognizer>());
 			Assert.That(((ClickGestureRecognizer)gestureElement.GestureRecognizers[0]).NumberOfClicksRequired, Is.EqualTo(numberOfClicks));
 		});
@@ -376,7 +380,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<TapGestureRecognizer>());
 		});
 
@@ -392,7 +396,8 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		};
 
 		gestureElement.BindTapGesture(
-			static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
+			getter: static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
+			handlers:
 			[
 				(vm => vm, nameof(ViewModel.NestedCommand)),
 				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
@@ -401,7 +406,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<TapGestureRecognizer>());
 		});
 
@@ -436,7 +441,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		Assert.Multiple(() =>
 		{
 			Assert.That(viewModel.Id, Is.EqualTo(guid));
-			Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<TapGestureRecognizer>());
 			Assert.That(tapGestureRecognizer.NumberOfTapsRequired, Is.EqualTo(numberOfTaps));
 		});
@@ -458,7 +463,8 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		object parameterSource = gestureElement.BindingContext;
 
 		gestureElement.BindTapGesture(
-			static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
+			getter: static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
+			handlers:
 			[
 				(vm => vm, nameof(ViewModel.NestedCommand)),
 				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
@@ -476,7 +482,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<TapGestureRecognizer>());
 			Assert.That(tapGestureRecognizer.NumberOfTapsRequired, Is.EqualTo(numberOfTaps));
 		});
@@ -495,7 +501,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 
 		gestureElement.BindSwipeGesture(static (ViewModel vm) => vm.SetGuidCommand);
 
-		Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+		Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 		Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<SwipeGestureRecognizer>());
 		BindingHelpers.AssertTypedBindingExists((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0], SwipeGestureRecognizer.CommandProperty, BindingMode.Default, gestureElement.BindingContext);
 	}
@@ -509,7 +515,8 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		};
 
 		gestureElement.BindSwipeGesture(
-			static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
+			getter: static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
+			handlers:
 			[
 				(vm => vm, nameof(ViewModel.NestedCommand)),
 				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
@@ -518,7 +525,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<SwipeGestureRecognizer>());
 		});
 
@@ -557,7 +564,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		Assert.Multiple(() =>
 		{
 			Assert.That(viewModel.Id, Is.EqualTo(guid));
-			Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<SwipeGestureRecognizer>());
 			Assert.That(((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0]).Direction, Is.EqualTo(direction));
 			Assert.That(((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0]).Threshold, Is.EqualTo(threshold));
@@ -579,7 +586,8 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		};
 
 		gestureElement.BindSwipeGesture(
-			static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
+			getter: static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
+			handlers:
 			[
 				(vm => vm, nameof(ViewModel.NestedCommand)),
 				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
@@ -596,7 +604,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(1));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<SwipeGestureRecognizer>());
 			Assert.That(((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0]).Direction, Is.EqualTo(direction));
 			Assert.That(((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0]).Threshold, Is.EqualTo(threshold));
@@ -619,7 +627,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(gestureElement.GestureRecognizers.Count, Is.EqualTo(3));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(3));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<SwipeGestureRecognizer>());
 			Assert.That(gestureElement.GestureRecognizers[1], Is.InstanceOf<TapGestureRecognizer>());
 			Assert.That(gestureElement.GestureRecognizers[2], Is.InstanceOf<ClickGestureRecognizer>());
