@@ -276,11 +276,8 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		};
 
 		gestureElement.BindClickGesture(
-			static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
-			[
-				(vm => vm, nameof(ViewModel.NestedCommand)),
-				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
-			],
+			getter: static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
+			handlers:
 			[
 				(vm => vm, nameof(ViewModel.NestedCommand)),
 				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
@@ -619,9 +616,9 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 	public void MultipleGestureBindings()
 	{
 		var gestureElement = new TGestureElement
-		{
-			BindingContext = new ViewModel()
-		}.BindSwipeGesture(static (ViewModel vm) => vm.SetGuidCommand)
+			{
+				BindingContext = new ViewModel()
+			}.BindSwipeGesture(static (ViewModel vm) => vm.SetGuidCommand)
 			.BindTapGesture(static (ViewModel vm) => vm.SetGuidCommand)
 			.BindClickGesture(static (ViewModel vm) => vm.SetGuidCommand);
 
