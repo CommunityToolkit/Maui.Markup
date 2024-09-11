@@ -153,7 +153,7 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 		}
 		else if (!testConvert && testConvertBack)
 		{
-			label.Bind<Label, string?, Guid, int?, string>(
+			label.Bind(
 				Label.TextProperty,
 				testBindings[0], testBindings[1],
 				convertBack: (string? formatted, int? parameter) =>
@@ -207,7 +207,7 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 		}
 		else if (!testConvert && testConvertBack)
 		{
-			label.Bind<Label, string?, Guid, bool, string>(
+			label.Bind(
 				Label.TextProperty,
 				testBindings[0], testBindings[1], testBindings[2],
 				convertBack: (string? formatted) =>
@@ -415,10 +415,10 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 	{
 		ArgumentNullException.ThrowIfNull(testBindings);
 
-		Func<object[], string>? convert = null;
+		Func<object?[], string>? convert = null;
 		if (testConvert)
 		{
-			convert = (object[] v) => Format(0, v[0], v[1], v[2], v[3], v[4]);
+			convert = v => Format(0, v[0], v[1], v[2], v[3], v[4]);
 		}
 
 		Func<string?, object[]>? convertBack = null;

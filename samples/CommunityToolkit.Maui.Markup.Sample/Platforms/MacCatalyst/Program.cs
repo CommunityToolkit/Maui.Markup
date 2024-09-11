@@ -1,5 +1,4 @@
 ﻿using UIKit;
-
 namespace CommunityToolkit.Maui.Markup.Sample;
 
 public class Program

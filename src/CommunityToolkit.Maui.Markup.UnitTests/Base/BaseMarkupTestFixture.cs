@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.Maui.Controls;
-using NUnit.Framework;
-
+﻿using NUnit.Framework;
 namespace CommunityToolkit.Maui.Markup.UnitTests.Base;
 
 abstract class BaseMarkupTestFixture<TBindable> : BaseMarkupTestFixture where TBindable : BindableObject, new()

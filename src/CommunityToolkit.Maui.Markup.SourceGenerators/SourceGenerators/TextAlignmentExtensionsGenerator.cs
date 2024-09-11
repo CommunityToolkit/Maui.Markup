@@ -5,7 +5,6 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
-
 namespace CommunityToolkit.Maui.Markup.SourceGenerators;
 
 [Generator(LanguageNames.CSharp)]
@@ -46,7 +45,7 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 				var iTextAlignmentInterfaceSymbol = compilation.GetTypeByMetadataName(iTextAlignmentInterface) ?? throw new Exception("There's no .NET MAUI referenced in the project.");
 				var mauiAssembly = compilation.SourceModule.ReferencedAssemblySymbols.Single(q => q.Name == mauiControlsAssembly);
 
-				return EquatableArray.AsEquatableArray(GetMauiInterfaceImplementors(mauiAssembly, iTextAlignmentInterfaceSymbol).ToImmutableArray());
+				return GetMauiInterfaceImplementors(mauiAssembly, iTextAlignmentInterfaceSymbol).ToImmutableArray().AsEquatableArray();
 			});
 
 

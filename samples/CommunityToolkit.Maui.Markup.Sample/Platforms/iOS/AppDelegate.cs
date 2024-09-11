@@ -1,5 +1,4 @@
 ﻿using Foundation;
-
 namespace CommunityToolkit.Maui.Markup.Sample;
 
 [Register(nameof(AppDelegate))]

@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-
 namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>
@@ -38,9 +37,9 @@ public static class GridRowsColumns
 		{
 			var columnDefinitions = new ColumnDefinitionCollection();
 
-			for (int i = 0; i < widths.Length; i++)
+			foreach (var width in widths)
 			{
-				columnDefinitions.Add(new ColumnDefinition { Width = widths[i] });
+				columnDefinitions.Add(new ColumnDefinition { Width = width });
 			}
 
 			return columnDefinitions;
@@ -87,9 +86,9 @@ public static class GridRowsColumns
 		{
 			var rowDefinitions = new RowDefinitionCollection();
 
-			for (int i = 0; i < heights.Length; i++)
+			foreach (var height in heights)
 			{
-				rowDefinitions.Add(new RowDefinition { Height = heights[i] });
+				rowDefinitions.Add(new RowDefinition { Height = height });
 			}
 
 			return rowDefinitions;

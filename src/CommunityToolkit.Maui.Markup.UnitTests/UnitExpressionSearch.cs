@@ -1,7 +1,6 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.Maui.Controls.Internals;
-
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 class UnitExpressionSearch : ExpressionVisitor, IExpressionSearch
@@ -19,15 +18,13 @@ class UnitExpressionSearch : ExpressionVisitor, IExpressionSearch
 
 	protected override Expression VisitMember(MemberExpression node)
 	{
-		if (node.Expression is ConstantExpression expression
-			&& node.Member is FieldInfo info)
+		if (node is { Expression: ConstantExpression expression, Member: FieldInfo info })
 		{
 			var container = expression.Value;
 			var value = info.GetValue(container);
 
 			if (targeType?.IsInstanceOfType(value) is true
-				&& results is not null
-				&& value is not null)
+				&& results is not null)
 			{
 				results.Add(value);
 			}

@@ -6,7 +6,6 @@ using System.Windows.Input;
 using CommunityToolkit.Maui.Converters;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
@@ -41,7 +40,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		{
 			new Button()
 				.BindCommand<Button, ViewModel, object?, Color>(
-					(ViewModel vm) => vm.Command,
+					vm => vm.Command,
 					[
 						(vm => vm, nameof(ViewModel.Command))
 					],
@@ -202,7 +201,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		var label = new Label
 		{
 			BindingContext = viewModel
-		}.Bind(Label.TextColorProperty, static (ViewModel viewModel) => viewModel.TextColor, static (ViewModel viewModel, Color color) => viewModel.TextColor = color, BindingMode.OneTime);
+		}.Bind(Label.TextColorProperty, static (ViewModel viewModel) => viewModel.TextColor, static (viewModel, color) => viewModel.TextColor = color, BindingMode.OneTime);
 
 		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
 		label.PropertyChanged += HandleLabelPropertyChanged;
@@ -255,7 +254,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		var slider = new Slider
 		{
 			BindingContext = viewModel
-		}.Bind(Slider.ValueProperty, static (ViewModel viewModel) => viewModel.Percentage, static (ViewModel viewModel, double temperature) => viewModel.Percentage = temperature);
+		}.Bind(Slider.ValueProperty, static (ViewModel viewModel) => viewModel.Percentage, static (viewModel, temperature) => viewModel.Percentage = temperature);
 
 		slider.PropertyChanged += HandleSliderPropertyChanged;
 		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
@@ -325,7 +324,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		{
 			entry.BindingContext = viewmodel;
 			entry.Bind(Entry.TextColorProperty,
-				static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
+				static vm => vm.Model?.Model?.TextColor,
 				[
 					(vm => vm, nameof(NestedViewModel.Model)),
 					(vm => vm.Model, nameof(NestedViewModel.Model)),
@@ -343,7 +342,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		else
 		{
 			entry.Bind(Entry.TextColorProperty,
-				static (NestedViewModel vm) => vm.Model?.Model?.TextColor,
+				static vm => vm.Model?.Model?.TextColor,
 				[
 					(vm => vm, nameof(NestedViewModel.Model)),
 					(vm => vm.Model, nameof(NestedViewModel.Model)),
@@ -475,7 +474,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		{
 			BindingContext = viewModel
 		}.Bind<Label, ViewModel, Color, string>(Label.TextProperty,
-			static (ViewModel viewModel) => viewModel.TextColor,
+			static viewModel => viewModel.TextColor,
 			converter: colorToHexRgbStringConverter);
 
 		label.PropertyChanged += HandleLabelPropertyChanged;
@@ -537,7 +536,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 			BindingContext = viewModel
 		}.Bind(Slider.ThumbColorProperty,
 			static (ViewModel viewModel) => viewModel.Percentage,
-			convert: (double percentage) => percentage > 0.5 ? Colors.Green : Colors.Red);
+			convert: percentage => percentage > 0.5 ? Colors.Green : Colors.Red);
 
 		slider.PropertyChanged += HandleSliderPropertyChanged;
 		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
@@ -580,11 +579,77 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		}
 	}
 
+	[Test]
+	public async Task ConfirmReadOnlyTypedBindingWithFuncConversionUsingValueType()
+	{
+		const double heightAdjustment = 5;
+		const double updatedHeight = 600;
+
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		bool didViewModelPropertyChangeFire = false;
+		int viewModelPropertyChangedEventCount = 0;
+		TaskCompletionSource<string?> viewModelPropertyChangedEventArgsTCS = new();
+
+		bool didSliderPropertyChangeFire = false;
+		int sliderPropertyChangedEventCount = 0;
+		TaskCompletionSource<string?> sliderPropertyChangedEventArgsTCS = new();
+
+		var slider = new Slider
+		{
+			BindingContext = viewModel
+		}.Bind(Slider.HeightRequestProperty,
+			static (ViewModel viewModel) => viewModel.HeightRequest,
+			convert: static (double height) => height + heightAdjustment);
+
+		slider.PropertyChanged += HandleSliderPropertyChanged;
+		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
+
+		BindingHelpers.AssertTypedBindingExists<Slider, ViewModel, double, double>(
+			slider,
+			Slider.HeightRequestProperty,
+			BindingMode.Default,
+			viewModel,
+			height => height + heightAdjustment);
+
+		viewModel.HeightRequest = updatedHeight;
+		var viewModelPropertyName = await viewModelPropertyChangedEventArgsTCS.Task;
+		var sliderPropertyName = await sliderPropertyChangedEventArgsTCS.Task;
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(didViewModelPropertyChangeFire, Is.True);
+			Assert.That(viewModelPropertyName, Is.EqualTo(nameof(ViewModel.HeightRequest)));
+			Assert.That(viewModelPropertyChangedEventCount, Is.EqualTo(1));
+
+			Assert.That(didSliderPropertyChangeFire, Is.True);
+			Assert.That(sliderPropertyName, Is.EqualTo(nameof(Slider.HeightRequest)));
+			Assert.That(sliderPropertyChangedEventCount, Is.EqualTo(1));
+
+			Assert.That(slider.HeightRequest, Is.EqualTo(updatedHeight + heightAdjustment));
+		});
+
+		void HandleViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+		{
+			didViewModelPropertyChangeFire = true;
+			viewModelPropertyChangedEventCount++;
+			viewModelPropertyChangedEventArgsTCS.TrySetResult(e.PropertyName);
+		}
+
+		void HandleSliderPropertyChanged(object? sender, PropertyChangedEventArgs e)
+		{
+			didSliderPropertyChangeFire = true;
+			sliderPropertyChangedEventCount++;
+			sliderPropertyChangedEventArgsTCS.TrySetResult(e.PropertyName);
+		}
+	}
+
 	class ViewModel : INotifyPropertyChanged
 	{
 		public const double DefaultPercentage = 0.5;
+		public const double DefaultHeightRequest = 500;
 
-		double percentage = DefaultPercentage;
+		double percentage = DefaultPercentage, heightRequest = DefaultHeightRequest;
 		Color textColor = DefaultColor;
 
 		public ViewModel()
@@ -594,13 +659,19 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 
 		public static Color DefaultColor { get; } = Colors.Transparent;
 
-		public bool IsRed => TextColor == Colors.Red;
+		public bool IsRed => Equals(TextColor, Colors.Red);
 
 		public Guid Id { get; } = Guid.NewGuid();
 
 		public ICommand Command { get; }
 
 		public event PropertyChangedEventHandler? PropertyChanged;
+
+		public double HeightRequest
+		{
+			get => heightRequest;
+			set => SetProperty(ref heightRequest, value);
+		}
 
 		public double Percentage
 		{

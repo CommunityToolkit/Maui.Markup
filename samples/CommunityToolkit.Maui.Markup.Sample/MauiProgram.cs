@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Http.Resilience;
 using Polly;
 using Refit;
-
 namespace CommunityToolkit.Maui.Markup.Sample;
 
 public class MauiProgram

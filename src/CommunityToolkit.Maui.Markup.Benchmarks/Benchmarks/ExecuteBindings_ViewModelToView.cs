@@ -1,5 +1,4 @@
 using BenchmarkDotNet.Attributes;
-
 namespace CommunityToolkit.Maui.Markup.Benchmarks;
 
 [MemoryDiagnoser]

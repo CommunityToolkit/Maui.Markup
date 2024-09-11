@@ -1,5 +1,4 @@
 ﻿using Microsoft.Maui.Controls.Internals;
-
 namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>

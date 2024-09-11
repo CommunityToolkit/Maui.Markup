@@ -40,7 +40,7 @@ sealed class SettingsPage : BaseContentPage<SettingsViewModel>
 					})
 					.TextCenter()
 					.SemanticDescription(topNewsStoriesToFetchLabel.Text)
-					.Bind(Entry.TextProperty, static (SettingsViewModel vm) => vm.NumberOfTopStoriesToFetch, static (SettingsViewModel vm, int text) => vm.NumberOfTopStoriesToFetch = text),
+					.Bind(Entry.TextProperty, static (SettingsViewModel vm) => vm.NumberOfTopStoriesToFetch, static (vm, text) => vm.NumberOfTopStoriesToFetch = text),
 
 				new Label()
 					.Bind(

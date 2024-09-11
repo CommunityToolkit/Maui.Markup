@@ -95,34 +95,32 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
-	using CommunityToolkit.Maui.Markup.LeftToRight;
 
 	[TestFixture]
 	class LeftToRightViewExtensionsTests : BaseMarkupTestFixture<BoxView>
 	{
 		[Test]
 		public void Left()
-			=> TestPropertiesSet(v => v.Left(), (View.HorizontalOptionsProperty, LayoutOptions.Start));
+			=> TestPropertiesSet(v => LeftToRight.ViewExtensions.Left(v), (View.HorizontalOptionsProperty, LayoutOptions.Start));
 
 		[Test]
 		public void Right()
-			=> TestPropertiesSet(v => v.Right(), (View.HorizontalOptionsProperty, LayoutOptions.End));
+			=> TestPropertiesSet(v => LeftToRight.ViewExtensions.Right(v), (View.HorizontalOptionsProperty, LayoutOptions.End));
 	}
 }
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
-	using CommunityToolkit.Maui.Markup.RightToLeft;
 
 	[TestFixture]
 	class RightToLeftViewExtensionsTests : BaseMarkupTestFixture<BoxView>
 	{
 		[Test]
 		public void Left()
-			=> TestPropertiesSet(v => v.Left(), (View.HorizontalOptionsProperty, LayoutOptions.End));
+			=> TestPropertiesSet(v => RightToLeft.ViewExtensions.Left(v), (View.HorizontalOptionsProperty, LayoutOptions.End));
 
 		[Test]
 		public void Right()
-			=> TestPropertiesSet(v => v.Right(), (View.HorizontalOptionsProperty, LayoutOptions.Start));
+			=> TestPropertiesSet(v => RightToLeft.ViewExtensions.Right(v), (View.HorizontalOptionsProperty, LayoutOptions.Start));
 	}
 }

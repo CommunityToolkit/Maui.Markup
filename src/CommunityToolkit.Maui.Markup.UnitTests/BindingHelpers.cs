@@ -1,9 +1,7 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Reflection;
 using Microsoft.Maui.Controls.Internals;
 using NUnit.Framework;
-
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 static class BindingHelpers
@@ -64,7 +62,7 @@ static class BindingHelpers
 		var funcConverter = expectedConverter switch
 		{
 			null => null,
-			_ => new FuncConverter<TSource, TDest, object>(expectedConverter, null)
+			_ => new FuncConverter<TSource, TDest, object>(expectedConverter)
 		};
 
 		AssertTypedBindingExists<TBindable, TBindingContext, TSource, object?, TDest>(

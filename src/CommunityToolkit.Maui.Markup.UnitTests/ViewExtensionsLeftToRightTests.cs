@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Maui.Markup.LeftToRight;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using NUnit.Framework;
-
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]

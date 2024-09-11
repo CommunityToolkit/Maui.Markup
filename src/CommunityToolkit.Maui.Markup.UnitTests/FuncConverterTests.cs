@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using NUnit.Framework;
-
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
@@ -11,7 +10,7 @@ class FuncConverterTests : BaseMarkupTestFixture
 	public void TwoWayMultiWithParamAndCulture()
 	{
 		CultureInfo? convertCulture = null, convertBackCulture = null;
-		var expectedCulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+		var expectedCulture = Thread.CurrentThread.CurrentUICulture;
 
 		// Convert char a and int i values to string of a repeated i times, or double that if parameter was true
 		var converter = new FuncMultiConverter<string, bool>(
@@ -30,6 +29,11 @@ class FuncConverterTests : BaseMarkupTestFixture
 			(text, addOne, culture) =>
 			{
 				convertBackCulture = culture;
+				return
+				[
+					text?.Length > 0 ? text[0] : '\0',
+					(text?.Length ?? 0) - (addOne ? 1 : 0)
+				];
 				return
 				[
 					text?.Length > 0 ? text[0] : '\0',
@@ -79,6 +83,11 @@ class FuncConverterTests : BaseMarkupTestFixture
 					text?.Length > 0 ? text[0] : '\0',
 					(text?.Length ?? 0) - (addOne ? 1 : 0)
 				];
+				return
+				[
+					text?.Length > 0 ? text[0] : '\0',
+					(text?.Length ?? 0) - (addOne ? 1 : 0)
+				];
 			})
 		.AssertConvert(['a', 2], true, "aaa", twoWay: true)
 		.AssertConvert(['b', 4], false, "bbbb", twoWay: true);
@@ -98,20 +107,17 @@ class FuncConverterTests : BaseMarkupTestFixture
 	{
 		// Convert char a and int i values to string of a repeated i times
 		var converter = new FuncMultiConverter<string, bool>(
-			(values) =>
+			values =>
 			{
-				var c = (char)values[0];
-				var l = (int)values[1];
-				return new string(c, l);
+				var c = (char?)values[0];
+				var l = (int?)values[1];
+				return new string(c ?? new(), l ?? 0);
 			},
-			(text) =>
-			{
-				return
-				[
-					text?.Length > 0 ? text[0] : '\0',
-					text?.Length ?? 0
-				];
-			})
+			text =>
+			[
+				text?.Length > 0 ? text[0] : '\0',
+				text?.Length ?? 0
+			])
 		.AssertConvert(['a', 2], true, "aa", twoWay: true)
 		.AssertConvert(['b', 4], false, "bbbb", twoWay: true);
 
@@ -130,7 +136,7 @@ class FuncConverterTests : BaseMarkupTestFixture
 	public void FullyTypedTwoWayWithParamAndCulture()
 	{
 		CultureInfo? convertCulture = null, convertBackCulture = null;
-		var expectedCulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+		var expectedCulture = Thread.CurrentThread.CurrentUICulture;
 
 		var converter = new FuncConverter<bool, Color, float>(
 			(isRed, alpha, culture) =>
@@ -287,7 +293,7 @@ class FuncConverterTests : BaseMarkupTestFixture
 	[Test]
 	public void UntypedTwoWay()
 	{
-		new Markup.FuncConverter(
+		new FuncConverter(
 			isRed =>
 			{
 				ArgumentNullException.ThrowIfNull(isRed);
@@ -302,7 +308,7 @@ class FuncConverterTests : BaseMarkupTestFixture
 	[Test]
 	public void UntypedOneWay()
 	{
-		new Markup.FuncConverter(isRed =>
+		new FuncConverter(isRed =>
 		{
 			ArgumentNullException.ThrowIfNull(isRed);
 			return (bool)isRed ? Colors.Red : Colors.Green;
@@ -314,7 +320,7 @@ class FuncConverterTests : BaseMarkupTestFixture
 	[Test]
 	public void UntypedBackOnly()
 	{
-		new Markup.FuncConverter(
+		new FuncConverter(
 			null,
 			color => (Color?)color == Colors.Red)
 		.AssertConvert((object)true, (object)Colors.Red, backOnly: true)

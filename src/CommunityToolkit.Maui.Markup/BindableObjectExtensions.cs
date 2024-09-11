@@ -40,7 +40,8 @@ public static class BindableObjectExtensions
 		string? stringFormat = null,
 		object? source = null,
 		TDest? targetNullValue = default,
-		TDest? fallbackValue = default) where TBindable : BindableObject
+		TDest? fallbackValue = default)
+		where TBindable : BindableObject
 	{
 		var converter = new FuncConverter<TSource, TDest, object>(convert, convertBack);
 		bindable.SetBinding(
@@ -154,7 +155,7 @@ public static class BindableObjectExtensions
 		string? parameterPath = Binding.SelfPath,
 		object? parameterSource = null) where TBindable : BindableObject
 	{
-		(var commandProperty, var parameterProperty) = DefaultBindableProperties.GetCommandAndCommandParameterProperty<TBindable>();
+		var (commandProperty, parameterProperty) = DefaultBindableProperties.GetCommandAndCommandParameterProperty<TBindable>();
 
 		bindable.SetBinding(commandProperty, new Binding(path: path, source: source));
 

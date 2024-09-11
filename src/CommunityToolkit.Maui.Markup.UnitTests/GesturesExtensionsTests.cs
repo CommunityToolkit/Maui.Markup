@@ -1,14 +1,13 @@
 ﻿using System.Windows.Input;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using NUnit.Framework;
-
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture(typeof(Label))] // Derived from View
 class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGestureElement : View, IGestureRecognizers, new()
 {
 	[Test]
-	[Obsolete($"ClickGestureRecognizer is now obsolete")]
+	[Obsolete("ClickGestureRecognizer is now obsolete")]
 	public void BindClickGestureDefaults()
 	{
 		var gestureElement = new TGestureElement();
@@ -21,7 +20,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 	}
 
 	[Test]
-	[Obsolete($"ClickGestureRecognizer is now obsolete")]
+	[Obsolete("ClickGestureRecognizer is now obsolete")]
 	public void BindClickGesturePositionalParameters()
 	{
 		const int numberOfClicks = 2;
@@ -77,7 +76,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 	}
 
 	[Test]
-	[Obsolete($"ClickGestureRecognizer is now obsolete")]
+	[Obsolete("ClickGestureRecognizer is now obsolete")]
 	public void ClickGesture()
 	{
 		const int numberOfClicks = 2;
@@ -183,7 +182,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 		var gestureElement = new TGestureElement();
 
 		gestureElement.PinchGesture(OnPinch);
-		((IPinchGestureController)gestureElement.GestureRecognizers[0]).SendPinch(null, 2, new Microsoft.Maui.Graphics.Point());
+		((IPinchGestureController)gestureElement.GestureRecognizers[0]).SendPinch(null, 2, new Point());
 
 		Assert.Multiple(() =>
 		{
@@ -246,7 +245,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixture where TGestureElement : View, IGestureRecognizers, new()
 {
 	[Test]
-	[Obsolete($"ClickGestureRecognizer is now obsolete")]
+	[Obsolete("ClickGestureRecognizer is now obsolete")]
 	public void BindClickGestureDefaults()
 	{
 		var gestureElement = new TGestureElement
@@ -266,7 +265,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 	}
 
 	[Test]
-	[Obsolete($"ClickGestureRecognizer is now obsolete")]
+	[Obsolete("ClickGestureRecognizer is now obsolete")]
 	public void BindClickGestureDefaultsWithNestedBindings()
 	{
 		var guid = Guid.NewGuid();
@@ -277,7 +276,8 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		};
 
 		gestureElement.BindClickGesture(
-			static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
+			getter: static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
+			handlers:
 			[
 				(vm => vm, nameof(ViewModel.NestedCommand)),
 				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
@@ -294,7 +294,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 	}
 
 	[Test]
-	[Obsolete($"ClickGestureRecognizer is now obsolete")]
+	[Obsolete("ClickGestureRecognizer is now obsolete")]
 	public void BindClickGesturePositionalParameters()
 	{
 		const int numberOfClicks = 2;
@@ -325,7 +325,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 
 
 	[Test]
-	[Obsolete($"ClickGestureRecognizer is now obsolete")]
+	[Obsolete("ClickGestureRecognizer is now obsolete")]
 	public void BindClickGesturePositionalParametersWithNestedBindings()
 	{
 		const int numberOfClicks = 2;
@@ -616,9 +616,9 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 	public void MultipleGestureBindings()
 	{
 		var gestureElement = new TGestureElement
-		{
-			BindingContext = new ViewModel()
-		}.BindSwipeGesture(static (ViewModel vm) => vm.SetGuidCommand)
+			{
+				BindingContext = new ViewModel()
+			}.BindSwipeGesture(static (ViewModel vm) => vm.SetGuidCommand)
 			.BindTapGesture(static (ViewModel vm) => vm.SetGuidCommand)
 			.BindClickGesture(static (ViewModel vm) => vm.SetGuidCommand);
 

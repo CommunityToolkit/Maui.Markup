@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using Microsoft.Maui.Layouts;
 using NUnit.Framework;
-
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]

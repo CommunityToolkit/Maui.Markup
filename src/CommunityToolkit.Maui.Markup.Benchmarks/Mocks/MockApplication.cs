@@ -1,6 +1,5 @@
-namespace CommunityToolkit.Maui.Markup.Benchmarks.Mocks;
-
 using Microsoft.Maui.Handlers;
+namespace CommunityToolkit.Maui.Markup.Benchmarks.Mocks;
 
 class MockApplication(IServiceProvider serviceProvider) : Application, IPlatformApplication
 {

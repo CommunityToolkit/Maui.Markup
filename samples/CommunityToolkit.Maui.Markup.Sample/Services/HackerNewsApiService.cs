@@ -1,6 +1,4 @@
-﻿using Polly;
-
-namespace CommunityToolkit.Maui.Markup.Sample.Services;
+﻿namespace CommunityToolkit.Maui.Markup.Sample.Services;
 
 class HackerNewsAPIService
 {

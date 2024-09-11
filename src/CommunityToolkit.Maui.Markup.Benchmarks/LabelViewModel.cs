@@ -1,5 +1,4 @@
 using CommunityToolkit.Mvvm.ComponentModel;
-
 namespace CommunityToolkit.Maui.Markup.Benchmarks;
 
 public partial class LabelViewModel : ObservableObject

@@ -1,5 +1,4 @@
 using CommunityToolkit.Maui.Markup.Benchmarks.Mocks;
-
 namespace CommunityToolkit.Maui.Markup.Benchmarks;
 
 public abstract class BaseTest

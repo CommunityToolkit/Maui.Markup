@@ -1,6 +1,5 @@
 ﻿using System.Linq.Expressions;
 using System.Windows.Input;
-
 namespace CommunityToolkit.Maui.Markup;
 
 public static partial class GesturesExtensions
@@ -13,15 +12,17 @@ public static partial class GesturesExtensions
 		Action<TCommandBindingContext, ICommand>? setter = null,
 		TCommandBindingContext? source = default,
 		BindingMode mode = BindingMode.Default,
-		int? numberOfClicksRequired = null) where TGestureElement : BindableObject, IGestureRecognizers
+		int? numberOfClicksRequired = null)
+		where TGestureElement : BindableObject, IGestureRecognizers
+		where TCommandBindingContext : class?
 	{
 		return BindClickGesture<TGestureElement, TCommandBindingContext, object?, object?>(
-				gestureElement,
-				getter,
-				setter,
-				source,
-				mode,
-				numberOfClicksRequired: numberOfClicksRequired);
+			gestureElement,
+			getter,
+			setter,
+			source,
+			mode,
+			numberOfClicksRequired: numberOfClicksRequired);
 	}
 
 	/// <summary>Add a <see cref="ClickGestureRecognizer"/> and bind to its Command and (optionally) CommandParameter properties</summary>
@@ -36,7 +37,10 @@ public static partial class GesturesExtensions
 		Action<TParameterBindingContext, TParameterSource>? parameterSetter = null,
 		BindingMode parameterBindingMode = BindingMode.Default,
 		TParameterBindingContext? parameterSource = default,
-		int? numberOfClicksRequired = null) where TGestureElement : BindableObject, IGestureRecognizers
+		int? numberOfClicksRequired = null)
+		where TGestureElement : BindableObject, IGestureRecognizers
+		where TCommandBindingContext : class?
+		where TParameterBindingContext : class?
 	{
 		var getterFunc = ConvertExpressionToFunc(getter);
 		var parameterGetterFunc = parameterGetter switch
@@ -45,25 +49,27 @@ public static partial class GesturesExtensions
 			_ => ConvertExpressionToFunc(parameterGetter)
 		};
 
-		var parameterGetterHandlers = parameterGetter switch
+		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = parameterGetter switch
 		{
 			null => null,
-			_ => new (Func<TParameterBindingContext, object?>, string)[] { ((TParameterBindingContext b) => b, GetMemberName(parameterGetter)) }
+			_ => [(b => b, GetMemberName(parameterGetter))]
 		};
 
 		return BindClickGesture(
-				gestureElement,
-				getterFunc,
-				[((TCommandBindingContext b) => b, GetMemberName(getter))],
-				setter,
-				source,
-				commandBindingMode,
-				parameterGetterFunc,
-				parameterGetterHandlers,
-				parameterSetter,
-				parameterBindingMode,
-				parameterSource,
-				numberOfClicksRequired);
+			gestureElement,
+			getterFunc,
+			[
+				(b => b, GetMemberName(getter))
+			],
+			setter,
+			source,
+			commandBindingMode,
+			parameterGetterFunc,
+			parameterGetterHandlers,
+			parameterSetter,
+			parameterBindingMode,
+			parameterSource,
+			numberOfClicksRequired);
 	}
 
 	/// <summary>Add a <see cref="ClickGestureRecognizer"/> and bind to its Command </summary>
@@ -75,15 +81,17 @@ public static partial class GesturesExtensions
 		Action<TCommandBindingContext, ICommand>? setter = null,
 		TCommandBindingContext? source = default,
 		BindingMode mode = BindingMode.Default,
-		int? numberOfClicksRequired = null) where TGestureElement : BindableObject, IGestureRecognizers
+		int? numberOfClicksRequired = null)
+		where TGestureElement : BindableObject, IGestureRecognizers
+		where TCommandBindingContext : class?
 	{
 		return gestureElement.BindClickGesture<TGestureElement, TCommandBindingContext, object?, object?>(
-											getter,
-											handlers,
-											setter,
-											source,
-											mode,
-											numberOfClicksRequired: numberOfClicksRequired);
+			getter,
+			handlers,
+			setter,
+			source,
+			mode,
+			numberOfClicksRequired: numberOfClicksRequired);
 	}
 
 	/// <summary>Add a <see cref="ClickGestureRecognizer"/> and bind to its Command and (optionally) CommandParameter properties</summary>
@@ -100,19 +108,22 @@ public static partial class GesturesExtensions
 		Action<TParameterBindingContext, TParameterSource>? parameterSetter = null,
 		BindingMode parameterBindingMode = BindingMode.Default,
 		TParameterBindingContext? parameterSource = default,
-		int? numberOfClicksRequired = null) where TGestureElement : BindableObject, IGestureRecognizers
+		int? numberOfClicksRequired = null)
+		where TGestureElement : BindableObject, IGestureRecognizers
+		where TCommandBindingContext : class?
+		where TParameterBindingContext : class?
 	{
 		var clickGesture = gestureElement.BindGesture<ClickGestureRecognizer, TGestureElement, TCommandBindingContext, TParameterBindingContext, TParameterSource>(
-											getter,
-											handlers,
-											setter,
-											source,
-											commandBindingMode,
-											parameterGetter,
-											parameterHandlers,
-											parameterSetter,
-											parameterBindingMode,
-											parameterSource);
+			getter,
+			handlers,
+			setter,
+			source,
+			commandBindingMode,
+			parameterGetter,
+			parameterHandlers,
+			parameterSetter,
+			parameterBindingMode,
+			parameterSource);
 
 		return gestureElement.ConfigureClickGesture(clickGesture, numberOfClicksRequired);
 	}
@@ -125,16 +136,18 @@ public static partial class GesturesExtensions
 		TCommandBindingContext? source = default,
 		BindingMode mode = BindingMode.Default,
 		SwipeDirection? direction = null,
-		uint? threshold = null) where TGestureElement : BindableObject, IGestureRecognizers
+		uint? threshold = null)
+		where TGestureElement : BindableObject, IGestureRecognizers
+		where TCommandBindingContext : class?
 	{
 		return BindSwipeGesture<TGestureElement, TCommandBindingContext, object?, object?>(
-				gestureElement,
-				getter,
-				setter,
-				source,
-				mode,
-				direction: direction,
-				threshold: threshold);
+			gestureElement,
+			getter,
+			setter,
+			source,
+			mode,
+			direction: direction,
+			threshold: threshold);
 	}
 
 	/// <summary>Add a <see cref="SwipeGestureRecognizer"/> and bind to its Command and (optionally) CommandParameter properties</summary>
@@ -149,7 +162,10 @@ public static partial class GesturesExtensions
 		BindingMode parameterBindingMode = BindingMode.Default,
 		TParameterBindingContext? parameterSource = default,
 		SwipeDirection? direction = null,
-		uint? threshold = null) where TGestureElement : BindableObject, IGestureRecognizers
+		uint? threshold = null)
+		where TGestureElement : BindableObject, IGestureRecognizers
+		where TCommandBindingContext : class?
+		where TParameterBindingContext : class?
 	{
 		var getterFunc = ConvertExpressionToFunc(getter);
 		var parameterGetterFunc = parameterGetter switch
@@ -158,26 +174,28 @@ public static partial class GesturesExtensions
 			_ => ConvertExpressionToFunc(parameterGetter)
 		};
 
-		var parameterGetterHandlers = parameterGetter switch
+		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = parameterGetter switch
 		{
 			null => null,
-			_ => new (Func<TParameterBindingContext, object?>, string)[] { ((TParameterBindingContext b) => b, GetMemberName(parameterGetter)) }
+			_ => [(b => b, GetMemberName(parameterGetter))]
 		};
 
 		return BindSwipeGesture(
-				gestureElement,
-				getterFunc,
-				[((TCommandBindingContext b) => b, GetMemberName(getter))],
-				setter,
-				source,
-				commandBindingMode,
-				parameterGetterFunc,
-				parameterGetterHandlers,
-				parameterSetter,
-				parameterBindingMode,
-				parameterSource,
-				direction,
-				threshold);
+			gestureElement,
+			getterFunc,
+			[
+				(b => b, GetMemberName(getter))
+			],
+			setter,
+			source,
+			commandBindingMode,
+			parameterGetterFunc,
+			parameterGetterHandlers,
+			parameterSetter,
+			parameterBindingMode,
+			parameterSource,
+			direction,
+			threshold);
 	}
 
 	/// <summary>Add a <see cref="SwipeGestureRecognizer"/> and bind to its Command</summary>
@@ -189,16 +207,18 @@ public static partial class GesturesExtensions
 		TCommandBindingContext? source = default,
 		BindingMode mode = BindingMode.Default,
 		SwipeDirection? direction = null,
-		uint? threshold = null) where TGestureElement : BindableObject, IGestureRecognizers
+		uint? threshold = null)
+		where TGestureElement : BindableObject, IGestureRecognizers
+		where TCommandBindingContext : class?
 	{
 		return gestureElement.BindSwipeGesture<TGestureElement, TCommandBindingContext, object?, object?>(
-											getter,
-											handlers,
-											setter,
-											source,
-											mode,
-											direction: direction,
-											threshold: threshold);
+			getter,
+			handlers,
+			setter,
+			source,
+			mode,
+			direction: direction,
+			threshold: threshold);
 	}
 
 	/// <summary>Add a <see cref="SwipeGestureRecognizer"/> and bind to its Command and (optionally) CommandParameter properties</summary>
@@ -215,19 +235,22 @@ public static partial class GesturesExtensions
 		BindingMode parameterBindingMode = BindingMode.Default,
 		TParameterBindingContext? parameterSource = default,
 		SwipeDirection? direction = null,
-		uint? threshold = null) where TGestureElement : BindableObject, IGestureRecognizers
+		uint? threshold = null)
+		where TGestureElement : BindableObject, IGestureRecognizers
+		where TCommandBindingContext : class?
+		where TParameterBindingContext : class?
 	{
 		var clickGesture = gestureElement.BindGesture<SwipeGestureRecognizer, TGestureElement, TCommandBindingContext, TParameterBindingContext, TParameterSource>(
-											getter,
-											handlers,
-											setter,
-											source,
-											commandBindingMode,
-											parameterGetter,
-											parameterHandlers,
-											parameterSetter,
-											parameterBindingMode,
-											parameterSource);
+			getter,
+			handlers,
+			setter,
+			source,
+			commandBindingMode,
+			parameterGetter,
+			parameterHandlers,
+			parameterSetter,
+			parameterBindingMode,
+			parameterSource);
 
 		return gestureElement.ConfigureSwipeGesture(clickGesture, direction, threshold);
 	}
@@ -239,16 +262,18 @@ public static partial class GesturesExtensions
 		Action<TCommandBindingContext, ICommand>? setter = null,
 		TCommandBindingContext? source = default,
 		BindingMode mode = BindingMode.Default,
-		int? numberOfTapsRequired = null) where TGestureElement : BindableObject, IGestureRecognizers
+		int? numberOfTapsRequired = null)
+		where TGestureElement : BindableObject, IGestureRecognizers
+		where TCommandBindingContext : class?
 	{
 
 		return BindTapGesture<TGestureElement, TCommandBindingContext, object?, object?>(
-				gestureElement,
-				getter,
-				setter,
-				source,
-				mode,
-				numberOfTapsRequired: numberOfTapsRequired);
+			gestureElement,
+			getter,
+			setter,
+			source,
+			mode,
+			numberOfTapsRequired: numberOfTapsRequired);
 	}
 
 	/// <summary>Adds a <see cref="TapGestureRecognizer"/> and bind its Command and (optionally) CommandParameter properties</summary>
@@ -262,7 +287,10 @@ public static partial class GesturesExtensions
 		Action<TParameterBindingContext, TParameterSource>? parameterSetter = null,
 		BindingMode parameterBindingMode = BindingMode.Default,
 		TParameterBindingContext? parameterSource = default,
-		int? numberOfTapsRequired = null) where TGestureElement : BindableObject, IGestureRecognizers
+		int? numberOfTapsRequired = null)
+		where TGestureElement : BindableObject, IGestureRecognizers
+		where TCommandBindingContext : class?
+		where TParameterBindingContext : class?
 	{
 		var getterFunc = ConvertExpressionToFunc(getter);
 		var parameterGetterFunc = parameterGetter switch
@@ -271,25 +299,27 @@ public static partial class GesturesExtensions
 			_ => ConvertExpressionToFunc(parameterGetter)
 		};
 
-		var parameterGetterHandlers = parameterGetter switch
+		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = parameterGetter switch
 		{
 			null => null,
-			_ => new (Func<TParameterBindingContext, object?>, string)[] { ((TParameterBindingContext b) => b, GetMemberName(parameterGetter)) }
+			_ => [(b => b, GetMemberName(parameterGetter))]
 		};
 
 		return BindTapGesture(
-				gestureElement,
-				getterFunc,
-				[((TCommandBindingContext b) => b, GetMemberName(getter))],
-				setter,
-				source,
-				commandBindingMode,
-				parameterGetterFunc,
-				parameterGetterHandlers,
-				parameterSetter,
-				parameterBindingMode,
-				parameterSource,
-				numberOfTapsRequired);
+			gestureElement,
+			getterFunc,
+			[
+				(b => b, GetMemberName(getter))
+			],
+			setter,
+			source,
+			commandBindingMode,
+			parameterGetterFunc,
+			parameterGetterHandlers,
+			parameterSetter,
+			parameterBindingMode,
+			parameterSource,
+			numberOfTapsRequired);
 	}
 
 	/// <summary>Adds a <see cref="TapGestureRecognizer"/> and bind its Command </summary>
@@ -300,15 +330,17 @@ public static partial class GesturesExtensions
 		Action<TCommandBindingContext, ICommand>? setter = null,
 		TCommandBindingContext? source = default,
 		BindingMode mode = BindingMode.Default,
-		int? numberOfTapsRequired = null) where TGestureElement : BindableObject, IGestureRecognizers
+		int? numberOfTapsRequired = null)
+		where TGestureElement : BindableObject, IGestureRecognizers
+		where TCommandBindingContext : class?
 	{
 		return gestureElement.BindTapGesture<TGestureElement, TCommandBindingContext, object?, object?>(
-											getter,
-											handlers,
-											setter,
-											source,
-											mode,
-											numberOfTapsRequired: numberOfTapsRequired);
+			getter,
+			handlers,
+			setter,
+			source,
+			mode,
+			numberOfTapsRequired: numberOfTapsRequired);
 	}
 
 	/// <summary>Adds a <see cref="TapGestureRecognizer"/> and bind its Command and (optionally) CommandParameter properties</summary>
@@ -324,19 +356,22 @@ public static partial class GesturesExtensions
 		Action<TParameterBindingContext, TParameterSource>? parameterSetter = null,
 		BindingMode parameterBindingMode = BindingMode.Default,
 		TParameterBindingContext? parameterSource = default,
-		int? numberOfTapsRequired = null) where TGestureElement : BindableObject, IGestureRecognizers
+		int? numberOfTapsRequired = null)
+		where TGestureElement : BindableObject, IGestureRecognizers
+		where TCommandBindingContext : class?
+		where TParameterBindingContext : class?
 	{
 		var tapGesture = gestureElement.BindGesture<TapGestureRecognizer, TGestureElement, TCommandBindingContext, TParameterBindingContext, TParameterSource>(
-											getter,
-											handlers,
-											setter,
-											source,
-											commandBindingMode,
-											parameterGetter,
-											parameterHandlers,
-											parameterSetter,
-											parameterBindingMode,
-											parameterSource);
+			getter,
+			handlers,
+			setter,
+			source,
+			commandBindingMode,
+			parameterGetter,
+			parameterHandlers,
+			parameterSetter,
+			parameterBindingMode,
+			parameterSource);
 
 		return gestureElement.ConfigureTapGesture(tapGesture, numberOfTapsRequired);
 	}
@@ -346,8 +381,8 @@ public static partial class GesturesExtensions
 	static string GetMemberName<T>(in Expression<T> expression) => expression.Body switch
 	{
 		MemberExpression m => m.Member.Name,
-		UnaryExpression u when u.Operand is MemberExpression m => m.Member.Name,
-		_ => throw new InvalidOperationException("Could not retreive member name")
+		UnaryExpression { Operand: MemberExpression m } => m.Member.Name,
+		_ => throw new InvalidOperationException("Invalid getter. The `getter` parameter must point directly to a property in the ViewModel and cannot add additional logic")
 	};
 
 	static TGestureRecognizer BindGesture<TGestureRecognizer, TGestureElement, TCommandBindingContext, TParameterBindingContext, TParameterSource>(
@@ -361,19 +396,22 @@ public static partial class GesturesExtensions
 		(Func<TParameterBindingContext, object?>, string)[]? parameterHandlers = null,
 		Action<TParameterBindingContext, TParameterSource>? parameterSetter = null,
 		BindingMode parameterBindingMode = BindingMode.Default,
-		TParameterBindingContext? parameterSource = default) where TGestureElement : IGestureRecognizers
-																where TGestureRecognizer : BindableObject, IGestureRecognizer, new()
+		TParameterBindingContext? parameterSource = default)
+		where TGestureElement : IGestureRecognizers
+		where TGestureRecognizer : BindableObject, IGestureRecognizer, new()
+		where TCommandBindingContext : class?
+		where TParameterBindingContext : class?
 	{
 		var gestureRecognizer = new TGestureRecognizer().BindCommand(getter,
-																		handlers,
-																		setter,
-																		source,
-																		commandBindingMode,
-																		parameterGetter,
-																		parameterHandlers,
-																		parameterSetter,
-																		parameterSource,
-																		parameterBindingMode);
+			handlers,
+			setter,
+			source,
+			commandBindingMode,
+			parameterGetter,
+			parameterHandlers,
+			parameterSetter,
+			parameterSource,
+			parameterBindingMode);
 		gestureElement.GestureRecognizers.Add(gestureRecognizer);
 
 		return gestureRecognizer;

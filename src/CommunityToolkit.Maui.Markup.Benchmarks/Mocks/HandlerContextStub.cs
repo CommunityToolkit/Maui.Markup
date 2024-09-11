@@ -1,6 +1,5 @@
-namespace CommunityToolkit.Maui.Markup.Benchmarks.Mocks;
-
 using Microsoft.Maui.Animations;
+namespace CommunityToolkit.Maui.Markup.Benchmarks.Mocks;
 
 class HandlersContextStub : IMauiContext
 {

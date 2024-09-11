@@ -1,6 +1,5 @@
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Running;
-
 namespace CommunityToolkit.Maui.Markup.Benchmarks;
 
 public class Program

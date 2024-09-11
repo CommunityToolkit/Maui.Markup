@@ -35,7 +35,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 #endregion
-
 #if !ISEXTERNALINIT_DISABLE
 #nullable enable
 #pragma warning disable
@@ -44,7 +43,6 @@ namespace System.Runtime.CompilerServices
 {
 	using global::System.Diagnostics;
 	using global::System.Diagnostics.CodeAnalysis;
-
 	/// <summary>
 	///     Reserved to be used by the compiler for tracking metadata.
 	///     This class should not be used by developers in source code.

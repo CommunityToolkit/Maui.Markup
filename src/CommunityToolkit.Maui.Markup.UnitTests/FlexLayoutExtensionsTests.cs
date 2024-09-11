@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using Microsoft.Maui.Layouts;
 using NUnit.Framework;
-
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture]
@@ -34,7 +33,7 @@ class FlexLayoutExtensionsTests : BaseMarkupTestFixture<BoxView>
 		Assert.That(FlexLayout.GetBasis(Bindable), Is.EqualTo(new FlexBasis(0.5f, true)));
 
 		Bindable.Basis(55, false);
-		Assert.That(FlexLayout.GetBasis(Bindable), Is.EqualTo(new FlexBasis(55, false)));
+		Assert.That(FlexLayout.GetBasis(Bindable), Is.EqualTo(new FlexBasis(55)));
 	}
 
 	[Test]

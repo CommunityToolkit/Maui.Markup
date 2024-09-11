@@ -1,5 +1,4 @@
 ﻿using Microsoft.Maui.Layouts;
-
 namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
 sealed class NewsDetailPage : BaseContentPage<NewsDetailViewModel>

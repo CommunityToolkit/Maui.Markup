@@ -146,7 +146,7 @@ readonly struct EquatableArray<T> : IEquatable<EquatableArray<T>>, IEnumerable<T
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public ImmutableArray<T> AsImmutableArray()
 	{
-		return Unsafe.As<T[]?, ImmutableArray<T>>(ref Unsafe.AsRef(in this.array));
+		return Unsafe.As<T[]?, ImmutableArray<T>>(ref Unsafe.AsRef(in array));
 	}
 
 	/// <summary>
