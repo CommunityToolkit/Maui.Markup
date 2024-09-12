@@ -616,9 +616,9 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 	public void MultipleGestureBindings()
 	{
 		var gestureElement = new TGestureElement
-			{
-				BindingContext = new ViewModel()
-			}.BindSwipeGesture(static (ViewModel vm) => vm.SetGuidCommand)
+		{
+			BindingContext = new ViewModel()
+		}.BindSwipeGesture(static (ViewModel vm) => vm.SetGuidCommand)
 			.BindTapGesture(static (ViewModel vm) => vm.SetGuidCommand)
 			.BindClickGesture(static (ViewModel vm) => vm.SetGuidCommand);
 

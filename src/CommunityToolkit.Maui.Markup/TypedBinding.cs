@@ -200,7 +200,7 @@ sealed class TypedBinding<TSource, TProperty> : TypedBindingBase
 		public PropertyChangedProxy(Func<TSource, object?> partGetter, string propertyName, BindingBase binding)
 		{
 			this.binding = binding;
-			
+
 			PartGetter = partGetter;
 			PropertyName = propertyName;
 			Listener = new BindingExpression.WeakPropertyChangedProxy();
@@ -242,7 +242,7 @@ sealed class TypedBinding<TSource, TProperty> : TypedBindingBase
 		void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
 		{
 			ArgumentNullException.ThrowIfNull(sender);
-			
+
 			if (!string.IsNullOrEmpty(e.PropertyName)
 				&& string.CompareOrdinal(e.PropertyName, PropertyName) is not 0)
 			{
