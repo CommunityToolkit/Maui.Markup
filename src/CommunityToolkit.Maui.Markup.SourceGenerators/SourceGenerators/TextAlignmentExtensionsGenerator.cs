@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.Text;
 namespace CommunityToolkit.Maui.Markup.SourceGenerators;
 
 [Generator(LanguageNames.CSharp)]
-class TextAlignmentExtensionsGenerator : IIncrementalGenerator
+public class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 {
 	const string iTextAlignmentInterface = "Microsoft.Maui.ITextAlignment";
 	const string mauiControlsAssembly = "Microsoft.Maui.Controls";
@@ -55,6 +55,16 @@ class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 		// Then we transform the ISymbol to be a type that we can compare and preserve the Incremental behavior of this Source Generator
 		context.RegisterSourceOutput(userGeneratedClassesProvider, Execute);
 		context.RegisterSourceOutput(mauiControlsAssemblySymbolProvider, ExecuteArray);
+	}
+	
+	internal static string GetGenericArgumentsString(in string genericArguments)
+	{
+		if (string.IsNullOrWhiteSpace(genericArguments))
+		{
+			return string.Empty;
+		}
+
+		return $"<{genericArguments}>";
 	}
 
 	static bool ShouldGenerateTextAlignmentExtension(INamedTypeSymbol classSymbol, INamedTypeSymbol iTextAlignmentInterfaceSymbol)
@@ -358,16 +368,6 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		return $"<TAssignable,{genericArguments}>";
-	}
-
-	static string GetGenericArgumentsString(in string genericArguments)
-	{
-		if (string.IsNullOrWhiteSpace(genericArguments))
-		{
-			return string.Empty;
-		}
-
-		return $"<{genericArguments}>";
 	}
 
 	static TextAlignmentClassMetadata GenerateMetadata(INamedTypeSymbol namedTypeSymbol)

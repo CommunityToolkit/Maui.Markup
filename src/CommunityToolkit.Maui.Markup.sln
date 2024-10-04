@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunityToolkit.Maui.Marku
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunityToolkit.Maui.Markup.Benchmarks", "CommunityToolkit.Maui.Markup.Benchmarks\CommunityToolkit.Maui.Markup.Benchmarks.csproj", "{9A46B6CE-CC4B-4F26-80F8-779C94A88C18}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunityToolkit.Maui.Markup.SourceGenerators.UnitTests", "CommunityToolkit.Maui.Markup.SourceGenerators.UnitTests\CommunityToolkit.Maui.Markup.SourceGenerators.UnitTests.csproj", "{BB9611DF-34B9-4BBF-A564-EB2AADD943C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{9A46B6CE-CC4B-4F26-80F8-779C94A88C18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A46B6CE-CC4B-4F26-80F8-779C94A88C18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A46B6CE-CC4B-4F26-80F8-779C94A88C18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB9611DF-34B9-4BBF-A564-EB2AADD943C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB9611DF-34B9-4BBF-A564-EB2AADD943C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB9611DF-34B9-4BBF-A564-EB2AADD943C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB9611DF-34B9-4BBF-A564-EB2AADD943C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
