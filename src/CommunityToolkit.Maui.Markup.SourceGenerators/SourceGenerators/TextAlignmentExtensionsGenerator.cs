@@ -56,16 +56,6 @@ public class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 		context.RegisterSourceOutput(userGeneratedClassesProvider, Execute);
 		context.RegisterSourceOutput(mauiControlsAssemblySymbolProvider, ExecuteArray);
 	}
-	
-	internal static string GetGenericArgumentsString(in string genericArguments)
-	{
-		if (string.IsNullOrWhiteSpace(genericArguments))
-		{
-			return string.Empty;
-		}
-
-		return $"<{genericArguments}>";
-	}
 
 	static bool ShouldGenerateTextAlignmentExtension(INamedTypeSymbol classSymbol, INamedTypeSymbol iTextAlignmentInterfaceSymbol)
 	{
@@ -368,6 +358,16 @@ namespace CommunityToolkit.Maui.Markup
 		}
 
 		return $"<TAssignable,{genericArguments}>";
+	}
+	
+	static string GetGenericArgumentsString(in string genericArguments)
+	{
+		if (string.IsNullOrWhiteSpace(genericArguments))
+		{
+			return string.Empty;
+		}
+
+		return $"<{genericArguments}>";
 	}
 
 	static TextAlignmentClassMetadata GenerateMetadata(INamedTypeSymbol namedTypeSymbol)
