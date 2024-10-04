@@ -11,7 +11,7 @@ public static partial class CSharpSourceGeneratorVerifier<TSourceGenerator>
 	where TSourceGenerator : IIncrementalGenerator, new()
 {
 	/// <inheritdoc cref="AnalyzerVerifier{TAnalyzer, TTest, TVerifier}.VerifyAnalyzerAsync(string, DiagnosticResult[])"/>
-	public static async Task VerifySourceGeneratorAsync(string source, string generatedFileName, string expectedGeneratedCode, Type[] assembliesUnderTest, params DiagnosticResult[] expectedDiagnosticResults)
+	public static async Task VerifySourceGeneratorAsync(string source, string expectedGeneratedCode, Type[] assembliesUnderTest, params DiagnosticResult[] expectedDiagnosticResults)
 	{
 		var test = new Test(assembliesUnderTest)
 		{
@@ -21,7 +21,7 @@ public static partial class CSharpSourceGeneratorVerifier<TSourceGenerator>
 				Sources = { source },
 				GeneratedSources =
 				{
-					(typeof(TSourceGenerator), generatedFileName, SourceText.From(expectedGeneratedCode, Encoding.UTF8, SourceHashAlgorithm.Sha256)),
+					(typeof(TSourceGenerator), string.Empty, SourceText.From(expectedGeneratedCode, Encoding.UTF8, SourceHashAlgorithm.Sha256)),
 				}
 			}
 		};

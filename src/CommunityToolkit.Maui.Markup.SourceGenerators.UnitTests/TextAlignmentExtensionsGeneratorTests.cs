@@ -27,7 +27,6 @@ public class MyClass : ITextAlignment
 		// Act // Assert
 		await VerifySourceGeneratorAsync(
 			source,
-			"MyClassTextAlignmentExtensions.g.cs",
 			GenerateSourceCode(textAlignmentExtensionsGeneratorFullName,
 				new("MyClass", "public", "MyNamespace", string.Empty, string.Empty), string.Empty, string.Empty),
 			[]);
@@ -54,7 +53,6 @@ public class MyClass<T, U> : Microsoft.Maui.ITextAlignment
 		// Act // Assert
 		await VerifySourceGeneratorAsync(
 			source,
-			"MyClassTextAlignmentExtensions.g.cs",
 			GenerateSourceCode(textAlignmentExtensionsGeneratorFullName,
 				new("MyClass", "public", "MyNamespace", "<T, U>", "where T : IDisposable, new() where U : class"), string.Empty, string.Empty),
 			[]);
