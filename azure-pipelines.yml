@@ -12,6 +12,7 @@ variables:
   PathToCommunityToolkitUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.UnitTests/CommunityToolkit.Maui.Markup.UnitTests.csproj'
   PathToCommunityToolkitBenchmarkCsproj: 'src/CommunityToolkit.Maui.Markup.Benchmarks/CommunityToolkit.Maui.Markup.Benchmarks.csproj'
   PathToCommunityToolkitSourceGeneratorsCsproj: 'src/CommunityToolkit.Maui.Markup.SourceGenerators/CommunityToolkit.Maui.Markup.SourceGenerators.csproj'
+  PathToCommunityToolkitSourceGeneratorsUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.SourceGenerators.UnitTests/CommunityToolkit.Maui.Markup.SourceGenerators.UnitTests.csproj'
   CommunityToolkitSampleApp_Xcode_Version: '16'
   CommunityToolkitLibrary_Xcode_Version: '16'
   ShouldCheckDependencies: true
@@ -170,6 +171,11 @@ jobs:
           script: 'dotnet build -c Release $(PathToCommunityToolkitUnitTestCsproj)'
 
       # test
+      - task: CmdLine@2
+        displayName: 'Run Source Generators Unit Tests'
+        inputs:
+          script: 'dotnet test -c Release $(PathToCommunityToolkitSourceGeneratorsUnitTestCsproj) --settings ".runsettings" --collect "XPlat code coverage" --logger trx --results-directory $(Agent.TempDirectory)'
+
       - task: CmdLine@2
         displayName: 'Run Unit Tests'
         inputs:
