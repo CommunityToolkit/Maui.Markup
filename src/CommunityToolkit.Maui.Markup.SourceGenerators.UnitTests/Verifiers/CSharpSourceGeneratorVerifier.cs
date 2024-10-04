@@ -15,6 +15,7 @@ public static partial class CSharpSourceGeneratorVerifier<TSourceGenerator>
 	{
 		var test = new Test(assembliesUnderTest)
 		{
+			TestBehaviors = TestBehaviors.SkipGeneratedSourcesCheck,
 			TestState =
 			{
 				Sources = { source },
@@ -26,6 +27,7 @@ public static partial class CSharpSourceGeneratorVerifier<TSourceGenerator>
 		};
 
 		test.ExpectedDiagnostics.AddRange(expectedDiagnosticResults);
+
 		await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
 	}
 }

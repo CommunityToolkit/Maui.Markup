@@ -17,7 +17,12 @@ public static partial class CSharpSourceGeneratorVerifier<TSourceGenerator>
 #else
 #error ReferenceAssemblies must be updated to current version of .NET
 #endif
-			List<Type> typesForAssembliesUnderTest = [];
+			List<Type> typesForAssembliesUnderTest =
+			[
+				typeof(Microsoft.Maui.Controls.Xaml.Extensions), // Microsoft.Maui.Controls.Xaml
+				typeof(MauiApp),// Microsoft.Maui.Hosting
+				typeof(Application), // Microsoft.Maui.Controls
+			];
 			typesForAssembliesUnderTest.AddRange(assembliesUnderTest);
 
 			foreach (var type in typesForAssembliesUnderTest)

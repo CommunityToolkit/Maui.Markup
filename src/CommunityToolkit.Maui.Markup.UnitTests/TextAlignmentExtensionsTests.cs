@@ -251,14 +251,14 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		class DerivedFromSearchBar : SearchBar { }
 	}
 
-	class CustomTextAlignmentControl : ITextAlignment
+	sealed class CustomTextAlignmentControl : ITextAlignment
 	{
 		public TextAlignment HorizontalTextAlignment { get; set; } = TextAlignment.Center;
 
 		public TextAlignment VerticalTextAlignment { get; set; } = TextAlignment.Center;
 	}
 
-	class MyEntry : Entry, IEntry
+	sealed class MyEntry : Entry, IEntry
 	{
 		public string Type { get; set; } = string.Empty;
 	}
