@@ -107,7 +107,7 @@ namespace CommunityToolkit.Maui.Markup
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("{{className}}", "{{assemblyVersion}}")]
     [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    {{textAlignmentClassMetadata.ClassAcessModifier}} static partial class TextAlignmentExtensions_{{textAlignmentClassMetadata.ClassName}}
+    {{textAlignmentClassMetadata.ClassAccessModifier}} static partial class TextAlignmentExtensions_{{textAlignmentClassMetadata.ClassName}}
     {
         /// <summary>
         /// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.Start"/>
@@ -244,7 +244,7 @@ namespace CommunityToolkit.Maui.Markup
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("{{className}}", "{{assemblyVersion}}")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        {{textAlignmentClassMetadata.ClassAcessModifier}} static partial class TextAlignmentExtensions_{{textAlignmentClassMetadata.ClassName}}
+        {{textAlignmentClassMetadata.ClassAccessModifier}} static partial class TextAlignmentExtensions_{{textAlignmentClassMetadata.ClassName}}
         {
             /// <summary>
             /// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.Start"/>
@@ -292,7 +292,7 @@ namespace CommunityToolkit.Maui.Markup
         /// <summary>
         /// Extension methods for <see cref="ITextAlignment"/>
         /// </summary>
-        {{textAlignmentClassMetadata.ClassAcessModifier}} static partial class TextAlignmentExtensions_{{textAlignmentClassMetadata.ClassName}}
+        {{textAlignmentClassMetadata.ClassAccessModifier}} static partial class TextAlignmentExtensions_{{textAlignmentClassMetadata.ClassName}}
         {
             /// <summary>
             /// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.End"/>
@@ -378,6 +378,4 @@ namespace CommunityToolkit.Maui.Markup
 
 		return new(namedTypeSymbol.Name, accessModifier, namedTypeSymbol.ContainingNamespace.ToDisplayString(), namedTypeSymbol.TypeArguments.GetGenericTypeArgumentsString(), namedTypeSymbol.GetGenericTypeConstraintsAsString());
 	}
-
-	record TextAlignmentClassMetadata(string ClassName, string ClassAcessModifier, string Namespace, string GenericArguments, string GenericConstraints);
 }

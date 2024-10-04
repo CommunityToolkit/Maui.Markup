@@ -6,7 +6,7 @@ namespace CommunityToolkit.Maui.Markup.SourceGenerators.UnitTests;
 public static partial class CSharpAnalyzerVerifier<TAnalyzer>
 	where TAnalyzer : DiagnosticAnalyzer, new()
 {
-	public class Test : CSharpAnalyzerTest<TAnalyzer, Microsoft.CodeAnalysis.Testing.DefaultVerifier>
+	class Test : CSharpAnalyzerTest<TAnalyzer, Microsoft.CodeAnalysis.Testing.DefaultVerifier>
 	{
 		public Test(params Type[] assembliesUnderTest)
 		{

@@ -10,7 +10,7 @@ public static partial class CSharpCodeFixVerifier<TAnalyzer, TCodeFix>
 	where TAnalyzer : DiagnosticAnalyzer, new()
 	where TCodeFix : CodeFixProvider, new()
 {
-	protected class Test : CSharpCodeFixTest<TAnalyzer, TCodeFix, DefaultVerifier>
+	class Test : CSharpCodeFixTest<TAnalyzer, TCodeFix, DefaultVerifier>
 	{
 		public Test(params Type[] assembliesUnderTest)
 		{
