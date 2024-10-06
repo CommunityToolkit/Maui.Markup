@@ -50,13 +50,13 @@ public class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 
 	static bool ShouldGenerateTextAlignmentExtension(INamedTypeSymbol classSymbol, INamedTypeSymbol iTextAlignmentInterfaceSymbol)
 	{
-		return ImplementsInterfaceIgnoringBaseType(classSymbol, iTextAlignmentInterfaceSymbol)
-			&& !ImplementsInterface(classSymbol.BaseType, iTextAlignmentInterfaceSymbol);
+		return DoesImplementInterfaceIgnoringBaseType(classSymbol, iTextAlignmentInterfaceSymbol)
+			&& !DoesImplementInterface(classSymbol.BaseType, iTextAlignmentInterfaceSymbol);
 
-		static bool ImplementsInterfaceIgnoringBaseType(INamedTypeSymbol classSymbol, INamedTypeSymbol interfaceSymbol)
+		static bool DoesImplementInterfaceIgnoringBaseType(INamedTypeSymbol classSymbol, INamedTypeSymbol interfaceSymbol)
 			=> classSymbol.AllInterfaces.Contains(interfaceSymbol);
 
-		static bool ImplementsInterface(INamedTypeSymbol? classSymbol, INamedTypeSymbol interfaceSymbol)
+		static bool DoesImplementInterface(INamedTypeSymbol? classSymbol, INamedTypeSymbol interfaceSymbol)
 			=> classSymbol?.AllInterfaces.Contains(interfaceSymbol) ?? false;
 	}
 
@@ -419,7 +419,9 @@ public class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 		// Primary constraint (class, struct, unmanaged)
 		if (typeParameter.HasReferenceTypeConstraint)
 		{
-			constraints.Add("class");
+			constraints.Add(typeParameter.ReferenceTypeConstraintNullableAnnotation is NullableAnnotation.Annotated 
+				? "class?" 
+				: "class");
 		}
 		else if (typeParameter.HasValueTypeConstraint)
 		{
@@ -437,12 +439,12 @@ public class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 		// Secondary constraints (specific types)
 		foreach (var constraintType in typeParameter.ConstraintTypes)
 		{
-			var constraintTypeString = constraintType.NullableAnnotation switch
-			{
-				NullableAnnotation.Annotated => string.Concat(constraintType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), '?'),
-				_ => constraintType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)
-			};
+			var symbolDisplayFormat = new SymbolDisplayFormat(
+				typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
+				miscellaneousOptions: SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
 			
+			var constraintTypeString = constraintType.ToDisplayString(symbolDisplayFormat);
+
 			constraints.Add(constraintTypeString);
 		}
 
@@ -457,7 +459,7 @@ public class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 		{
 			constraints.Add("new()");
 		}
-		
+
 		return constraints.Count > 0
 			? $"where {typeParameter.Name} : {string.Join(", ", constraints)}"
 			: string.Empty;
