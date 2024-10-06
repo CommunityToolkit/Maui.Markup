@@ -13,6 +13,7 @@ variables:
   PathToCommunityToolkitBenchmarkCsproj: 'src/CommunityToolkit.Maui.Markup.Benchmarks/CommunityToolkit.Maui.Markup.Benchmarks.csproj'
   PathToCommunityToolkitSourceGeneratorsCsproj: 'src/CommunityToolkit.Maui.Markup.SourceGenerators/CommunityToolkit.Maui.Markup.SourceGenerators.csproj'
   PathToCommunityToolkitSourceGeneratorsUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.SourceGenerators.UnitTests/CommunityToolkit.Maui.Markup.SourceGenerators.UnitTests.csproj'
+  PathToCommunityToolkitSourceGeneratorsBenchmarkCsproj: 'src/CommunityToolkit.Maui.Markup.SourceGenerators.Benchmarks/CommunityToolkit.Maui.Markup.SourceGenerators.Benchmarks.csproj'
   CommunityToolkitSampleApp_Xcode_Version: '16'
   CommunityToolkitLibrary_Xcode_Version: '16'
   ShouldCheckDependencies: true
@@ -291,9 +292,14 @@ jobs:
           script: dotnet --info
 
       - task: CmdLine@2
-        displayName: 'Run Benchmarks'
+        displayName: 'Run Library Benchmarks'
         inputs:
           script : 'dotnet run --project $(PathToCommunityToolkitBenchmarkCsproj) -c Release -- -a $(Build.ArtifactStagingDirectory)'
+
+      - task: CmdLine@2
+        displayName: 'Run Source Generator Benchmarks'
+        inputs:
+          script : 'dotnet run --project $(PathToCommunityToolkitSourceGeneratorsBenchmarkCsproj) -c Release -- -a $(Build.ArtifactStagingDirectory)'
 
       # publish the Benchmark Results
       - task: PublishBuildArtifacts@1

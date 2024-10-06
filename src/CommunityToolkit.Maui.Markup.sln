@@ -14,11 +14,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\global.json = ..\global.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunityToolkit.Maui.Markup.SourceGenerators", "CommunityToolkit.Maui.Markup.SourceGenerators\CommunityToolkit.Maui.Markup.SourceGenerators.csproj", "{C66CEA39-565E-479C-974D-72795D3502CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityToolkit.Maui.Markup.SourceGenerators", "CommunityToolkit.Maui.Markup.SourceGenerators\CommunityToolkit.Maui.Markup.SourceGenerators.csproj", "{C66CEA39-565E-479C-974D-72795D3502CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunityToolkit.Maui.Markup.Benchmarks", "CommunityToolkit.Maui.Markup.Benchmarks\CommunityToolkit.Maui.Markup.Benchmarks.csproj", "{9A46B6CE-CC4B-4F26-80F8-779C94A88C18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityToolkit.Maui.Markup.Benchmarks", "CommunityToolkit.Maui.Markup.Benchmarks\CommunityToolkit.Maui.Markup.Benchmarks.csproj", "{9A46B6CE-CC4B-4F26-80F8-779C94A88C18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunityToolkit.Maui.Markup.SourceGenerators.UnitTests", "CommunityToolkit.Maui.Markup.SourceGenerators.UnitTests\CommunityToolkit.Maui.Markup.SourceGenerators.UnitTests.csproj", "{BB9611DF-34B9-4BBF-A564-EB2AADD943C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityToolkit.Maui.Markup.SourceGenerators.UnitTests", "CommunityToolkit.Maui.Markup.SourceGenerators.UnitTests\CommunityToolkit.Maui.Markup.SourceGenerators.UnitTests.csproj", "{BB9611DF-34B9-4BBF-A564-EB2AADD943C8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0716CCB2-1629-4E73-ACE8-643A6F9F5AD3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Benchmarks", "Benchmarks", "{F690A1B1-9B74-4DB7-8A98-D0CBF794EDAD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityToolkit.Maui.Markup.SourceGenerators.Benchmarks", "CommunityToolkit.Maui.Markup.SourceGenerators.Benchmarks\CommunityToolkit.Maui.Markup.SourceGenerators.Benchmarks.csproj", "{2B682080-908C-467C-B429-3700AFFFD612}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,9 +52,19 @@ Global
 		{BB9611DF-34B9-4BBF-A564-EB2AADD943C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB9611DF-34B9-4BBF-A564-EB2AADD943C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB9611DF-34B9-4BBF-A564-EB2AADD943C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B682080-908C-467C-B429-3700AFFFD612}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B682080-908C-467C-B429-3700AFFFD612}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B682080-908C-467C-B429-3700AFFFD612}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B682080-908C-467C-B429-3700AFFFD612}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{480F4FB8-F50A-4349-B5B6-C4D6D9151343} = {0716CCB2-1629-4E73-ACE8-643A6F9F5AD3}
+		{9A46B6CE-CC4B-4F26-80F8-779C94A88C18} = {F690A1B1-9B74-4DB7-8A98-D0CBF794EDAD}
+		{BB9611DF-34B9-4BBF-A564-EB2AADD943C8} = {0716CCB2-1629-4E73-ACE8-643A6F9F5AD3}
+		{2B682080-908C-467C-B429-3700AFFFD612} = {F690A1B1-9B74-4DB7-8A98-D0CBF794EDAD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42B065EB-DA54-40BE-B676-3D47D59A81F2}
