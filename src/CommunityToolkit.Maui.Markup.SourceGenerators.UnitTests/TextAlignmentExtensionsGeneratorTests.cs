@@ -50,9 +50,6 @@ public class GenericClass<T, U> : Microsoft.Maui.ITextAlignment
 }
 """;
 
-		var temp = GenerateSourceCode(textAlignmentExtensionsGeneratorFullName,
-			new("GenericClass", "public", "MyNamespace", "<TAssignable, T, U>", "<T, U>", "where T : IDisposable, new() where U : class"));
-
 		// Act // Assert
 		await VerifySourceGeneratorAsync(
 			source,
