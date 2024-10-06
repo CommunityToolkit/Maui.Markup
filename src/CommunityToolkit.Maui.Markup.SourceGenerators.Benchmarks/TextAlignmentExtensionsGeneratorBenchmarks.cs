@@ -15,7 +15,7 @@ public class TextAlignmentExtensionsGeneratorBenchmarks
 	}
 
 	[Benchmark]
-	public Task VerifyNoErrorsWhenUseMauiCommunityToolkitHasAdditonalWhitespace()
+	public Task VerifyGeneratedSource_WhenClassImplementsITextAlignmentInterface()
 	{
 		return textAlignmentExtensionsGeneratorTests.VerifyGeneratedSource_WhenClassImplementsITextAlignmentInterface();
 	}
