@@ -41,7 +41,7 @@ using System;
 using Microsoft.Maui;
 namespace MyNamespace;
 
-public class MyClass<T, U> : Microsoft.Maui.ITextAlignment
+public class GenericClass<T, U> : Microsoft.Maui.ITextAlignment
 						  where T : IDisposable, new()
 						  where U : class
 {
@@ -50,11 +50,14 @@ public class MyClass<T, U> : Microsoft.Maui.ITextAlignment
 }
 """;
 
+		var temp = GenerateSourceCode(textAlignmentExtensionsGeneratorFullName,
+			new("GenericClass", "public", "MyNamespace", "<TAssignable, T, U>", "<T, U>", "where T : IDisposable, new() where U : class"));
+
 		// Act // Assert
 		await VerifySourceGeneratorAsync(
 			source,
 			GenerateSourceCode(textAlignmentExtensionsGeneratorFullName,
-				new("MyClass", "public", "MyNamespace", "<T, U>", string.Empty, "where T : IDisposable, new() where U : class")),
+				new("GenericClass", "public", "MyNamespace", "<TAssignable, T, U>", "<T, U>", "where T : IDisposable, new() where U : class")),
 			[]);
 	}
 

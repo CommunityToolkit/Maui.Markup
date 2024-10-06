@@ -415,24 +415,24 @@ public class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 
 	static string GetGenericParameterConstraints(ITypeParameterSymbol typeParameter)
 	{
-		var constraints = new StringBuilder();
+		var constraints = new List<string>();
 
 		// Primary constraint (class, struct, unmanaged)
 		if (typeParameter.HasReferenceTypeConstraint)
 		{
-			constraints.Append("class");
+			constraints.Add("class");
 		}
 		else if (typeParameter.HasValueTypeConstraint)
 		{
-			constraints.Append(typeParameter.HasUnmanagedTypeConstraint ? "unmanaged" : "struct");
+			constraints.Add(typeParameter.HasUnmanagedTypeConstraint ? "unmanaged" : "struct");
 		}
 		else if (typeParameter.HasUnmanagedTypeConstraint)
 		{
-			constraints.Append("unmanaged");
+			constraints.Add("unmanaged");
 		}
 		else if (typeParameter.HasNotNullConstraint)
 		{
-			constraints.Append("notnull");
+			constraints.Add("notnull");
 		}
 
 		// Secondary constraints (specific types)
@@ -440,26 +440,26 @@ public class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 		{
 			var constraintTypeString = constraintType.NullableAnnotation switch
 			{
-				NullableAnnotation.Annotated => constraintType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) + '?',
+				NullableAnnotation.Annotated => string.Concat(constraintType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), '?'),
 				_ => constraintType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)
 			};
 			
-			constraints.Append(constraintTypeString);
+			constraints.Add(constraintTypeString);
 		}
 
 		// Check for record constraint
 		if (typeParameter.IsRecord)
 		{
-			constraints.Append("record");
+			constraints.Add("record");
 		}
 
 		// Constructor constraint (must be last)
 		if (typeParameter.HasConstructorConstraint)
 		{
-			constraints.Append("new()");
+			constraints.Add("new()");
 		}
 		
-		return constraints.Length > 0
+		return constraints.Count > 0
 			? $"where {typeParameter.Name} : {string.Join(", ", constraints)}"
 			: string.Empty;
 	}
