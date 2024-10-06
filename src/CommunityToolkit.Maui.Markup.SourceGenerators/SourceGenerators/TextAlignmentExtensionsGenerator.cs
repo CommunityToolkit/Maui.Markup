@@ -15,7 +15,6 @@ public class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 
 	public void Initialize(IncrementalGeneratorInitializationContext context)
 	{
-		// Optimize: Use ValueTuple for lightweight data passing
 		IncrementalValuesProvider<(INamedTypeSymbol ClassSymbol, INamedTypeSymbol ITextAlignmentInterfaceSymbol)> userGeneratedClassesProvider = context.SyntaxProvider
 			.CreateSyntaxProvider(
 				static (syntaxNode, _) => syntaxNode is ClassDeclarationSyntax { BaseList: not null },
@@ -40,7 +39,7 @@ public class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 
 		var compilationProvider = context.CompilationProvider;
 
-		// Optimize: Combine providers to reduce the number of operations
+		// Combine providers to reduce the number of operations
 		var combined = userGeneratedClassesProvider
 			.Collect()
 			.Combine(compilationProvider);
@@ -408,7 +407,7 @@ public class TextAlignmentExtensionsGenerator : IIncrementalGenerator
 	{
 		var constraints = namedTypeSymbol.TypeParameters
 			.Select(GetGenericParameterConstraints)
-			.Where(c => !string.IsNullOrEmpty(c));
+			.Where(static c => !string.IsNullOrEmpty(c));
 
 		return string.Join(" ", constraints);
 	}
