@@ -44,6 +44,10 @@
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiPackageVersion)"/>
   </ItemGroup>
 
+  <ItemGroup Condition=" '$(Configuration)'=='Release' ">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
   <ItemGroup>
 		<None Include="..\CommunityToolkit.Maui.Markup.SourceGenerators\bin\$(Configuration)\netstandard2.0\CommunityToolkit.Maui.Markup.SourceGenerators.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>
