@@ -35,6 +35,21 @@
 		<Configurations>Debug;Release</Configurations>
 	</PropertyGroup>
 
+  <!--  Only include this PropertyGroup when running using CI/CD on Azure Pipelines or GitHub Actions-->
+  <PropertyGroup Condition="'$(TF_BUILD)' == 'true' OR '$(GITHUB_ACTIONS)' == 'true'">
+    <!--  Ensure deterministic build when using Azure Pipelines or GitHub Actions-->
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    
+    <!-- Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+
+    <!-- Embed source files that are not tracked by the source control manager in the PDB -->
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+    <!-- Embed symbols containing Source Link in the main file (exe/dll) -->
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
 	<ItemGroup>
 		<None Include="../../build/nuget.png" Pack="true" PackagePath="" />
 		<None Include="ReadMe.txt" pack="true" PackagePath="." />
