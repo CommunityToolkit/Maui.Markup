@@ -7,7 +7,6 @@ namespace CommunityToolkit.Maui.Markup.UnitTests;
 [TestFixture]
 class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 {
-	ViewModel? viewModel;
 	List<BindingBase>? testBindings;
 	List<object>? testConvertValues;
 
@@ -16,17 +15,17 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 	{
 		base.Setup();
 
-		viewModel = new ViewModel();
+		new ViewModel();
 
 		testBindings =
 		[
-			new Binding(nameof(viewModel.Text)),
-			new Binding(nameof(viewModel.Id)),
+			BindingBase.Create((ViewModel vm) => vm.Text),
+			BindingBase.Create((ViewModel vm) => vm.Id),
 
-			new Binding(nameof(viewModel.IsDone)),
-			new Binding(nameof(viewModel.Fraction)),
+			BindingBase.Create((ViewModel vm) => vm.IsDone),
+			BindingBase.Create((ViewModel vm) => vm.Fraction),
 
-			new Binding(nameof(viewModel.Count))
+			BindingBase.Create((ViewModel vm) => vm.Count)
 		];
 
 		testConvertValues =
@@ -44,7 +43,6 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 	[TearDown]
 	public override void TearDown()
 	{
-		viewModel = null;
 		testBindings = null;
 		testConvertValues = null;
 		base.TearDown();
@@ -238,24 +236,24 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 		if (testConvert && testConvertBack)
 		{
 			label.Bind(
-					Label.TextProperty,
-					testBindings[0], testBindings[1], testBindings[2],
-					((string? text, Guid id, bool isDone) v, int? parameter) =>
-					{
-						ArgumentNullException.ThrowIfNull(parameter);
+				Label.TextProperty,
+				testBindings[0], testBindings[1], testBindings[2],
+				((string? text, Guid id, bool isDone) v, int? parameter) =>
+				{
+					ArgumentNullException.ThrowIfNull(parameter);
 
-						return Format(parameter.Value, v.text, v.id, v.isDone);
-					},
-					(string? formatted, int? parameter) =>
-					{
-						ArgumentNullException.ThrowIfNull(parameter);
-						ArgumentNullException.ThrowIfNull(formatted);
+					return Format(parameter.Value, v.text, v.id, v.isDone);
+				},
+				(string? formatted, int? parameter) =>
+				{
+					ArgumentNullException.ThrowIfNull(parameter);
+					ArgumentNullException.ThrowIfNull(formatted);
 
-						var unformattedResult = Unformat(parameter.Value, formatted);
-						return (unformattedResult.Text ?? throw new NullReferenceException(), unformattedResult.Id, unformattedResult.IsDone);
-					},
-					converterParameter: 2
-				);
+					var unformattedResult = Unformat(parameter.Value, formatted);
+					return (unformattedResult.Text ?? throw new NullReferenceException(), unformattedResult.Id, unformattedResult.IsDone);
+				},
+				converterParameter: 2
+			);
 		}
 		else if (testConvert && !testConvertBack)
 		{
@@ -435,7 +433,9 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 		}
 
 		var converter = new FuncMultiConverter<string, object>(convert, convertBack);
-		var label = new Label { }.Bind(Label.TextProperty, GetTestBindings(5), converter);
+		var label = new Label
+		{
+		}.Bind(Label.TextProperty, GetTestBindings(5), converter);
 		AssertLabelTextMultiBound(label, 5, testConvert, testConvertBack, converter: converter);
 	}
 
@@ -449,7 +449,7 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 		if (testConvert)
 		{
 			convert = (object[] v, int parameter) => Format(parameter,
-			v[0], v[1], v[2], v[3], v[4]);
+				v[0], v[1], v[2], v[3], v[4]);
 		}
 
 		Func<string?, int, object?[]>? convertBack = null;
@@ -465,7 +465,9 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 		}
 
 		var converter = new FuncMultiConverter<string?, int>(convert, convertBack);
-		var label = new Label { }.Bind(Label.TextProperty, GetTestBindings(5), converter, 2);
+		var label = new Label
+		{
+		}.Bind(Label.TextProperty, GetTestBindings(5), converter, 2);
 		AssertLabelTextMultiBound(label, 5, testConvert, testConvertBack, 2, converter);
 	}
 
@@ -480,7 +482,7 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 	static string Format(int parameter, params List<object?> values)
 	{
 		var stringBuilder = new StringBuilder();
-		
+
 		stringBuilder.Append($"'{PrefixDots(values[0], parameter)}'");
 		for (var i = 1; i < values.Count; i++)
 		{
