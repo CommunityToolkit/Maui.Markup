@@ -15,17 +15,13 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 	{
 		base.Setup();
 
-		new ViewModel();
-
 		testBindings =
 		[
-			BindingBase.Create((ViewModel vm) => vm.Text),
-			BindingBase.Create((ViewModel vm) => vm.Id),
-
-			BindingBase.Create((ViewModel vm) => vm.IsDone),
-			BindingBase.Create((ViewModel vm) => vm.Fraction),
-
-			BindingBase.Create((ViewModel vm) => vm.Count)
+			BindingBase.Create(static (MultiBindViewModel vm) => vm.Text),
+			BindingBase.Create(static (MultiBindViewModel vm) => vm.Id),
+			BindingBase.Create(static (MultiBindViewModel vm) => vm.IsDone),
+			BindingBase.Create(static (MultiBindViewModel vm) => vm.Fraction),
+			BindingBase.Create(static (MultiBindViewModel vm) => vm.Count)
 		];
 
 		testConvertValues =
@@ -533,17 +529,17 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 			assertConverterInstanceIsAnyNotNull: converter is null,
 			assertConvert: c => c.AssertConvert(values, expected, twoWay: testConvert && testConvertBack, backOnly: !testConvert && testConvertBack));
 	}
+}
 
-	class ViewModel
-	{
-		public Guid Id { get; set; }
+sealed class MultiBindViewModel
+{
+	public Guid Id { get; set; }
 
-		public string Text { get; set; } = string.Empty;
+	public string Text { get; set; } = string.Empty;
 
-		public bool IsDone { get; set; }
+	public bool IsDone { get; set; }
 
-		public double Fraction { get; set; }
+	public double Fraction { get; set; }
 
-		public int Count { get; set; }
-	}
+	public int Count { get; set; }
 }
