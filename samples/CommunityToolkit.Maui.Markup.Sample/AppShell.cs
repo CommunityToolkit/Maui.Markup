@@ -32,7 +32,7 @@ class AppShell : Shell
 		return route;
 	}
 
-	static KeyValuePair<Type, string> CreateRoutePageMapping<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] TPage, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] TViewModel>() where TPage : BaseContentPage<TViewModel>
+	static KeyValuePair<Type, string> CreateRoutePageMapping<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TPage, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TViewModel>() where TPage : BaseContentPage<TViewModel>
 																					where TViewModel : BaseViewModel
 	{
 		var route = CreateRoute();

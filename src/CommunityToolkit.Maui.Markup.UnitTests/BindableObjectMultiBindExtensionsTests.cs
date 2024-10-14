@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
+﻿using System.Text;
+using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests;
@@ -476,15 +477,17 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 
 	static string RemoveDots(string text, int count) => text.Substring(count);
 
-	static string Format(int parameter, params object?[] values)
+	static string Format(int parameter, params List<object?> values)
 	{
-		var formatted = $"'{PrefixDots(values[0], parameter)}'";
-		for (var i = 1; i < values.Length; i++)
+		var stringBuilder = new StringBuilder();
+		
+		stringBuilder.Append($"'{PrefixDots(values[0], parameter)}'");
+		for (var i = 1; i < values.Count; i++)
 		{
-			formatted += $", '{values[i]}'";
+			stringBuilder.Append($", '{values[i]}'");
 		}
 
-		return formatted;
+		return stringBuilder.ToString();
 	}
 
 	static (string? Text, Guid Id, bool IsDone, double Fraction, int Count) Unformat(int parameter, string formatted)

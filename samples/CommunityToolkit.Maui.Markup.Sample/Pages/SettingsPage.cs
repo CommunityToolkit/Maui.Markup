@@ -18,14 +18,17 @@ sealed class SettingsPage : BaseContentPage<SettingsViewModel>
 
 				new Label()
 					.Text("Top Stories To Fetch")
-					.AppThemeBinding(Label.TextColorProperty,AppStyles.BlackColor, AppStyles.PrimaryTextColorDark)
+					.AppThemeBinding(Label.TextColorProperty, AppStyles.BlackColor, AppStyles.PrimaryTextColorDark)
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
 					.LayoutBounds(0, 0, 1, 40)
 					.TextCenterHorizontal()
 					.TextBottom()
 					.Assign(out Label topNewsStoriesToFetchLabel),
 
-				new Entry { Keyboard = Keyboard.Numeric }
+				new Entry
+					{
+						Keyboard = Keyboard.Numeric
+					}
 					.BackgroundColor(Colors.White)
 					.Placeholder($"Provide a value between {SettingsService.MinimumStoriesToFetch} and {SettingsService.MaximumStoriesToFetch}", Colors.Grey)
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional, AbsoluteLayoutFlags.WidthProportional)
@@ -43,16 +46,11 @@ sealed class SettingsPage : BaseContentPage<SettingsViewModel>
 					.Bind(Entry.TextProperty, static (SettingsViewModel vm) => vm.NumberOfTopStoriesToFetch, static (vm, text) => vm.NumberOfTopStoriesToFetch = text),
 
 				new Label()
-					.Bind(
-						Label.TextProperty,
-						binding1: new Binding { Source = SettingsService.MinimumStoriesToFetch },
-						binding2: new Binding { Source = SettingsService.MaximumStoriesToFetch },
-						convert: ((int minimum, int maximum) values) => string.Format(CultureInfo.CurrentUICulture, $"The number must be between {values.minimum} and {values.maximum}."),
-						mode: BindingMode.OneTime)
+					.Text(string.Format(CultureInfo.CurrentUICulture, $"The number must be between {SettingsService.MinimumStoriesToFetch} and {SettingsService.MaximumStoriesToFetch}."))
 					.LayoutFlags(AbsoluteLayoutFlags.XProportional | AbsoluteLayoutFlags.WidthProportional)
 					.LayoutBounds(0, 90, 1, 40)
 					.TextCenter()
-					.AppThemeColorBinding(Label.TextColorProperty,AppStyles.BlackColor, AppStyles.PrimaryTextColorDark)
+					.AppThemeColorBinding(Label.TextColorProperty, AppStyles.BlackColor, AppStyles.PrimaryTextColorDark)
 					.Font(size: 12, italic: true)
 					.SemanticHint($"The minimum and maximum possible values for the {topNewsStoriesToFetchLabel.Text} field above.")
 			}
