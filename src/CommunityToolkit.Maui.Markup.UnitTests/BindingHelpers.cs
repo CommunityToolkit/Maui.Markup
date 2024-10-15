@@ -214,17 +214,8 @@ static class BindingHelpers
 	{
 		getContextMethodInfo ??= typeof(BindableObject).GetMethod("GetContext", BindingFlags.NonPublic | BindingFlags.Instance);
 
-		var context = getContextMethodInfo?.Invoke(bindable, [property]);
-		if (context is null)
-		{
-			return null;
-		}
-
-		bindingsFieldInfo ??= context.GetType().GetField("Bindings");
-
-		var bindingsList = bindingsFieldInfo?.GetValue(context) as SortedList<SetterSpecificity, BindingBase>;
-
-		return (TBinding?)bindingsList?.First().Value;
+		var context = (BindableObject.BindablePropertyContext?)getContextMethodInfo?.Invoke(bindable, [property]);
+		return (TBinding?)context?.Bindings.GetValue();
 	}
 
 	internal static IValueConverter AssertConvert<TValue, TConvertedValue>(this IValueConverter converter, TValue value, object? parameter, TConvertedValue expectedConvertedValue, bool twoWay = false, bool backOnly = false, CultureInfo? culture = null)
