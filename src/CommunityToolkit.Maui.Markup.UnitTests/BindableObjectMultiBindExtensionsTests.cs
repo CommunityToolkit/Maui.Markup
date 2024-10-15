@@ -470,10 +470,10 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 
 	static string RemoveDots(string text, int count) => text[count..];
 
-	static string Format(int parameter, params List<object?> values)
+	static string Format(int parameter, params object?[] values)
 	{
 		var formatted = $"'{PrefixDots(values[0], parameter)}'";
-		for (var i = 1; i < values.Count; i++)
+		for (var i = 1; i < values.Length; i++)
 		{
 			formatted += $", '{values[i]}'";
 		}
