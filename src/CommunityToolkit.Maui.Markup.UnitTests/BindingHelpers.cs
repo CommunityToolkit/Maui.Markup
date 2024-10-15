@@ -7,7 +7,6 @@ namespace CommunityToolkit.Maui.Markup.UnitTests;
 static class BindingHelpers
 {
 	static MethodInfo? getContextMethodInfo;
-	static FieldInfo? bindingsFieldInfo;
 
 	internal static void AssertBindingExists(
 		BindableObject bindable,
