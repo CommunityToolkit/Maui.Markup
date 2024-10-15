@@ -57,11 +57,6 @@ sealed class TypedBinding<TSource, TProperty> : TypedBindingBase where TSource :
 	[MemberNotNull(nameof(targetProperty)), MemberNotNull(nameof(specificity))]
 	internal override void Apply(object? context, BindableObject bindObj, BindableProperty targetProperty, bool fromBindingContextChanged, SetterSpecificity specificity)
 	{
-		if (context is not TSource sourceContext)
-		{
-			throw new InvalidOperationException($"Invalid context. Expected type {typeof(TSource).FullName}, but received {context?.GetType()?.FullName ?? "null"}");
-		}
-
 		this.targetProperty = targetProperty;
 		this.specificity = specificity;
 		var source = Source ?? Context ?? context;
@@ -84,10 +79,10 @@ sealed class TypedBinding<TSource, TProperty> : TypedBindingBase where TSource :
 			throw new InvalidOperationException("Binding instances cannot be reused");
 		}
 
-		weakSource.SetTarget(sourceContext);
+		weakSource.SetTarget(source as TSource);
 		weakTarget.SetTarget(bindObj);
 
-		ApplyCore(sourceContext, bindObj, targetProperty, false, specificity);
+		ApplyCore(source as TSource, bindObj, targetProperty, false, specificity);
 	}
 
 	internal override BindingBase Clone()
