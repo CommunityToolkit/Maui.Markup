@@ -1,5 +1,4 @@
-﻿using System.Text;
-using CommunityToolkit.Maui.Markup.UnitTests.Base;
+﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using NUnit.Framework;
 
 namespace CommunityToolkit.Maui.Markup.UnitTests;
@@ -429,9 +428,7 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 		}
 
 		var converter = new FuncMultiConverter<string, object>(convert, convertBack);
-		var label = new Label
-		{
-		}.Bind(Label.TextProperty, GetTestBindings(5), converter);
+		var label = new Label().Bind(Label.TextProperty, GetTestBindings(5), converter);
 		AssertLabelTextMultiBound(label, 5, testConvert, testConvertBack, converter: converter);
 	}
 
@@ -461,31 +458,27 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 		}
 
 		var converter = new FuncMultiConverter<string?, int>(convert, convertBack);
-		var label = new Label
-		{
-		}.Bind(Label.TextProperty, GetTestBindings(5), converter, 2);
+		var label = new Label().Bind(Label.TextProperty, GetTestBindings(5), converter, 2);
 		AssertLabelTextMultiBound(label, 5, testConvert, testConvertBack, 2, converter);
 	}
 
-	List<BindingBase> GetTestBindings(int count) => testBindings?.Take(count).ToList() ?? Enumerable.Empty<BindingBase>().ToList();
+	List<BindingBase> GetTestBindings(int count) => testBindings?.Take(count).ToList() ?? [];
 
-	object[] GetTestConvertValues(int count) => testConvertValues?.Take(count).ToArray() ?? Array.Empty<BindingBase>();
+	object[] GetTestConvertValues(int count) => testConvertValues?.Take(count).ToArray() ?? [];
 
 	static string PrefixDots(object? value, int count) => $"{new string('.', count)}{value}";
 
-	static string RemoveDots(string text, int count) => text.Substring(count);
+	static string RemoveDots(string text, int count) => text[count..];
 
 	static string Format(int parameter, params List<object?> values)
 	{
-		var stringBuilder = new StringBuilder();
-
-		stringBuilder.Append($"'{PrefixDots(values[0], parameter)}'");
+		var formatted = $"'{PrefixDots(values[0], parameter)}'";
 		for (var i = 1; i < values.Count; i++)
 		{
-			stringBuilder.Append($", '{values[i]}'");
+			formatted += $", '{values[i]}'";
 		}
 
-		return stringBuilder.ToString();
+		return formatted;
 	}
 
 	static (string? Text, Guid Id, bool IsDone, double Fraction, int Count) Unformat(int parameter, string formatted)
