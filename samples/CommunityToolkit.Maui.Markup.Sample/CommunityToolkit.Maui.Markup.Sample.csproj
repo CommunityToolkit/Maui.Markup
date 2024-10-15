@@ -33,12 +33,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release' 
-                  AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'tizen'
-                  AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'android'
-                  AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'windows'">
+                  AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'tizen'">
     <!-- Ahead-of-time compilation is not yet supported net8.0-tizen -->
-    <!-- Cross-OS native compilation is not supported net8.0-android -->
-    <!-- net8.0-windows causing build errors in azurepipelines.yml -->
     <PublishAot>true</PublishAot>
   </PropertyGroup>
 
