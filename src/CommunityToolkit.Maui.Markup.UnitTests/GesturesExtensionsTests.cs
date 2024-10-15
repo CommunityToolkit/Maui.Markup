@@ -367,22 +367,20 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 	}
 
 	[Test]
-	[Obsolete]
 	public void MultipleGestureBindings()
 	{
 		var gestureElement = new TGestureElement
 			{
 				BindingContext = new ViewModel()
-			}.BindSwipeGesture(static (ViewModel vm) => vm.SetGuidCommand)
-			.BindTapGesture(static (ViewModel vm) => vm.SetGuidCommand)
+			}
+			.BindSwipeGesture(static (ViewModel vm) => vm.SetGuidCommand)
 			.BindTapGesture(static (ViewModel vm) => vm.SetGuidCommand);
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(3));
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(2));
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<SwipeGestureRecognizer>());
 			Assert.That(gestureElement.GestureRecognizers[1], Is.InstanceOf<TapGestureRecognizer>());
-			Assert.That(gestureElement.GestureRecognizers[2], Is.InstanceOf<ClickGestureRecognizer>());
 		});
 	}
 }
