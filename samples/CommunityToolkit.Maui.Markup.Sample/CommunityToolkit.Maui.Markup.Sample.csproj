@@ -33,8 +33,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release' 
-                  AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'tizen'">
+                  AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'tizen'
+                  AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'windows'">
     <!-- Ahead-of-time compilation is not yet supported net8.0-tizen -->
+    <!-- net8.0-windows causing build errors in azurepipelines.yml -->
     <PublishAot>true</PublishAot>
   </PropertyGroup>
 
