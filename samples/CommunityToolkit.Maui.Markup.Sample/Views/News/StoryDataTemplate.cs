@@ -2,13 +2,8 @@
 
 namespace CommunityToolkit.Maui.Markup.Sample.Views.News;
 
-class StoryDataTemplate : DataTemplate
+class StoryDataTemplate() : DataTemplate(CreateGrid)
 {
-	public StoryDataTemplate() : base(CreateGrid)
-	{
-
-	}
-
 	static Grid CreateGrid() => new()
 	{
 		RowSpacing = 1,

@@ -1,6 +1,6 @@
 ﻿namespace CommunityToolkit.Maui.Markup.Sample.Resources;
 
-public class AppStyles : ResourceDictionary
+public partial class AppStyles : ResourceDictionary
 {
 	static readonly Color browserNavigationBarTextColorDark = Colors.White,
 							browserNavigationBarTextColorLight = Color.FromArgb("3F3F3F"),

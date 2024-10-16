@@ -6,7 +6,6 @@ namespace CommunityToolkit.Maui.Markup.UnitTests;
 [TestFixture]
 class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 {
-	ViewModel? viewModel;
 	List<BindingBase>? testBindings;
 	List<object>? testConvertValues;
 
@@ -15,17 +14,13 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 	{
 		base.Setup();
 
-		viewModel = new ViewModel();
-
 		testBindings =
 		[
-			new Binding(nameof(viewModel.Text)),
-			new Binding(nameof(viewModel.Id)),
-
-			new Binding(nameof(viewModel.IsDone)),
-			new Binding(nameof(viewModel.Fraction)),
-
-			new Binding(nameof(viewModel.Count))
+			BindingBase.Create(static (MultiBindViewModel vm) => vm.Text),
+			BindingBase.Create(static (MultiBindViewModel vm) => vm.Id),
+			BindingBase.Create(static (MultiBindViewModel vm) => vm.IsDone),
+			BindingBase.Create(static (MultiBindViewModel vm) => vm.Fraction),
+			BindingBase.Create(static (MultiBindViewModel vm) => vm.Count)
 		];
 
 		testConvertValues =
@@ -43,7 +38,6 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 	[TearDown]
 	public override void TearDown()
 	{
-		viewModel = null;
 		testBindings = null;
 		testConvertValues = null;
 		base.TearDown();
@@ -237,24 +231,24 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 		if (testConvert && testConvertBack)
 		{
 			label.Bind(
-					Label.TextProperty,
-					testBindings[0], testBindings[1], testBindings[2],
-					((string? text, Guid id, bool isDone) v, int? parameter) =>
-					{
-						ArgumentNullException.ThrowIfNull(parameter);
+				Label.TextProperty,
+				testBindings[0], testBindings[1], testBindings[2],
+				((string? text, Guid id, bool isDone) v, int? parameter) =>
+				{
+					ArgumentNullException.ThrowIfNull(parameter);
 
-						return Format(parameter.Value, v.text, v.id, v.isDone);
-					},
-					(string? formatted, int? parameter) =>
-					{
-						ArgumentNullException.ThrowIfNull(parameter);
-						ArgumentNullException.ThrowIfNull(formatted);
+					return Format(parameter.Value, v.text, v.id, v.isDone);
+				},
+				(string? formatted, int? parameter) =>
+				{
+					ArgumentNullException.ThrowIfNull(parameter);
+					ArgumentNullException.ThrowIfNull(formatted);
 
-						var unformattedResult = Unformat(parameter.Value, formatted);
-						return (unformattedResult.Text ?? throw new NullReferenceException(), unformattedResult.Id, unformattedResult.IsDone);
-					},
-					converterParameter: 2
-				);
+					var unformattedResult = Unformat(parameter.Value, formatted);
+					return (unformattedResult.Text ?? throw new NullReferenceException(), unformattedResult.Id, unformattedResult.IsDone);
+				},
+				converterParameter: 2
+			);
 		}
 		else if (testConvert && !testConvertBack)
 		{
@@ -434,7 +428,7 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 		}
 
 		var converter = new FuncMultiConverter<string, object>(convert, convertBack);
-		var label = new Label { }.Bind(Label.TextProperty, GetTestBindings(5), converter);
+		var label = new Label().Bind(Label.TextProperty, GetTestBindings(5), converter);
 		AssertLabelTextMultiBound(label, 5, testConvert, testConvertBack, converter: converter);
 	}
 
@@ -448,7 +442,7 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 		if (testConvert)
 		{
 			convert = (object[] v, int parameter) => Format(parameter,
-			v[0], v[1], v[2], v[3], v[4]);
+				v[0], v[1], v[2], v[3], v[4]);
 		}
 
 		Func<string?, int, object?[]>? convertBack = null;
@@ -464,17 +458,17 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 		}
 
 		var converter = new FuncMultiConverter<string?, int>(convert, convertBack);
-		var label = new Label { }.Bind(Label.TextProperty, GetTestBindings(5), converter, 2);
+		var label = new Label().Bind(Label.TextProperty, GetTestBindings(5), converter, 2);
 		AssertLabelTextMultiBound(label, 5, testConvert, testConvertBack, 2, converter);
 	}
 
-	List<BindingBase> GetTestBindings(int count) => testBindings?.Take(count).ToList() ?? Enumerable.Empty<BindingBase>().ToList();
+	List<BindingBase> GetTestBindings(int count) => testBindings?.Take(count).ToList() ?? [];
 
-	object[] GetTestConvertValues(int count) => testConvertValues?.Take(count).ToArray() ?? Array.Empty<BindingBase>();
+	object[] GetTestConvertValues(int count) => testConvertValues?.Take(count).ToArray() ?? [];
 
 	static string PrefixDots(object? value, int count) => $"{new string('.', count)}{value}";
 
-	static string RemoveDots(string text, int count) => text.Substring(count);
+	static string RemoveDots(string text, int count) => text[count..];
 
 	static string Format(int parameter, params object?[] values)
 	{
@@ -528,17 +522,17 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 			assertConverterInstanceIsAnyNotNull: converter is null,
 			assertConvert: c => c.AssertConvert(values, expected, twoWay: testConvert && testConvertBack, backOnly: !testConvert && testConvertBack));
 	}
+}
 
-	class ViewModel
-	{
-		public Guid Id { get; set; }
+sealed class MultiBindViewModel
+{
+	public Guid Id { get; set; }
 
-		public string Text { get; set; } = string.Empty;
+	public string Text { get; set; } = string.Empty;
 
-		public bool IsDone { get; set; }
+	public bool IsDone { get; set; }
 
-		public double Fraction { get; set; }
+	public double Fraction { get; set; }
 
-		public int Count { get; set; }
-	}
+	public int Count { get; set; }
 }

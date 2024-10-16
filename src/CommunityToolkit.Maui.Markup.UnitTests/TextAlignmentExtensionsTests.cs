@@ -265,7 +265,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 	interface IMyEntry
 	{
-		public string Type { get; set; }
+		string Type { get; set; }
 	}
 }
 

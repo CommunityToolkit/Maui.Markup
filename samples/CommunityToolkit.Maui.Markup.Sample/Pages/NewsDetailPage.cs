@@ -1,7 +1,7 @@
 ﻿using Microsoft.Maui.Layouts;
 namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
-sealed class NewsDetailPage : BaseContentPage<NewsDetailViewModel>
+sealed partial class NewsDetailPage : BaseContentPage<NewsDetailViewModel>
 {
 	public NewsDetailPage(NewsDetailViewModel newsDetailViewModel) : base(newsDetailViewModel, newsDetailViewModel.Title)
 	{
