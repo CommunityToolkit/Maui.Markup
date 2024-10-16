@@ -28,7 +28,7 @@ public static class ApplicationTestHelpers
 
 			ArgumentNullException.ThrowIfNull(Application.Current);
 
-			Application.Current.MainPage = new ContentPage
+			Application.Current.Windows[0].Page = new ContentPage
 			{
 				Content = bindable
 			};

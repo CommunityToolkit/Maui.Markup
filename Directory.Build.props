@@ -24,6 +24,7 @@
 
     <!-- WarningsAsErrors
      CS0419: Ambiguous reference in cref attribute 
+     CS0618: Is obsolete
      CS1570: XML comment has badly formed XML 'Expected an end tag for element [parameter] 
      CS1571: XML comment on [construct] has a duplicate param tag for [parameter] 
      CS1572: XML comment has a param tag for '[parameter]', but there is no parameter by that name 
@@ -59,7 +60,7 @@
      IL3***: AOT Warnings-->
     <WarningsAsErrors>
       nullable,
-      CS0419,CS1570,CS1571,CS1572,CS1573,CS1574,CS1580,CS1581,CS1584,CS1587,CS1589,CS1590,CS1591,CS1592,CS1598,CS1658,CS1710,CS1711,CS1712,CS1723,CS1734,
+      CS0419,CS0618,CS1570,CS1571,CS1572,CS1573,CS1574,CS1580,CS1581,CS1584,CS1587,CS1589,CS1590,CS1591,CS1592,CS1598,CS1658,CS1710,CS1711,CS1712,CS1723,CS1734,
       CsWinRT1028,CsWinRT1030,
       XC0045,XC0103,
       NU1900,NU1901,NU1902,NU1903,NU1904,NU1905,

@@ -1,6 +1,6 @@
 ﻿namespace CommunityToolkit.Maui.Markup.Sample;
 
-class App : Application
+partial class App : Application
 {
 	readonly AppShell appShell;
 
