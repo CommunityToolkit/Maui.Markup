@@ -1,7 +1,9 @@
-﻿using NUnit.Framework;
+﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
+using CommunityToolkit.Maui.Markup.UnitTests.Mocks;
+using NUnit.Framework;
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
-public class DynamicResourceHandlerTests
+class DynamicResourceHandlerTests : BaseTestFixture
 {
 	[Test]
 	public void DynamicResource()
@@ -19,6 +21,15 @@ public class DynamicResourceHandlerTests
 	static Label AssertDynamicResources()
 	{
 		var label = new Label { Resources = new ResourceDictionary { { "TextKey", "TextValue" }, { "ColorKey", Colors.Green } } };
+		
+		ArgumentNullException.ThrowIfNull(Application.Current);
+		
+		Application.Current.ActivateWindow(new Window(new MockShell([
+			new ContentPage
+			{
+				Content = label
+			}
+		])));
 
 		Assert.Multiple(() =>
 		{

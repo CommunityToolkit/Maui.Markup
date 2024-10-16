@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
+using CommunityToolkit.Maui.Markup.UnitTests.Mocks;
 using NUnit.Framework;
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
@@ -8,7 +9,16 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 	[Test]
 	public void RemoveDynamicResources()
 	{
+		ArgumentNullException.ThrowIfNull(Application.Current);
+		
 		var label = AssertDynamicResources();
+		
+		Application.Current.ActivateWindow(new Window(new MockShell([
+			new ContentPage
+			{
+				Content = label
+			}
+		])));
 
 		label.RemoveDynamicResources(Label.TextProperty, Label.TextColorProperty);
 		label.Resources["TextKey"] = "ChangedTextValue";

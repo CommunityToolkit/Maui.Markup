@@ -16,22 +16,16 @@ public static class ApplicationTestHelpers
 	{
 		try
 		{
-			var appBuilder = MauiApp.CreateBuilder()
-				.UseMauiCommunityToolkit()
-				.UseMauiApp<MockApplication>();
-
-			var mauiApp = appBuilder.Build();
-
-			var application = mauiApp.Services.GetRequiredService<IApplication>();
-
 			var bindable = setAppThemeValue();
 
 			ArgumentNullException.ThrowIfNull(Application.Current);
 
-			Application.Current.Windows[0].Page = new ContentPage
-			{
-				Content = bindable
-			};
+			Application.Current.ActivateWindow(new Window(new MockShell([
+				new ContentPage
+				{
+					Content = bindable
+				}
+			])));
 
 			Application.Current.UserAppTheme = appTheme;
 
