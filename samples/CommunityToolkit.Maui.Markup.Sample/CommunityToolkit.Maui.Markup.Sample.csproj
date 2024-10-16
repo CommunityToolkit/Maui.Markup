@@ -28,8 +28,11 @@
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
     <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <WindowsSdkPackageVersion>10.0.19041.41</WindowsSdkPackageVersion>
+    
+    <!-- Remove this NoWarn once .NET MAUI has implplemented partial classes for XamlUsreTypeInfo source generators -->
+    <NoWarn>CsWinRT1028</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release' 
@@ -55,8 +58,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiPackageVersion)"/>
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiPackageVersion)"/>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiPackageVersion)" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiPackageVersion)" />
     <PackageReference Include="CommunityToolkit.Maui" Version="$(MauiCommunityToolkitPackageVersion)" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="8.10.0" />
@@ -71,10 +74,7 @@
   <!-- Workaround for https://github.com/dotnet/maui/issues/7272 -->
   <Target Name="_SetPublishFolderTypeNoneOnDocFileItems" BeforeTargets="_ComputePublishLocation">
     <ItemGroup>
-      <ResolvedFileToPublish
-        Update="@(ResolvedFileToPublish)"
-        Condition="'%(ResolvedFileToPublish.Extension)' == '.xml' And '%(ResolvedFileToPublish.PublishFolderType)' == ''"
-        PublishFolderType="None" />
+      <ResolvedFileToPublish Update="@(ResolvedFileToPublish)" Condition="'%(ResolvedFileToPublish.Extension)' == '.xml' And '%(ResolvedFileToPublish.PublishFolderType)' == ''" PublishFolderType="None" />
     </ItemGroup>
   </Target>
 

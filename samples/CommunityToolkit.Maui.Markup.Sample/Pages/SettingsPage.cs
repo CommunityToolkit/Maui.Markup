@@ -2,7 +2,7 @@
 
 namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
-sealed class SettingsPage : BaseContentPage<SettingsViewModel>
+sealed partial class SettingsPage : BaseContentPage<SettingsViewModel>
 {
 	public SettingsPage(SettingsViewModel settingsViewModel) : base(settingsViewModel, "Settings")
 	{

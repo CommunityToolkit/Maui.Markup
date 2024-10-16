@@ -1,6 +1,6 @@
 ﻿namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
-sealed class NewsPage : BaseContentPage<NewsViewModel>
+sealed partial class NewsPage : BaseContentPage<NewsViewModel>
 {
 	readonly IDispatcher dispatcher;
 	readonly RefreshView refreshView;

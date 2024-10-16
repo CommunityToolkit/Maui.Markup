@@ -2,7 +2,7 @@
 
 namespace CommunityToolkit.Maui.Markup.Sample;
 
-class AppShell : Shell
+partial class AppShell : Shell
 {
 	static readonly IReadOnlyDictionary<Type, string> pageRouteMappingDictionary = new Dictionary<Type, string>(
 	[
