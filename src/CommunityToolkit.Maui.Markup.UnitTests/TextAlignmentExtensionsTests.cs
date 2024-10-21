@@ -81,9 +81,9 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				ClassConstraintWithInterface?,
 				ClassConstraint[],
 				ClassConstraintWithInterface,
-				RecordClassContstraint,
-				RecordClassContstraint[],
-				RecordStructContstraint>()
+				RecordClassConstraint,
+				RecordClassConstraint[],
+				RecordStructConstraint>()
 					.TextCenter<GenericPicker<ClassConstraintWithInterface,
 									ClassConstraint,
 									StructConstraint,
@@ -94,9 +94,9 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 									ClassConstraintWithInterface?,
 									ClassConstraint[],
 									ClassConstraintWithInterface,
-									RecordClassContstraint,
-									RecordClassContstraint[],
-									RecordStructContstraint>,
+									RecordClassConstraint,
+									RecordClassConstraint[],
+									RecordStructConstraint>,
 									ClassConstraintWithInterface,
 									ClassConstraint,
 									StructConstraint,
@@ -107,9 +107,9 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 									ClassConstraintWithInterface?,
 									ClassConstraint[],
 									ClassConstraintWithInterface,
-									RecordClassContstraint,
-									RecordClassContstraint[],
-									RecordStructContstraint>();
+									RecordClassConstraint,
+									RecordClassConstraint[],
+									RecordStructConstraint>();
 
 			Assert.That(textAlignmentView.HorizontalTextAlignment, Is.EqualTo(TextAlignment.Center));
 
@@ -123,9 +123,9 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 									ClassConstraintWithInterface?,
 									ClassConstraint[],
 									ClassConstraintWithInterface,
-									RecordClassContstraint,
-									RecordClassContstraint[],
-									RecordStructContstraint>,
+									RecordClassConstraint,
+									RecordClassConstraint[],
+									RecordStructConstraint>,
 									ClassConstraintWithInterface,
 									ClassConstraint,
 									StructConstraint,
@@ -136,9 +136,9 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 									ClassConstraintWithInterface?,
 									ClassConstraint[],
 									ClassConstraintWithInterface,
-									RecordClassContstraint,
-									RecordClassContstraint[],
-									RecordStructContstraint>();
+									RecordClassConstraint,
+									RecordClassConstraint[],
+									RecordStructConstraint>();
 
 			Assert.That(textAlignmentView.HorizontalTextAlignment, Is.EqualTo(TextAlignment.End));
 		}
@@ -460,13 +460,13 @@ namespace CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions
 
 	}
 
-	public record RecordClassContstraint
+	public record RecordClassConstraint
 	{
 
 	}
 
 
-	public readonly record struct RecordStructContstraint
+	public readonly record struct RecordStructConstraint
 	{
 
 	}
