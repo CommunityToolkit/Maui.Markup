@@ -9,19 +9,14 @@ abstract class BaseTestFixture
 	CultureInfo? defaultCulture;
 	CultureInfo? defaultUICulture;
 
-	protected BaseTestFixture()
-	{
-		CreateAndSetMockApplication(out var serviceProvider);
-		ServiceProvider = serviceProvider;
-	}
-
-
 	[SetUp]
 	public virtual void Setup()
 	{
 		defaultCulture = Thread.CurrentThread.CurrentCulture;
 		defaultUICulture = Thread.CurrentThread.CurrentUICulture;
 		DispatcherProvider.SetCurrent(new MockDispatcherProvider());
+
+		InitializeMockApplication(out _);
 	}
 
 	[TearDown]
@@ -31,8 +26,6 @@ abstract class BaseTestFixture
 		Thread.CurrentThread.CurrentUICulture = defaultUICulture ?? throw new NullReferenceException();
 		DispatcherProvider.SetCurrent(null);
 	}
-
-	protected IServiceProvider ServiceProvider { get; }
 
 	protected static TElementHandler CreateElementHandler<TElementHandler>(IElement view, bool hasMauiContext = true)
 		where TElementHandler : IElementHandler, new()
@@ -60,14 +53,20 @@ abstract class BaseTestFixture
 		return mockViewHandler;
 	}
 
-	static void CreateAndSetMockApplication(out IServiceProvider serviceProvider)
+	static void InitializeMockApplication(out IServiceProvider serviceProvider)
 	{
-		var appBuilder = MauiApp.CreateBuilder().UseMauiApp<MockApplication>().UseMauiCommunityToolkit();
-		appBuilder.Services.AddSingleton<IDispatcher>(_ => new MockDispatcherProvider().GetForCurrentThread());
+		var appBuilder = MauiApp.CreateBuilder()
+			.UseMauiCommunityToolkit()
+			.UseMauiApp<MockApplication>();
+
 		var mauiApp = appBuilder.Build();
-		var application = mauiApp.Services.GetRequiredService<IApplication>();
+
+		var application = (MockApplication)mauiApp.Services.GetRequiredService<IApplication>();
+		application.AddWindow(new Window());
 		serviceProvider = mauiApp.Services;
-		IPlatformApplication.Current = (IPlatformApplication)application;
+
+		IPlatformApplication.Current = application;
+
 		application.Handler = new ApplicationHandlerStub();
 		application.Handler.SetMauiContext(new HandlersContextStub(mauiApp.Services));
 	}

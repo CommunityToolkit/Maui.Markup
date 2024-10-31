@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Maui.Markup.UnitTests.Mocks;
-namespace CommunityToolkit.Maui.Markup.UnitTests;
+﻿namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 public static class ApplicationTestHelpers
 {
@@ -20,12 +19,10 @@ public static class ApplicationTestHelpers
 
 			ArgumentNullException.ThrowIfNull(Application.Current);
 
-			Application.Current.ActivateWindow(new Window(new MockShell([
-				new ContentPage
-				{
-					Content = bindable
-				}
-			])));
+			Application.Current.AddWindow(new Window(new ContentPage
+			{
+				Content = bindable
+			}));
 
 			Application.Current.UserAppTheme = appTheme;
 
