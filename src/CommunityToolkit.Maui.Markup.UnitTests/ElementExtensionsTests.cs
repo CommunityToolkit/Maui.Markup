@@ -10,15 +10,13 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 	public void RemoveDynamicResources()
 	{
 		ArgumentNullException.ThrowIfNull(Application.Current);
-		
+
 		var label = AssertDynamicResources();
-		
-		Application.Current.ActivateWindow(new Window(new MockShell([
-			new ContentPage
-			{
-				Content = label
-			}
-		])));
+
+		Application.Current.Windows[0].Page = new ContentPage
+		{
+			Content = label
+		};
 
 		label.RemoveDynamicResources(Label.TextProperty, Label.TextColorProperty);
 		label.Resources["TextKey"] = "ChangedTextValue";
@@ -76,10 +74,10 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 	[Test]
 	public void FontWithPositionalParameters()
 		=> TestPropertiesSet(
-				l => l.Font("AFontName", 8, true, true),
-				(FontElement.FontSizeProperty, 6.0, 8.0),
-				(FontElement.FontAttributesProperty, FontAttributes.None, FontAttributes.Bold | FontAttributes.Italic),
-				(FontElement.FontFamilyProperty, string.Empty, "AFontName"));
+			l => l.Font("AFontName", 8, true, true),
+			(FontElement.FontSizeProperty, 6.0, 8.0),
+			(FontElement.FontAttributesProperty, FontAttributes.None, FontAttributes.Bold | FontAttributes.Italic),
+			(FontElement.FontFamilyProperty, string.Empty, "AFontName"));
 
 	[Test]
 	public void FontWithSizeNamedParameter()
@@ -99,7 +97,18 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 
 	static Label AssertDynamicResources()
 	{
-		var label = new Label { Resources = new ResourceDictionary { { "TextKey", "TextValue" }, { "ColorKey", Colors.Green } } };
+		var label = new Label
+		{
+			Resources = new ResourceDictionary
+			{
+				{
+					"TextKey", "TextValue"
+				},
+				{
+					"ColorKey", Colors.Green
+				}
+			}
+		};
 
 		Assert.Multiple(() =>
 		{
@@ -108,7 +117,7 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 		});
 
 		label.DynamicResources((Label.TextProperty, "TextKey"),
-							   (Label.TextColorProperty, "ColorKey"));
+			(Label.TextColorProperty, "ColorKey"));
 
 		Assert.Multiple(() =>
 		{

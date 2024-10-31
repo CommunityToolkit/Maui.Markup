@@ -8,7 +8,15 @@ class DynamicResourceHandlerTests : BaseTestFixture
 	[Test]
 	public void DynamicResource()
 	{
-		var label = new Label { Resources = new ResourceDictionary { { "TextKey", "TextValue" } } };
+		var label = new Label
+		{
+			Resources = new ResourceDictionary
+			{
+				{
+					"TextKey", "TextValue"
+				}
+			}
+		};
 		Assert.That(label.Text, Is.EqualTo(Label.TextProperty.DefaultValue));
 
 		label.DynamicResource(Label.TextProperty, "TextKey");
@@ -20,16 +28,25 @@ class DynamicResourceHandlerTests : BaseTestFixture
 
 	static Label AssertDynamicResources()
 	{
-		var label = new Label { Resources = new ResourceDictionary { { "TextKey", "TextValue" }, { "ColorKey", Colors.Green } } };
-		
-		ArgumentNullException.ThrowIfNull(Application.Current);
-		
-		Application.Current.ActivateWindow(new Window(new MockShell([
-			new ContentPage
+		var label = new Label
+		{
+			Resources = new ResourceDictionary
 			{
-				Content = label
+				{
+					"TextKey", "TextValue"
+				},
+				{
+					"ColorKey", Colors.Green
+				}
 			}
-		])));
+		};
+
+		ArgumentNullException.ThrowIfNull(Application.Current);
+
+		Application.Current.Windows[0].Page = new ContentPage
+		{
+			Content = label
+		};
 
 		Assert.Multiple(() =>
 		{
@@ -38,7 +55,7 @@ class DynamicResourceHandlerTests : BaseTestFixture
 		});
 
 		label.DynamicResources((Label.TextProperty, "TextKey"),
-							   (Label.TextColorProperty, "ColorKey"));
+			(Label.TextColorProperty, "ColorKey"));
 
 		Assert.Multiple(() =>
 		{
