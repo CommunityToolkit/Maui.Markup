@@ -3,7 +3,7 @@ namespace CommunityToolkit.Maui.Markup;
 /// <summary>
 /// Extension Methods for Bindable Objects
 /// </summary>
-public static class BindableObjectExtensions
+public static partial class BindableObjectExtensions
 {
 		/// <summary>
 	/// Sets the property values for <paramref name="light"/> and <paramref name="dark"/> themes respectively.
