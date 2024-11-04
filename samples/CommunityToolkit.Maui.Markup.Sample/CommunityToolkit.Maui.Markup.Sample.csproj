@@ -63,7 +63,7 @@
     <PackageReference Include="CommunityToolkit.Maui" Version="$(MauiCommunityToolkitPackageVersion)" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
     <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="8.10.0" />
-    <PackageReference Include="Refit.HttpClientFactory" Version="7.2.1" />
+    <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
   </ItemGroup>
   
   <ItemGroup>
