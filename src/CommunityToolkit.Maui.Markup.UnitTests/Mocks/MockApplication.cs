@@ -7,7 +7,7 @@ class MockApplication : Application, IPlatformApplication
 	public MockApplication(IServiceProvider serviceProvider)
 	{
 		Resources = new MockResourceDictionary();
-		
+
 		Services = serviceProvider;
 #pragma warning disable CS0612 // Type or member is obsolete
 		DependencyService.Register<ISystemResourcesProvider, MockResourcesProvider>();

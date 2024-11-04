@@ -6,7 +6,7 @@ class MockShell : Shell
 	public MockShell(List<ContentPage> pageList)
 	{
 		Handler = new ShellHandlerStub();
-		
+
 		foreach (var page in pageList)
 		{
 			Items.Add(page);

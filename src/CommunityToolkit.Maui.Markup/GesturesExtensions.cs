@@ -254,7 +254,7 @@ public static class GesturesExtensions
 
 		return gestureElement.ConfigureTapGesture(tapGesture, numberOfTapsRequired);
 	}
-	
+
 	/// <summary>
 	/// Adds a <see cref="PanGestureRecognizer"/>
 	/// </summary>
@@ -364,7 +364,7 @@ public static class GesturesExtensions
 
 		return gestureElement;
 	}
-	
+
 	static Func<TBindingContext, TSource> ConvertExpressionToFunc<TBindingContext, TSource>(in Expression<Func<TBindingContext, TSource>> expression) => expression.Compile();
 
 	static string GetMemberName<T>(in Expression<T> expression) => expression.Body switch
@@ -405,7 +405,7 @@ public static class GesturesExtensions
 
 		return gestureRecognizer;
 	}
-	
+
 	static TGestureElement ConfigureSwipeGesture<TGestureElement>(this TGestureElement gestureElement,
 		SwipeGestureRecognizer swipeGesture,
 		SwipeDirection? direction = null,
