@@ -43,7 +43,7 @@ sealed partial class SettingsPage : BaseContentPage<SettingsViewModel>
 					})
 					.TextCenter()
 					.SemanticDescription(topNewsStoriesToFetchLabel.Text)
-					.Bind(Entry.TextProperty, static (SettingsViewModel vm) => vm.NumberOfTopStoriesToFetch, static (vm, text) => vm.NumberOfTopStoriesToFetch = text),
+					.Bind(Entry.TextProperty, BindingBase.Create(static (SettingsViewModel vm) => vm.NumberOfTopStoriesToFetch)),
 
 				new Label()
 					.Text(string.Format(CultureInfo.CurrentUICulture, $"The number must be between {SettingsService.MinimumStoriesToFetch} and {SettingsService.MaximumStoriesToFetch}."))
