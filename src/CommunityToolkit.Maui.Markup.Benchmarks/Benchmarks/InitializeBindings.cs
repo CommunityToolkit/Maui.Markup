@@ -10,7 +10,7 @@ public class InitializeBindings : BaseTest
 		BindingContext = new LabelViewModel()
 	};
 
-	readonly Label defaultMarkupBindingsLabel = new()
+	readonly Label defaultBindingBaseCreateLabel = new()
 	{
 		BindingContext = new LabelViewModel()
 	};
@@ -21,10 +21,29 @@ public class InitializeBindings : BaseTest
 	};
 
 	[Benchmark(Baseline = true)]
-	public void InitializeDefaultBindings()
+	public void InitializeDefaultStringBindings()
 	{
 		defaultBindingsLabel.SetBinding(Label.TextProperty, nameof(LabelViewModel.Text), mode: BindingMode.TwoWay);
 		defaultBindingsLabel.SetBinding(Label.TextColorProperty, nameof(LabelViewModel.TextColor), mode: BindingMode.TwoWay);
+	}
+
+	[Benchmark]
+	public void InitializeDefaultLambdaBindings()
+	{
+		defaultBindingBaseCreateLabel.SetBinding(Label.TextProperty,
+			BindingBase.Create(static (LabelViewModel vm) => vm.Text, mode: BindingMode.TwoWay));
+		defaultBindingBaseCreateLabel.Bind(Label.TextColorProperty,
+			BindingBase.Create(static (LabelViewModel vm) => vm.TextColor, mode: BindingMode.TwoWay));
+	}
+
+	[Benchmark]
+	public void InitializeMarkupBindingsWithBindingBaseCreate()
+	{
+		defaultBindingBaseCreateLabel
+			.Bind(Label.TextProperty,
+				BindingBase.Create(static (LabelViewModel vm) => vm.Text, mode: BindingMode.TwoWay))
+			.Bind(Label.TextColorProperty,
+				BindingBase.Create(static (LabelViewModel vm) => vm.TextColor, mode: BindingMode.TwoWay));
 	}
 
 	[Benchmark]

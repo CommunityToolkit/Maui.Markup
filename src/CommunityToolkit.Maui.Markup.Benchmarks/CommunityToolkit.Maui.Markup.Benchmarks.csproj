@@ -3,6 +3,7 @@
     <TargetFramework>$(NetVersion)</TargetFramework>
     <OutputType>Exe</OutputType>
     <IsPackable>false</IsPackable>
+    <Features>InterceptorsPreview</Features>
   </PropertyGroup>
   
   <PropertyGroup>

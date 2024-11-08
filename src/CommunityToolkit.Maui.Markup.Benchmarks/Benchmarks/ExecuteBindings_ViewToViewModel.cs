@@ -12,6 +12,13 @@ public class ExecuteBindings_ViewToViewModel : ExecuteBindingsBase
 	}
 
 	[Benchmark]
+	public void ExecuteMarkupBindingBaseCreateBindingsViewModel_ViewToViewModel()
+	{
+		MarkupBindingBaseCreateBindingsLabel.TextColor = Colors.Green;
+		MarkupBindingBaseCreateBindingsViewModel.Text = helloWorldText;
+	}
+
+	[Benchmark]
 	public void ExecuteTypedBindingsMarkup_ViewToViewModel()
 	{
 		TypedMarkupBindingsLabel.TextColor = Colors.Green;

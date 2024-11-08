@@ -1,6 +1,6 @@
 ﻿namespace CommunityToolkit.Maui.Markup.Sample.ViewModels;
 
-sealed partial class SettingsViewModel : BaseViewModel
+public sealed partial class SettingsViewModel : BaseViewModel
 {
 	readonly SettingsService settingsService;
 

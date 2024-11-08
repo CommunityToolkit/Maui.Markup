@@ -13,27 +13,37 @@ public abstract class ExecuteBindingsBase : BaseTest
 			BindingContext = DefaultBindingsLabelViewModel
 		};
 
-		DefaultBindingsLabel.SetBinding(Label.TextProperty, BindingBase.Create((LabelViewModel vm) => vm.Text, mode: BindingMode.TwoWay));
-		DefaultBindingsLabel.SetBinding(Label.TextColorProperty, BindingBase.Create((LabelViewModel vm) => vm.TextColor, mode: BindingMode.TwoWay));
+		DefaultBindingsLabel.SetBinding(Label.TextProperty, BindingBase.Create(static (LabelViewModel vm) => vm.Text, mode: BindingMode.TwoWay));
+		DefaultBindingsLabel.SetBinding(Label.TextColorProperty, BindingBase.Create(static (LabelViewModel vm) => vm.TextColor, mode: BindingMode.TwoWay));
 		DefaultBindingsLabel.EnableAnimations();
 
 		TypedMarkupBindingsLabel = new Label
 			{
 				BindingContext = TypedMarkupBindingsLabelViewModel
 			}.Bind(Label.TextProperty,
-				getter: (LabelViewModel vm) => vm.Text,
-				setter: (vm, text) => vm.Text = text,
+				getter: static (LabelViewModel vm) => vm.Text,
+				setter: static (vm, text) => vm.Text = text,
 				mode: BindingMode.TwoWay)
 			.Bind(Label.TextColorProperty,
-				getter: (LabelViewModel vm) => vm.TextColor,
-				setter: (vm, textColor) => vm.TextColor = textColor,
+				getter: static (LabelViewModel vm) => vm.TextColor,
+				setter: static (vm, textColor) => vm.TextColor = textColor,
 				mode: BindingMode.TwoWay);
+		TypedMarkupBindingsLabel.EnableAnimations();
+
+		MarkupBindingBaseCreateBindingsLabel = new Label
+		{
+			BindingContext = MarkupBindingBaseCreateBindingsViewModel
+		}.Bind(Label.TextProperty, BindingBase.Create(
+			getter: static (LabelViewModel vm) => vm.Text,
+			mode: BindingMode.TwoWay));
 		TypedMarkupBindingsLabel.EnableAnimations();
 	}
 
-	protected LabelViewModel DefaultBindingsLabelViewModel { get; } = new();
-	protected LabelViewModel TypedMarkupBindingsLabelViewModel { get; } = new();
+	protected internal LabelViewModel DefaultBindingsLabelViewModel { get; } = new();
+	protected internal LabelViewModel TypedMarkupBindingsLabelViewModel { get; } = new();
+	protected internal LabelViewModel MarkupBindingBaseCreateBindingsViewModel { get; } = new();
 
 	protected Label DefaultBindingsLabel { get; }
 	protected Label TypedMarkupBindingsLabel { get; }
+	protected Label MarkupBindingBaseCreateBindingsLabel { get; }
 }

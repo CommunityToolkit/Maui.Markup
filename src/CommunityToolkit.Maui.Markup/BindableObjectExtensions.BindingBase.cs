@@ -3,6 +3,7 @@ namespace CommunityToolkit.Maui.Markup;
 public partial class BindableObjectExtensions
 {
 	/// <summary>Bind to a specified property with inline conversion and conversion parameter</summary>
+	[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 	public static TBindable Bind<TBindable>(
 		this TBindable bindable,
 		BindableProperty targetProperty,
