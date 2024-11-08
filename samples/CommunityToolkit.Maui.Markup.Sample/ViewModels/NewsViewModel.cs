@@ -1,19 +1,26 @@
 ﻿namespace CommunityToolkit.Maui.Markup.Sample.ViewModels;
 
-sealed partial class NewsViewModel(IDispatcher dispatcher,
-                            SettingsService settingsService,
-                            HackerNewsAPIService hackerNewsAPIService) : BaseViewModel, IDisposable
+sealed partial class NewsViewModel : BaseViewModel, IDisposable
 {
-	readonly IDispatcher dispatcher = dispatcher;
-	readonly SettingsService settingsService = settingsService;
-	readonly HackerNewsAPIService hackerNewsAPIService = hackerNewsAPIService;
+	readonly IDispatcher dispatcher;
+	readonly SettingsService settingsService;
+	readonly HackerNewsAPIService hackerNewsAPIService;
 	readonly WeakEventManager pullToRefreshEventManager = new();
 	readonly SemaphoreSlim insertIntoSortedCollectionSemaphore = new(1, 1);
 
-    [ObservableProperty]
-    public partial bool IsListRefreshing { get; set; }
+	[ObservableProperty]
+	bool isListRefreshing;
 
-    public event EventHandler<string> PullToRefreshFailed
+	public NewsViewModel(IDispatcher dispatcher,
+							SettingsService settingsService,
+							HackerNewsAPIService hackerNewsAPIService)
+	{
+		this.dispatcher = dispatcher;
+		this.settingsService = settingsService;
+		this.hackerNewsAPIService = hackerNewsAPIService;
+	}
+
+	public event EventHandler<string> PullToRefreshFailed
 	{
 		add => pullToRefreshEventManager.AddEventHandler(value);
 		remove => pullToRefreshEventManager.RemoveEventHandler(value);
