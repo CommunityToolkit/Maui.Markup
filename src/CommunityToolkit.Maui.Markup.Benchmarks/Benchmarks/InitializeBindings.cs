@@ -26,6 +26,14 @@ public class InitializeBindings : BaseTest
 		defaultBindingsLabel.SetBinding(Label.TextProperty, nameof(LabelViewModel.Text), mode: BindingMode.TwoWay);
 		defaultBindingsLabel.SetBinding(Label.TextColorProperty, nameof(LabelViewModel.TextColor), mode: BindingMode.TwoWay);
 	}
+	
+	[Benchmark]
+	public void InitializeDefaultBindingsMarkup()
+	{
+		defaultMarkupBindingsLabel
+			.Bind(Label.TextProperty, nameof(LabelViewModel.Text), mode: BindingMode.TwoWay)
+			.Bind(Label.TextColorProperty, nameof(LabelViewModel.TextColor), mode: BindingMode.TwoWay);
+	}
 
 	[Benchmark]
 	public void InitializeTypedBindingsMarkup()

@@ -17,6 +17,13 @@ public abstract class ExecuteBindingsBase : BaseTest
 		DefaultBindingsLabel.SetBinding(Label.TextColorProperty, nameof(LabelViewModel.TextColor), mode: BindingMode.TwoWay);
 		DefaultBindingsLabel.EnableAnimations();
 
+		DefaultMarkupBindingsLabel = new Label
+			{
+				BindingContext = DefaultMarkupBindingsLabelViewModel
+			}.Bind(Label.TextProperty, nameof(LabelViewModel.Text), mode: BindingMode.TwoWay)
+			.Bind(Label.TextColorProperty, nameof(LabelViewModel.TextColor), mode: BindingMode.TwoWay);
+		DefaultMarkupBindingsLabel.EnableAnimations();
+
 		TypedMarkupBindingsLabel = new Label
 			{
 				BindingContext = TypedMarkupBindingsLabelViewModel
@@ -32,8 +39,10 @@ public abstract class ExecuteBindingsBase : BaseTest
 	}
 
 	protected LabelViewModel DefaultBindingsLabelViewModel { get; } = new();
+	protected LabelViewModel DefaultMarkupBindingsLabelViewModel { get; } = new();
 	protected LabelViewModel TypedMarkupBindingsLabelViewModel { get; } = new();
 
 	protected Label DefaultBindingsLabel { get; }
+	protected Label DefaultMarkupBindingsLabel { get; }
 	protected Label TypedMarkupBindingsLabel { get; }
 }
