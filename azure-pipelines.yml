@@ -56,6 +56,7 @@ jobs:
       vmImage: $(image)
     steps:
       - script: |
+          echo Installed Xcode Versions:
           ls -al  /Applications | grep Xcode
           echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(CommunityToolkitSampleApp_Xcode_Version).app;sudo xcode-select --switch /Applications/Xcode_$(CommunityToolkitSampleApp_Xcode_Version).app/Contents/Developer
         displayName: 'Set Xcode v$(CommunityToolkitSampleApp_Xcode_Version)'
@@ -123,6 +124,7 @@ jobs:
         condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows_NT'), eq(variables['build.reason'], 'PullRequest'))
 
       - script: |
+          echo Installed Xcode Versions:
           ls -al  /Applications | grep Xcode
           echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(CommunityToolkitLibrary_Xcode_Version).app;sudo xcode-select --switch /Applications/Xcode_$(CommunityToolkitLibrary_Xcode_Version).app/Contents/Developer
         displayName: 'Set Xcode v$(CommunityToolkitLibrary_Xcode_Version)'
@@ -254,6 +256,7 @@ jobs:
       vmImage: $(image)
     steps:
       - script: |
+          echo Installed Xcode Versions:
           ls -al  /Applications | grep Xcode
           echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(CommunityToolkitLibrary_Xcode_Version).app;sudo xcode-select --switch /Applications/Xcode_$(CommunityToolkitLibrary_Xcode_Version).app/Contents/Developer
         displayName: 'Set Xcode v$(CommunityToolkitLibrary_Xcode_Version)'
