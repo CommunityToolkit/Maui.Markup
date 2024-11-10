@@ -13,8 +13,8 @@ public abstract class ExecuteBindingsBase : BaseTest
 			BindingContext = DefaultBindingsLabelViewModel
 		};
 
-		DefaultBindingsLabel.SetBinding(Label.TextProperty, BindingBase.Create((LabelViewModel vm) => vm.Text, mode: BindingMode.TwoWay));
-		DefaultBindingsLabel.SetBinding(Label.TextColorProperty, BindingBase.Create((LabelViewModel vm) => vm.TextColor, mode: BindingMode.TwoWay));
+		DefaultBindingsLabel.SetBinding(Label.TextProperty, nameof(LabelViewModel.Text), mode: BindingMode.TwoWay);
+		DefaultBindingsLabel.SetBinding(Label.TextColorProperty, nameof(LabelViewModel.TextColor), mode: BindingMode.TwoWay);
 		DefaultBindingsLabel.EnableAnimations();
 
 		TypedMarkupBindingsLabel = new Label
