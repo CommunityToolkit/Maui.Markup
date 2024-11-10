@@ -29,7 +29,7 @@ public static class DynamicResourceHandlerExtensions
 	/// <param name="dynamicResourceHandler"></param>
 	/// <param name="resources"></param>
 	/// <returns>Layout with added Dynamic Resource</returns>
-	public static TDynamicResourceHandler DynamicResources<TDynamicResourceHandler>(this TDynamicResourceHandler dynamicResourceHandler, params List<(BindableProperty property, string key)> resources)
+	public static TDynamicResourceHandler DynamicResources<TDynamicResourceHandler>(this TDynamicResourceHandler dynamicResourceHandler, params ReadOnlySpan<(BindableProperty property, string key)> resources)
 		where TDynamicResourceHandler : IDynamicResourceHandler
 	{
 		foreach (var (property, key) in resources)

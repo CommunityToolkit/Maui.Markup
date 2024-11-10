@@ -33,7 +33,7 @@ public static class GridRowsColumns
 		/// </summary>
 		/// <param name="widths"></param>
 		/// <returns></returns>
-		public static ColumnDefinitionCollection Define(params List<GridLength> widths)
+		public static ColumnDefinitionCollection Define(params ReadOnlySpan<GridLength> widths)
 		{
 			var columnDefinitions = new ColumnDefinitionCollection();
 
@@ -52,11 +52,11 @@ public static class GridRowsColumns
 		/// <param name="columns"></param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentException"></exception>
-		public static ColumnDefinitionCollection Define<TEnum>(params List<(TEnum Name, GridLength Width)> columns) where TEnum : Enum
+		public static ColumnDefinitionCollection Define<TEnum>(params ReadOnlySpan<(TEnum Name, GridLength Width)> columns) where TEnum : Enum
 		{
 			var columnDefinitions = new ColumnDefinitionCollection();
 
-			for (var i = 0; i < columns.Count; i++)
+			for (var i = 0; i < columns.Length; i++)
 			{
 				if (i != columns[i].Name.ToInt())
 				{
@@ -82,7 +82,7 @@ public static class GridRowsColumns
 		/// </summary>
 		/// <param name="heights"></param>
 		/// <returns></returns>
-		public static RowDefinitionCollection Define(params List<GridLength> heights)
+		public static RowDefinitionCollection Define(params ReadOnlySpan<GridLength> heights)
 		{
 			var rowDefinitions = new RowDefinitionCollection();
 
@@ -101,10 +101,10 @@ public static class GridRowsColumns
 		/// <param name="rows"></param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentException"></exception>
-		public static RowDefinitionCollection Define<TEnum>(params List<(TEnum Name, GridLength Height)> rows) where TEnum : Enum
+		public static RowDefinitionCollection Define<TEnum>(params ReadOnlySpan<(TEnum Name, GridLength Height)> rows) where TEnum : Enum
 		{
 			var rowDefinitions = new RowDefinitionCollection();
-			for (var i = 0; i < rows.Count; i++)
+			for (var i = 0; i < rows.Length; i++)
 			{
 				if (i != rows[i].Name.ToInt())
 				{

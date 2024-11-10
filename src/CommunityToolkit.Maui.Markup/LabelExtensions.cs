@@ -12,7 +12,7 @@ public static class LabelExtensions
 	/// <param name="label"></param>
 	/// <param name="spans"></param>
 	/// <returns>Label with added FormattedText</returns>
-	public static TLabel FormattedText<TLabel>(this TLabel label, params List<Span> spans) where TLabel : Label
+	public static TLabel FormattedText<TLabel>(this TLabel label, params ReadOnlySpan<Span> spans) where TLabel : Label
 	{
 		label.FormattedText = new FormattedString();
 

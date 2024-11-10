@@ -101,7 +101,7 @@ public static class DefaultBindableProperties
 	/// Registers Bindable Properties
 	/// </summary>
 	/// <param name="properties"></param>
-	public static void Register(params List<BindableProperty> properties)
+	public static void Register(params ReadOnlySpan<BindableProperty> properties)
 	{
 		foreach (var property in properties)
 		{
@@ -116,7 +116,7 @@ public static class DefaultBindableProperties
 	/// Registers Command and CommandParameter Properties
 	/// </summary>
 	/// <param name="propertyPairs"></param>
-	public static void RegisterForCommand(params List<(BindableProperty commandProperty, BindableProperty parameterProperty)> propertyPairs)
+	public static void RegisterForCommand(params ReadOnlySpan<(BindableProperty commandProperty, BindableProperty parameterProperty)> propertyPairs)
 	{
 		foreach (var propertyPair in propertyPairs)
 		{
