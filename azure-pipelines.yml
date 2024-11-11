@@ -4,8 +4,6 @@ variables:
   CurrentSemanticVersion: '$(CurrentSemanticVersionBase)-preview$(PreviewNumber)'
   NugetPackageVersion: '$(CurrentSemanticVersion)'
   NET_VERSION: '9.0.100-rc.2.24474.11'
-  BuildHostImage_Windows: 'windows-latest'
-  BuildHostImage_macOS: 'macos-15'
   RunPoliCheck: false
   PathToLibrarySolution: 'src/CommunityToolkit.Maui.Markup.sln'
   PathToSamplesSolution: 'samples/CommunityToolkit.Maui.Markup.Sample.sln'
@@ -51,9 +49,9 @@ jobs:
     strategy:
       matrix:
         'Windows':
-          image: '$(BuildHostImage_Windows)'
+          image: 'windows-latest'
         'macOS':
-          image: '$(BuildHostImage_macOS)'
+          image: 'macos-15'
     pool:
       vmImage: $(image)
     steps:
@@ -99,9 +97,9 @@ jobs:
     strategy:
       matrix:
         'Windows':
-          image: '$(BuildHostImage_Windows)'
+          image: 'windows-latest'
         'macOS':
-          image: '$(BuildHostImage_macOS)'
+          image: 'macos-15'
     pool:
       vmImage: $(image)
     steps:
