@@ -249,9 +249,9 @@ jobs:
     strategy:
       matrix:
         'Windows':
-          image: '$(BuildHostImage_Windows)'
+          image: 'windows-latest'
         'macOS':
-          image: '$(BuildHostImage_macOS)'
+          image: 'macos-15'
     pool:
       vmImage: $(image)
     steps:
