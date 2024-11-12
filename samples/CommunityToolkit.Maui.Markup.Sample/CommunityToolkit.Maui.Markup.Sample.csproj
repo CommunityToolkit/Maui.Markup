@@ -31,7 +31,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <WindowsSdkPackageVersion>10.0.19041.41</WindowsSdkPackageVersion>
     
-    <!-- Remove this NoWarn once .NET MAUI has implplemented partial classes for XamlUsreTypeInfo source generators -->
+    <!-- Remove this NoWarn once .NET MAUI has implemented partial classes for XamlUserTypeInfo source generators -->
     <NoWarn>CsWinRT1028</NoWarn>
   </PropertyGroup>
 
