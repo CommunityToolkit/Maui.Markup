@@ -1,12 +1,22 @@
-﻿using NUnit.Framework;
+﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
+using CommunityToolkit.Maui.Markup.UnitTests.Mocks;
+using NUnit.Framework;
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
-public class DynamicResourceHandlerTests
+class DynamicResourceHandlerTests : BaseTestFixture
 {
 	[Test]
 	public void DynamicResource()
 	{
-		var label = new Label { Resources = new ResourceDictionary { { "TextKey", "TextValue" } } };
+		var label = new Label
+		{
+			Resources = new ResourceDictionary
+			{
+				{
+					"TextKey", "TextValue"
+				}
+			}
+		};
 		Assert.That(label.Text, Is.EqualTo(Label.TextProperty.DefaultValue));
 
 		label.DynamicResource(Label.TextProperty, "TextKey");
@@ -18,7 +28,25 @@ public class DynamicResourceHandlerTests
 
 	static Label AssertDynamicResources()
 	{
-		var label = new Label { Resources = new ResourceDictionary { { "TextKey", "TextValue" }, { "ColorKey", Colors.Green } } };
+		var label = new Label
+		{
+			Resources = new ResourceDictionary
+			{
+				{
+					"TextKey", "TextValue"
+				},
+				{
+					"ColorKey", Colors.Green
+				}
+			}
+		};
+
+		ArgumentNullException.ThrowIfNull(Application.Current);
+
+		Application.Current.Windows[0].Page = new ContentPage
+		{
+			Content = label
+		};
 
 		Assert.Multiple(() =>
 		{
@@ -27,7 +55,7 @@ public class DynamicResourceHandlerTests
 		});
 
 		label.DynamicResources((Label.TextProperty, "TextKey"),
-							   (Label.TextColorProperty, "ColorKey"));
+			(Label.TextColorProperty, "ColorKey"));
 
 		Assert.Multiple(() =>
 		{

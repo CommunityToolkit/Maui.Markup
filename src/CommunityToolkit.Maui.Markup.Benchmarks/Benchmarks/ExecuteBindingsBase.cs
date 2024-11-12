@@ -12,6 +12,7 @@ public abstract class ExecuteBindingsBase : BaseTest
 		{
 			BindingContext = DefaultBindingsLabelViewModel
 		};
+
 		DefaultBindingsLabel.SetBinding(Label.TextProperty, nameof(LabelViewModel.Text), mode: BindingMode.TwoWay);
 		DefaultBindingsLabel.SetBinding(Label.TextColorProperty, nameof(LabelViewModel.TextColor), mode: BindingMode.TwoWay);
 		DefaultBindingsLabel.EnableAnimations();

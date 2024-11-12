@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Maui.Markup.UnitTests.Mocks;
-namespace CommunityToolkit.Maui.Markup.UnitTests;
+﻿namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 public static class ApplicationTestHelpers
 {
@@ -16,22 +15,14 @@ public static class ApplicationTestHelpers
 	{
 		try
 		{
-			var appBuilder = MauiApp.CreateBuilder()
-				.UseMauiCommunityToolkit()
-				.UseMauiApp<MockApplication>();
-
-			var mauiApp = appBuilder.Build();
-
-			var application = mauiApp.Services.GetRequiredService<IApplication>();
-
 			var bindable = setAppThemeValue();
 
 			ArgumentNullException.ThrowIfNull(Application.Current);
 
-			Application.Current.MainPage = new ContentPage
+			Application.Current.AddWindow(new Window(new ContentPage
 			{
 				Content = bindable
-			};
+			}));
 
 			Application.Current.UserAppTheme = appTheme;
 

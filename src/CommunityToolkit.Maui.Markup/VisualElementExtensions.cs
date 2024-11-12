@@ -188,7 +188,7 @@ public static class VisualElementExtensions
 	/// <param name="element">This element to add the <paramref name="behaviors"/> to.</param>
 	/// <param name="behaviors">The <see cref="Behavior"/>s to add.</param>
 	/// <returns>The supplied <paramref name="element"/> with the supplied <paramref name="behaviors"/> added.</returns>
-	public static TVisualElement Behaviors<TVisualElement>(this TVisualElement element, params Behavior[] behaviors) where TVisualElement : VisualElement
+	public static TVisualElement Behaviors<TVisualElement>(this TVisualElement element, params ReadOnlySpan<Behavior> behaviors) where TVisualElement : VisualElement
 	{
 		foreach (var behavior in behaviors)
 		{

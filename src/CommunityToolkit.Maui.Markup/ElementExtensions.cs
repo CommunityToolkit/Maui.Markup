@@ -59,7 +59,7 @@ public static class ElementExtensions
 	/// <param name="bindable"></param>
 	/// <param name="properties"></param>
 	/// <returns>Layout without Dynamic Resource</returns>
-	public static TBindable RemoveDynamicResources<TBindable>(this TBindable bindable, params BindableProperty[] properties) where TBindable : BindableObject
+	public static TBindable RemoveDynamicResources<TBindable>(this TBindable bindable, params ReadOnlySpan<BindableProperty> properties) where TBindable : BindableObject
 	{
 		foreach (var property in properties)
 		{
@@ -76,7 +76,7 @@ public static class ElementExtensions
 	/// <param name="element"></param>
 	/// <param name="effects"></param>
 	/// <returns>Element with added Effects</returns>
-	public static TElement Effects<TElement>(this TElement element, params Effect[] effects) where TElement : Element
+	public static TElement Effects<TElement>(this TElement element, params ReadOnlySpan<Effect> effects) where TElement : Element
 	{
 		foreach (var effect in effects)
 		{

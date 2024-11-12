@@ -3,7 +3,7 @@ variables:
   PreviewNumber: $[counter(variables['CurrentSemanticVersionBase'], 1001)]
   CurrentSemanticVersion: '$(CurrentSemanticVersionBase)-preview$(PreviewNumber)'
   NugetPackageVersion: '$(CurrentSemanticVersion)'
-  NET_VERSION: '8.0.x'
+  NET_VERSION: '9.0.100'
   RunPoliCheck: false
   PathToLibrarySolution: 'src/CommunityToolkit.Maui.Markup.sln'
   PathToSamplesSolution: 'samples/CommunityToolkit.Maui.Markup.Sample.sln'
@@ -53,13 +53,14 @@ jobs:
         'Windows':
           image: 'windows-latest'
         'macOS':
-          image: 'macos-14'
+          image: 'macos-15'
     pool:
       vmImage: $(image)
     steps:
       - script: |
-          sudo xcode-select -s /Applications/Xcode_$(CommunityToolkitSampleApp_Xcode_Version).app 
-          sudo xcode-select -p
+          echo Installed Xcode Versions:
+          ls -al  /Applications | grep Xcode
+          echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(CommunityToolkitSampleApp_Xcode_Version).app;sudo xcode-select --switch /Applications/Xcode_$(CommunityToolkitSampleApp_Xcode_Version).app/Contents/Developer
         displayName: 'Set Xcode v$(CommunityToolkitSampleApp_Xcode_Version)'
         condition: eq(variables['Agent.OS'], 'Darwin') # Only run this step on macOS
 
@@ -70,10 +71,19 @@ jobs:
           version: '$(NET_VERSION)'
           includePreviewVersions: false
 
+      - task: JavaToolInstaller@0
+        displayName: "Install Java"
+        inputs:
+          versionSpec: "17"
+          jdkArchitectureOption: "x64"
+          jdkSourceOption: "PreInstalled"
+
       - task: CmdLine@2
         displayName: 'Install .NET MAUI Workload'
         inputs:
-          script : 'dotnet workload install maui'
+          script : |
+            dotnet workload install maui
+            dotnet workload update
 
       - pwsh: |
           Invoke-WebRequest 'https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.ps1' -OutFile 'workload-install.ps1'
@@ -100,7 +110,7 @@ jobs:
         'Windows':
           image: 'windows-latest'
         'macOS':
-          image: 'macos-14'
+          image: 'macos-15'
     pool:
       vmImage: $(image)
     steps:
@@ -125,8 +135,9 @@ jobs:
         condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows_NT'), eq(variables['build.reason'], 'PullRequest'))
 
       - script: |
-          sudo xcode-select -s /Applications/Xcode_$(CommunityToolkitLibrary_Xcode_Version).app 
-          sudo xcode-select -p
+          echo Installed Xcode Versions:
+          ls -al  /Applications | grep Xcode
+          echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(CommunityToolkitLibrary_Xcode_Version).app;sudo xcode-select --switch /Applications/Xcode_$(CommunityToolkitLibrary_Xcode_Version).app/Contents/Developer
         displayName: 'Set Xcode v$(CommunityToolkitLibrary_Xcode_Version)'
         condition: eq(variables['Agent.OS'], 'Darwin') # Only run this step on macOS
 
@@ -137,10 +148,19 @@ jobs:
           version: '$(NET_VERSION)'
           includePreviewVersions: false
 
+      - task: JavaToolInstaller@0
+        displayName: "Install Java"
+        inputs:
+          versionSpec: "17"
+          jdkArchitectureOption: "x64"
+          jdkSourceOption: "PreInstalled"
+
       - task: CmdLine@2
         displayName: 'Install .NET MAUI Workload'
         inputs:
-          script : 'dotnet workload install maui'
+          script : |
+            dotnet workload install maui
+            dotnet workload update
 
       - pwsh: |
           Invoke-WebRequest 'https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.ps1' -OutFile 'workload-install.ps1'
@@ -256,13 +276,14 @@ jobs:
         'Windows':
           image: 'windows-latest'
         'macOS':
-          image: 'macos-14'
+          image: 'macos-15'
     pool:
       vmImage: $(image)
     steps:
       - script: |
-          sudo xcode-select -s /Applications/Xcode_$(CommunityToolkitLibrary_Xcode_Version).app 
-          sudo xcode-select -p
+          echo Installed Xcode Versions:
+          ls -al  /Applications | grep Xcode
+          echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(CommunityToolkitLibrary_Xcode_Version).app;sudo xcode-select --switch /Applications/Xcode_$(CommunityToolkitLibrary_Xcode_Version).app/Contents/Developer
         displayName: 'Set Xcode v$(CommunityToolkitLibrary_Xcode_Version)'
         condition: eq(variables['Agent.OS'], 'Darwin') # Only run this step on macOS
 

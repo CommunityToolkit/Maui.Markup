@@ -33,7 +33,7 @@ public class Style<T> where T : BindableObject
 	/// Initialize Style
 	/// </summary>
 	/// <param name="setters"></param>
-	public Style(params (BindableProperty Property, object Value)[] setters)
+	public Style(params ReadOnlySpan<(BindableProperty Property, object Value)> setters)
 	{
 		MauiStyle = new Style(typeof(T));
 		Add(setters);
@@ -97,7 +97,7 @@ public class Style<T> where T : BindableObject
 	/// </summary>
 	/// <param name="setters"></param>
 	/// <returns>Style with added setters</returns>
-	public Style<T> Add(params (BindableProperty Property, object Value)[] setters)
+	public Style<T> Add(params ReadOnlySpan<(BindableProperty Property, object Value)> setters)
 	{
 		foreach (var (property, value) in setters)
 		{
@@ -129,7 +129,7 @@ public class Style<T> where T : BindableObject
 	/// </summary>
 	/// <param name="setters">A set of <see cref="BindableProperty"/>, and value for light and dark theme.</param>
 	/// <returns>Style with added setters</returns>
-	public Style<T> AddAppThemeBindings(params (BindableProperty Property, object Light, object Dark)[] setters)
+	public Style<T> AddAppThemeBindings(params ReadOnlySpan<(BindableProperty Property, object Light, object Dark)> setters)
 	{
 		foreach (var (property, light, dark) in setters)
 		{
@@ -144,7 +144,7 @@ public class Style<T> where T : BindableObject
 	/// </summary>
 	/// <param name="behaviors"></param>
 	/// <returns>Style with added behaviors</returns>
-	public Style<T> Add(params Behavior[] behaviors)
+	public Style<T> Add(params ReadOnlySpan<Behavior> behaviors)
 	{
 		foreach (var behavior in behaviors)
 		{
@@ -159,7 +159,7 @@ public class Style<T> where T : BindableObject
 	/// </summary>
 	/// <param name="triggers"></param>
 	/// <returns>Style with added Triggers</returns>
-	public Style<T> Add(params TriggerBase[] triggers)
+	public Style<T> Add(params ReadOnlySpan<TriggerBase> triggers)
 	{
 		foreach (var trigger in triggers)
 		{

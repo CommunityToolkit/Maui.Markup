@@ -1,4 +1,4 @@
-﻿using System.Windows.Input;
+using System.Windows.Input;
 using BindableObjectViews;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using NUnit.Framework;
@@ -116,13 +116,13 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		{
 			var label = new Label();
 			label.Bind(Label.TextColorProperty,
-						nameof(viewModel.IsRed),
-						convert: (bool? isRed, float? alpha) =>
-						{
-							ArgumentNullException.ThrowIfNull(alpha);
-							return (isRed.HasValue && isRed.Value ? Colors.Red : Colors.Green).MultiplyAlpha(alpha.Value);
-						},
-						converterParameter: 0.5f
+				nameof(viewModel.IsRed),
+				convert: (bool? isRed, float? alpha) =>
+				{
+					ArgumentNullException.ThrowIfNull(alpha);
+					return (isRed.HasValue && isRed.Value ? Colors.Red : Colors.Green).MultiplyAlpha(alpha.Value);
+				},
+				converterParameter: 0.5f
 			);
 
 			BindingHelpers.AssertBindingExists<Color, double>(
@@ -132,7 +132,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				assertConverterInstanceIsAnyNotNull: true,
 				converterParameter: 0.5f,
 				assertConvert: c => c.AssertConvert<bool?, Color>(true, 0.5f, Colors.Red.MultiplyAlpha(0.5f))
-									 .AssertConvert<bool?, Color>(false, 0.2f, Colors.Green.MultiplyAlpha(0.2f))
+					.AssertConvert<bool?, Color>(false, 0.2f, Colors.Green.MultiplyAlpha(0.2f))
 			);
 		}
 
@@ -155,7 +155,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				BindingMode.TwoWay,
 				assertConverterInstanceIsAnyNotNull: true,
 				assertConvert: c => c.AssertConvert(true, Colors.Red, twoWay: true)
-									 .AssertConvert(false, Colors.Transparent, twoWay: true)
+					.AssertConvert(false, Colors.Transparent, twoWay: true)
 			);
 		}
 
@@ -180,7 +180,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				assertConverterInstanceIsAnyNotNull: true,
 				converterParameter: 0.5f,
 				assertConvert: c => c.AssertConvert(true, 0.5f, Colors.Red.MultiplyAlpha(0.5f), twoWay: true)
-									 .AssertConvert(false, 0.2f, Colors.Green.MultiplyAlpha(0.2f), twoWay: true)
+					.AssertConvert(false, 0.2f, Colors.Green.MultiplyAlpha(0.2f), twoWay: true)
 			);
 
 			static Func<bool, float, Color> convert()
@@ -714,38 +714,38 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			Assert.Multiple(() =>
 			{
 				Assert.That(new DerivedFromLabel()
-									.Bind(nameof(viewModel.Text))
-									.Bind(
-										nameof(viewModel.Text),
-										convert: (string? text) => $"'{text}'")
-									.Bind(
-										nameof(viewModel.Text),
-										convert: (string? text, int? repeat) =>
-										{
-											ArgumentNullException.ThrowIfNull(text);
-											ArgumentNullException.ThrowIfNull(repeat);
+						.Bind(nameof(viewModel.Text))
+						.Bind(
+							nameof(viewModel.Text),
+							convert: (string? text) => $"'{text}'")
+						.Bind(
+							nameof(viewModel.Text),
+							convert: (string? text, int? repeat) =>
+							{
+								ArgumentNullException.ThrowIfNull(text);
+								ArgumentNullException.ThrowIfNull(repeat);
 
-											return string.Concat(Enumerable.Repeat($"'{text.Trim('\'')}'", repeat.Value));
-										})
-									.Bind(
-										DerivedFromLabel.TextColorProperty,
-										nameof(viewModel.TextColor))
-									.Bind(
-										DerivedFromLabel.BackgroundColorProperty,
-										nameof(viewModel.IsRed),
-										convert: (bool? isRed) => isRed.HasValue && isRed.Value ? Colors.Black : Colors.Transparent)
-									.Bind(
-										Label.TextColorProperty,
-										nameof(viewModel.IsRed),
-										convert: (bool? isRed, float? alpha) =>
-										{
-											ArgumentNullException.ThrowIfNull(alpha);
+								return string.Concat(Enumerable.Repeat($"'{text.Trim('\'')}'", repeat.Value));
+							})
+						.Bind(
+							DerivedFromLabel.TextColorProperty,
+							nameof(viewModel.TextColor))
+						.Bind(
+							DerivedFromLabel.BackgroundColorProperty,
+							nameof(viewModel.IsRed),
+							convert: (bool? isRed) => isRed.HasValue && isRed.Value ? Colors.Black : Colors.Transparent)
+						.Bind(
+							Label.TextColorProperty,
+							nameof(viewModel.IsRed),
+							convert: (bool? isRed, float? alpha) =>
+							{
+								ArgumentNullException.ThrowIfNull(alpha);
 
-											return (isRed.HasValue && isRed.Value ? Colors.Red : Colors.Green).MultiplyAlpha(alpha.Value);
-										})
-									.Invoke(l => l.Text = nameof(SupportDerivedElements))
-									.Assign(out DerivedFromLabel assignDerivedFromLabel),
-							Is.InstanceOf<DerivedFromLabel>());
+								return (isRed.HasValue && isRed.Value ? Colors.Red : Colors.Green).MultiplyAlpha(alpha.Value);
+							})
+						.Invoke(l => l.Text = nameof(SupportDerivedElements))
+						.Assign(out DerivedFromLabel assignDerivedFromLabel),
+					Is.InstanceOf<DerivedFromLabel>());
 
 				Assert.That(new DerivedFromTextCell().BindCommand(nameof(viewModel.Command)), Is.InstanceOf<DerivedFromTextCell>());
 				Assert.That(assignDerivedFromLabel, Is.InstanceOf<DerivedFromLabel>());
