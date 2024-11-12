@@ -10,7 +10,7 @@ public class ExecuteBindings_ViewToViewModel : ExecuteBindingsBase
 		DefaultBindingsLabel.TextColor = Colors.Green;
 		DefaultBindingsLabel.Text = helloWorldText;
 	}
-	
+
 	[Benchmark]
 	public void ExecuteDefaultBindingsMarkup_ViewModelToView()
 	{

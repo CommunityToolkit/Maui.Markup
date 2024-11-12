@@ -18,16 +18,16 @@ public abstract class ExecuteBindingsBase : BaseTest
 		DefaultBindingsLabel.EnableAnimations();
 
 		DefaultMarkupBindingsLabel = new Label
-			{
-				BindingContext = DefaultMarkupBindingsLabelViewModel
-			}.Bind(Label.TextProperty, nameof(LabelViewModel.Text), mode: BindingMode.TwoWay)
+		{
+			BindingContext = DefaultMarkupBindingsLabelViewModel
+		}.Bind(Label.TextProperty, nameof(LabelViewModel.Text), mode: BindingMode.TwoWay)
 			.Bind(Label.TextColorProperty, nameof(LabelViewModel.TextColor), mode: BindingMode.TwoWay);
 		DefaultMarkupBindingsLabel.EnableAnimations();
 
 		TypedMarkupBindingsLabel = new Label
-			{
-				BindingContext = TypedMarkupBindingsLabelViewModel
-			}.Bind(Label.TextProperty,
+		{
+			BindingContext = TypedMarkupBindingsLabelViewModel
+		}.Bind(Label.TextProperty,
 				getter: (LabelViewModel vm) => vm.Text,
 				setter: (vm, text) => vm.Text = text,
 				mode: BindingMode.TwoWay)
