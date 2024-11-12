@@ -79,7 +79,9 @@ jobs:
       - task: CmdLine@2
         displayName: 'Install .NET MAUI Workload'
         inputs:
-          script : 'dotnet workload install maui'
+          script : |
+            dotnet workload install maui
+            dotnet workload update
 
       - pwsh: |
           Invoke-WebRequest 'https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.ps1' -OutFile 'workload-install.ps1'
@@ -154,7 +156,9 @@ jobs:
       - task: CmdLine@2
         displayName: 'Install .NET MAUI Workload'
         inputs:
-          script : 'dotnet workload install maui'
+          script : |
+            dotnet workload install maui
+            dotnet workload update
 
       - pwsh: |
           Invoke-WebRequest 'https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.ps1' -OutFile 'workload-install.ps1'
