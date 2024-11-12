@@ -12,7 +12,7 @@ sealed partial class NewsViewModel(
 	readonly SemaphoreSlim insertIntoSortedCollectionSemaphore = new(1, 1);
 
 	[ObservableProperty]
-	bool isListRefreshing;
+	public partial bool IsListRefreshing { get; set; }
 
 	public event EventHandler<string> PullToRefreshFailed
 	{

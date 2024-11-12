@@ -1,17 +1,11 @@
 ﻿namespace CommunityToolkit.Maui.Markup.Sample.ViewModels;
 
-sealed partial class SettingsViewModel : BaseViewModel
+sealed partial class SettingsViewModel(SettingsService settingsService) : BaseViewModel
 {
-	readonly SettingsService settingsService;
+	readonly SettingsService settingsService = settingsService;
 
 	[ObservableProperty]
-	int numberOfTopStoriesToFetch;
-
-	public SettingsViewModel(SettingsService settingsService)
-	{
-		this.settingsService = settingsService;
-		NumberOfTopStoriesToFetch = settingsService.NumberOfTopStoriesToFetch;
-	}
+	public partial int NumberOfTopStoriesToFetch { get; private set; } = settingsService.NumberOfTopStoriesToFetch;
 
 	partial void OnNumberOfTopStoriesToFetchChanged(int value)
 	{
