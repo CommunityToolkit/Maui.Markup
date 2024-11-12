@@ -5,7 +5,7 @@ sealed partial class SettingsViewModel(SettingsService settingsService) : BaseVi
 	readonly SettingsService settingsService = settingsService;
 
 	[ObservableProperty]
-	public partial int NumberOfTopStoriesToFetch { get; private set; } = settingsService.NumberOfTopStoriesToFetch;
+	public partial int NumberOfTopStoriesToFetch { get; set; } = settingsService.NumberOfTopStoriesToFetch;
 
 	partial void OnNumberOfTopStoriesToFetchChanged(int value)
 	{
