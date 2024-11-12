@@ -67,7 +67,7 @@ jobs:
         inputs:
           packageType: 'sdk'
           version: '$(NET_VERSION)'
-          includePreviewVersions: true
+          includePreviewVersions: false
 
       - task: CmdLine@2
         displayName: 'Install .NET MAUI Workload'
