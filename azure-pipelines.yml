@@ -3,7 +3,7 @@ variables:
   PreviewNumber: $[counter(variables['CurrentSemanticVersionBase'], 1001)]
   CurrentSemanticVersion: '$(CurrentSemanticVersionBase)-preview$(PreviewNumber)'
   NugetPackageVersion: '$(CurrentSemanticVersion)'
-  NET_VERSION: '9.0.100-rc.2.24474.11'
+  NET_VERSION: '9.0.100'
   RunPoliCheck: false
   PathToLibrarySolution: 'src/CommunityToolkit.Maui.Markup.sln'
   PathToSamplesSolution: 'samples/CommunityToolkit.Maui.Markup.Sample.sln'
