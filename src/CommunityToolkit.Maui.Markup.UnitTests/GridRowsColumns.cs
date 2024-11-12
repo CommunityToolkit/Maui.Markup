@@ -8,7 +8,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests;
 class GridRowsColumns : BaseMarkupTestFixture
 {
 	const double starsValue = 1.5;
-	readonly GridLength starsLength = new GridLength(starsValue, GridUnitType.Star);
+	readonly GridLength starsLength = new(starsValue, GridUnitType.Star);
 
 	enum Row { First, Second, Third, Fourth }
 	enum Col { First, Second, Third, Fourth, Fifth }
@@ -24,10 +24,10 @@ class GridRowsColumns : BaseMarkupTestFixture
 		Assert.Multiple(() =>
 		{
 			Assert.That(grid.RowDefinitions, Has.Count.EqualTo(4));
-			Assert.That(grid.RowDefinitions[0]?.Height, Is.EqualTo(GridLength.Auto));
-			Assert.That(grid.RowDefinitions[1]?.Height, Is.EqualTo(GridLength.Star));
-			Assert.That(grid.RowDefinitions[2]?.Height, Is.EqualTo(starsLength));
-			Assert.That(grid.RowDefinitions[3]?.Height, Is.EqualTo(new GridLength(20)));
+			Assert.That(grid.RowDefinitions[0].Height, Is.EqualTo(GridLength.Auto));
+			Assert.That(grid.RowDefinitions[1].Height, Is.EqualTo(GridLength.Star));
+			Assert.That(grid.RowDefinitions[2].Height, Is.EqualTo(starsLength));
+			Assert.That(grid.RowDefinitions[3].Height, Is.EqualTo(new GridLength(20)));
 		});
 	}
 
@@ -47,10 +47,10 @@ class GridRowsColumns : BaseMarkupTestFixture
 		Assert.Multiple(() =>
 		{
 			Assert.That(grid.RowDefinitions, Has.Count.EqualTo(4));
-			Assert.That(grid.RowDefinitions[0]?.Height, Is.EqualTo(GridLength.Auto));
-			Assert.That(grid.RowDefinitions[1]?.Height, Is.EqualTo(GridLength.Star));
-			Assert.That(grid.RowDefinitions[2]?.Height, Is.EqualTo(starsLength));
-			Assert.That(grid.RowDefinitions[3]?.Height, Is.EqualTo(new GridLength(20)));
+			Assert.That(grid.RowDefinitions[0].Height, Is.EqualTo(GridLength.Auto));
+			Assert.That(grid.RowDefinitions[1].Height, Is.EqualTo(GridLength.Star));
+			Assert.That(grid.RowDefinitions[2].Height, Is.EqualTo(starsLength));
+			Assert.That(grid.RowDefinitions[3].Height, Is.EqualTo(new GridLength(20)));
 		});
 	}
 
@@ -74,11 +74,11 @@ class GridRowsColumns : BaseMarkupTestFixture
 		Assert.Multiple(() =>
 		{
 			Assert.That(grid.ColumnDefinitions, Has.Count.EqualTo(5));
-			Assert.That(grid.ColumnDefinitions[0]?.Width, Is.EqualTo(GridLength.Auto));
-			Assert.That(grid.ColumnDefinitions[1]?.Width, Is.EqualTo(GridLength.Star));
-			Assert.That(grid.ColumnDefinitions[2]?.Width, Is.EqualTo(starsLength));
-			Assert.That(grid.ColumnDefinitions[3]?.Width, Is.EqualTo(new GridLength(20)));
-			Assert.That(grid.ColumnDefinitions[4]?.Width, Is.EqualTo(new GridLength(40)));
+			Assert.That(grid.ColumnDefinitions[0].Width, Is.EqualTo(GridLength.Auto));
+			Assert.That(grid.ColumnDefinitions[1].Width, Is.EqualTo(GridLength.Star));
+			Assert.That(grid.ColumnDefinitions[2].Width, Is.EqualTo(starsLength));
+			Assert.That(grid.ColumnDefinitions[3].Width, Is.EqualTo(new GridLength(20)));
+			Assert.That(grid.ColumnDefinitions[4].Width, Is.EqualTo(new GridLength(40)));
 		});
 	}
 
@@ -99,11 +99,11 @@ class GridRowsColumns : BaseMarkupTestFixture
 		Assert.Multiple(() =>
 		{
 			Assert.That(grid.ColumnDefinitions, Has.Count.EqualTo(5));
-			Assert.That(grid.ColumnDefinitions[0]?.Width, Is.EqualTo(GridLength.Auto));
-			Assert.That(grid.ColumnDefinitions[1]?.Width, Is.EqualTo(GridLength.Star));
-			Assert.That(grid.ColumnDefinitions[2]?.Width, Is.EqualTo(starsLength));
-			Assert.That(grid.ColumnDefinitions[3]?.Width, Is.EqualTo(new GridLength(20)));
-			Assert.That(grid.ColumnDefinitions[4]?.Width, Is.EqualTo(new GridLength(40)));
+			Assert.That(grid.ColumnDefinitions[0].Width, Is.EqualTo(GridLength.Auto));
+			Assert.That(grid.ColumnDefinitions[1].Width, Is.EqualTo(GridLength.Star));
+			Assert.That(grid.ColumnDefinitions[2].Width, Is.EqualTo(starsLength));
+			Assert.That(grid.ColumnDefinitions[3].Width, Is.EqualTo(new GridLength(20)));
+			Assert.That(grid.ColumnDefinitions[4].Width, Is.EqualTo(new GridLength(40)));
 		});
 	}
 

@@ -23,17 +23,17 @@ abstract class BaseMarkupTestFixture<TBindable> : BaseMarkupTestFixture where TB
 
 	protected void TestPropertiesSet<TPropertyValue>(
 		Action<TBindable> modify,
-		params (BindableProperty property, TPropertyValue beforeValue, TPropertyValue expectedValue)[] propertyChanges)
+		params ReadOnlySpan<(BindableProperty property, TPropertyValue beforeValue, TPropertyValue expectedValue)> propertyChanges)
 		=> TestPropertiesSet(Bindable, modify, propertyChanges);
 
 	protected void TestPropertiesSet(
 		Action<TBindable> modify,
-		params (BindableProperty property, object? beforeValue, object? expectedValue)[] propertyChanges)
+		params ReadOnlySpan<(BindableProperty property, object? beforeValue, object? expectedValue)> propertyChanges)
 		=> TestPropertiesSet(Bindable, modify, propertyChanges);
 
 	protected void TestPropertiesSet(
 		Action<TBindable> modify,
-		params (BindableProperty property, object? expectedValue)[] propertyChanges)
+		params ReadOnlySpan<(BindableProperty property, object? expectedValue)> propertyChanges)
 		=> TestPropertiesSet(Bindable, modify, propertyChanges);
 }
 
@@ -42,7 +42,7 @@ abstract class BaseMarkupTestFixture : BaseTestFixture
 	protected static void TestPropertiesSet<TBindable, TPropertyValue>(
 		TBindable bindable,
 		Action<TBindable> modify,
-		params (BindableProperty property, TPropertyValue beforeValue, TPropertyValue expectedValue)[] propertyChanges) where TBindable : BindableObject
+		params ReadOnlySpan<(BindableProperty property, TPropertyValue beforeValue, TPropertyValue expectedValue)> propertyChanges) where TBindable : BindableObject
 	{
 		foreach (var (property, beforeValue, expectedValue) in propertyChanges)
 		{
@@ -61,7 +61,7 @@ abstract class BaseMarkupTestFixture : BaseTestFixture
 	protected static void TestPropertiesSet<TBindable, TPropertyValue>(
 		TBindable bindable,
 		Action<TBindable> modify,
-		params (BindableProperty property, TPropertyValue expectedValue)[] propertyChanges) where TBindable : BindableObject
+		params ReadOnlySpan<(BindableProperty property, TPropertyValue expectedValue)> propertyChanges) where TBindable : BindableObject
 	{
 		foreach (var (property, expectedValue) in propertyChanges)
 		{

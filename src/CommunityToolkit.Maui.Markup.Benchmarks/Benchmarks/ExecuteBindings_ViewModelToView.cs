@@ -12,10 +12,10 @@ public class ExecuteBindings_ViewModelToView : ExecuteBindingsBase
 	}
 
 	[Benchmark]
-	public void ExecuteDefaultBindingsMarkup_ViewModelToView()
+	public void ExecuteDefaultBindingsMarkup_ViewToViewModel()
 	{
-		DefaultMarkupBindingsLabelViewModel.TextColor = Colors.Green;
-		DefaultMarkupBindingsLabelViewModel.Text = helloWorldText;
+		DefaultMarkupBindingsLabel.TextColor = Colors.Green;
+		DefaultMarkupBindingsLabel.Text = helloWorldText;
 	}
 
 	[Benchmark]

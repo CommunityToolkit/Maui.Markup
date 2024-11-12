@@ -136,3 +136,6 @@ dotnet_diagnostic.CA1834.severity = error
 
 # IDE0220: Add explicit cast
 dotnet_diagnostic.IDE0220.severity = error
+
+# IDE0220: The field [ObservableProperty] can be converted to a partial property
+dotnet_diagnostic.MVMTK0042.severity = error

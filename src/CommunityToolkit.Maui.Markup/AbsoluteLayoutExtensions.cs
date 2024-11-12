@@ -45,7 +45,7 @@ public static class AbsoluteLayoutExtensions
 	/// <param name="bindable"></param>
 	/// <param name="flags"></param>
 	/// <returns></returns>
-	public static TBindable LayoutFlags<TBindable>(this TBindable bindable, params AbsoluteLayoutFlags[] flags) where TBindable : BindableObject
+	public static TBindable LayoutFlags<TBindable>(this TBindable bindable, params ReadOnlySpan<AbsoluteLayoutFlags> flags) where TBindable : BindableObject
 	{
 		var newFlags = AbsoluteLayoutFlags.None;
 

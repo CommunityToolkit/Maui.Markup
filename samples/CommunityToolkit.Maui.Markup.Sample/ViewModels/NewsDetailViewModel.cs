@@ -1,22 +1,17 @@
 ﻿namespace CommunityToolkit.Maui.Markup.Sample.ViewModels;
 
-sealed partial class NewsDetailViewModel : BaseViewModel, IQueryAttributable
+sealed partial class NewsDetailViewModel(IBrowser browser) : BaseViewModel, IQueryAttributable
 {
-	readonly IBrowser browser;
+	readonly IBrowser browser = browser;
 
 	[ObservableProperty]
-	Uri? uri;
+	public partial Uri? Uri { get; private set; }
 
 	[ObservableProperty]
-	string title = string.Empty;
+	public partial string Title { get; set; } = string.Empty;
 
 	[ObservableProperty]
-	string scoreDescription = string.Empty;
-
-	public NewsDetailViewModel(IBrowser browser)
-	{
-		this.browser = browser;
-	}
+	public partial string ScoreDescription { get; set; } = string.Empty;
 
 	[RelayCommand]
 	Task OpenBrowser()

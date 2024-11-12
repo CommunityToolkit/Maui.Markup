@@ -6,6 +6,8 @@ class MockApplication : Application, IPlatformApplication
 {
 	public MockApplication(IServiceProvider serviceProvider)
 	{
+		Resources = new MockResourceDictionary();
+
 		Services = serviceProvider;
 #pragma warning disable CS0612 // Type or member is obsolete
 		DependencyService.Register<ISystemResourcesProvider, MockResourcesProvider>();
@@ -24,5 +26,13 @@ class ApplicationHandlerStub() : ElementHandler<IApplication, object>(Mapper)
 	protected override object CreatePlatformElement()
 	{
 		return new object();
+	}
+}
+
+class MockResourceDictionary : ResourceDictionary
+{
+	public MockResourceDictionary()
+	{
+		Add(new Style<Label>());
 	}
 }

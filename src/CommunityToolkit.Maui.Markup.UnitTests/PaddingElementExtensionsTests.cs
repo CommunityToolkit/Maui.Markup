@@ -3,7 +3,7 @@ using NUnit.Framework;
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture(typeof(Button))]
-[TestFixture(typeof(Frame))]
+[TestFixture(typeof(Border))]
 [TestFixture(typeof(ImageButton))]
 [TestFixture(typeof(Label))]
 [TestFixture(typeof(Page))]

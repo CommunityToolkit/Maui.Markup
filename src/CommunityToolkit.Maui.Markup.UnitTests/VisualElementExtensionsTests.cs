@@ -295,7 +295,6 @@ class VisualElementExtensionsTests : BaseMarkupTestFixture<BoxView>
 	public void Style()
 	{
 		var style = new Style<BoxView>();
-		Bindable.Style = null;
 		Bindable.Style(style);
 		Assert.That(Bindable.Style, Is.EqualTo(style.MauiStyle));
 	}
