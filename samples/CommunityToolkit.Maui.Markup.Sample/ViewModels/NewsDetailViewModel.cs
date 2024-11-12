@@ -5,13 +5,13 @@ sealed partial class NewsDetailViewModel(IBrowser browser) : BaseViewModel, IQue
 	readonly IBrowser browser = browser;
 
 	[ObservableProperty]
-	Uri? uri;
+	public partial Uri? Uri { get; private set; }
 
 	[ObservableProperty]
-	string title = string.Empty;
+	public partial string Title { get; set; } = string.Empty;
 
 	[ObservableProperty]
-	string scoreDescription = string.Empty;
+	public partial string ScoreDescription { get; set; } = string.Empty;
 
 	[RelayCommand]
 	Task OpenBrowser()
