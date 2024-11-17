@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project>
   <PropertyGroup>
-    <NetVersion>net9.0</NetVersion>
-    <MauiPackageVersion>9.0.0</MauiPackageVersion>
-    <MauiCommunityToolkitPackageVersion>9.1.1</MauiCommunityToolkitPackageVersion>
-    <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
     <NoWarn>NETSDK1023</NoWarn>
-    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
-    <GenerateErrorForMissingTargetingPacks>false</GenerateErrorForMissingTargetingPacks>
+    <NetVersion>net9.0</NetVersion>
+    <LangVersion>preview</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
+    <GenerateErrorForMissingTargetingPacks>false</GenerateErrorForMissingTargetingPacks>
     
     <!-- Support NativeAOT https://learn.microsoft.com/dotnet/core/deploying/native-aot/?tabs=net8plus%2Cwindows -->
     <StripSymbols>false</StripSymbols>
@@ -22,6 +20,9 @@
     <NuGetAuditMode>all</NuGetAuditMode>
 
     <!-- MAUI Specific -->
+    <MauiPackageVersion>9.0.10</MauiPackageVersion>
+    <NextMauiPackageVersion>10.0.0</NextMauiPackageVersion>
+    <MauiCommunityToolkitPackageVersion>9.1.1</MauiCommunityToolkitPackageVersion>
     <MauiStrictXamlCompilation>true</MauiStrictXamlCompilation>
     <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
     <MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
