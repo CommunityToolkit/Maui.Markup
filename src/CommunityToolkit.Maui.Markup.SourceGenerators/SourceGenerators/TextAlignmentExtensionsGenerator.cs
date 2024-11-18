@@ -110,6 +110,25 @@ namespace CommunityToolkit.Maui.Markup
     {{textAlignmentClassMetadata.ClassAcessModifier}} static partial class TextAlignmentExtensions_{{textAlignmentClassMetadata.ClassName}}
     {
         /// <summary>
+        /// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.Justify"/>
+        /// </summary>
+        /// <param name="textAlignmentControl"></param>
+        /// <returns><typeparamref name="TAssignable"/> with added <see cref="TextAlignment.Justify"/></returns>
+        public static TAssignable TextJustify{{genericTypeParameters}}(this TAssignable textAlignmentControl)
+			where TAssignable : {{textAlignmentClassMetadata.Namespace}}.{{textAlignmentClassMetadata.ClassName}}{{genericArguments}}{{textAlignmentClassMetadata.GenericConstraints}}
+        {
+            ArgumentNullException.ThrowIfNull(textAlignmentControl);
+
+            if (textAlignmentControl is not ITextAlignment)
+            {
+                throw new ArgumentException($"Element must implement {nameof(ITextAlignment)}", nameof(textAlignmentControl));
+            }
+
+            textAlignmentControl.HorizontalTextAlignment = TextAlignment.Justify;
+            return textAlignmentControl;
+        }
+    
+        /// <summary>
         /// <see cref="ITextAlignment.HorizontalTextAlignment"/> = <see cref="TextAlignment.Start"/>
         /// </summary>
         /// <param name="textAlignmentControl"></param>
