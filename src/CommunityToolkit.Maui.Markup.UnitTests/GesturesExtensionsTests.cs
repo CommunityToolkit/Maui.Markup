@@ -1,11 +1,45 @@
 ﻿using System.Windows.Input;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using NUnit.Framework;
+
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
 [TestFixture(typeof(Label))] // Derived from View
 class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGestureElement : View, IGestureRecognizers, new()
 {
+	[Test]
+	public void BindTapGestureDefaults()
+	{
+		var gestureElement = new TGestureElement();
+
+		gestureElement.BindTapGesture(nameof(ViewModel.SetGuidCommand));
+
+		Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
+		Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<TapGestureRecognizer>());
+		BindingHelpers.AssertBindingExists((TapGestureRecognizer)gestureElement.GestureRecognizers[0], TapGestureRecognizer.CommandProperty, nameof(ViewModel.SetGuidCommand));
+	}
+
+	[Test]
+	public void BindTapGesturePositionalParameters()
+	{
+		const int numberOfTaps = 2;
+
+		var gestureElement = new TGestureElement();
+		object commandSource = new ViewModel();
+		object parameterSource = new ViewModel();
+
+		gestureElement.BindTapGesture(nameof(ViewModel.SetGuidCommand), commandSource, nameof(ViewModel.Id), parameterSource, numberOfTaps);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
+			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<TapGestureRecognizer>());
+			Assert.That(((TapGestureRecognizer)gestureElement.GestureRecognizers[0]).NumberOfTapsRequired, Is.EqualTo(numberOfTaps));
+		});
+		BindingHelpers.AssertBindingExists((TapGestureRecognizer)gestureElement.GestureRecognizers[0], TapGestureRecognizer.CommandProperty, nameof(ViewModel.SetGuidCommand), source: commandSource);
+		BindingHelpers.AssertBindingExists((TapGestureRecognizer)gestureElement.GestureRecognizers[0], TapGestureRecognizer.CommandParameterProperty, nameof(ViewModel.Id), source: parameterSource);
+	}
+
 	[Test]
 	public void TapGesture()
 	{
@@ -24,6 +58,42 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<TapGestureRecognizer>());
 			Assert.That(((TapGestureRecognizer)gestureElement.GestureRecognizers[0]).NumberOfTapsRequired, Is.EqualTo(numberOfTaps));
 		});
+	}
+
+	[Test]
+	public void BindSwipeGestureDefaults()
+	{
+		var gestureElement = new TGestureElement();
+
+		gestureElement.BindSwipeGesture(nameof(ViewModel.SetGuidCommand));
+
+		Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
+		Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<SwipeGestureRecognizer>());
+		BindingHelpers.AssertBindingExists((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0], SwipeGestureRecognizer.CommandProperty, nameof(ViewModel.SetGuidCommand));
+	}
+
+	[Test]
+	public void BindSwipeGesturePositionalParameters()
+	{
+		const SwipeDirection direction = SwipeDirection.Up;
+		const uint threshold = 2000;
+
+		var gestureElement = new TGestureElement();
+		object commandSource = new ViewModel();
+		object parameterSource = new ViewModel();
+
+		gestureElement.BindSwipeGesture(nameof(ViewModel.SetGuidCommand), commandSource, nameof(ViewModel.Id), parameterSource, direction, threshold);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
+			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<SwipeGestureRecognizer>());
+			Assert.That(((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0]).Direction, Is.EqualTo(direction));
+			Assert.That(((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0]).Threshold, Is.EqualTo(threshold));
+		});
+
+		BindingHelpers.AssertBindingExists((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0], SwipeGestureRecognizer.CommandProperty, nameof(ViewModel.SetGuidCommand), source: commandSource);
+		BindingHelpers.AssertBindingExists((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0], SwipeGestureRecognizer.CommandParameterProperty, nameof(ViewModel.Id), source: parameterSource);
 	}
 
 	[Test]
@@ -56,7 +126,7 @@ class GesturesExtensionsTests<TGestureElement> : BaseMarkupTestFixture where TGe
 		var gestureElement = new TGestureElement();
 
 		gestureElement.PinchGesture(OnPinch);
-		((IPinchGestureController)gestureElement.GestureRecognizers[0]).SendPinch(null, 2, new Point());
+		((IPinchGestureController)gestureElement.GestureRecognizers[0]).SendPinch(null, 2, new Microsoft.Maui.Graphics.Point());
 
 		Assert.Multiple(() =>
 		{
@@ -128,7 +198,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 			BindingContext = viewModel
 		};
 
-		gestureElement.BindTapGesture(static (ViewModel vm) => vm.SetGuidCommand);
+		gestureElement.BindTapGesture(getter: static (ViewModel vm) => vm.SetGuidCommand);
 
 		Assert.Multiple(() =>
 		{
@@ -149,10 +219,8 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 
 		gestureElement.BindTapGesture(
 			getter: static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
-			handlers:
 			[
-				(vm => vm, nameof(ViewModel.NestedCommand)),
-				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
+				(static vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
 			],
 			mode: BindingMode.OneTime);
 
@@ -178,7 +246,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		};
 
 		gestureElement.BindTapGesture(
-			static (ViewModel vm) => vm.SetGuidCommand,
+			getter: static (ViewModel vm) => vm.SetGuidCommand,
 			commandBindingMode: BindingMode.OneTime,
 			parameterGetter: (ViewModel vm) => guid,
 			parameterBindingMode: BindingMode.OneTime,
@@ -216,17 +284,14 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 
 		gestureElement.BindTapGesture(
 			getter: static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
-			handlers:
 			[
-				(vm => vm, nameof(ViewModel.NestedCommand)),
-				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
+				(static vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
 			],
 			commandBindingMode: BindingMode.OneTime,
 			parameterGetter: static (ViewModel vm) => vm.NestedCommand.Id,
 			parameterHandlers:
 			[
-				(vm => vm, nameof(ViewModel.NestedCommand)),
-				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.Id))
+				(static vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.Id))
 			],
 			numberOfTapsRequired: numberOfTaps);
 
@@ -251,7 +316,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 			BindingContext = new ViewModel()
 		};
 
-		gestureElement.BindSwipeGesture(static (ViewModel vm) => vm.SetGuidCommand);
+		gestureElement.BindSwipeGesture(getter: static (ViewModel vm) => vm.SetGuidCommand);
 
 		Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 		Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<SwipeGestureRecognizer>());
@@ -268,10 +333,8 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 
 		gestureElement.BindSwipeGesture(
 			getter: static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
-			handlers:
 			[
-				(vm => vm, nameof(ViewModel.NestedCommand)),
-				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
+				(static vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
 			],
 			mode: BindingMode.OneTime);
 
@@ -299,7 +362,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		};
 
 		gestureElement.BindSwipeGesture(
-			static (ViewModel vm) => vm.SetGuidCommand,
+			getter: static (ViewModel vm) => vm.SetGuidCommand,
 			commandBindingMode: BindingMode.OneTime,
 			parameterGetter: (ViewModel vm) => guid,
 			parameterBindingMode: BindingMode.OneTime,
@@ -339,17 +402,14 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 
 		gestureElement.BindSwipeGesture(
 			getter: static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
-			handlers:
 			[
-				(vm => vm, nameof(ViewModel.NestedCommand)),
-				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
+				(static vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
 			],
 			commandBindingMode: BindingMode.OneTime,
 			parameterGetter: static (ViewModel vm) => vm.NestedCommand.Id,
 			parameterHandlers:
 			[
-				(vm => vm, nameof(ViewModel.NestedCommand)),
-				(vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.Id))
+				(static vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.Id))
 			],
 			direction: direction,
 			threshold: threshold);
@@ -367,14 +427,14 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 	}
 
 	[Test]
+	[Obsolete]
 	public void MultipleGestureBindings()
 	{
 		var gestureElement = new TGestureElement
-		{
-			BindingContext = new ViewModel()
-		}
-			.BindSwipeGesture(static (ViewModel vm) => vm.SetGuidCommand)
-			.BindTapGesture(static (ViewModel vm) => vm.SetGuidCommand);
+			{
+				BindingContext = new ViewModel()
+			}.BindSwipeGesture(getter: static (ViewModel vm) => vm.SetGuidCommand)
+			.BindTapGesture(getter: static (ViewModel vm) => vm.SetGuidCommand);
 
 		Assert.Multiple(() =>
 		{
