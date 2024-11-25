@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Input;
 
 namespace CommunityToolkit.Maui.Markup;
@@ -17,6 +17,7 @@ public static partial class GesturesExtensions
 	/// <param name="direction">Swipe gesture direction</param>
 	/// <param name="threshold">Minimum swipe distance that will cause the gesture to be recognized</param>
 	/// <returns><paramref name="gestureElement"/></returns>
+[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
 	[RequiresUnreferencedCode("Using bindings with string paths is not trim safe. Use expression-based binding instead.")]
 	public static TGestureElement BindSwipeGesture<TGestureElement>(this TGestureElement gestureElement,
 																		string commandPath,
@@ -39,6 +40,7 @@ public static partial class GesturesExtensions
 	/// <param name="parameterSource">Binding source for Command Binding</param>
 	/// <param name="numberOfTapsRequired">Number of taps required to trigger the <see cref="ICommand"/></param>
 	/// <returns><paramref name="gestureElement"/></returns>
+[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
 	[RequiresUnreferencedCode("Using bindings with string paths is not trim safe. Use expression-based binding instead.")]
 	public static TGestureElement BindTapGesture<TGestureElement>(this TGestureElement gestureElement,
 																	string commandPath,
