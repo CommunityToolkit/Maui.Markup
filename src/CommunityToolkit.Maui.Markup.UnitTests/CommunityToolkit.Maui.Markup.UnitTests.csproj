@@ -10,9 +10,9 @@
   <ItemGroup>
     <PackageReference Include="NUnit" Version="4.2.2" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
     <PackageReference Include="coverlet.collector" Version="6.0.2" PrivateAssets="all" />
-    <PackageReference Include="NUnit.Analyzers" Version="4.3.0" PrivateAssets="all" />
+    <PackageReference Include="NUnit.Analyzers" Version="4.4.0" PrivateAssets="all" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="CommunityToolkit.Maui" Version="$(MauiCommunityToolkitPackageVersion)" />
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiPackageVersion)"/>
