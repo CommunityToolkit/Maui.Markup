@@ -220,7 +220,8 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		gestureElement.BindTapGesture(
 			getter: static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
 			[
-				(static vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
+				(static vm => vm, nameof(ViewModel.NestedCommand)),
+				(static vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
 			],
 			mode: BindingMode.OneTime);
 
@@ -285,13 +286,15 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		gestureElement.BindTapGesture(
 			getter: static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
 			[
-				(static vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
+				(static vm => vm, nameof(ViewModel.NestedCommand)),
+				(static vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
 			],
 			commandBindingMode: BindingMode.OneTime,
 			parameterGetter: static (ViewModel vm) => vm.NestedCommand.Id,
 			parameterHandlers:
 			[
-				(static vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.Id))
+				(static vm => vm, nameof(ViewModel.NestedCommand)),
+				(static vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.Id))
 			],
 			numberOfTapsRequired: numberOfTaps);
 
@@ -334,7 +337,8 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		gestureElement.BindSwipeGesture(
 			getter: static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
 			[
-				(static vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
+				(static vm => vm, nameof(ViewModel.NestedCommand)),
+				(static vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
 			],
 			mode: BindingMode.OneTime);
 
@@ -403,13 +407,15 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		gestureElement.BindSwipeGesture(
 			getter: static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
 			[
-				(static vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
+				(static vm => vm, nameof(ViewModel.NestedCommand)),
+				(static vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.SetGuidCommand))
 			],
 			commandBindingMode: BindingMode.OneTime,
 			parameterGetter: static (ViewModel vm) => vm.NestedCommand.Id,
 			parameterHandlers:
 			[
-				(static vm => vm, nameof(ViewModel.NestedCommand)), (vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.Id))
+				(static vm => vm, nameof(ViewModel.NestedCommand)),
+				(static vm => vm.NestedCommand, nameof(ViewModel.NestedCommand.Id))
 			],
 			direction: direction,
 			threshold: threshold);
