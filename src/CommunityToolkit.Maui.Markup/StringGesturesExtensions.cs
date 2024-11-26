@@ -1,12 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Windows.Input;
+using CommunityToolkit.Maui.Markup.Services;
 
 namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>
 /// Extension Methods for Element Gestures
 /// </summary>
-public static partial class GesturesExtensions
+[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicMethods)]
+public static class StringGesturesExtensions
 {
 	/// <summary>Add a <see cref="SwipeGestureRecognizer"/> and bind to its Command and (optionally) CommandParameter properties</summary>
 	/// <param name="gestureElement">An <see cref="Element"/> implementing <see cref="IGestureRecognizers"/></param>
@@ -17,7 +19,6 @@ public static partial class GesturesExtensions
 	/// <param name="direction">Swipe gesture direction</param>
 	/// <param name="threshold">Minimum swipe distance that will cause the gesture to be recognized</param>
 	/// <returns><paramref name="gestureElement"/></returns>
-[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
 	[RequiresUnreferencedCode("Using bindings with string paths is not trim safe. Use expression-based binding instead.")]
 	public static TGestureElement BindSwipeGesture<TGestureElement>(this TGestureElement gestureElement,
 																		string commandPath,
@@ -40,7 +41,6 @@ public static partial class GesturesExtensions
 	/// <param name="parameterSource">Binding source for Command Binding</param>
 	/// <param name="numberOfTapsRequired">Number of taps required to trigger the <see cref="ICommand"/></param>
 	/// <returns><paramref name="gestureElement"/></returns>
-[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
 	[RequiresUnreferencedCode("Using bindings with string paths is not trim safe. Use expression-based binding instead.")]
 	public static TGestureElement BindTapGesture<TGestureElement>(this TGestureElement gestureElement,
 																	string commandPath,
@@ -163,45 +163,15 @@ public static partial class GesturesExtensions
 
 		return gestureElement;
 	}
-
-	static TGestureElement ConfigureSwipeGesture<TGestureElement>(this TGestureElement gestureElement,
-																	SwipeGestureRecognizer swipeGesture,
-																	SwipeDirection? direction = null,
-																	uint? threshold = null) where TGestureElement : IGestureRecognizers
-	{
-		if (direction is not null)
-		{
-			swipeGesture.Direction = direction.Value;
-		}
-
-		if (threshold is not null)
-		{
-			swipeGesture.Threshold = threshold.Value;
-		}
-
-		return gestureElement;
-	}
-
-	static TGestureElement ConfigureTapGesture<TGestureElement>(this TGestureElement gestureElement,
-															TapGestureRecognizer tapGesture,
-															int? numberOfTapsRequired = null) where TGestureElement : IGestureRecognizers
-	{
-		if (numberOfTapsRequired is not null)
-		{
-			tapGesture.NumberOfTapsRequired = numberOfTapsRequired.Value;
-		}
-
-		return gestureElement;
-	}
-
+	
 	[RequiresUnreferencedCode("Using bindings with string paths is not trim safe. Use expression-based binding instead.")]
-    static TGestureRecognizer BindGesture<TGestureElement, TGestureRecognizer>(
+	static TGestureRecognizer BindGesture<TGestureElement, TGestureRecognizer>(
 		this TGestureElement gestureElement,
 		string commandPath,
 		object? commandSource = null,
 		string? parameterPath = null,
 		object? parameterSource = null) where TGestureElement : IGestureRecognizers
-										where TGestureRecognizer : BindableObject, IGestureRecognizer, new()
+		where TGestureRecognizer : BindableObject, IGestureRecognizer, new()
 	{
 		var gestureRecognizer = new TGestureRecognizer().BindCommand(commandPath, commandSource, parameterPath, parameterSource);
 		gestureElement.GestureRecognizers.Add(gestureRecognizer);

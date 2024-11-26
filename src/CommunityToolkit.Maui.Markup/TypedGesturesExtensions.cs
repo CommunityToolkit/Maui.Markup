@@ -1,11 +1,15 @@
-﻿using System.Linq.Expressions;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 using System.Windows.Input;
+using CommunityToolkit.Maui.Markup.Services;
+
 namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>
 /// Extension Methods for Element Gestures
 /// </summary>
-public static partial class GesturesExtensions
+[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicMethods)]
+public static class TypedGesturesExtensions
 {
 	/// <summary>Add a <see cref="SwipeGestureRecognizer"/> and bind to its Command </summary>
 	public static TGestureElement BindSwipeGesture<TGestureElement, TCommandBindingContext>(
