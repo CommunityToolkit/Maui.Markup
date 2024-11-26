@@ -1,11 +1,15 @@
-﻿using System.Linq.Expressions;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 using System.Windows.Input;
+using CommunityToolkit.Maui.Markup.Services;
+
 namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>
 /// Extension Methods for Element Gestures
 /// </summary>
-public static class GesturesExtensions
+[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicMethods)]
+public static class TypedGesturesExtensions
 {
 	/// <summary>Add a <see cref="SwipeGestureRecognizer"/> and bind to its Command </summary>
 	public static TGestureElement BindSwipeGesture<TGestureElement, TCommandBindingContext>(
@@ -255,116 +259,6 @@ public static class GesturesExtensions
 		return gestureElement.ConfigureTapGesture(tapGesture, numberOfTapsRequired);
 	}
 
-	/// <summary>
-	/// Adds a <see cref="PanGestureRecognizer"/>
-	/// </summary>
-	/// <param name="gestureElement">An <see cref="Element"/> implementing <see cref="IGestureRecognizers"/></param>
-	/// <param name="onPanUpdated"><see cref="Action"/> that invokes when the <see cref="PanGestureRecognizer.PanUpdated"/> event is invoked</param>
-	/// <param name="touchPoints">Number of touch points in the gesture</param>
-	/// <returns><paramref name="gestureElement"/></returns>
-	public static TGestureElement PanGesture<TGestureElement>(this TGestureElement gestureElement,
-																EventHandler<PanUpdatedEventArgs>? onPanUpdated = null,
-																int? touchPoints = null) where TGestureElement : IGestureRecognizers
-	{
-		var gestureRecognizer = new PanGestureRecognizer();
-
-		if (onPanUpdated is not null)
-		{
-			gestureRecognizer.PanUpdated += onPanUpdated;
-		}
-
-		if (touchPoints is not null)
-		{
-			gestureRecognizer.TouchPoints = touchPoints.Value;
-		}
-
-		gestureElement.GestureRecognizers.Add(gestureRecognizer);
-
-		return gestureElement;
-	}
-
-	/// <summary>
-	/// Adds a <see cref="PinchGestureRecognizer"/>
-	/// </summary>
-	/// <param name="gestureElement">An <see cref="Element"/> implementing <see cref="IGestureRecognizers"/></param>
-	/// <param name="onPinchGestureUpdated"><see cref="Action"/> that invokes when the <see cref="PinchGestureRecognizer.PinchUpdated"/> event is invoked</param>
-	/// <returns><paramref name="gestureElement"/></returns>
-	public static TGestureElement PinchGesture<TGestureElement>(this TGestureElement gestureElement,
-																EventHandler<PinchGestureUpdatedEventArgs>? onPinchGestureUpdated = null) where TGestureElement : IGestureRecognizers
-	{
-		var gestureRecognizer = new PinchGestureRecognizer();
-
-		if (onPinchGestureUpdated is not null)
-		{
-			gestureRecognizer.PinchUpdated += onPinchGestureUpdated;
-		}
-
-		gestureElement.GestureRecognizers.Add(gestureRecognizer);
-
-		return gestureElement;
-	}
-
-	/// <summary>
-	/// Adds a <see cref="SwipeGestureRecognizer"/>
-	/// </summary>
-	/// <param name="gestureElement">An <see cref="Element"/> implementing <see cref="IGestureRecognizers"/></param>
-	/// <param name="onSwiped"><see cref="Action"/> that invokes when the <see cref="SwipeGestureRecognizer.Swiped"/> event is invoked</param>
-	/// <param name="direction">Swipe gesture direction</param>
-	/// <param name="threshold">Minimum swipe distance that will cause the gesture to be recognized</param>
-	/// <returns><paramref name="gestureElement"/></returns>
-	public static TGestureElement SwipeGesture<TGestureElement>(this TGestureElement gestureElement,
-																EventHandler<SwipedEventArgs>? onSwiped = null,
-																SwipeDirection? direction = null,
-																uint? threshold = null) where TGestureElement : IGestureRecognizers
-	{
-		var gestureRecognizer = new SwipeGestureRecognizer();
-
-		if (onSwiped is not null)
-		{
-			gestureRecognizer.Swiped += onSwiped;
-		}
-
-		if (direction is not null)
-		{
-			gestureRecognizer.Direction = direction.Value;
-		}
-
-		if (threshold is not null)
-		{
-			gestureRecognizer.Threshold = threshold.Value;
-		}
-
-		gestureElement.GestureRecognizers.Add(gestureRecognizer);
-
-		return gestureElement;
-	}
-
-	/// <summary>
-	/// Adds a <see cref="TapGestureRecognizer"/> and sets defines its action when tapped
-	/// </summary>
-	/// <param name="gestureElement">An <see cref="Element"/> implementing <see cref="IGestureRecognizers"/></param>
-	/// <param name="onTapped"><see cref="Action"/>invoked once <paramref name="numberOfTapsRequired"/> threshold is reached</param>
-	/// <param name="numberOfTapsRequired">Number of taps required to trigger <paramref name="onTapped"/></param>
-	/// <returns><paramref name="gestureElement"/></returns>
-	public static TGestureElement TapGesture<TGestureElement>(this TGestureElement gestureElement,
-																Action onTapped,
-																int? numberOfTapsRequired = null) where TGestureElement : IGestureRecognizers
-	{
-		var gestureRecognizer = new TapGestureRecognizer
-		{
-			Command = new Command(onTapped)
-		};
-
-		if (numberOfTapsRequired is not null)
-		{
-			gestureRecognizer.NumberOfTapsRequired = numberOfTapsRequired.Value;
-		}
-
-		gestureElement.GestureRecognizers.Add(gestureRecognizer);
-
-		return gestureElement;
-	}
-
 	static Func<TBindingContext, TSource> ConvertExpressionToFunc<TBindingContext, TSource>(in Expression<Func<TBindingContext, TSource>> expression) => expression.Compile();
 
 	static string GetMemberName<T>(in Expression<T> expression) => expression.Body switch
@@ -404,35 +298,5 @@ public static class GesturesExtensions
 		gestureElement.GestureRecognizers.Add(gestureRecognizer);
 
 		return gestureRecognizer;
-	}
-
-	static TGestureElement ConfigureSwipeGesture<TGestureElement>(this TGestureElement gestureElement,
-		SwipeGestureRecognizer swipeGesture,
-		SwipeDirection? direction = null,
-		uint? threshold = null) where TGestureElement : IGestureRecognizers
-	{
-		if (direction is not null)
-		{
-			swipeGesture.Direction = direction.Value;
-		}
-
-		if (threshold is not null)
-		{
-			swipeGesture.Threshold = threshold.Value;
-		}
-
-		return gestureElement;
-	}
-
-	static TGestureElement ConfigureTapGesture<TGestureElement>(this TGestureElement gestureElement,
-		TapGestureRecognizer tapGesture,
-		int? numberOfTapsRequired = null) where TGestureElement : IGestureRecognizers
-	{
-		if (numberOfTapsRequired is not null)
-		{
-			tapGesture.NumberOfTapsRequired = numberOfTapsRequired.Value;
-		}
-
-		return gestureElement;
 	}
 }
