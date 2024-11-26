@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="CommunityToolkit.Maui.Markup.SourceGenerators.UnitTests" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.11.0" PrivateAssets="all" />
     <PackageReference Include="PolySharp" Version="1.15.0" PrivateAssets="all" IncludeAssets="build; analyzers" />
   </ItemGroup>

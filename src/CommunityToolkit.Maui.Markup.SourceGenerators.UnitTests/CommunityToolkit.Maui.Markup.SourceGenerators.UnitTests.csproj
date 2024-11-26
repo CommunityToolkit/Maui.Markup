@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(NetVersion)</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\GF</CompilerGeneratedFilesOutputPath>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0"  />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.11.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.NUnit" Version="1.1.2" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeFix.Testing.NUnit" Version="1.1.2" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.NUnit" Version="1.1.2" />
+    <PackageReference Include="NUnit" Version="4.2.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="coverlet.collector" Version="6.0.2" PrivateAssets="all" />
+    <PackageReference Include="NUnit.Analyzers" Version="4.3.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiPackageVersion)"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CommunityToolkit.Maui.Markup.SourceGenerators\CommunityToolkit.Maui.Markup.SourceGenerators.csproj" />
+    <ProjectReference Include="..\CommunityToolkit.Maui.Markup\CommunityToolkit.Maui.Markup.csproj" />
+  </ItemGroup>
+
+</Project>
