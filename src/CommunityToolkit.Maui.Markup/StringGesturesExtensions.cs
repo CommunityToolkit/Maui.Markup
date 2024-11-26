@@ -163,7 +163,7 @@ public static class StringGesturesExtensions
 
 		return gestureElement;
 	}
-	
+
 	[RequiresUnreferencedCode("Using bindings with string paths is not trim safe. Use expression-based binding instead.")]
 	static TGestureRecognizer BindGesture<TGestureElement, TGestureRecognizer>(
 		this TGestureElement gestureElement,
