@@ -12,8 +12,8 @@ variables:
   PathToCommunityToolkitUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.UnitTests/CommunityToolkit.Maui.Markup.UnitTests.csproj'
   PathToCommunityToolkitBenchmarkCsproj: 'src/CommunityToolkit.Maui.Markup.Benchmarks/CommunityToolkit.Maui.Markup.Benchmarks.csproj'
   PathToCommunityToolkitSourceGeneratorsCsproj: 'src/CommunityToolkit.Maui.Markup.SourceGenerators/CommunityToolkit.Maui.Markup.SourceGenerators.csproj'
-  CommunityToolkitSampleApp_Xcode_Version: '16'
-  CommunityToolkitLibrary_Xcode_Version: '16'
+  CommunityToolkitSampleApp_Xcode_Version: '16.1'
+  CommunityToolkitLibrary_Xcode_Version: '16.1'
   ShouldCheckDependencies: true
   
 trigger:
