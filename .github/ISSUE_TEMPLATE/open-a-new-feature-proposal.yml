@@ -2,6 +2,7 @@ name: Open a New Feature Proposal
 description: For proposals that have been discussed in the Discussions tab and have been approved by a member of the core .NET MAUI Markup Toolkit team
 title: "[Proposal] "
 labels: [new, proposal]
+projects: ["CommunityToolkit/projects/15"]
 body:
 
 - type: input
