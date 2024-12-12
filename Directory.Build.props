@@ -27,6 +27,9 @@
     <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
     <MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
 
+    <!-- Unit Test Specific -->
+    <EnableNUnitRunner>true</EnableNUnitRunner>
+
     <!-- WarningsAsErrors
      CS0419: Ambiguous reference in cref attribute 
      CS0618: Is obsolete
