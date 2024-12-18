@@ -1,10 +1,13 @@
-﻿namespace CommunityToolkit.Maui.Markup.Sample.Pages;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
 sealed partial class NewsPage : BaseContentPage<NewsViewModel>
 {
 	readonly IDispatcher dispatcher;
 	readonly RefreshView refreshView;
 
+	[RequiresUnreferencedCode("AppShell.GetRoute Requires Unreferenced Code")]
 	public NewsPage(IDispatcher dispatcher,
 					NewsViewModel newsViewModel) : base(newsViewModel, "Top Stories")
 	{
@@ -46,6 +49,7 @@ sealed partial class NewsPage : BaseContentPage<NewsViewModel>
 		static bool IsNullOrEmpty(in IEnumerable? enumerable) => !enumerable?.GetEnumerator().MoveNext() ?? true;
 	}
 
+	[RequiresUnreferencedCode("AppShell.GetRoute Requires Unreferenced Code")]
 	async void HandleSelectionChanged(object? sender, SelectionChangedEventArgs e)
 	{
 		ArgumentNullException.ThrowIfNull(sender);
@@ -82,12 +86,14 @@ sealed partial class NewsPage : BaseContentPage<NewsViewModel>
 
 	void HandleNumberOfTopStoriesToFetchChanged(object? sender, int e) => TryRefreshCollectionView();
 
+	[RequiresUnreferencedCode("AppShell.GetRoute Requires Unreferenced Code")]
 	Task NavigateToSettingsPage() => dispatcher.DispatchAsync(() =>
 	{
 		var route = AppShell.GetRoute<SettingsPage, SettingsViewModel>();
 		return Shell.Current.GoToAsync(route);
 	});
 
+	[RequiresUnreferencedCode("AppShell.GetRoute Requires Unreferenced Code")]
 	Task NavigateToNewsDetailPage(StoryModel storyModel) => dispatcher.DispatchAsync(() =>
 	{
 		var route = AppShell.GetRoute<NewsDetailPage, NewsDetailViewModel>();

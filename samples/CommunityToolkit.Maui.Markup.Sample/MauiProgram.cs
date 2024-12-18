@@ -1,8 +1,10 @@
-﻿using Microsoft.Extensions.Http.Resilience;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.Http.Resilience;
 using Polly;
 using Refit;
 namespace CommunityToolkit.Maui.Markup.Sample;
 
+[RequiresUnreferencedCode("SettingsViewModel Calls CommunityToolkit.Maui.Behaviors.NumericValidationBehavior.NumericValidationBehavior()")]
 public class MauiProgram
 {
 	public static MauiApp CreateMauiApp()

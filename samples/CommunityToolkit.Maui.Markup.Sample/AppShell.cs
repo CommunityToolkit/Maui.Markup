@@ -2,14 +2,15 @@
 
 namespace CommunityToolkit.Maui.Markup.Sample;
 
+[RequiresUnreferencedCode("SettingsViewModel Calls CommunityToolkit.Maui.Behaviors.NumericValidationBehavior.NumericValidationBehavior()")]
 partial class AppShell : Shell
 {
-	static readonly IReadOnlyDictionary<Type, string> pageRouteMappingDictionary = new Dictionary<Type, string>(
+    static readonly ReadOnlyDictionary<Type, string> pageRouteMappingDictionary = new Dictionary<Type, string>(
 	[
 		CreateRoutePageMapping<NewsPage, NewsViewModel>(),
 		CreateRoutePageMapping<SettingsPage, SettingsViewModel>(),
 		CreateRoutePageMapping<NewsDetailPage, NewsDetailViewModel>()
-	]);
+	]).AsReadOnly();
 
 	public AppShell(NewsPage newsPage)
 	{
@@ -21,7 +22,7 @@ partial class AppShell : Shell
 	{
 		return GetRoute(typeof(TPage));
 	}
-
+	
 	public static string GetRoute(Type type)
 	{
 		if (!pageRouteMappingDictionary.TryGetValue(type, out var route))
