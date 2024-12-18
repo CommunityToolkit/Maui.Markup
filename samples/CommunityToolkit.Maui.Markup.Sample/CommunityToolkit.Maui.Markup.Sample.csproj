@@ -67,14 +67,7 @@
     <ProjectReference Include="..\..\src\CommunityToolkit.Maui.Markup\CommunityToolkit.Maui.Markup.csproj" />
     <ProjectReference Include="..\..\src\CommunityToolkit.Maui.Markup.SourceGenerators\CommunityToolkit.Maui.Markup.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
-
-  <!-- Workaround for https://github.com/dotnet/maui/issues/7272 -->
-  <Target Name="_SetPublishFolderTypeNoneOnDocFileItems" BeforeTargets="_ComputePublishLocation">
-    <ItemGroup>
-      <ResolvedFileToPublish Update="@(ResolvedFileToPublish)" Condition="'%(ResolvedFileToPublish.Extension)' == '.xml' And '%(ResolvedFileToPublish.PublishFolderType)' == ''" PublishFolderType="None" />
-    </ItemGroup>
-  </Target>
-
+  
   <!-- Fixes Static Registrar causing Linker error: https://github.com/xamarin/xamarin-macios/blob/main/docs/managed-static-registrar.md -->
   <Target Name="SelectStaticRegistrar" AfterTargets="SelectRegistrar">
     <PropertyGroup Condition="'$(Registrar)' == 'managed-static' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)'))=='maccatalyst'">
