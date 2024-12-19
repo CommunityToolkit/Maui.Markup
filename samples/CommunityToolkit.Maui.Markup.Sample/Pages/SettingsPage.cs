@@ -5,8 +5,8 @@ namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
 sealed partial class SettingsPage : BaseContentPage<SettingsViewModel>
 {
-    [RequiresUnreferencedCode("Calls CommunityToolkit.Maui.Behaviors.NumericValidationBehavior.NumericValidationBehavior()")]
-    public SettingsPage(SettingsViewModel settingsViewModel) : base(settingsViewModel, "Settings")
+	[RequiresUnreferencedCode("Calls CommunityToolkit.Maui.Behaviors.NumericValidationBehavior.NumericValidationBehavior()")]
+	public SettingsPage(SettingsViewModel settingsViewModel) : base(settingsViewModel, "Settings")
 	{
 		Content = new AbsoluteLayout
 		{
