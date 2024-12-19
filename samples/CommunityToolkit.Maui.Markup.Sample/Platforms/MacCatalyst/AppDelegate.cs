@@ -6,5 +6,5 @@ namespace CommunityToolkit.Maui.Markup.Sample;
 [RequiresUnreferencedCode("SettingsViewModel Calls CommunityToolkit.Maui.Behaviors.NumericValidationBehavior.NumericValidationBehavior()")]
 public class AppDelegate : MauiUIApplicationDelegate
 {
-    protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+	protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
 }
