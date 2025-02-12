@@ -193,16 +193,8 @@ jobs:
       - task: CmdLine@2
         displayName: 'Run Unit Tests'
         inputs:
-          script: 'dotnet test -c Release $(PathToCommunityToolkitUnitTestCsproj) --settings ".runsettings" --collect "XPlat code coverage" --logger trx --results-directory $(Agent.TempDirectory)'
+          script: 'dotnet run -c Release --project $(PathToCommunityToolkitUnitTestCsproj) --results-directory $(Agent.TempDirectory) --coverage --coverage-output $(Agent.TempDirectory)/coverage.cobertura.xml --coverage-output-format cobertura'
 
-      - task: PublishTestResults@2
-        condition: eq(variables['Agent.OS'], 'Windows_NT') # Only run this step on Windows
-        displayName: 'Publish Test Results'
-        inputs:
-          testResultsFormat: VSTest
-          testResultsFiles: '**/*.trx'
-          searchFolder: $(Agent.TempDirectory)
-          
       - task: PublishCodeCoverageResults@2
         condition: eq(variables['Agent.OS'], 'Windows_NT') # Only run this step on Windows
         displayName: 'Publish Code Coverage Results'
