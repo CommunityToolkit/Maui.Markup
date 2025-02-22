@@ -249,7 +249,12 @@ sealed class TypedBinding<TSource, TProperty> : TypedBindingBase where TSource :
 		if (needsSetter && sourceObject is not null)
 		{
 			var value = GetTargetValue(target.GetValue(property), typeof(TProperty));
-
+			if (value == null)
+			{
+				setter?.Invoke(sourceObject,default!);
+				return;
+			}
+			
 			if (!BindingExpressionHelper.TryConvert(ref value, property, typeof(TProperty), false))
 			{
 				BindingDiagnostics.SendBindingFailure(this, sourceObject, target, property, "Binding", BindingExpression.CannotConvertTypeErrorMessage, value, typeof(TProperty));
