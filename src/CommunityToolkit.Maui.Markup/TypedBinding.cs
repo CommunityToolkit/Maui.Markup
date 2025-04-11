@@ -248,7 +248,13 @@ sealed class TypedBinding<TSource, TProperty> : TypedBindingBase where TSource :
 		var needsSetter = (mode == BindingMode.TwoWay && fromTarget) || mode == BindingMode.OneWayToSource;
 		if (needsSetter && sourceObject is not null)
 		{
-			var value = GetTargetValue(target.GetValue(property), typeof(TProperty)) ?? throw new InvalidOperationException("Unable to find target value");
+			var value = GetTargetValue(target.GetValue(property), typeof(TProperty?));
+			
+			if (value is null)
+			{
+				setter?.Invoke(sourceObject, default!);
+				return;
+			}
 
 			if (!BindingExpressionHelper.TryConvert(ref value, property, typeof(TProperty), false))
 			{
