@@ -473,7 +473,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		var label = new Label
 		{
 			BindingContext = viewModel
-		}.Bind<Label, ViewModel, Color, string>(Label.TextProperty,
+		}.Bind<Label, ViewModel, Color?, string>(Label.TextProperty,
 			static viewModel => viewModel.TextColor,
 			converter: colorToHexRgbStringConverter);
 
@@ -715,10 +715,6 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		public const double DefaultPercentage = 0.5;
 		public const double DefaultHeightRequest = 500;
 
-		double percentage = DefaultPercentage, heightRequest = DefaultHeightRequest;
-		Color textColor = DefaultColor;
-		int? age;
-
 		public ViewModel()
 		{
 			Command = new Command(() => TextColor = colors.Skip(Random.Shared.Next(colors.Keys.Count())).First().Value);
@@ -736,29 +732,29 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 
 		public double HeightRequest
 		{
-			get => heightRequest;
-			set => SetProperty(ref heightRequest, value);
-		}
+			get;
+			set => SetProperty(ref field, value);
+		} = DefaultHeightRequest;
 
 		public double Percentage
 		{
-			get => percentage;
-			set => SetProperty(ref percentage, value);
-		}
+			get;
+			set => SetProperty(ref field, value);
+		} = DefaultPercentage;
 
-		public Color TextColor
+		public Color? TextColor
 		{
-			get => textColor;
-			set => SetProperty(ref textColor, value);
-		}
+			get;
+			set => SetProperty(ref field, value);
+		} = DefaultColor;
 
 		public int? Age
 		{
-			get => age;
-			set => SetProperty(ref age, value);
+			get;
+			set => SetProperty(ref field, value);
 		}
 
-		protected void SetProperty<T>(ref T backingStore, in T value, [CallerMemberName] in string propertyname = "")
+		protected void SetProperty<T>(ref T backingStore, in T value, [CallerMemberName] in string propertyName = "")
 		{
 			if (EqualityComparer<T>.Default.Equals(backingStore, value))
 			{
@@ -767,21 +763,19 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 
 			backingStore = value;
 
-			OnPropertyChanged(propertyname);
+			OnPropertyChanged(propertyName);
 		}
 
 		void OnPropertyChanged([CallerMemberName] string propertyName = "") =>
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 	}
 
-	class NestedViewModel : ViewModel
+	sealed class NestedViewModel : ViewModel
 	{
-		NestedViewModel? model;
-
 		public NestedViewModel? Model
 		{
-			get => model;
-			set => SetProperty(ref model, value);
+			get;
+			set => SetProperty(ref field, value);
 		}
 	}
 }
