@@ -644,6 +644,72 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		}
 	}
 
+	/// <summary>
+	/// Previously this was causing a System.InvalidOperationException : Unable to find target value.
+	/// For more info: https://github.com/CommunityToolkit/Maui.Markup/issues/354
+	/// </summary>
+	[Test]
+	public async Task ConfirmNullableTypedBindingWithValueNull()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		bool didViewModelPropertyChangeFire = false;
+		int viewModelPropertyChangedEventCount = 0;
+		TaskCompletionSource<string?> viewModelPropertyChangedEventArgsTCS = new();
+
+		bool didEntryTextChangeFire = false;
+		int entryTextChangedEventCount = 0;
+
+		var entry = new Entry
+		{
+			BindingContext = viewModel,
+			Keyboard = Keyboard.Numeric
+		}.Bind(Entry.TextProperty, static (ViewModel viewModel) => viewModel.Age, static (viewModel, age) => viewModel.Age = age);
+
+		entry.TextChanged += HandleEntryTextChanged;
+		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
+
+		BindingHelpers.AssertTypedBindingExists(entry, Entry.TextProperty, BindingMode.Default, viewModel);
+		Assert.That(entry.Text, Is.Null);
+
+		entry.Text = "1";
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(entry.Text, Is.EqualTo("1"));
+			Assert.That(viewModel.Age, Is.EqualTo(1));
+		});
+
+		viewModel.Age = null;
+		var viewModelPropertyName = await viewModelPropertyChangedEventArgsTCS.Task;
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(didViewModelPropertyChangeFire, Is.True);
+			Assert.That(viewModelPropertyName, Is.EqualTo(nameof(ViewModel.Age)));
+			Assert.That(viewModelPropertyChangedEventCount, Is.EqualTo(2));
+
+			Assert.That(didEntryTextChangeFire, Is.True);
+			Assert.That(entryTextChangedEventCount, Is.EqualTo(2));
+
+			Assert.That(entry.Text, Is.Null);
+			Assert.That(viewModel.Age, Is.Null);
+		});
+
+		void HandleViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+		{
+			didViewModelPropertyChangeFire = true;
+			viewModelPropertyChangedEventCount++;
+			viewModelPropertyChangedEventArgsTCS.TrySetResult(e.PropertyName);
+		}
+
+		void HandleEntryTextChanged(object? sender, TextChangedEventArgs e)
+		{
+			didEntryTextChangeFire = true;
+			entryTextChangedEventCount++;
+		}
+	}
+
 	class ViewModel : INotifyPropertyChanged
 	{
 		public const double DefaultPercentage = 0.5;
@@ -651,6 +717,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 
 		double percentage = DefaultPercentage, heightRequest = DefaultHeightRequest;
 		Color textColor = DefaultColor;
+		int? age;
 
 		public ViewModel()
 		{
@@ -683,6 +750,12 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		{
 			get => textColor;
 			set => SetProperty(ref textColor, value);
+		}
+
+		public int? Age
+		{
+			get => age;
+			set => SetProperty(ref age, value);
 		}
 
 		protected void SetProperty<T>(ref T backingStore, in T value, [CallerMemberName] in string propertyname = "")
