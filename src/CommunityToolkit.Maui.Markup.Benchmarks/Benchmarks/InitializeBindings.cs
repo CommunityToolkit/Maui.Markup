@@ -40,12 +40,12 @@ public class InitializeBindings : BaseTest
 	{
 		typedMarkupBindingsLabel
 			.Bind(Label.TextProperty,
-				getter: (LabelViewModel vm) => vm.Text,
-				setter: (vm, text) => vm.Text = text,
+				getter: static (LabelViewModel vm) => vm.Text,
+				setter: static (vm, text) => vm.Text = text ?? string.Empty,
 				mode: BindingMode.TwoWay)
 			.Bind(Label.TextColorProperty,
-				getter: (LabelViewModel vm) => vm.TextColor,
-				setter: (vm, textColor) => vm.TextColor = textColor,
+				getter: static (LabelViewModel vm) => vm.TextColor,
+				setter: static (vm, textColor) => vm.TextColor = textColor ?? Colors.Transparent,
 				mode: BindingMode.TwoWay);
 	}
 }
