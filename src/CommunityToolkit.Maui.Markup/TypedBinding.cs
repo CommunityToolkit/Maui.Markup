@@ -12,7 +12,7 @@ sealed class TypedBinding<TSource, TProperty> : TypedBindingBase where TSource :
 	readonly WeakReference<BindableObject?> weakTarget = new(null);
 
 	readonly Func<TSource, TProperty> getter;
-	readonly Action<TSource, TProperty>? setter;
+	readonly Action<TSource, TProperty?>? setter;
 	readonly PropertyChangedProxy[] handlers;
 	readonly List<WeakReference<Element>> ancestryChain = [];
 
@@ -20,7 +20,7 @@ sealed class TypedBinding<TSource, TProperty> : TypedBindingBase where TSource :
 	SetterSpecificity? specificity;
 	BindableProperty? targetProperty;
 
-	public TypedBinding(Func<TSource, TProperty> getter, Action<TSource, TProperty>? setter, (Func<TSource, object?>, string)[] handlers)
+	public TypedBinding(Func<TSource, TProperty> getter, Action<TSource, TProperty?>? setter, (Func<TSource, object?>, string)[] handlers)
 	{
 		ArgumentNullException.ThrowIfNull(handlers);
 
@@ -252,7 +252,7 @@ sealed class TypedBinding<TSource, TProperty> : TypedBindingBase where TSource :
 			
 			if (value is null)
 			{
-				setter?.Invoke(sourceObject, default!);
+				setter?.Invoke(sourceObject, default);
 				return;
 			}
 
