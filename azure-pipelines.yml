@@ -282,12 +282,21 @@ jobs:
     pool:
       vmImage: $(image)
     steps:
-      - script: |
-          echo Installed Xcode Versions:
-          ls -al  /Applications | grep Xcode
-          echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(CommunityToolkitLibrary_Xcode_Version).app;sudo xcode-select --switch /Applications/Xcode_$(CommunityToolkitLibrary_Xcode_Version).app/Contents/Developer
-        displayName: 'Set Xcode v$(CommunityToolkitLibrary_Xcode_Version)'
+      - task: CmdLine@2
+        displayName: 'Set Xcode v$(Xcode_Version)'
         condition: eq(variables['Agent.OS'], 'Darwin') # Only run this step on macOS
+        inputs:
+          script: |
+            echo Installed Xcode Versions:
+            ls -al  /Applications | grep Xcode
+            
+            echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(Xcode_Version).app
+            sudo xcode-select --switch /Applications/Xcode_$(Xcode_Version).app/Contents/Developer
+            
+            xcodebuild -downloadPlatform iOS
+            
+            echo Installed Simulator SDKs:
+            xcodebuild -showsdks
 
       - task: UseDotNet@2
         displayName: 'Install .NET SDK'
