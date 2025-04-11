@@ -12,8 +12,7 @@ variables:
   PathToCommunityToolkitUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.UnitTests/CommunityToolkit.Maui.Markup.UnitTests.csproj'
   PathToCommunityToolkitBenchmarkCsproj: 'src/CommunityToolkit.Maui.Markup.Benchmarks/CommunityToolkit.Maui.Markup.Benchmarks.csproj'
   PathToCommunityToolkitSourceGeneratorsCsproj: 'src/CommunityToolkit.Maui.Markup.SourceGenerators/CommunityToolkit.Maui.Markup.SourceGenerators.csproj'
-  CommunityToolkitSampleApp_Xcode_Version: '16.2'
-  CommunityToolkitLibrary_Xcode_Version: '16.2'
+  Xcode_Version: '16.3'
   ShouldCheckDependencies: true
   
 trigger:
@@ -55,12 +54,21 @@ jobs:
     pool:
       vmImage: $(image)
     steps:
-      - script: |
-          echo Installed Xcode Versions:
-          ls -al  /Applications | grep Xcode
-          echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(CommunityToolkitSampleApp_Xcode_Version).app;sudo xcode-select --switch /Applications/Xcode_$(CommunityToolkitSampleApp_Xcode_Version).app/Contents/Developer
-        displayName: 'Set Xcode v$(CommunityToolkitSampleApp_Xcode_Version)'
+      - task: CmdLine@2
+        displayName: 'Set Xcode v$(Xcode_Version)'
         condition: eq(variables['Agent.OS'], 'Darwin') # Only run this step on macOS
+        inputs:
+          script: |
+            echo Installed Xcode Versions:
+            ls -al  /Applications | grep Xcode
+            
+            echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(Xcode_Version).app
+            sudo xcode-select --switch /Applications/Xcode_$(Xcode_Version).app/Contents/Developer
+            
+            xcodebuild -downloadPlatform iOS
+            
+            echo Installed Simulator SDKs:
+            xcodebuild -showsdks
 
       - task: UseDotNet@2
         displayName: 'Install .NET SDK'
@@ -132,12 +140,21 @@ jobs:
         displayName: Set NuGet Version to PR Version
         condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows_NT'), eq(variables['build.reason'], 'PullRequest'))
 
-      - script: |
-          echo Installed Xcode Versions:
-          ls -al  /Applications | grep Xcode
-          echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(CommunityToolkitLibrary_Xcode_Version).app;sudo xcode-select --switch /Applications/Xcode_$(CommunityToolkitLibrary_Xcode_Version).app/Contents/Developer
-        displayName: 'Set Xcode v$(CommunityToolkitLibrary_Xcode_Version)'
+      - task: CmdLine@2
+        displayName: 'Set Xcode v$(Xcode_Version)'
         condition: eq(variables['Agent.OS'], 'Darwin') # Only run this step on macOS
+        inputs:
+          script: |
+            echo Installed Xcode Versions:
+            ls -al  /Applications | grep Xcode
+            
+            echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(Xcode_Version).app
+            sudo xcode-select --switch /Applications/Xcode_$(Xcode_Version).app/Contents/Developer
+            
+            xcodebuild -downloadPlatform iOS
+            
+            echo Installed Simulator SDKs:
+            xcodebuild -showsdks
 
       - task: UseDotNet@2
         displayName: 'Install .NET SDK'
@@ -265,12 +282,21 @@ jobs:
     pool:
       vmImage: $(image)
     steps:
-      - script: |
-          echo Installed Xcode Versions:
-          ls -al  /Applications | grep Xcode
-          echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(CommunityToolkitLibrary_Xcode_Version).app;sudo xcode-select --switch /Applications/Xcode_$(CommunityToolkitLibrary_Xcode_Version).app/Contents/Developer
-        displayName: 'Set Xcode v$(CommunityToolkitLibrary_Xcode_Version)'
+      - task: CmdLine@2
+        displayName: 'Set Xcode v$(Xcode_Version)'
         condition: eq(variables['Agent.OS'], 'Darwin') # Only run this step on macOS
+        inputs:
+          script: |
+            echo Installed Xcode Versions:
+            ls -al  /Applications | grep Xcode
+            
+            echo '##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]'/Applications/Xcode_$(Xcode_Version).app
+            sudo xcode-select --switch /Applications/Xcode_$(Xcode_Version).app/Contents/Developer
+            
+            xcodebuild -downloadPlatform iOS
+            
+            echo Installed Simulator SDKs:
+            xcodebuild -showsdks
 
       - task: UseDotNet@2
         displayName: 'Install .NET SDK'
