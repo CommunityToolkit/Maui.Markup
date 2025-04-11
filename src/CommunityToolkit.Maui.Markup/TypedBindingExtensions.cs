@@ -11,7 +11,7 @@ public static partial class TypedBindingExtensions
 	public static TBindable BindCommand<TBindable, TCommandBindingContext>(
 		this TBindable bindable,
 		Expression<Func<TCommandBindingContext, ICommand>> getter,
-		Action<TCommandBindingContext, ICommand>? setter = null,
+		Action<TCommandBindingContext, ICommand?>? setter = null,
 		BindingMode mode = BindingMode.Default,
 		TCommandBindingContext? source = default)
 		where TBindable : BindableObject
@@ -29,11 +29,11 @@ public static partial class TypedBindingExtensions
 	public static TBindable BindCommand<TBindable, TCommandBindingContext, TParameterBindingContext, TParameterSource>(
 		this TBindable bindable,
 		Expression<Func<TCommandBindingContext, ICommand>> getter,
-		Action<TCommandBindingContext, ICommand>? setter = null,
+		Action<TCommandBindingContext, ICommand?>? setter = null,
 		TCommandBindingContext? source = default,
 		BindingMode commandBindingMode = BindingMode.Default,
 		Expression<Func<TParameterBindingContext, TParameterSource>>? parameterGetter = null,
-		Action<TParameterBindingContext, TParameterSource>? parameterSetter = null,
+		Action<TParameterBindingContext, TParameterSource?>? parameterSetter = null,
 		BindingMode parameterBindingMode = BindingMode.Default,
 		TParameterBindingContext? parameterSource = default)
 		where TBindable : BindableObject
@@ -68,7 +68,7 @@ public static partial class TypedBindingExtensions
 		this TBindable bindable,
 		BindableProperty targetProperty,
 		Expression<Func<TBindingContext, TSource>> getter,
-		Action<TBindingContext, TSource>? setter = null,
+		Action<TBindingContext, TSource?>? setter = null,
 		BindingMode mode = BindingMode.Default,
 		string? stringFormat = null,
 		TBindingContext? source = default)
@@ -93,7 +93,7 @@ public static partial class TypedBindingExtensions
 		this TBindable bindable,
 		BindableProperty targetProperty,
 		Expression<Func<TBindingContext, TSource>> getter,
-		Action<TBindingContext, TSource>? setter = null,
+		Action<TBindingContext, TSource?>? setter = null,
 		BindingMode mode = BindingMode.Default,
 		Func<TSource?, TDest>? convert = null,
 		Func<TDest?, TSource>? convertBack = null,
@@ -124,7 +124,7 @@ public static partial class TypedBindingExtensions
 		this TBindable bindable,
 		BindableProperty targetProperty,
 		Expression<Func<TBindingContext, TSource>> getter,
-		Action<TBindingContext, TSource>? setter = null,
+		Action<TBindingContext, TSource?>? setter = null,
 		BindingMode mode = BindingMode.Default,
 		IValueConverter? converter = null,
 		string? stringFormat = null,
@@ -154,7 +154,7 @@ public static partial class TypedBindingExtensions
 		BindableProperty targetProperty,
 		Func<TBindingContext, TSource> getter,
 		(Func<TBindingContext, object?>, string)[] handlers,
-		Action<TBindingContext, TSource>? setter = null,
+		Action<TBindingContext, TSource?>? setter = null,
 		BindingMode mode = BindingMode.Default,
 		IValueConverter? converter = null,
 		string? stringFormat = null,
@@ -185,7 +185,7 @@ public static partial class TypedBindingExtensions
 		this TBindable bindable,
 		BindableProperty targetProperty,
 		Expression<Func<TBindingContext, TSource>> getter,
-		Action<TBindingContext, TSource>? setter = null,
+		Action<TBindingContext, TSource?>? setter = null,
 		BindingMode mode = BindingMode.Default,
 		Func<TSource?, TParam?, TDest>? convert = null,
 		Func<TDest?, TParam?, TSource>? convertBack = null,
@@ -221,7 +221,7 @@ public static partial class TypedBindingExtensions
 		this TBindable bindable,
 		BindableProperty targetProperty,
 		Expression<Func<TBindingContext, TSource>> getter,
-		Action<TBindingContext, TSource>? setter = null,
+		Action<TBindingContext, TSource?>? setter = null,
 		BindingMode mode = BindingMode.Default,
 		IValueConverter? converter = null,
 		TParam? converterParameter = default,

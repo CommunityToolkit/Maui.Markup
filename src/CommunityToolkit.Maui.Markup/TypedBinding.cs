@@ -12,7 +12,7 @@ sealed class TypedBinding<TSource, TProperty> : TypedBindingBase where TSource :
 	readonly WeakReference<BindableObject?> weakTarget = new(null);
 
 	readonly Func<TSource, TProperty> getter;
-	readonly Action<TSource, TProperty>? setter;
+	readonly Action<TSource, TProperty?>? setter;
 	readonly PropertyChangedProxy[] handlers;
 	readonly List<WeakReference<Element>> ancestryChain = [];
 
@@ -20,7 +20,7 @@ sealed class TypedBinding<TSource, TProperty> : TypedBindingBase where TSource :
 	SetterSpecificity? specificity;
 	BindableProperty? targetProperty;
 
-	public TypedBinding(Func<TSource, TProperty> getter, Action<TSource, TProperty>? setter, (Func<TSource, object?>, string)[] handlers)
+	public TypedBinding(Func<TSource, TProperty> getter, Action<TSource, TProperty?>? setter, (Func<TSource, object?>, string)[] handlers)
 	{
 		ArgumentNullException.ThrowIfNull(handlers);
 
@@ -248,7 +248,13 @@ sealed class TypedBinding<TSource, TProperty> : TypedBindingBase where TSource :
 		var needsSetter = (mode == BindingMode.TwoWay && fromTarget) || mode == BindingMode.OneWayToSource;
 		if (needsSetter && sourceObject is not null)
 		{
-			var value = GetTargetValue(target.GetValue(property), typeof(TProperty)) ?? throw new InvalidOperationException("Unable to find target value");
+			var value = GetTargetValue(target.GetValue(property), typeof(TProperty?));
+			
+			if (value is null)
+			{
+				setter?.Invoke(sourceObject, default);
+				return;
+			}
 
 			if (!BindingExpressionHelper.TryConvert(ref value, property, typeof(TProperty), false))
 			{
