@@ -15,10 +15,9 @@ on:
       - README.md
 
 env:
-  CurrentSemanticVersionBase: '99.0.0'
-  PreviewNumber: $[counter(variables['CurrentSemanticVersionBase'], 1001)]
-  CurrentSemanticVersion: '$(CurrentSemanticVersionBase)-preview$(PreviewNumber)'
-  NugetPackageVersion: '$(CurrentSemanticVersion)'
+  # When we create a tag, we set the NuGet version to the tag number, the below values are only for PR builds.
+  CurrentSemanticVersionBase: '99.0.0' # Only used for PR builds
+  NugetPackageVersion: '99.0.0-preview${{ github.run_number }}' # Only used for PR builds
   NET_VERSION: '9.0.x'
   RunPoliCheck: false
   PathToLibrarySolution: 'src/CommunityToolkit.Maui.Markup.sln'
@@ -93,7 +92,7 @@ jobs:
 
       - name: Set NuGet Version to Tag Number
         if: startsWith(github.ref, 'refs/tags/')
-        run: echo "NugetPackageVersion=${{ github.ref }}" >> $GITHUB_ENV
+        run: echo "NugetPackageVersion=${${{ github.ref }}#refs/tags/}" >> $GITHUB_ENV
 
       - name: Set NuGet Version to PR Version
         if: ${{ github.event_name == 'pull_request' }}
@@ -194,7 +193,7 @@ jobs:
 
   sign:
     needs: [build_library]
-    if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/rel/') }}
+    if: ${{ startsWith(github.ref, 'refs/tags/') }}
     runs-on: windows-latest
     permissions:
       id-token: write # Required for requesting the JWT
@@ -247,7 +246,7 @@ jobs:
             ${{ github.workspace }}/packages/**/*.nupkg
 
   release:
-    if: ${{ startsWith(github.ref, 'refs/heads/rel/') }}
+    if: ${{ startsWith(github.ref, 'refs/tags/') }}
     needs: [sign]
     environment: nuget-release-gate # This gates this job until manually approved
     runs-on: ubuntu-latest
