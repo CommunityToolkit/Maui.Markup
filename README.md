@@ -1,6 +1,6 @@
 <img src="https://user-images.githubusercontent.com/13558917/137551073-ac8958bf-83e3-4ae3-8623-4db6dce49d02.png" alt=".NET MAUI Community Toolkit bot" width=125 />  [<img src="https://raw.githubusercontent.com/dotnet-foundation/swag/master/logo/dotnetfoundation_v4.svg" alt=".NET Foundation" width=100>](https://dotnetfoundation.org) 
 
-[![Build Status](https://dev.azure.com/dotnet/CommunityToolkit/_apis/build/status/CommunityToolkit.Maui.Markup?branchName=main)](https://dev.azure.com/dotnet/CommunityToolkit/_build/latest?definitionId=173&branchName=main) [![NuGet Version](https://img.shields.io/nuget/vpre/CommunityToolkit.Maui.Markup)](https://www.nuget.org/packages/CommunityToolkit.Maui.Markup) [![NuGet Downloads](https://img.shields.io/nuget/dt/CommunityToolkit.Maui.Markup)](https://www.nuget.org/packages/CommunityToolkit.Maui.Markup)
+[![Build](https://github.com/CommunityToolkit/Maui.Markup/actions/workflows/dotnet-build.yml/badge.svg)](https://github.com/CommunityToolkit/Maui.Markup/actions/workflows/dotnet-build.yml) [![NuGet Version](https://img.shields.io/nuget/vpre/CommunityToolkit.Maui.Markup)](https://www.nuget.org/packages/CommunityToolkit.Maui.Markup) [![NuGet Downloads](https://img.shields.io/nuget/dt/CommunityToolkit.Maui.Markup)](https://www.nuget.org/packages/CommunityToolkit.Maui.Markup)
 
 
 # .NET MAUI Markup Community Toolkit
