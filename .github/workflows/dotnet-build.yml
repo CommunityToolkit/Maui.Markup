@@ -95,6 +95,7 @@ jobs:
         run: |
           echo "Setting NuGet version from tag: ${GITHUB_REF#refs/tags/}"
           echo "NugetPackageVersion=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+        shell: bash
 
       - name: Set NuGet Version to PR Version
         if: ${{ github.event_name == 'pull_request' }}
@@ -153,7 +154,7 @@ jobs:
         shell: bash
 
       - name: Build and Pack CommunityToolkit.Maui.Markup
-        run: dotnet pack -c Release ${{ env.PathToCommunityToolkitCsproj }} -p:PackageVersion=$NugetPackageVersion -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
+        run: dotnet pack -c Release ${{ env.PathToCommunityToolkitCsproj }} -p:PackageVersion=${{ env.NugetPackageVersion }} -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
 
       - name: 'Check Dependencies'
         if: ${{ runner.os == 'Windows' && (success() || failure()) }}
@@ -230,8 +231,8 @@ jobs:
           --file-list "${{ github.workspace }}/SignClientFileList.txt"
           --timestamp-url "http://timestamp.digicert.com"
           --publisher-name ".NET Foundation"
-          --description ".NET MAUI Markup Community Toolkit"
-          --description-url "https://github.com/CommunityToolkit/Maui.Markup"
+          --description "Community Toolkit MAUI"
+          --description-url "https://github.com/CommunityToolkit/Maui"
           --azure-key-vault-url "${{ secrets.SIGN_KEY_VAULT_URL }}"
           --azure-key-vault-client-id ${{ secrets.SIGN_CLIENT_ID }}
           --azure-key-vault-client-secret "${{ secrets.SIGN_CLIENT_SECRET }}"
