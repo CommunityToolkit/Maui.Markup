@@ -249,7 +249,7 @@ sealed class TypedBinding<TSource, TProperty> : TypedBindingBase where TSource :
 		if (needsSetter && sourceObject is not null)
 		{
 			var value = GetTargetValue(target.GetValue(property), typeof(TProperty?));
-			
+
 			if (value is null)
 			{
 				setter?.Invoke(sourceObject, default);
