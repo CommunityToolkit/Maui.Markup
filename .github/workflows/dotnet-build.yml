@@ -52,7 +52,7 @@ jobs:
           xcode-version: latest-stable
 
       - name: Install Latest .NET SDK, v${{ env.NET_VERSION }}
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.NET_VERSION }}
           dotnet-quality: 'ga'
@@ -109,7 +109,7 @@ jobs:
           xcode-version: ${{ env.Xcode_Version }}
 
       - name: Install .NET SDK v${{ env.NET_VERSION }}
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.NET_VERSION }}
           dotnet-quality: 'ga'
@@ -203,7 +203,7 @@ jobs:
 
     steps:
       - name: Install .NET SDK v${{ env.NET_VERSION }}
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.NET_VERSION }}
           dotnet-quality: 'ga'
@@ -256,7 +256,7 @@ jobs:
 
     steps:
       - name: Install .NET SDK
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.NET_VERSION }}
           dotnet-quality: 'ga'
