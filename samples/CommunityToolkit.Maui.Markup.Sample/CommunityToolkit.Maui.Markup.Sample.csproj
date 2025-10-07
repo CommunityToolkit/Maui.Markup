@@ -35,12 +35,10 @@
     <NoWarn>CsWinRT1028</NoWarn>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)' == 'Release' 
-    AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'tizen'
-    AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'windows'">
-    <!-- Ahead-of-time compilation is not yet supported in tizen -->
-    <!-- Windows causing build errors in azurepipelines.yml -->
-    <PublishAot>true</PublishAot>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" >
+    <PublishAot>false</PublishAot>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>partial</TrimMode>
   </PropertyGroup>
 
   <ItemGroup>
