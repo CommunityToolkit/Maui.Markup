@@ -672,40 +672,40 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 		[Test]
 		public void BindCommandWithDefaults()
 		{
-			var textCell = new TextCell();
+			var button = new Button();
 			var path = nameof(viewModel.Command);
 
-			textCell.BindCommand(path);
+			button.BindCommand(path);
 
-			BindingHelpers.AssertBindingExists(textCell, TextCell.CommandProperty, path);
-			BindingHelpers.AssertBindingExists(textCell, TextCell.CommandParameterProperty);
+			BindingHelpers.AssertBindingExists(button, Button.CommandProperty, path);
+			BindingHelpers.AssertBindingExists(button, Button.CommandParameterProperty);
 		}
 
 		[Test]
 		public void BindCommandWithoutParameter()
 		{
-			var textCell = new TextCell();
+			var button = new Button();
 			var path = nameof(viewModel.Command);
 
-			textCell.BindCommand(path, parameterPath: null);
+			button.BindCommand(path, parameterPath: null);
 
-			BindingHelpers.AssertBindingExists(textCell, TextCell.CommandProperty, path);
-			Assert.That(BindingHelpers.GetBinding(textCell, TextCell.CommandParameterProperty), Is.Null);
+			BindingHelpers.AssertBindingExists(button, Button.CommandProperty, path);
+			Assert.That(BindingHelpers.GetBinding(button, Button.CommandParameterProperty), Is.Null);
 		}
 
 		[Test]
 		public void BindCommandWithPositionalParameters()
 		{
-			var textCell = new TextCell();
+			var button = new Button();
 			object source = new ViewModel();
 			var path = nameof(viewModel.Command);
 			var parameterPath = nameof(viewModel.Id);
 			object parameterSource = new ViewModel();
 
-			textCell.BindCommand(path, source, parameterPath, parameterSource);
+			button.BindCommand(path, source, parameterPath, parameterSource);
 
-			BindingHelpers.AssertBindingExists(textCell, TextCell.CommandProperty, path, source: source);
-			BindingHelpers.AssertBindingExists(textCell, TextCell.CommandParameterProperty, parameterPath, source: parameterSource);
+			BindingHelpers.AssertBindingExists(button, Button.CommandProperty, path, source: source);
+			BindingHelpers.AssertBindingExists(button, Button.CommandParameterProperty, parameterPath, source: parameterSource);
 		}
 
 		[Test]
@@ -746,8 +746,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 						.Invoke(l => l.Text = nameof(SupportDerivedElements))
 						.Assign(out DerivedFromLabel assignDerivedFromLabel),
 					Is.InstanceOf<DerivedFromLabel>());
-
-				Assert.That(new DerivedFromTextCell().BindCommand(nameof(viewModel.Command)), Is.InstanceOf<DerivedFromTextCell>());
+				
 				Assert.That(assignDerivedFromLabel, Is.InstanceOf<DerivedFromLabel>());
 			});
 		}
@@ -801,10 +800,6 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 namespace BindableObjectViews // This namespace simulates derived controls defined in a separate app, for use in the tests in this file only
 {
 	class DerivedFromLabel : Label
-	{
-	}
-
-	class DerivedFromTextCell : TextCell
 	{
 	}
 }

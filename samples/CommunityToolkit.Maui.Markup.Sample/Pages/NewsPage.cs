@@ -6,8 +6,7 @@ sealed partial class NewsPage : BaseContentPage<NewsViewModel>
 {
 	readonly IDispatcher dispatcher;
 	readonly RefreshView refreshView;
-
-	[RequiresUnreferencedCode("AppShell.GetRoute Requires Unreferenced Code")]
+	
 	public NewsPage(IDispatcher dispatcher,
 					NewsViewModel newsViewModel) : base(newsViewModel, "Top Stories")
 	{
@@ -65,13 +64,13 @@ sealed partial class NewsPage : BaseContentPage<NewsViewModel>
 			}
 			else
 			{
-				await DisplayAlert("Invalid Article", "ASK HN articles have no url", "OK");
+				await DisplayAlertAsync("Invalid Article", "ASK HN articles have no url", "OK");
 			}
 		}
 	}
 
 	async void HandlePullToRefreshFailed(object? sender, string message) =>
-		await dispatcher.DispatchAsync(() => DisplayAlert("Refresh Failed", message, "OK"));
+		await dispatcher.DispatchAsync(() => DisplayAlertAsync("Refresh Failed", message, "OK"));
 
 	bool TryRefreshCollectionView()
 	{
