@@ -2,7 +2,6 @@
 using System.Diagnostics.CodeAnalysis;
 namespace CommunityToolkit.Maui.Markup.Sample;
 
-[RequiresUnreferencedCode("AppShell.GetRoute Requires Unreferenced Code")]
 class HotReloadHandler : ICommunityToolkitHotReloadHandler
 {
 	public async void OnHotReload(IReadOnlyList<Type> types)

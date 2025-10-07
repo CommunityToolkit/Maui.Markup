@@ -35,9 +35,10 @@
     <NoWarn>CsWinRT1028</NoWarn>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)' == 'Release' &#xD;&#xA;                  AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'tizen'&#xD;&#xA;                  AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'android'&#xD;&#xA;                  AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'windows'">
-    <!-- Ahead-of-time compilation is not yet supported net8.0-tizen -->
-    <!-- Cross-OS native compilation is not supported net8.0-android -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release' 
+    AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'tizen'
+    AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'windows'">
+    <!-- Ahead-of-time compilation is not yet supported in tizen -->
     <!-- Windows causing build errors in azurepipelines.yml -->
     <PublishAot>true</PublishAot>
   </PropertyGroup>
@@ -74,5 +75,9 @@
       <Registrar>static</Registrar>
     </PropertyGroup>
   </Target>
+
+  <ItemGroup>
+    <TrimmerRootAssembly Include="CommunityToolkit.Maui" RootMode="All"/>
+  </ItemGroup>
 
 </Project>
