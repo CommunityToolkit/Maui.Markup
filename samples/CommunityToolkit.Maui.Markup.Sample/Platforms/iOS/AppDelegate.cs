@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Foundation;
+﻿using Foundation;
 namespace CommunityToolkit.Maui.Markup.Sample;
 
 [Register(nameof(AppDelegate))]

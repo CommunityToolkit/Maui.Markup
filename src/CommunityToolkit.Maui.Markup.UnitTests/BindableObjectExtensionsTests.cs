@@ -1,5 +1,4 @@
 using System.Windows.Input;
-using BindableObjectViews;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using NUnit.Framework;
 namespace CommunityToolkit.Maui.Markup.UnitTests
@@ -746,7 +745,7 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 						.Invoke(l => l.Text = nameof(SupportDerivedElements))
 						.Assign(out DerivedFromLabel assignDerivedFromLabel),
 					Is.InstanceOf<DerivedFromLabel>());
-				
+
 				Assert.That(assignDerivedFromLabel, Is.InstanceOf<DerivedFromLabel>());
 			});
 		}

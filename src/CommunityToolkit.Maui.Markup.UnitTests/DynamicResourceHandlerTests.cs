@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Maui.Markup.UnitTests.Base;
-using CommunityToolkit.Maui.Markup.UnitTests.Mocks;
 using NUnit.Framework;
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 

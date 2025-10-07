@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Microsoft.Maui.Layouts;
+﻿using Microsoft.Maui.Layouts;
 
 namespace CommunityToolkit.Maui.Markup.Sample.Pages;
 
