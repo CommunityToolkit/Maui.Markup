@@ -26,7 +26,7 @@ env:
   PathToCommunityToolkitSampleCsproj: 'samples/CommunityToolkit.Maui.Markup.Sample/CommunityToolkit.Maui.Markup.Sample.csproj'
   PathToCommunityToolkitUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.UnitTests/CommunityToolkit.Maui.Markup.UnitTests.csproj'
   PathToCommunityToolkitSourceGeneratorsCsproj: 'src/CommunityToolkit.Maui.Markup.SourceGenerators/CommunityToolkit.Maui.Markup.SourceGenerators.csproj'
-  Xcode_Version: '16.4'
+  Xcode_Version: '26.0.1'
   ShouldCheckDependencies: true
 
 concurrency:
@@ -49,7 +49,7 @@ jobs:
         if: runner.os == 'macOS'
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: ${{ env.Xcode_Version }}
+          xcode-version: latest-stable
 
       - name: Install Latest .NET SDK, v${{ env.NET_VERSION }}
         uses: actions/setup-dotnet@v5
