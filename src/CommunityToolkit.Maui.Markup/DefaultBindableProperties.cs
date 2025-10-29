@@ -15,11 +15,7 @@ public static class DefaultBindableProperties
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(Border)}", Border.ContentProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(BoxView)}", BoxView.ColorProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(Button)}", Button.CommandProperty },
-		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(CarouselPage)}", Page.TitleProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(CheckBox)}", CheckBox.IsCheckedProperty },
-#pragma warning disable CS0618
-		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ClickGestureRecognizer)}", ClickGestureRecognizer.CommandProperty },
-#pragma warning disable CS0618
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(CollectionView)}", CollectionView.ItemsSourceProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ContentPage)}", Page.TitleProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ContentPresenter)}", ContentPresenter.ContentProperty },
@@ -27,19 +23,27 @@ public static class DefaultBindableProperties
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(DatePicker)}", DatePicker.DateProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(Editor)}", Editor.TextProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(Entry)}", Entry.TextProperty },
+#pragma warning disable CS0618 // Type or member is obsolete
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(EntryCell)}", EntryCell.TextProperty },
+#pragma warning restore CS0618 // Type or member is obsolete
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(FileImageSource)}", FileImageSource.FileProperty },
+#pragma warning disable CS0618 // Type or member is obsolete
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(Frame)}", Frame.ContentProperty },
+#pragma warning restore CS0618 // Type or member is obsolete
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(FlyoutPage)}", FlyoutPage.IsPresentedProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(GraphicsView)}", GraphicsView.DrawableProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(HtmlWebViewSource)}", HtmlWebViewSource.HtmlProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(Image)}", Image.SourceProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ImageButton)}", ImageButton.CommandProperty },
+#pragma warning disable CS0618 // Type or member is obsolete
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ImageCell)}", ImageCell.ImageSourceProperty },
+#pragma warning restore CS0618 // Type or member is obsolete
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(IndicatorView)}", IndicatorView.ItemsSourceProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ItemsView)}", ItemsView.ItemsSourceProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(Label)}", Label.TextProperty },
+#pragma warning disable CS0618 // Type or member is obsolete
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ListView)}", ListView.ItemsSourceProperty },
+#pragma warning restore CS0618 // Type or member is obsolete
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(MenuFlyoutItem)}", MenuFlyoutItem.TextProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(MenuFlyoutSubItem)}", MenuFlyoutSubItem.TextProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(MenuItem)}", MenuItem.TextProperty },
@@ -65,14 +69,18 @@ public static class DefaultBindableProperties
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(Switch)}", Switch.IsToggledProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(SwipeItemView)}", SwipeItemView.ContentProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(SwipeView)}", SwipeView.ContentProperty },
+#pragma warning disable CS0618 // Type or member is obsolete
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(SwitchCell)}", SwitchCell.OnProperty },
+#pragma warning restore CS0618 // Type or member is obsolete
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(TabbedPage)}", Page.TitleProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(TableRoot)}", TableRoot.TitleProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(TableSection)}", TableSection.TitleProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(TableSectionBase)}", TableSectionBase.TitleProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(TapGestureRecognizer)}", TapGestureRecognizer.CommandProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(TemplatedPage)}", Page.TitleProperty },
+#pragma warning disable CS0618 // Type or member is obsolete
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(TextCell)}", TextCell.TextProperty },
+#pragma warning restore CS0618 // Type or member is obsolete
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(TemplatedView)}", TemplatedView.ControlTemplateProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(TimePicker)}", TimePicker.TimeProperty },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ToolbarItem)}", ToolbarItem.CommandProperty },
@@ -85,10 +93,9 @@ public static class DefaultBindableProperties
 	static readonly Dictionary<string, (BindableProperty, BindableProperty)> bindableObjectTypeDefaultCommandAndParameterProperties = new()
 	{ // Key: full type name of BindableObject, Value: command property and corresponding commandParameter property
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(Button)}", (Button.CommandProperty, Button.CommandParameterProperty) },
+#pragma warning disable CS0618 // Type or member is obsolete
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(TextCell)}", (TextCell.CommandProperty, TextCell.CommandParameterProperty) },
-#pragma warning disable CS0618
-		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ClickGestureRecognizer)}", (ClickGestureRecognizer.CommandProperty, ClickGestureRecognizer.CommandParameterProperty) },
-#pragma warning restore CS0618
+#pragma warning restore CS0618 // Type or member is obsolete
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(ImageButton)}", (ImageButton.CommandProperty, ImageButton.CommandParameterProperty) },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(MenuItem)}", (MenuItem.CommandProperty, MenuItem.CommandParameterProperty) },
 		{ $"{nameof(Microsoft)}.{nameof(Microsoft.Maui)}.{nameof(Microsoft.Maui.Controls)}.{nameof(RefreshView)}", (RefreshView.CommandProperty, RefreshView.CommandParameterProperty) },

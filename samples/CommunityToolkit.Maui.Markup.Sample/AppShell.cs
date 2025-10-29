@@ -2,7 +2,6 @@
 
 namespace CommunityToolkit.Maui.Markup.Sample;
 
-[RequiresUnreferencedCode("SettingsViewModel Calls CommunityToolkit.Maui.Behaviors.NumericValidationBehavior.NumericValidationBehavior()")]
 partial class AppShell : Shell
 {
 	static readonly ReadOnlyDictionary<Type, string> pageRouteMappingDictionary = new Dictionary<Type, string>(

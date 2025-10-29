@@ -51,15 +51,15 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	[Test]
 	public void BindCommandWithDefaults()
 	{
-		var textCell = new TextCell
+		var textCell = new Button
 		{
 			BindingContext = viewModel
 		};
 
 		textCell.BindCommand(static (ViewModel vm) => vm.Command);
 
-		BindingHelpers.AssertTypedBindingExists(textCell, TextCell.CommandProperty, BindingMode.Default, viewModel);
-		Assert.That(BindingHelpers.GetBinding(textCell, TextCell.CommandParameterProperty), Is.Null);
+		BindingHelpers.AssertTypedBindingExists(textCell, Button.CommandProperty, BindingMode.Default, viewModel);
+		Assert.That(BindingHelpers.GetBinding(textCell, Button.CommandParameterProperty), Is.Null);
 	}
 
 	[Test]
@@ -67,7 +67,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	{
 		ArgumentNullException.ThrowIfNull(viewModel);
 
-		var textCell = new TextCell
+		var textCell = new Button
 		{
 			BindingContext = viewModel
 		};
@@ -78,8 +78,8 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 			parameterGetter: static (ViewModel vm) => vm.Id,
 			parameterBindingMode: BindingMode.OneWay);
 
-		BindingHelpers.AssertTypedBindingExists(textCell, TextCell.CommandProperty, BindingMode.OneTime, viewModel);
-		BindingHelpers.AssertTypedBindingExists(textCell, TextCell.CommandParameterProperty, BindingMode.OneWay, viewModel);
+		BindingHelpers.AssertTypedBindingExists(textCell, Button.CommandProperty, BindingMode.OneTime, viewModel);
+		BindingHelpers.AssertTypedBindingExists(textCell, Button.CommandParameterProperty, BindingMode.OneWay, viewModel);
 
 		Assert.Multiple(() =>
 		{
