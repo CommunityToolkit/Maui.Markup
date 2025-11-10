@@ -40,7 +40,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, macos-15]
+        os: [windows-latest, macos-26]
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
@@ -85,7 +85,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, macos-15]
+        os: [windows-latest, macos-26]
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
