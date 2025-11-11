@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/Samples/">
+    <Project Path="CommunityToolkit.Maui.Markup.Sample/CommunityToolkit.Maui.Markup.Sample.csproj">
+      <Deploy />
+    </Project>
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="../.editorconfig" />
+    <File Path="../Directory.Build.props" />
+    <File Path="../global.json" />
+  </Folder>
+  <Project Path="../src/CommunityToolkit.Maui.Markup.Benchmarks/CommunityToolkit.Maui.Markup.Benchmarks.csproj" />
+  <Project Path="../src/CommunityToolkit.Maui.Markup.SourceGenerators/CommunityToolkit.Maui.Markup.SourceGenerators.csproj" />
+  <Project Path="../src/CommunityToolkit.Maui.Markup.UnitTests/CommunityToolkit.Maui.Markup.UnitTests.csproj" />
+  <Project Path="../src/CommunityToolkit.Maui.Markup/CommunityToolkit.Maui.Markup.csproj" />
+</Solution>
