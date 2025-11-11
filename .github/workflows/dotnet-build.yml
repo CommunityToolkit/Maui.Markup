@@ -26,7 +26,7 @@ env:
   PathToCommunityToolkitSampleCsproj: 'samples/CommunityToolkit.Maui.Markup.Sample/CommunityToolkit.Maui.Markup.Sample.csproj'
   PathToCommunityToolkitUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.UnitTests/CommunityToolkit.Maui.Markup.UnitTests.csproj'
   PathToCommunityToolkitSourceGeneratorsCsproj: 'src/CommunityToolkit.Maui.Markup.SourceGenerators/CommunityToolkit.Maui.Markup.SourceGenerators.csproj'
-  Xcode_Version: '26.0.1'
+  Xcode_Version: '26.1'
   ShouldCheckDependencies: true
 
 concurrency:
