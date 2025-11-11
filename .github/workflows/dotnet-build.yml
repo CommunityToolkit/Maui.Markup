@@ -55,7 +55,6 @@ jobs:
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.NET_VERSION }}
-          dotnet-quality: 'preview'
 
       - uses: actions/setup-java@v5
         with:
@@ -112,7 +111,6 @@ jobs:
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.NET_VERSION }}
-          dotnet-quality: 'preview'
 
       - uses: actions/setup-java@v5
         with:
@@ -206,7 +204,6 @@ jobs:
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.NET_VERSION }}
-          dotnet-quality: 'preview'
 
       - name: Download NuGet List
         uses: actions/download-artifact@v6
@@ -259,7 +256,6 @@ jobs:
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.NET_VERSION }}
-          dotnet-quality: 'preview'
 
       - name: Download signed packages for ${{ matrix.platform }}
         uses: actions/download-artifact@v6
