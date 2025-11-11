@@ -18,15 +18,15 @@ env:
   # When we create a tag, we set the NuGet version to the tag number, the below values are only for PR builds.
   CurrentSemanticVersionBase: '99.0.0' # Only used for PR builds
   NugetPackageVersion: '99.0.0-preview${{ github.run_number }}' # Only used for PR builds
-  NET_VERSION: '9.0.x'
+  NET_VERSION: '10.0.x'
   RunPoliCheck: false
-  PathToLibrarySolution: 'src/CommunityToolkit.Maui.Markup.sln'
-  PathToSamplesSolution: 'samples/CommunityToolkit.Maui.Markup.Sample.sln'
+  PathToLibrarySolution: 'src/CommunityToolkit.Maui.Markup.slnx'
+  PathToSamplesSolution: 'samples/CommunityToolkit.Maui.Markup.Sample.slnx'
   PathToCommunityToolkitCsproj: 'src/CommunityToolkit.Maui.Markup/CommunityToolkit.Maui.Markup.csproj'
   PathToCommunityToolkitSampleCsproj: 'samples/CommunityToolkit.Maui.Markup.Sample/CommunityToolkit.Maui.Markup.Sample.csproj'
   PathToCommunityToolkitUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.UnitTests/CommunityToolkit.Maui.Markup.UnitTests.csproj'
   PathToCommunityToolkitSourceGeneratorsCsproj: 'src/CommunityToolkit.Maui.Markup.SourceGenerators/CommunityToolkit.Maui.Markup.SourceGenerators.csproj'
-  Xcode_Version: '16.3'
+  Xcode_Version: '26.0.1'
   ShouldCheckDependencies: true
 
 concurrency:
@@ -40,7 +40,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, macos-15]
+        os: [windows-latest, macos-26]
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
@@ -49,7 +49,7 @@ jobs:
         if: runner.os == 'macOS'
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: latest-stable
+          xcode-version: ${{ env.Xcode_Version }}
 
       - name: Install Latest .NET SDK, v${{ env.NET_VERSION }}
         uses: actions/setup-dotnet@v5
@@ -85,7 +85,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, macos-15]
+        os: [windows-latest, macos-26]
     steps:
       - name: Checkout code
         uses: actions/checkout@v5

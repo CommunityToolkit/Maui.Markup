@@ -51,15 +51,15 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	[Test]
 	public void BindCommandWithDefaults()
 	{
-		var textCell = new TextCell
+		var button = new Button
 		{
 			BindingContext = viewModel
 		};
 
-		textCell.BindCommand(static (ViewModel vm) => vm.Command);
+		button.BindCommand(static (ViewModel vm) => vm.Command);
 
-		BindingHelpers.AssertTypedBindingExists(textCell, TextCell.CommandProperty, BindingMode.Default, viewModel);
-		Assert.That(BindingHelpers.GetBinding(textCell, TextCell.CommandParameterProperty), Is.Null);
+		BindingHelpers.AssertTypedBindingExists(button, Button.CommandProperty, BindingMode.Default, viewModel);
+		Assert.That(BindingHelpers.GetBinding(button, Button.CommandParameterProperty), Is.Null);
 	}
 
 	[Test]
@@ -67,24 +67,24 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	{
 		ArgumentNullException.ThrowIfNull(viewModel);
 
-		var textCell = new TextCell
+		var button = new Button
 		{
 			BindingContext = viewModel
 		};
 
-		textCell.BindCommand(
+		button.BindCommand(
 			static (ViewModel vm) => vm.Command,
 			commandBindingMode: BindingMode.OneTime,
 			parameterGetter: static (ViewModel vm) => vm.Id,
 			parameterBindingMode: BindingMode.OneWay);
 
-		BindingHelpers.AssertTypedBindingExists(textCell, TextCell.CommandProperty, BindingMode.OneTime, viewModel);
-		BindingHelpers.AssertTypedBindingExists(textCell, TextCell.CommandParameterProperty, BindingMode.OneWay, viewModel);
+		BindingHelpers.AssertTypedBindingExists(button, Button.CommandProperty, BindingMode.OneTime, viewModel);
+		BindingHelpers.AssertTypedBindingExists(button, Button.CommandParameterProperty, BindingMode.OneWay, viewModel);
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(viewModel.Command, Is.EqualTo(textCell.Command));
-			Assert.That(viewModel.Id, Is.EqualTo(textCell.CommandParameter));
+			Assert.That(viewModel.Command, Is.EqualTo(button.Command));
+			Assert.That(viewModel.Id, Is.EqualTo(button.CommandParameter));
 		});
 	}
 

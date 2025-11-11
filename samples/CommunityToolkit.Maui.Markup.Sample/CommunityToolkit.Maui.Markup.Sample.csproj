@@ -35,11 +35,13 @@
     <NoWarn>CsWinRT1028</NoWarn>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)' == 'Release' &#xD;&#xA;                  AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'tizen'&#xD;&#xA;                  AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'android'&#xD;&#xA;                  AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'windows'">
-    <!-- Ahead-of-time compilation is not yet supported net8.0-tizen -->
-    <!-- Cross-OS native compilation is not supported net8.0-android -->
-    <!-- Windows causing build errors in azurepipelines.yml -->
-    <PublishAot>true</PublishAot>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'
+      AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'windows'">
+    <!-- Windows error NETSDK1102: Optimizing assemblies for size is not supported for the selected publish configuration. -->
+    
+    <PublishAot>false</PublishAot>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>partial</TrimMode>
   </PropertyGroup>
 
   <ItemGroup>
@@ -59,7 +61,7 @@
     <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiPackageVersion)" />
     <PackageReference Include="CommunityToolkit.Maui" Version="$(MauiCommunityToolkitPackageVersion)" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="9.10.0" />
+    <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="10.0.0" />
     <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
   </ItemGroup>
   
@@ -74,5 +76,9 @@
       <Registrar>static</Registrar>
     </PropertyGroup>
   </Target>
+
+  <ItemGroup>
+    <TrimmerRootAssembly Include="CommunityToolkit.Maui" RootMode="All"/>
+  </ItemGroup>
 
 </Project>
