@@ -61,7 +61,7 @@
     <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiPackageVersion)" />
     <PackageReference Include="CommunityToolkit.Maui" Version="$(MauiCommunityToolkitPackageVersion)" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="9.10.0" />
+    <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="10.0.0" />
     <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
   </ItemGroup>
   

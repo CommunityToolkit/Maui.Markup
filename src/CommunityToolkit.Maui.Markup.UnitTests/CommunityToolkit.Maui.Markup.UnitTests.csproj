@@ -13,7 +13,7 @@
     <PackageReference Include="NUnit3TestAdapter" Version="5.2.0" PrivateAssets="all" />
     <PackageReference Include="NUnit.Analyzers" Version="4.11.2" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.0.4" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
     <PackageReference Include="CommunityToolkit.Maui" Version="$(MauiCommunityToolkitPackageVersion)" />
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiPackageVersion)"/>
   </ItemGroup>
