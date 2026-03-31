@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using CommunityToolkit.Maui.Markup.UnitTests.Base;
 using NUnit.Framework;
@@ -779,6 +781,38 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 				label => Assert.That(label.Text, Is.EqualTo(expectedText)));
 		}
 
+		[TestCase("Hello")]
+		[TestCase("World")]
+		public void BindAcceptsBindingBaseCreateForNestedProperty(string text)
+		{
+			var viewModel = new OuterViewModel { NestedObject = { Text = text } };
+
+			var label = new Label();
+			label.Bind(Label.TextProperty, BindingBase.Create(static (OuterViewModel vm) => vm.NestedObject.Text, BindingMode.OneWay, source: viewModel));
+
+			Assert.That(label.Text, Is.EqualTo(text));
+		}
+
+		[TestCase("Hello")]
+		[TestCase("World")]
+		public void BindBindingBaseCreateNestedPropertyPropagatesChanges(string text)
+		{
+			var viewModel = new OuterViewModel();
+
+			var entry = new Entry { BindingContext = viewModel };
+			entry.Bind(Entry.TextProperty, BindingBase.Create(static (OuterViewModel vm) => vm.NestedObject.Text, BindingMode.TwoWay));
+			var label = new Label { BindingContext = viewModel };
+			label.Bind(Label.TextProperty, BindingBase.Create(static (OuterViewModel vm) => vm.NestedObject.Text, BindingMode.OneWay));
+
+			entry.Text = text;
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(viewModel.NestedObject.Text, Is.EqualTo(text), "TwoWay binding should update the nested ViewModel");
+				Assert.That(label.Text, Is.EqualTo(text), "OneWay binding should reflect the nested ViewModel");
+			});
+		}
+
 		sealed class ViewModel
 		{
 			public Guid Id { get; set; }
@@ -792,6 +826,37 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			public bool IsRed { get; set; }
 
 			public double HeightRequest { get; set; }
+		}
+
+		internal class OuterViewModel
+		{
+			internal NestedViewModel NestedObject { get; } = new();
+		}
+
+		internal class NestedViewModel : INotifyPropertyChanged
+		{
+			public string? Text
+			{
+				get;
+				set => SetProperty(ref field, value);
+			}
+
+			protected void SetProperty<T>(ref T backingStore, in T value, [CallerMemberName] in string propertyName = "")
+			{
+				if (EqualityComparer<T>.Default.Equals(backingStore, value))
+				{
+					return;
+				}
+
+				backingStore = value;
+
+				OnPropertyChanged(propertyName);
+			}
+
+			void OnPropertyChanged([CallerMemberName] string propertyName = "") =>
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+			public event PropertyChangedEventHandler? PropertyChanged;
 		}
 	}
 }
