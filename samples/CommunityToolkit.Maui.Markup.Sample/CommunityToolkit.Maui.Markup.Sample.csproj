@@ -33,10 +33,13 @@
     
     <!-- Remove this NoWarn once .NET MAUI has implemented partial classes for XamlUserTypeInfo source generators -->
     <NoWarn>CsWinRT1028</NoWarn>
+
+    <WindowsSdkPackageVersion>10.0.19041.56</WindowsSdkPackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'
-      AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'windows'">
+      AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'windows'
+      AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'maccatalyst'">
     <!-- Windows error NETSDK1102: Optimizing assemblies for size is not supported for the selected publish configuration. -->
     
     <PublishAot>false</PublishAot>
@@ -60,9 +63,9 @@
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiPackageVersion)" />
     <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiPackageVersion)" />
     <PackageReference Include="CommunityToolkit.Maui" Version="$(MauiCommunityToolkitPackageVersion)" />
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
     <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="10.0.0" />
-    <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
+    <PackageReference Include="Refit.HttpClientFactory" Version="10.1.6" />
   </ItemGroup>
   
   <ItemGroup>
