@@ -33,6 +33,8 @@
     
     <!-- Remove this NoWarn once .NET MAUI has implemented partial classes for XamlUserTypeInfo source generators -->
     <NoWarn>CsWinRT1028</NoWarn>
+
+    <WindowsSdkPackageVersion>10.0.19041.56</WindowsSdkPackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'
