@@ -14,8 +14,6 @@
     <PackageReference Include="NUnit.Analyzers" Version="4.13.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.7.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.5.1" />
-    <PackageReference Include="Microsoft.Testing.Platform.MSBuild" Version="2.2.3" />
-    <PackageReference Include="Microsoft.Testing.Extensions.VSTestBridge" Version="2.2.3" />
     <PackageReference Include="CommunityToolkit.Maui" Version="$(MauiCommunityToolkitPackageVersion)" />
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiPackageVersion)"/>
   </ItemGroup>
