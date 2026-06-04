@@ -20,8 +20,8 @@
     <NuGetAuditMode>all</NuGetAuditMode>
 
     <!-- MAUI Specific -->
-    <MauiPackageVersion>10.0.41</MauiPackageVersion>
-    <MauiCommunityToolkitPackageVersion>13.0.0</MauiCommunityToolkitPackageVersion>
+    <MauiPackageVersion>10.0.70</MauiPackageVersion>
+    <MauiCommunityToolkitPackageVersion>14.2.0</MauiCommunityToolkitPackageVersion>
     <MauiStrictXamlCompilation>true</MauiStrictXamlCompilation>
     <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
     <MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
