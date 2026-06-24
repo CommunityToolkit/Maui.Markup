@@ -15,7 +15,7 @@ public static class ImageExtensions
 	/// <returns></returns>
 	public static TBindable Source<TBindable>(this TBindable bindable, ImageSource? imageSource) where TBindable : BindableObject, IImageSourcePart
 	{
-		bindable.SetValue(ImageElement.SourceProperty, imageSource);
+		bindable.SetValue(BindablePropertyHelpers.GetImageSourceProperty(bindable), imageSource);
 		return bindable;
 	}
 
@@ -28,7 +28,7 @@ public static class ImageExtensions
 	/// <returns></returns>
 	public static TBindable Aspect<TBindable>(this TBindable bindable, Aspect aspect) where TBindable : BindableObject, IImage
 	{
-		bindable.SetValue(ImageElement.AspectProperty, aspect);
+		bindable.SetValue(BindablePropertyHelpers.GetImageAspectProperty(bindable), aspect);
 		return bindable;
 	}
 
@@ -41,7 +41,7 @@ public static class ImageExtensions
 	/// <returns></returns>
 	public static TBindable IsOpaque<TBindable>(this TBindable bindable, bool isOpaque) where TBindable : BindableObject, IImage
 	{
-		bindable.SetValue(ImageElement.IsOpaqueProperty, isOpaque);
+		bindable.SetValue(BindablePropertyHelpers.GetImageIsOpaqueProperty(bindable), isOpaque);
 		return bindable;
 	}
 }

@@ -14,7 +14,7 @@ public static class PlaceholderExtensions
 	/// <returns></returns>
 	public static TBindable PlaceholderColor<TBindable>(this TBindable bindable, Color? textColor) where TBindable : BindableObject, IPlaceholder
 	{
-		bindable.SetValue(PlaceholderElement.PlaceholderColorProperty, textColor);
+		bindable.SetValue(BindablePropertyHelpers.GetPlaceholderColorProperty(bindable), textColor);
 		return bindable;
 	}
 
@@ -27,7 +27,7 @@ public static class PlaceholderExtensions
 	/// <returns></returns>
 	public static TBindable Placeholder<TBindable>(this TBindable bindable, string? text) where TBindable : BindableObject, IPlaceholder
 	{
-		bindable.SetValue(PlaceholderElement.PlaceholderProperty, text);
+		bindable.SetValue(BindablePropertyHelpers.GetPlaceholderProperty(bindable), text);
 		return bindable;
 	}
 

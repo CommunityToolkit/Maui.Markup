@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.Controls.Internals;
-namespace CommunityToolkit.Maui.Markup;
+﻿namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>
 /// Extension Methods for Elements
@@ -13,9 +12,9 @@ public static class ElementExtensions
 	/// <param name="paddingElement"></param>
 	/// <param name="padding"></param>
 	/// <returns>Layout with added Padding</returns>
-	public static TLayout Padding<TLayout>(this TLayout paddingElement, Thickness padding) where TLayout : Element, IPaddingElement
+	public static TLayout Padding<TLayout>(this TLayout paddingElement, Thickness padding) where TLayout : BindableObject
 	{
-		paddingElement.SetValue(PaddingElement.PaddingProperty, padding);
+		paddingElement.SetValue(BindablePropertyHelpers.GetPaddingProperty(paddingElement), padding);
 
 		return paddingElement;
 	}
@@ -28,9 +27,9 @@ public static class ElementExtensions
 	/// <param name="horizontalSize"></param>
 	/// <param name="verticalSize"></param>
 	/// <returns>Layout with added Padding</returns>
-	public static TLayout Padding<TLayout>(this TLayout paddingElement, double horizontalSize, double verticalSize) where TLayout : Element, IPaddingElement
+	public static TLayout Padding<TLayout>(this TLayout paddingElement, double horizontalSize, double verticalSize) where TLayout : BindableObject
 	{
-		paddingElement.SetValue(PaddingElement.PaddingProperty, new Thickness(horizontalSize, verticalSize));
+		paddingElement.SetValue(BindablePropertyHelpers.GetPaddingProperty(paddingElement), new Thickness(horizontalSize, verticalSize));
 
 		return paddingElement;
 	}
@@ -45,9 +44,9 @@ public static class ElementExtensions
 	/// <param name="right"></param>
 	/// <param name="bottom"></param>
 	/// <returns>Layout with added Padding</returns>
-	public static TLayout Paddings<TLayout>(this TLayout paddingElement, double left = 0, double top = 0, double right = 0, double bottom = 0) where TLayout : Element, IPaddingElement
+	public static TLayout Paddings<TLayout>(this TLayout paddingElement, double left = 0, double top = 0, double right = 0, double bottom = 0) where TLayout : BindableObject
 	{
-		paddingElement.SetValue(PaddingElement.PaddingProperty, new Thickness(left, top, right, bottom));
+		paddingElement.SetValue(BindablePropertyHelpers.GetPaddingProperty(paddingElement), new Thickness(left, top, right, bottom));
 
 		return paddingElement;
 	}
@@ -55,11 +54,11 @@ public static class ElementExtensions
 	/// <summary>
 	/// Remove Dynamic Resource
 	/// </summary>
-	/// <typeparam name="TBindable"></typeparam>
+	/// <typeparam name="TElement"></typeparam>
 	/// <param name="bindable"></param>
 	/// <param name="properties"></param>
 	/// <returns>Layout without Dynamic Resource</returns>
-	public static TBindable RemoveDynamicResources<TBindable>(this TBindable bindable, params ReadOnlySpan<BindableProperty> properties) where TBindable : BindableObject
+	public static TElement RemoveDynamicResources<TElement>(this TElement bindable, params ReadOnlySpan<BindableProperty> properties) where TElement : Element
 	{
 		foreach (var property in properties)
 		{
@@ -89,65 +88,65 @@ public static class ElementExtensions
 	/// <summary>
 	/// Sets FontSize
 	/// </summary>
-	/// <typeparam name="TFontElement"></typeparam>
+	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="fontElement"></param>
 	/// <param name="size"></param>
 	/// <returns></returns>
-	public static TFontElement FontSize<TFontElement>(this TFontElement fontElement, double size) where TFontElement : BindableObject, IFontElement
+	public static TBindable FontSize<TBindable>(this TBindable fontElement, double size) where TBindable : BindableObject
 	{
-		fontElement.SetValue(FontElement.FontSizeProperty, size);
+		fontElement.SetValue(BindablePropertyHelpers.GetFontSizeProperty(fontElement), size);
 		return fontElement;
 	}
 
 	/// <summary>
 	/// Sets Bold
 	/// </summary>
-	/// <typeparam name="TFontElement"></typeparam>
+	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="fontElement"></param>
 	/// <returns>Font element with added Bold</returns>
-	public static TFontElement Bold<TFontElement>(this TFontElement fontElement) where TFontElement : BindableObject, IFontElement
+	public static TBindable Bold<TBindable>(this TBindable fontElement) where TBindable : BindableObject
 	{
-		fontElement.SetValue(FontElement.FontAttributesProperty, FontAttributes.Bold);
+		fontElement.SetValue(BindablePropertyHelpers.GetFontAttributesProperty(fontElement), FontAttributes.Bold);
 		return fontElement;
 	}
 
 	/// <summary>
 	/// Sets Italic
 	/// </summary>
-	/// <typeparam name="TFontElement"></typeparam>
+	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="fontElement"></param>
 	/// <returns>Font element with added Italic</returns>
-	public static TFontElement Italic<TFontElement>(this TFontElement fontElement) where TFontElement : BindableObject, IFontElement
+	public static TBindable Italic<TBindable>(this TBindable fontElement) where TBindable : BindableObject
 	{
-		fontElement.SetValue(FontElement.FontAttributesProperty, FontAttributes.Italic);
+		fontElement.SetValue(BindablePropertyHelpers.GetFontAttributesProperty(fontElement), FontAttributes.Italic);
 		return fontElement;
 	}
 
 	/// <summary>
 	/// Sets Font Properties
 	/// </summary>
-	/// <typeparam name="TFontElement"></typeparam>
+	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="fontElement"></param>
 	/// <param name="family"></param>
 	/// <param name="size"></param>
 	/// <param name="bold"></param>
 	/// <param name="italic"></param>
 	/// <returns>Font element with added Font properties</returns>
-	public static TFontElement Font<TFontElement>(
-		this TFontElement fontElement,
+	public static TBindable Font<TBindable>(
+		this TBindable fontElement,
 		string? family = null,
 		double? size = null,
 		bool? bold = null,
-		bool? italic = null) where TFontElement : BindableObject, IFontElement
+		bool? italic = null) where TBindable : BindableObject
 	{
 		if (family != null)
 		{
-			fontElement.SetValue(FontElement.FontFamilyProperty, family);
+			fontElement.SetValue(BindablePropertyHelpers.GetFontFamilyProperty(fontElement), family);
 		}
 
 		if (size.HasValue)
 		{
-			fontElement.SetValue(FontElement.FontSizeProperty, size.Value);
+			fontElement.SetValue(BindablePropertyHelpers.GetFontSizeProperty(fontElement), size.Value);
 		}
 
 		if (bold.HasValue || italic.HasValue)
@@ -164,7 +163,7 @@ public static class ElementExtensions
 				attributes |= FontAttributes.Italic;
 			}
 
-			fontElement.SetValue(FontElement.FontAttributesProperty, attributes);
+			fontElement.SetValue(BindablePropertyHelpers.GetFontAttributesProperty(fontElement), attributes);
 		}
 
 		return fontElement;
@@ -177,14 +176,14 @@ public static class ElementExtensions
 	/// <param name="bindable">Element</param>
 	/// <param name="textColor">Text <see cref="Color"/></param>
 	/// <returns></returns>
-	public static TBindable TextColor<TBindable>(this TBindable bindable, Color? textColor) where TBindable : BindableObject, ITextStyle
+	public static TBindable TextColor<TBindable>(this TBindable bindable, Color? textColor) where TBindable : BindableObject
 	{
 		if (bindable is MenuItem)
 		{
 			throw new NotSupportedException($"{typeof(MenuItem)} is not supported");
 		}
 
-		bindable.SetValue(TextElement.TextColorProperty, textColor);
+		bindable.SetValue(BindablePropertyHelpers.GetTextColorProperty(bindable), textColor);
 
 		return bindable;
 	}

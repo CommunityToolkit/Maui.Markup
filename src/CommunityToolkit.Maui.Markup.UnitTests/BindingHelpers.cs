@@ -1,6 +1,5 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Reflection;
-using Microsoft.Maui.Controls.Internals;
 using NUnit.Framework;
 namespace CommunityToolkit.Maui.Markup.UnitTests;
 
@@ -79,14 +78,17 @@ static class BindingHelpers
 		TDest? expectedFallbackValue = default,
 		TParam? expectedConverterParameter = default) where TBindable : BindableObject
 	{
-		var binding = GetTypedBinding(bindable, targetProperty) ?? throw new NullReferenceException();
+		var binding = GetBinding(bindable, targetProperty) ?? throw new NullReferenceException();
 
 		Assert.Multiple(() =>
 		{
 			Assert.That(binding, Is.Not.Null);
 			Assert.That(binding.Mode, Is.EqualTo(expectedBindingMode));
 
-			Assert.That(binding.Converter?.ToString(), Is.EqualTo(expectedConverter?.ToString()));
+			var actualConverter = binding.Converter?.GetType().Name.StartsWith("GetterValueConverter", StringComparison.Ordinal) is true && expectedConverter is null
+				? null
+				: binding.Converter;
+			Assert.That(actualConverter?.ToString(), Is.EqualTo(expectedConverter?.ToString()));
 
 			Assert.That(binding.ConverterParameter, Is.EqualTo(expectedConverterParameter));
 
@@ -200,8 +202,6 @@ static class BindingHelpers
 
 	internal static Binding? GetBinding(BindableObject bindable, BindableProperty property) => GetBindingBase<Binding>(bindable, property);
 
-	internal static TypedBindingBase? GetTypedBinding(BindableObject bindable, BindableProperty property) => GetBindingBase<TypedBindingBase>(bindable, property);
-
 	internal static MultiBinding? GetMultiBinding(BindableObject bindable, BindableProperty property) => GetBindingBase<MultiBinding>(bindable, property);
 
 	/// <remarks>
@@ -213,8 +213,15 @@ static class BindingHelpers
 	{
 		getContextMethodInfo ??= typeof(BindableObject).GetMethod("GetContext", BindingFlags.NonPublic | BindingFlags.Instance);
 
-		var context = (BindableObject.BindablePropertyContext?)getContextMethodInfo?.Invoke(bindable, [property]);
-		return (TBinding?)context?.Bindings.GetValue();
+		var context = getContextMethodInfo?.Invoke(bindable, [property]);
+		var contextType = context?.GetType();
+		var bindings = contextType?.GetProperty("Bindings", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)?.GetValue(context)
+			?? contextType?.GetField("Bindings", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)?.GetValue(context);
+		var binding = bindings?.GetType()
+			.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+			.SingleOrDefault(static method => method.Name is "GetValue" && method.GetParameters().Length is 0)
+			?.Invoke(bindings, null);
+		return binding as TBinding;
 	}
 
 	internal static IValueConverter AssertConvert<TValue, TConvertedValue>(this IValueConverter converter, TValue value, object? parameter, TConvertedValue expectedConvertedValue, bool twoWay = false, bool backOnly = false, CultureInfo? culture = null)

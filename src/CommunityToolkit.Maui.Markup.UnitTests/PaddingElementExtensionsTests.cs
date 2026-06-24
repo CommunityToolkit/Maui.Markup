@@ -7,23 +7,23 @@ namespace CommunityToolkit.Maui.Markup.UnitTests;
 [TestFixture(typeof(ImageButton))]
 [TestFixture(typeof(Label))]
 [TestFixture(typeof(Page))]
-class PaddingElementExtensionsTests<TPaddingElement> : BaseMarkupTestFixture<TPaddingElement> where TPaddingElement : Element, IPaddingElement, new()
+class PaddingElementExtensionsTests<TPaddingElement> : BaseMarkupTestFixture<TPaddingElement> where TPaddingElement : BindableObject, new()
 {
 	[Test]
 	public void PaddingThickness()
-		=> TestPropertiesSet(l => l.Padding(new Thickness(1)), (PaddingElement.PaddingProperty, new Thickness(0), new Thickness(1)));
+		=> TestPropertiesSet(l => l.Padding(new Thickness(1)), (BindablePropertyHelpers.GetPaddingProperty(Bindable), new Thickness(0), new Thickness(1)));
 
 	[Test]
 	public void PaddingUniform()
-		=> TestPropertiesSet(l => l.Padding(1), (PaddingElement.PaddingProperty, new Thickness(0), new Thickness(1)));
+		=> TestPropertiesSet(l => l.Padding(1), (BindablePropertyHelpers.GetPaddingProperty(Bindable), new Thickness(0), new Thickness(1)));
 
 	[Test]
 	public void PaddingHorizontalVertical()
-		=> TestPropertiesSet(l => l.Padding(1, 2), (PaddingElement.PaddingProperty, new Thickness(0), new Thickness(1, 2)));
+		=> TestPropertiesSet(l => l.Padding(1, 2), (BindablePropertyHelpers.GetPaddingProperty(Bindable), new Thickness(0), new Thickness(1, 2)));
 
 	[Test]
 	public void Paddings()
-		=> TestPropertiesSet(l => l.Paddings(left: 1, top: 2, right: 3, bottom: 4), (PaddingElement.PaddingProperty, new Thickness(0), new Thickness(1, 2, 3, 4)));
+		=> TestPropertiesSet(l => l.Paddings(left: 1, top: 2, right: 3, bottom: 4), (BindablePropertyHelpers.GetPaddingProperty(Bindable), new Thickness(0), new Thickness(1, 2, 3, 4)));
 
 	[Test]
 	public void SupportDerivedFrom()

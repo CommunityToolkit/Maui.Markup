@@ -6,15 +6,15 @@ class PaceholderExtensionsTests : BaseMarkupTestFixture<Entry>
 {
 	[Test]
 	public void SetPlaceholderTest()
-		=> TestPropertiesSet(e => e.Placeholder("Hello World"), (PlaceholderElement.PlaceholderProperty, "Hello World"));
+		=> TestPropertiesSet(e => e.Placeholder("Hello World"), (Entry.PlaceholderProperty, "Hello World"));
 
 	[Test]
 	public void SetPlaceholderAndColorTest()
-		=> TestPropertiesSet(e => e.Placeholder("Hello World", Colors.Red), (PlaceholderElement.PlaceholderProperty, "Hello World"), (PlaceholderElement.PlaceholderColorProperty, Colors.Red));
+		=> TestPropertiesSet(e => e.Placeholder("Hello World", Colors.Red), (Entry.PlaceholderProperty, "Hello World"), (Entry.PlaceholderColorProperty, Colors.Red));
 
 	[Test]
 	public void SetPlaceholderColorTest()
-		=> TestPropertiesSet(e => e.PlaceholderColor(Colors.Red), (PlaceholderElement.PlaceholderColorProperty, Colors.Red));
+		=> TestPropertiesSet(e => e.PlaceholderColor(Colors.Red), (Entry.PlaceholderColorProperty, Colors.Red));
 
 	[Test]
 	public void SupportDerivedFromEditor()

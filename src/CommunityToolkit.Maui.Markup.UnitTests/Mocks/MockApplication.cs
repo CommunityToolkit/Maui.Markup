@@ -1,4 +1,3 @@
-using Microsoft.Maui.Controls.Internals;
 using Microsoft.Maui.Handlers;
 namespace CommunityToolkit.Maui.Markup.UnitTests.Mocks;
 
@@ -9,9 +8,6 @@ class MockApplication : Application, IPlatformApplication
 		Resources = new MockResourceDictionary();
 
 		Services = serviceProvider;
-#pragma warning disable CS0612 // Type or member is obsolete
-		DependencyService.Register<ISystemResourcesProvider, MockResourcesProvider>();
-#pragma warning restore CS0612 // Type or member is obsolete
 	}
 
 	public IApplication Application => this;

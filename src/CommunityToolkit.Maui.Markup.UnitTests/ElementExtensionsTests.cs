@@ -60,39 +60,39 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 
 	[Test]
 	public void FontSize()
-		=> TestPropertiesSet(l => l.FontSize(8), (FontElement.FontSizeProperty, 6.0, 8.0));
+		=> TestPropertiesSet(l => l.FontSize(8), (Label.FontSizeProperty, 6.0, 8.0));
 
 	[Test]
 	public void Bold()
-		=> TestPropertiesSet(l => l.Bold(), (FontElement.FontAttributesProperty, FontAttributes.None, FontAttributes.Bold));
+		=> TestPropertiesSet(l => l.Bold(), (Label.FontAttributesProperty, FontAttributes.None, FontAttributes.Bold));
 
 	[Test]
 	public void Italic()
-		=> TestPropertiesSet(l => l.Italic(), (FontElement.FontAttributesProperty, FontAttributes.None, FontAttributes.Italic));
+		=> TestPropertiesSet(l => l.Italic(), (Label.FontAttributesProperty, FontAttributes.None, FontAttributes.Italic));
 
 	[Test]
 	public void FontWithPositionalParameters()
 		=> TestPropertiesSet(
 			l => l.Font("AFontName", 8, true, true),
-			(FontElement.FontSizeProperty, 6.0, 8.0),
-			(FontElement.FontAttributesProperty, FontAttributes.None, FontAttributes.Bold | FontAttributes.Italic),
-			(FontElement.FontFamilyProperty, string.Empty, "AFontName"));
+			(Label.FontSizeProperty, 6.0, 8.0),
+			(Label.FontAttributesProperty, FontAttributes.None, FontAttributes.Bold | FontAttributes.Italic),
+			(Label.FontFamilyProperty, string.Empty, "AFontName"));
 
 	[Test]
 	public void FontWithSizeNamedParameter()
-		=> TestPropertiesSet(l => l.Font(size: 8), (FontElement.FontSizeProperty, 6.0, 8.0));
+		=> TestPropertiesSet(l => l.Font(size: 8), (Label.FontSizeProperty, 6.0, 8.0));
 
 	[Test]
 	public void FontWithBoldNamedParameter()
-		=> TestPropertiesSet(l => l.Font(bold: true), (FontElement.FontAttributesProperty, FontAttributes.None, FontAttributes.Bold));
+		=> TestPropertiesSet(l => l.Font(bold: true), (Label.FontAttributesProperty, FontAttributes.None, FontAttributes.Bold));
 
 	[Test]
 	public void FontWithItalicNamedParameter()
-		=> TestPropertiesSet(l => l.Font(italic: true), (FontElement.FontAttributesProperty, FontAttributes.None, FontAttributes.Italic));
+		=> TestPropertiesSet(l => l.Font(italic: true), (Label.FontAttributesProperty, FontAttributes.None, FontAttributes.Italic));
 
 	[Test]
 	public void FontWithFamilyNamedParameter()
-		=> TestPropertiesSet(l => l.Font(family: "AFontName"), (FontElement.FontFamilyProperty, string.Empty, "AFontName"));
+		=> TestPropertiesSet(l => l.Font(family: "AFontName"), (Label.FontFamilyProperty, string.Empty, "AFontName"));
 
 	static Label AssertDynamicResources()
 	{

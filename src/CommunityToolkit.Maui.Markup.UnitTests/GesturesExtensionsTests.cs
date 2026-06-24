@@ -206,7 +206,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<TapGestureRecognizer>());
 		});
 
-		BindingHelpers.AssertTypedBindingExists((TapGestureRecognizer)gestureElement.GestureRecognizers[0], TapGestureRecognizer.CommandProperty, BindingMode.Default, gestureElement.BindingContext);
+		BindingHelpers.AssertTypedBindingExists((TapGestureRecognizer)gestureElement.GestureRecognizers[0], TapGestureRecognizer.CommandProperty, BindingMode.OneWay, gestureElement.BindingContext);
 	}
 
 	[Test]
@@ -308,7 +308,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		});
 
 		BindingHelpers.AssertTypedBindingExists(tapGestureRecognizer, TapGestureRecognizer.CommandProperty, BindingMode.OneTime, gestureElement.BindingContext);
-		BindingHelpers.AssertTypedBindingExists(tapGestureRecognizer, TapGestureRecognizer.CommandParameterProperty, BindingMode.Default, gestureElement.BindingContext);
+		BindingHelpers.AssertTypedBindingExists(tapGestureRecognizer, TapGestureRecognizer.CommandParameterProperty, BindingMode.OneWay, gestureElement.BindingContext);
 	}
 
 	[Test]
@@ -323,7 +323,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 
 		Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 		Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<SwipeGestureRecognizer>());
-		BindingHelpers.AssertTypedBindingExists((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0], SwipeGestureRecognizer.CommandProperty, BindingMode.Default, gestureElement.BindingContext);
+		BindingHelpers.AssertTypedBindingExists((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0], SwipeGestureRecognizer.CommandProperty, BindingMode.OneWay, gestureElement.BindingContext);
 	}
 
 	[Test]
@@ -429,7 +429,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		});
 
 		BindingHelpers.AssertTypedBindingExists((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0], SwipeGestureRecognizer.CommandProperty, BindingMode.OneTime, gestureElement.BindingContext);
-		BindingHelpers.AssertTypedBindingExists((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0], SwipeGestureRecognizer.CommandParameterProperty, BindingMode.Default, gestureElement.BindingContext);
+		BindingHelpers.AssertTypedBindingExists((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0], SwipeGestureRecognizer.CommandParameterProperty, BindingMode.OneWay, gestureElement.BindingContext);
 	}
 
 	[Test]

@@ -57,17 +57,17 @@ public static class TypedGesturesExtensions
 			_ => ConvertExpressionToFunc(parameterGetter)
 		};
 
-		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = parameterGetter switch
+		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = GetMemberNameOrNullForCapturedValue(parameterGetter) switch
 		{
 			null => null,
-			_ => [(b => b, GetMemberName(parameterGetter))]
+			var memberName => [(b => b, memberName)]
 		};
 
 		return BindSwipeGesture(
 			gestureElement,
 			getterFunc,
 			[
-				(b => b, GetMemberName(getter))
+				(b => b, GetMemberNameOrNullForCapturedValue(getter) ?? throw CreateInvalidGetterException())
 			],
 			setter,
 			source,
@@ -182,17 +182,17 @@ public static class TypedGesturesExtensions
 			_ => ConvertExpressionToFunc(parameterGetter)
 		};
 
-		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = parameterGetter switch
+		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = GetMemberNameOrNullForCapturedValue(parameterGetter) switch
 		{
 			null => null,
-			_ => [(b => b, GetMemberName(parameterGetter))]
+			var memberName => [(b => b, memberName)]
 		};
 
 		return BindTapGesture(
 			gestureElement,
 			getterFunc,
 			[
-				(b => b, GetMemberName(getter))
+				(b => b, GetMemberNameOrNullForCapturedValue(getter) ?? throw CreateInvalidGetterException())
 			],
 			setter,
 			source,
@@ -261,12 +261,28 @@ public static class TypedGesturesExtensions
 
 	static Func<TBindingContext, TSource> ConvertExpressionToFunc<TBindingContext, TSource>(in Expression<Func<TBindingContext, TSource>> expression) => expression.Compile();
 
-	static string GetMemberName<T>(in Expression<T> expression) => expression.Body switch
+	static string? GetMemberNameOrNullForCapturedValue<T>(in Expression<T>? expression)
 	{
-		MemberExpression m => m.Member.Name,
-		UnaryExpression { Operand: MemberExpression m } => m.Member.Name,
-		_ => throw new InvalidOperationException("Invalid getter. The `getter` parameter must point directly to a property in the ViewModel and cannot add additional logic")
-	};
+		if (expression is null)
+		{
+			return null;
+		}
+
+		var body = expression.Body is UnaryExpression { Operand: MemberExpression unaryMemberExpression }
+			? unaryMemberExpression
+			: expression.Body;
+
+		return body switch
+		{
+			MemberExpression { Expression: ConstantExpression } => null,
+			MemberExpression { Expression: null } => null,
+			MemberExpression memberExpression => memberExpression.Member.Name,
+			_ => throw CreateInvalidGetterException()
+		};
+	}
+
+	static InvalidOperationException CreateInvalidGetterException()
+		=> new("Invalid getter. The `getter` parameter must point directly to a property in the ViewModel and cannot add additional logic");
 
 	static TGestureRecognizer BindGesture<TGestureRecognizer, TGestureElement, TCommandBindingContext, TParameterBindingContext, TParameterSource>(
 		this TGestureElement gestureElement,

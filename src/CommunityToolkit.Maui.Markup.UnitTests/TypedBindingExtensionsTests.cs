@@ -34,18 +34,21 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	}
 
 	[Test]
-	public void BindCommandThrowsArgumentNullExceptionWhenParameterHandlersNull()
+	public void BindCommandSupportsParameterGetterWithoutHandlers()
 	{
-		Assert.Throws<ArgumentNullException>(() =>
+		var button = new Button
 		{
-			new Button()
-				.BindCommand<Button, ViewModel, object?, Color>(
-					vm => vm.Command,
-					[
-						(vm => vm, nameof(ViewModel.Command))
-					],
-					parameterGetter: _ => Colors.Black);
-		});
+			BindingContext = viewModel
+		};
+
+		button.BindCommand<Button, ViewModel, object?, Color>(
+			vm => vm.Command,
+			[
+				(vm => vm, nameof(ViewModel.Command))
+			],
+			parameterGetter: _ => Colors.Black);
+
+		Assert.That(button.CommandParameter, Is.EqualTo(Colors.Black));
 	}
 
 	[Test]
@@ -58,7 +61,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 
 		button.BindCommand(static (ViewModel vm) => vm.Command);
 
-		BindingHelpers.AssertTypedBindingExists(button, Button.CommandProperty, BindingMode.Default, viewModel);
+		BindingHelpers.AssertTypedBindingExists(button, Button.CommandProperty, BindingMode.OneWay, viewModel);
 		Assert.That(BindingHelpers.GetBinding(button, Button.CommandParameterProperty), Is.Null);
 	}
 
@@ -104,7 +107,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 
 		viewModel.PropertyChanged += HandlePropertyChanged;
 
-		BindingHelpers.AssertTypedBindingExists(label, Label.TextProperty, BindingMode.Default, viewModel, stringFormat);
+		BindingHelpers.AssertTypedBindingExists(label, Label.TextProperty, BindingMode.OneWay, viewModel, stringFormat);
 		Assert.That(label.Text, Is.EqualTo(string.Format(stringFormat, ViewModel.DefaultPercentage)));
 
 		label.Text = string.Format(stringFormat, 0.1);
@@ -150,7 +153,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
 		label.PropertyChanged += HandleLabelPropertyChanged;
 
-		BindingHelpers.AssertTypedBindingExists(label, Label.TextColorProperty, BindingMode.Default, viewModel);
+		BindingHelpers.AssertTypedBindingExists(label, Label.TextColorProperty, BindingMode.OneWay, viewModel);
 		Assert.That(label.TextColor, Is.EqualTo(ViewModel.DefaultColor));
 
 		viewModel.TextColor = Colors.Green;
@@ -188,6 +191,118 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 			didLabelPropertyChangeFire = true;
 			labelPropertyChangedEventArgsTCS.TrySetResult(e.PropertyName);
 		}
+	}
+
+	[Test]
+	public void DefaultTwoWayTypedBindingWithoutSetterDoesNotWriteBack()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		var slider = new Slider
+		{
+			BindingContext = viewModel
+		}.Bind(Slider.ValueProperty, static (ViewModel viewModel) => viewModel.Percentage);
+
+		BindingHelpers.AssertTypedBindingExists(slider, Slider.ValueProperty, BindingMode.OneWay, viewModel);
+
+		slider.Value = 1;
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(slider.Value, Is.EqualTo(1));
+			Assert.That(viewModel.Percentage, Is.EqualTo(ViewModel.DefaultPercentage));
+		});
+	}
+
+	[Test]
+	public void DefaultTwoWayObjectTypedBindingWithoutSetterDoesNotWriteBack()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		var selectedItem = new object();
+		var updatedSelectedItem = new object();
+		viewModel.SelectedItem = selectedItem;
+
+		var collectionView = new CollectionView
+		{
+			BindingContext = viewModel
+		}.Bind(SelectableItemsView.SelectedItemProperty, static (ViewModel viewModel) => viewModel.SelectedItem);
+
+		BindingHelpers.AssertTypedBindingExists(collectionView, SelectableItemsView.SelectedItemProperty, BindingMode.OneWay, viewModel);
+
+		collectionView.SelectedItem = updatedSelectedItem;
+
+		Assert.That(viewModel.SelectedItem, Is.SameAs(selectedItem));
+	}
+
+	[Test]
+	public void BindingDoNothingConvertBackSkipsSetterWriteBack()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		var slider = new Slider
+		{
+			BindingContext = viewModel
+		}.Bind<Slider, ViewModel, double, object?, double>(
+			Slider.ValueProperty,
+			static viewModel => viewModel.Percentage,
+			static (viewModel, percentage) => viewModel.Percentage = percentage,
+			converter: new DoNothingConvertBackConverter());
+
+		slider.Value = 1;
+
+		Assert.That(viewModel.Percentage, Is.EqualTo(ViewModel.DefaultPercentage));
+	}
+
+	[Test]
+	public void InvalidTargetValueDoesNotCrashSetterWriteBack()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		viewModel.Age = 1;
+		var entry = new Entry
+		{
+			BindingContext = viewModel
+		}.Bind(Entry.TextProperty, static (ViewModel viewModel) => viewModel.Age, static (viewModel, age) => viewModel.Age = age);
+
+		Assert.DoesNotThrow(() => entry.Text = "abc");
+		Assert.That(viewModel.Age, Is.EqualTo(1));
+	}
+
+	[Test]
+	public void OneWayToSourceTypedBindingPushesInitialTargetValue()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		var entry = new Entry
+		{
+			BindingContext = viewModel,
+			Text = "12"
+		}.Bind(Entry.TextProperty, static (ViewModel viewModel) => viewModel.Age, static (viewModel, age) => viewModel.Age = age, BindingMode.OneWayToSource);
+
+		Assert.That(viewModel.Age, Is.EqualTo(12));
+
+		entry.Text = "13";
+
+		Assert.That(viewModel.Age, Is.EqualTo(13));
+	}
+
+	[Test]
+	public void OneWayToSourceTypedBindingPushesInitialTargetValueWhenBindingContextIsSetAfterBind()
+	{
+		var entry = new Entry
+		{
+			Text = "12"
+		}.Bind(Entry.TextProperty, static (ViewModel viewModel) => viewModel.Age, static (viewModel, age) => viewModel.Age = age, BindingMode.OneWayToSource);
+		var lateViewModel = new ViewModel();
+
+		entry.BindingContext = lateViewModel;
+
+		Assert.That(lateViewModel.Age, Is.EqualTo(12));
+
+		entry.Text = "13";
+
+		Assert.That(lateViewModel.Age, Is.EqualTo(13));
 	}
 
 	[Test]
@@ -259,7 +374,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		slider.PropertyChanged += HandleSliderPropertyChanged;
 		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
 
-		BindingHelpers.AssertTypedBindingExists(slider, Slider.ValueProperty, BindingMode.Default, viewModel);
+		BindingHelpers.AssertTypedBindingExists(slider, Slider.ValueProperty, BindingMode.OneWay, viewModel);
 		Assert.That(slider.Value, Is.EqualTo(ViewModel.DefaultPercentage));
 
 		slider.Value = 1;
@@ -483,7 +598,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		BindingHelpers.AssertTypedBindingExists<Label, ViewModel, Color, object?, string>(
 			label,
 			Label.TextProperty,
-			BindingMode.Default,
+			BindingMode.OneWay,
 			viewModel,
 			expectedConverter: colorToHexRgbStringConverter);
 
@@ -544,7 +659,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		BindingHelpers.AssertTypedBindingExists<Slider, ViewModel, double, Color>(
 			slider,
 			Slider.ThumbColorProperty,
-			BindingMode.Default,
+			BindingMode.OneWay,
 			viewModel,
 			percentage => percentage > 0.5 ? Colors.Green : Colors.Red);
 
@@ -608,7 +723,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		BindingHelpers.AssertTypedBindingExists<Slider, ViewModel, double, double>(
 			slider,
 			Slider.HeightRequestProperty,
-			BindingMode.Default,
+			BindingMode.OneWay,
 			viewModel,
 			height => height + heightAdjustment);
 
@@ -669,7 +784,7 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		entry.TextChanged += HandleEntryTextChanged;
 		viewModel.PropertyChanged += HandleViewModelPropertyChanged;
 
-		BindingHelpers.AssertTypedBindingExists(entry, Entry.TextProperty, BindingMode.Default, viewModel);
+		BindingHelpers.AssertTypedBindingExists(entry, Entry.TextProperty, BindingMode.OneWay, viewModel);
 		Assert.That(entry.Text, Is.Null);
 
 		entry.Text = "1";
@@ -710,6 +825,29 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		}
 	}
 
+	[Test]
+	public void CapturedValueTypedBindingIgnoresMismatchedBindingContext()
+	{
+		var label = new Label
+		{
+			BindingContext = new object()
+		};
+
+		Assert.DoesNotThrow(() => label.Bind(Label.TextColorProperty, static (ViewModel _) => Colors.Red));
+		Assert.That(label.TextColor, Is.Not.EqualTo(Colors.Red));
+
+		label.BindingContext = viewModel;
+
+		Assert.That(label.TextColor, Is.EqualTo(Colors.Red));
+	}
+
+	sealed class DoNothingConvertBackConverter : IValueConverter
+	{
+		public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => value;
+
+		public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => Binding.DoNothing;
+	}
+
 	class ViewModel : INotifyPropertyChanged
 	{
 		public const double DefaultPercentage = 0.5;
@@ -729,6 +867,12 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		public ICommand Command { get; }
 
 		public event PropertyChangedEventHandler? PropertyChanged;
+
+		public object? SelectedItem
+		{
+			get;
+			set => SetProperty(ref field, value);
+		}
 
 		public double HeightRequest
 		{

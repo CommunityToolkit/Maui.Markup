@@ -199,16 +199,21 @@ public static partial class TypedBindingExtensions
 
 	{
 		var getterFunc = ConvertExpressionToFunc(getter);
+		var path = GetMemberPathOrNullForCapturedValue(getter);
+		var converter = (convert, convertBack) switch
+		{
+			(null, null) => null,
+			_ => new FuncConverter<TSource, TDest, TParam>(convert, convertBack)
+		};
 
-		return Bind(
+		return SetTypedBinding(
 			bindable,
 			targetProperty,
 			getterFunc,
-			[(b => b, GetMemberName(getter))],
+			path,
 			setter,
 			mode,
-			convert,
-			convertBack,
+			converter,
 			converterParameter,
 			stringFormat,
 			source,
@@ -234,12 +239,13 @@ public static partial class TypedBindingExtensions
 
 	{
 		var getterFunc = ConvertExpressionToFunc(getter);
+		var path = GetMemberPathOrNullForCapturedValue(getter);
 
-		return Bind(
+		return SetTypedBinding(
 			bindable,
 			targetProperty,
 			getterFunc,
-			[(b => b, GetMemberName(getter))],
+			path,
 			setter,
 			mode,
 			converter,
@@ -250,12 +256,57 @@ public static partial class TypedBindingExtensions
 			fallbackValue);
 	}
 
-	static Func<TBindingContext, TSource> ConvertExpressionToFunc<TBindingContext, TSource>(in Expression<Func<TBindingContext, TSource>> expression) => expression.Compile();
-
-	static string GetMemberName<T>(in Expression<T> expression) => expression.Body switch
+	static Func<TBindingContext, TSource> ConvertExpressionToFunc<TBindingContext, TSource>(in Expression<Func<TBindingContext, TSource>> expression)
 	{
-		MemberExpression m => m.Member.Name,
-		UnaryExpression { Operand: MemberExpression m } => m.Member.Name,
-		_ => throw new InvalidOperationException("Invalid getter. The `getter` parameter must point directly to a property in the ViewModel and cannot add additional logic")
-	};
+		ArgumentNullException.ThrowIfNull(expression);
+
+		return expression.Compile();
+	}
+
+	static string GetMemberPath<TBindingContext>((Func<TBindingContext, object?>, string)[] handlers)
+	{
+		ArgumentNullException.ThrowIfNull(handlers);
+
+		if (handlers.Length is 0 || handlers.Any(static handler => string.IsNullOrWhiteSpace(handler.Item2)))
+		{
+			throw CreateInvalidGetterException();
+		}
+
+		return string.Join(".", handlers.Select(static handler => handler.Item2));
+	}
+
+	static string? GetMemberPathOrNullForCapturedValue<T>(in Expression<T> expression)
+	{
+		ArgumentNullException.ThrowIfNull(expression);
+
+		var members = new Stack<string>();
+		var currentExpression = UnwrapConvertExpression(expression.Body);
+
+		while (currentExpression is MemberExpression memberExpression)
+		{
+			members.Push(memberExpression.Member.Name);
+			currentExpression = UnwrapConvertExpression(memberExpression.Expression);
+		}
+
+		return currentExpression switch
+		{
+			ParameterExpression when members.Count > 0 => string.Join(".", members),
+			ConstantExpression when members.Count > 0 => null,
+			null when members.Count > 0 => null,
+			_ => throw CreateInvalidGetterException()
+		};
+	}
+
+	static Expression? UnwrapConvertExpression(Expression? expression)
+	{
+		while (expression is UnaryExpression { NodeType: ExpressionType.Convert or ExpressionType.ConvertChecked } unaryExpression)
+		{
+			expression = unaryExpression.Operand;
+		}
+
+		return expression;
+	}
+
+	static InvalidOperationException CreateInvalidGetterException()
+		=> new("Invalid getter. The `getter` parameter must point directly to a property in the ViewModel and cannot add additional logic");
 }

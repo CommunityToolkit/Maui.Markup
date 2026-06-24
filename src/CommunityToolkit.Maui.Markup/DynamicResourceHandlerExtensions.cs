@@ -1,8 +1,7 @@
-﻿using Microsoft.Maui.Controls.Internals;
-namespace CommunityToolkit.Maui.Markup;
+﻿namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>
-/// Extension Methods for IDynamicResourceHandler
+/// Extension Methods for dynamic resources
 /// </summary>
 public static class DynamicResourceHandlerExtensions
 {
@@ -15,7 +14,7 @@ public static class DynamicResourceHandlerExtensions
 	/// <param name="key"></param>
 	/// <returns>Layout with added Dynamic Resource</returns>
 	public static TDynamicResourceHandler DynamicResource<TDynamicResourceHandler>(this TDynamicResourceHandler dynamicResourceHandler, BindableProperty property, string key)
-		where TDynamicResourceHandler : IDynamicResourceHandler
+		where TDynamicResourceHandler : Element
 	{
 		dynamicResourceHandler.SetDynamicResource(property, key);
 
@@ -30,7 +29,7 @@ public static class DynamicResourceHandlerExtensions
 	/// <param name="resources"></param>
 	/// <returns>Layout with added Dynamic Resource</returns>
 	public static TDynamicResourceHandler DynamicResources<TDynamicResourceHandler>(this TDynamicResourceHandler dynamicResourceHandler, params ReadOnlySpan<(BindableProperty property, string key)> resources)
-		where TDynamicResourceHandler : IDynamicResourceHandler
+		where TDynamicResourceHandler : Element
 	{
 		foreach (var (property, key) in resources)
 		{
