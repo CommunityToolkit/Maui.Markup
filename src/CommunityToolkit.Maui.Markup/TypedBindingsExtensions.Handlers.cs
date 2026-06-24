@@ -205,6 +205,16 @@ public static partial class TypedBindingExtensions
 			fallbackValue);
 	}
 
+	/// <summary>Remove a typed binding from a specified property.</summary>
+	public static TBindable RemoveTypedBinding<TBindable>(this TBindable bindable, BindableProperty targetProperty)
+		where TBindable : BindableObject
+	{
+		RemoveSourceUpdateHandler(bindable, targetProperty);
+		bindable.RemoveBinding(targetProperty);
+
+		return bindable;
+	}
+
 	static TBindable SetTypedBinding<TBindable, TBindingContext, TSource, TParam, TDest>(
 		TBindable bindable,
 		BindableProperty targetProperty,

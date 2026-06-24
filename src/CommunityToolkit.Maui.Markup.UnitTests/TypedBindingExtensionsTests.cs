@@ -215,6 +215,22 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	}
 
 	[Test]
+	public void RemoveTypedBindingRemovesSetterWriteBackHandler()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		var slider = new Slider
+		{
+			BindingContext = viewModel
+		}.Bind(Slider.ValueProperty, static (ViewModel viewModel) => viewModel.Percentage, static (viewModel, percentage) => viewModel.Percentage = percentage);
+
+		slider.RemoveTypedBinding(Slider.ValueProperty);
+		slider.Value = 1;
+
+		Assert.That(viewModel.Percentage, Is.EqualTo(ViewModel.DefaultPercentage));
+	}
+
+	[Test]
 	public void DefaultTwoWayObjectTypedBindingWithoutSetterDoesNotWriteBack()
 	{
 		ArgumentNullException.ThrowIfNull(viewModel);
