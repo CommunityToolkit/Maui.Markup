@@ -11,7 +11,8 @@ class PaddingElementExtensionsTests : BaseMarkupTestFixture
 		new("Button", () => new Button(), Button.PaddingProperty, (bindable, padding) => ((Button)bindable).Padding(padding), (bindable, uniformSize) => ((Button)bindable).Padding(uniformSize), (bindable, horizontal, vertical) => ((Button)bindable).Padding(horizontal, vertical), (bindable, left, top, right, bottom) => ((Button)bindable).Paddings(left, top, right, bottom)),
 		new("ImageButton", () => new ImageButton(), ImageButton.PaddingProperty, (bindable, padding) => ((ImageButton)bindable).Padding(padding), (bindable, uniformSize) => ((ImageButton)bindable).Padding(uniformSize), (bindable, horizontal, vertical) => ((ImageButton)bindable).Padding(horizontal, vertical), (bindable, left, top, right, bottom) => ((ImageButton)bindable).Paddings(left, top, right, bottom)),
 		new("Label", () => new Label(), Label.PaddingProperty, (bindable, padding) => ((Label)bindable).Padding(padding), (bindable, uniformSize) => ((Label)bindable).Padding(uniformSize), (bindable, horizontal, vertical) => ((Label)bindable).Padding(horizontal, vertical), (bindable, left, top, right, bottom) => ((Label)bindable).Paddings(left, top, right, bottom)),
-		new("Page", () => new Page(), Page.PaddingProperty, (bindable, padding) => ((Page)bindable).Padding(padding), (bindable, uniformSize) => ((Page)bindable).Padding(uniformSize), (bindable, horizontal, vertical) => ((Page)bindable).Padding(horizontal, vertical), (bindable, left, top, right, bottom) => ((Page)bindable).Paddings(left, top, right, bottom))
+		new("Page", () => new Page(), Page.PaddingProperty, (bindable, padding) => ((Page)bindable).Padding(padding), (bindable, uniformSize) => ((Page)bindable).Padding(uniformSize), (bindable, horizontal, vertical) => ((Page)bindable).Padding(horizontal, vertical), (bindable, left, top, right, bottom) => ((Page)bindable).Paddings(left, top, right, bottom)),
+		new("ScrollView", () => new ScrollView(), ScrollView.PaddingProperty, (bindable, padding) => ((ScrollView)bindable).Padding(padding), (bindable, uniformSize) => ((ScrollView)bindable).Padding(uniformSize), (bindable, horizontal, vertical) => ((ScrollView)bindable).Padding(horizontal, vertical), (bindable, left, top, right, bottom) => ((ScrollView)bindable).Paddings(left, top, right, bottom))
 	];
 
 	[TestCaseSource(nameof(paddingCases))]
@@ -50,7 +51,16 @@ class PaddingElementExtensionsTests : BaseMarkupTestFixture
 			.Padding(1, 2)
 			.Paddings(left: 1, top: 2, right: 3, bottom: 4);
 
-		Assert.That(derivedFrom, Is.InstanceOf<DerivedFrom>());
+		DerivedFromScrollView derivedFromScrollView = new DerivedFromScrollView()
+			.Padding(1)
+			.Padding(1, 2)
+			.Paddings(left: 1, top: 2, right: 3, bottom: 4);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(derivedFrom, Is.InstanceOf<DerivedFrom>());
+			Assert.That(derivedFromScrollView, Is.InstanceOf<DerivedFromScrollView>());
+		});
 	}
 
 	public sealed record PaddingCase(
@@ -66,4 +76,6 @@ class PaddingElementExtensionsTests : BaseMarkupTestFixture
 	}
 
 	class DerivedFrom : ContentView { }
+
+	class DerivedFromScrollView : ScrollView { }
 }
