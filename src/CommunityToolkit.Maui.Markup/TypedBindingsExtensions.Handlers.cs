@@ -396,16 +396,15 @@ public static partial class TypedBindingExtensions
 
 	static bool TryConvertTargetValue<TSource, TParam>(object? targetValue, IValueConverter? converter, TParam? converterParameter, out TSource? sourceValue)
 	{
-		var convertedValue = converter?.ConvertBack(targetValue, typeof(TSource), converterParameter, System.Globalization.CultureInfo.CurrentUICulture) ?? targetValue;
-
-		if (ReferenceEquals(convertedValue, BindableProperty.UnsetValue) || ReferenceEquals(convertedValue, Binding.DoNothing))
-		{
-			sourceValue = default;
-			return false;
-		}
-
 		try
 		{
+			var convertedValue = converter?.ConvertBack(targetValue, typeof(TSource), converterParameter, System.Globalization.CultureInfo.CurrentUICulture) ?? targetValue;
+			if (ReferenceEquals(convertedValue, BindableProperty.UnsetValue) || ReferenceEquals(convertedValue, Binding.DoNothing))
+			{
+				sourceValue = default;
+				return false;
+			}
+
 			sourceValue = convertedValue is null ? default : ConvertTargetValue<TSource>(convertedValue);
 			return true;
 		}
