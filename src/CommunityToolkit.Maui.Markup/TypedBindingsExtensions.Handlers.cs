@@ -206,6 +206,9 @@ public static partial class TypedBindingExtensions
 	}
 
 	/// <summary>Remove a typed binding from a specified property.</summary>
+	/// <remarks>
+	/// Use this instead of <see cref="BindableObject.RemoveBinding(BindableProperty)"/> for typed bindings created with a setter so source write-back handlers are detached too.
+	/// </remarks>
 	public static TBindable RemoveTypedBinding<TBindable>(this TBindable bindable, BindableProperty targetProperty)
 		where TBindable : BindableObject
 	{
@@ -331,6 +334,7 @@ public static partial class TypedBindingExtensions
 				return;
 			}
 
+			// A direct target value write can detach the public Binding, so restore it after source write-back.
 			applyBinding();
 		};
 	}
