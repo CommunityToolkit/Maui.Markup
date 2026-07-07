@@ -452,6 +452,31 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		}
 	}
 
+	[Test]
+	public void SourceUpdateWithNonReversibleConverterDoesNotWriteBackToSource()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		var slider = new Slider
+		{
+			BindingContext = viewModel
+		}.Bind<Slider, ViewModel, double, object?, double>(
+			Slider.ValueProperty,
+			static viewModel => viewModel.Percentage,
+			static (viewModel, percentage) => viewModel.Percentage = percentage,
+			converter: new NonReversibleConverter());
+
+		Assert.That(slider.Value, Is.EqualTo(ViewModel.DefaultPercentage / 2));
+
+		viewModel.Percentage = 0.6;
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(slider.Value, Is.EqualTo(0.3));
+			Assert.That(viewModel.Percentage, Is.EqualTo(0.6));
+		});
+	}
+
 	[TestCase(false, false)]
 	[TestCase(false, true)]
 	[TestCase(true, false)]
@@ -887,6 +912,13 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => value;
 
 		public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new FormatException();
+	}
+
+	sealed class NonReversibleConverter : IValueConverter
+	{
+		public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => value is double sourceValue ? sourceValue / 2 : value;
+
+		public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => value is double targetValue ? targetValue / 10 : value;
 	}
 
 	class ViewModel : INotifyPropertyChanged

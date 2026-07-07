@@ -246,6 +246,9 @@ public static partial class TypedBindingExtensions
 		var resolvedMode = ResolveBindingMode(targetProperty, mode);
 		var updatesTarget = UpdatesTarget(resolvedMode);
 		var isApplyingBinding = false;
+		var targetUpdateTracker = setter is not null && UpdatesSource(resolvedMode) && updatesTarget
+			? new TargetUpdateTracker()
+			: null;
 
 		void ApplyBinding()
 		{
@@ -258,10 +261,13 @@ public static partial class TypedBindingExtensions
 			try
 			{
 				isApplyingBinding = true;
+				var bindingConverter = path is null
+					? new GetterValueConverter<TBindingContext, TSource>(getter, converter, targetUpdateTracker)
+					: targetUpdateTracker is null ? converter : new TargetUpdateTrackingConverter(converter, targetUpdateTracker);
 				var binding = new Binding(
 					path ?? Binding.SelfPath,
 					GetTargetUpdateBindingMode(resolvedMode),
-					path is null ? new GetterValueConverter<TBindingContext, TSource>(getter, converter) : converter,
+					bindingConverter,
 					converterParameter,
 					stringFormat,
 					source)
@@ -282,7 +288,7 @@ public static partial class TypedBindingExtensions
 
 		if (setter is not null && UpdatesSource(resolvedMode))
 		{
-			var sourceUpdateHandler = CreateSourceUpdateHandler(bindable, targetProperty, getter, setter, converter, converterParameter, source, () => isApplyingBinding, ApplyBinding);
+			var sourceUpdateHandler = CreateSourceUpdateHandler(bindable, targetProperty, getter, setter, converter, converterParameter, source, () => isApplyingBinding, targetUpdateTracker, ApplyBinding);
 			var bindingContextChangedHandler = source is null && !updatesTarget
 				? CreateBindingContextChangedHandler(bindable, targetProperty, getter, setter, converter, converterParameter, source)
 				: null;
@@ -319,12 +325,25 @@ public static partial class TypedBindingExtensions
 		TParam? converterParameter,
 		TBindingContext? source,
 		Func<bool> isApplyingBinding,
+		TargetUpdateTracker? targetUpdateTracker,
 		Action applyBinding)
 		where TBindingContext : class?
 	{
 		return (_, args) =>
 		{
 			if (isApplyingBinding() || !string.Equals(args.PropertyName, targetProperty.PropertyName, StringComparison.Ordinal))
+			{
+				return;
+			}
+
+			var targetValue = bindable.GetValue(targetProperty);
+			if (isApplyingBinding())
+			{
+				targetUpdateTracker?.TryConsume(targetValue);
+				return;
+			}
+
+			if (targetUpdateTracker?.TryConsume(targetValue) is true)
 			{
 				return;
 			}
@@ -460,7 +479,48 @@ public static partial class TypedBindingExtensions
 
 	sealed record SourceUpdateHandlers(PropertyChangedEventHandler PropertyChangedHandler, EventHandler? BindingContextChangedHandler);
 
-	sealed class GetterValueConverter<TBindingContext, TSource>(Func<TBindingContext, TSource> getter, IValueConverter? converter) : IValueConverter
+	sealed class TargetUpdateTracker
+	{
+		bool hasPendingTargetValue;
+		object? pendingTargetValue;
+
+		public void Track(object? targetValue)
+		{
+			pendingTargetValue = targetValue;
+			hasPendingTargetValue = true;
+		}
+
+		public bool TryConsume(object? targetValue)
+		{
+			if (!hasPendingTargetValue)
+			{
+				return false;
+			}
+
+			var isPendingUpdate = Equals(pendingTargetValue, targetValue);
+			pendingTargetValue = null;
+			hasPendingTargetValue = false;
+
+			return isPendingUpdate;
+		}
+	}
+
+	sealed class TargetUpdateTrackingConverter(IValueConverter? converter, TargetUpdateTracker targetUpdateTracker) : IValueConverter
+	{
+		public object? Convert(object? value, Type? targetType, object? parameter, System.Globalization.CultureInfo? culture)
+		{
+			var targetValue = converter?.Convert(value, targetType ?? typeof(object), parameter, culture ?? System.Globalization.CultureInfo.CurrentUICulture) ?? value;
+			targetUpdateTracker.Track(targetValue);
+			return targetValue;
+		}
+
+		public object? ConvertBack(object? value, Type? targetType, object? parameter, System.Globalization.CultureInfo? culture)
+			=> converter?.ConvertBack(value, targetType ?? typeof(object), parameter, culture ?? System.Globalization.CultureInfo.CurrentUICulture) ?? value;
+
+		public override string? ToString() => converter?.ToString();
+	}
+
+	sealed class GetterValueConverter<TBindingContext, TSource>(Func<TBindingContext, TSource> getter, IValueConverter? converter, TargetUpdateTracker? targetUpdateTracker) : IValueConverter
 		where TBindingContext : class?
 	{
 		public object? Convert(object? value, Type? targetType, object? parameter, System.Globalization.CultureInfo? culture)
@@ -471,7 +531,9 @@ public static partial class TypedBindingExtensions
 			}
 
 			var sourceValue = getter(sourceObject);
-			return converter?.Convert(sourceValue, targetType ?? typeof(object), parameter, culture ?? System.Globalization.CultureInfo.CurrentUICulture) ?? sourceValue;
+			var targetValue = converter?.Convert(sourceValue, targetType ?? typeof(object), parameter, culture ?? System.Globalization.CultureInfo.CurrentUICulture) ?? sourceValue;
+			targetUpdateTracker?.Track(targetValue);
+			return targetValue;
 		}
 
 		public object? ConvertBack(object? value, Type? targetType, object? parameter, System.Globalization.CultureInfo? culture)
