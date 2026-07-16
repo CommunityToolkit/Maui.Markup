@@ -254,6 +254,7 @@ jobs:
     environment: nuget-release-gate # This gates this job until manually approved
     runs-on: ubuntu-latest
     permissions:
+      actions: read
       id-token: write
       contents: read
 
