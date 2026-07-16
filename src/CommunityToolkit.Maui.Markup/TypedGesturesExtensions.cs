@@ -57,17 +57,17 @@ public static class TypedGesturesExtensions
 			_ => ConvertExpressionToFunc(parameterGetter)
 		};
 
-		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = GetMemberNameOrNullForCapturedValue(parameterGetter) switch
+		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = GetMemberPathOrNullForCapturedValue(parameterGetter) switch
 		{
 			null => null,
-			var memberName => [(b => b, memberName)]
+			var memberPath => [(b => b, memberPath)]
 		};
 
 		return BindSwipeGesture(
 			gestureElement,
 			getterFunc,
 			[
-				(b => b, GetMemberNameOrNullForCapturedValue(getter) ?? throw CreateInvalidGetterException())
+				(b => b, GetMemberPathOrNullForCapturedValue(getter) ?? throw CreateInvalidGetterException())
 			],
 			setter,
 			source,
@@ -182,17 +182,17 @@ public static class TypedGesturesExtensions
 			_ => ConvertExpressionToFunc(parameterGetter)
 		};
 
-		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = GetMemberNameOrNullForCapturedValue(parameterGetter) switch
+		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = GetMemberPathOrNullForCapturedValue(parameterGetter) switch
 		{
 			null => null,
-			var memberName => [(b => b, memberName)]
+			var memberPath => [(b => b, memberPath)]
 		};
 
 		return BindTapGesture(
 			gestureElement,
 			getterFunc,
 			[
-				(b => b, GetMemberNameOrNullForCapturedValue(getter) ?? throw CreateInvalidGetterException())
+				(b => b, GetMemberPathOrNullForCapturedValue(getter) ?? throw CreateInvalidGetterException())
 			],
 			setter,
 			source,
@@ -261,24 +261,39 @@ public static class TypedGesturesExtensions
 
 	static Func<TBindingContext, TSource> ConvertExpressionToFunc<TBindingContext, TSource>(in Expression<Func<TBindingContext, TSource>> expression) => expression.Compile();
 
-	static string? GetMemberNameOrNullForCapturedValue<T>(in Expression<T>? expression)
+	static string? GetMemberPathOrNullForCapturedValue<T>(in Expression<T>? expression)
 	{
 		if (expression is null)
 		{
 			return null;
 		}
 
-		var body = expression.Body is UnaryExpression { Operand: MemberExpression unaryMemberExpression }
-			? unaryMemberExpression
-			: expression.Body;
+		var members = new Stack<string>();
+		var currentExpression = UnwrapConvertExpression(expression.Body);
 
-		return body switch
+		while (currentExpression is MemberExpression memberExpression)
 		{
-			MemberExpression { Expression: ConstantExpression } => null,
-			MemberExpression { Expression: null } => null,
-			MemberExpression memberExpression => memberExpression.Member.Name,
+			members.Push(memberExpression.Member.Name);
+			currentExpression = UnwrapConvertExpression(memberExpression.Expression);
+		}
+
+		return currentExpression switch
+		{
+			ParameterExpression when members.Count > 0 => string.Join(".", members),
+			ConstantExpression when members.Count > 0 => null,
+			null when members.Count > 0 => null,
 			_ => throw CreateInvalidGetterException()
 		};
+	}
+
+	static Expression? UnwrapConvertExpression(Expression? expression)
+	{
+		while (expression is UnaryExpression { NodeType: ExpressionType.Convert or ExpressionType.ConvertChecked } unaryExpression)
+		{
+			expression = unaryExpression.Operand;
+		}
+
+		return expression;
 	}
 
 	static InvalidOperationException CreateInvalidGetterException()
