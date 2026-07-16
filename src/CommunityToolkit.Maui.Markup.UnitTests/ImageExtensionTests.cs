@@ -33,6 +33,21 @@ class ImageExtensionTests : BaseMarkupTestFixture<Image>
 		=> TestPropertiesSet(i => i.IsOpaque(true), (Image.IsOpaqueProperty, true));
 
 	[Test]
+	public void SupportsImageButton()
+	{
+		var imageButton = new ImageButton().Source(resourceToLoad);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(imageButton.Source, Is.InstanceOf<FileImageSource>());
+			Assert.That(((FileImageSource)imageButton.Source).File, Is.EqualTo(resourceToLoad));
+		});
+
+		TestPropertiesSet(new ImageButton(), imageButton => imageButton.Aspect(Aspect.Center), (ImageButton.AspectProperty, Aspect.Center));
+		TestPropertiesSet(new ImageButton(), imageButton => imageButton.IsOpaque(true), (ImageButton.IsOpaqueProperty, true));
+	}
+
+	[Test]
 	public void SupportDerivedFromImage()
 	{
 		Assert.That(new DerivedFromImage()

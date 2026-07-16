@@ -17,6 +17,21 @@ class PaceholderExtensionsTests : BaseMarkupTestFixture<Entry>
 		=> TestPropertiesSet(e => e.PlaceholderColor(Colors.Red), (Entry.PlaceholderColorProperty, Colors.Red));
 
 	[Test]
+	public void SupportsSearchBar()
+	{
+		var searchBar = new SearchBar()
+			.Placeholder("Hello World")
+			.PlaceholderColor(Colors.Blue)
+			.Placeholder("Hello World 2", Colors.Red);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(searchBar.Placeholder, Is.EqualTo("Hello World 2"));
+			Assert.That(searchBar.PlaceholderColor, Is.EqualTo(Colors.Red));
+		});
+	}
+
+	[Test]
 	public void SupportDerivedFromEditor()
 	{
 		Assert.That(new DerivedFromEditor()
