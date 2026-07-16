@@ -6,10 +6,10 @@
 public static class ImageExtensions
 {
 	/// <summary>
-	/// Sets the <see cref="IImageSourcePart.Source" /> Property/>
+	/// Sets the <see cref="IImageSourcePart.Source" /> property.
 	/// </summary>
 	/// <typeparam name="TImage">The <see cref="Image"/> type.</typeparam>
-	/// <param name="bindable">The <see cref="BindableObject"/> on which to set the <see cref="IImageSourcePart.Source"/> Property</param>
+	/// <param name="bindable">The <see cref="BindableObject"/> on which to set the <see cref="IImageSourcePart.Source"/> property.</param>
 	/// <param name="imageSource">The <see cref="Microsoft.Maui.Controls.ImageSource"/> value</param>
 	/// <param name="overload">Unused overload discriminator.</param>
 	/// <returns></returns>
@@ -25,11 +25,11 @@ public static class ImageExtensions
 	}
 
 	/// <summary>
-	/// Sets the <see cref="Microsoft.Maui.IImage.Aspect" /> Property/>
+	/// Sets the <see cref="Microsoft.Maui.IImage.Aspect" /> property.
 	/// </summary>
 	/// <typeparam name="TImage">The <see cref="Image"/> type.</typeparam>
-	/// <param name="bindable">The <see cref="BindableObject"/> on which to set the <see cref="Microsoft.Maui.IImage.Aspect"/> Property</param>
-	/// <param name="aspect">The <see cref="Microsoft.Maui.Aspect"/> vaue</param>
+	/// <param name="bindable">The <see cref="BindableObject"/> on which to set the <see cref="Microsoft.Maui.IImage.Aspect"/> property.</param>
+	/// <param name="aspect">The <see cref="Microsoft.Maui.Aspect"/> value.</param>
 	/// <param name="overload">Unused overload discriminator.</param>
 	/// <returns></returns>
 	public static TImage Aspect<TImage>(this TImage bindable, Aspect aspect, Image? overload = null) where TImage : Image
@@ -44,11 +44,11 @@ public static class ImageExtensions
 	}
 
 	/// <summary>
-	/// Sets the <see cref="Microsoft.Maui.IImage.IsOpaque" /> Property/>
+	/// Sets the <see cref="Microsoft.Maui.IImage.IsOpaque" /> property.
 	/// </summary>
 	/// <typeparam name="TImage">The <see cref="Image"/> type.</typeparam>
-	/// <param name="bindable">The <see cref="BindableObject"/> on which to set the <see cref="Microsoft.Maui.IImage.IsOpaque"/> Property</param>
-	/// <param name="isOpaque">The <see cref="bool"/> vaue</param>
+	/// <param name="bindable">The <see cref="BindableObject"/> on which to set the <see cref="Microsoft.Maui.IImage.IsOpaque"/> property.</param>
+	/// <param name="isOpaque">The <see cref="bool"/> value.</param>
 	/// <param name="overload">Unused overload discriminator.</param>
 	/// <returns></returns>
 	public static TImage IsOpaque<TImage>(this TImage bindable, bool isOpaque, Image? overload = null) where TImage : Image
