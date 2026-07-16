@@ -9,9 +9,9 @@ static class BindablePropertyHelpers
 		ContentPresenter => ContentPresenter.PaddingProperty,
 		ImageButton => ImageButton.PaddingProperty,
 		Label => Label.PaddingProperty,
+		ScrollView => ScrollView.PaddingProperty,
 		Layout => Layout.PaddingProperty,
 		Page => Page.PaddingProperty,
-		ScrollView => ScrollView.PaddingProperty,
 		TemplatedView => TemplatedView.PaddingProperty,
 		_ => throw CreateUnsupportedException(bindable, "Padding")
 	};

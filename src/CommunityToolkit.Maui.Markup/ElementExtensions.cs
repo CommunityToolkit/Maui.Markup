@@ -149,7 +149,7 @@ public static class ElementExtensions
 	/// <param name="fontElement"></param>
 	/// <param name="size"></param>
 	/// <returns></returns>
-	public static TBindable FontSize<TBindable>(this TBindable fontElement, double size) where TBindable : BindableObject
+	public static TBindable FontSize<TBindable>(this TBindable fontElement, double size) where TBindable : BindableObject, ITextStyle
 	{
 		fontElement.SetValue(BindablePropertyHelpers.GetFontSizeProperty(fontElement), size);
 		return fontElement;
@@ -161,7 +161,7 @@ public static class ElementExtensions
 	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="fontElement"></param>
 	/// <returns>Font element with added Bold</returns>
-	public static TBindable Bold<TBindable>(this TBindable fontElement) where TBindable : BindableObject
+	public static TBindable Bold<TBindable>(this TBindable fontElement) where TBindable : BindableObject, ITextStyle
 	{
 		fontElement.SetValue(BindablePropertyHelpers.GetFontAttributesProperty(fontElement), FontAttributes.Bold);
 		return fontElement;
@@ -173,7 +173,7 @@ public static class ElementExtensions
 	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="fontElement"></param>
 	/// <returns>Font element with added Italic</returns>
-	public static TBindable Italic<TBindable>(this TBindable fontElement) where TBindable : BindableObject
+	public static TBindable Italic<TBindable>(this TBindable fontElement) where TBindable : BindableObject, ITextStyle
 	{
 		fontElement.SetValue(BindablePropertyHelpers.GetFontAttributesProperty(fontElement), FontAttributes.Italic);
 		return fontElement;
@@ -194,7 +194,7 @@ public static class ElementExtensions
 		string? family = null,
 		double? size = null,
 		bool? bold = null,
-		bool? italic = null) where TBindable : BindableObject
+		bool? italic = null) where TBindable : BindableObject, ITextStyle
 	{
 		if (family != null)
 		{
