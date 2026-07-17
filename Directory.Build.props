@@ -21,7 +21,7 @@
 
     <!-- MAUI Specific -->
     <MauiPackageVersion>10.0.80</MauiPackageVersion>
-    <MauiCommunityToolkitPackageVersion>14.2.0</MauiCommunityToolkitPackageVersion>
+    <MauiCommunityToolkitPackageVersion>14.2.2</MauiCommunityToolkitPackageVersion>
     <MauiStrictXamlCompilation>true</MauiStrictXamlCompilation>
     <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
     <MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
