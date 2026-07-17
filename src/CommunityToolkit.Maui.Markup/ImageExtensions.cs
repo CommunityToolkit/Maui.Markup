@@ -1,7 +1,7 @@
 ﻿namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>
-/// Extension methods for IImage
+/// Extension methods for <see cref="Image"/> and <see cref="ImageButton"/>
 /// </summary>
 public static class ImageExtensions
 {

@@ -198,8 +198,8 @@ public static partial class TypedBindingExtensions
 		where TBindingContext : class?
 
 	{
-		var getterFunc = ConvertExpressionToFunc(getter);
-		var path = GetMemberPathOrNullForCapturedValue(getter);
+		var getterFunc = ExpressionPathHelpers.ConvertExpressionToFunc(getter);
+		var path = ExpressionPathHelpers.GetMemberPathOrNullForCapturedValue(getter);
 		var converter = (convert, convertBack) switch
 		{
 			(null, null) => null,
@@ -238,8 +238,8 @@ public static partial class TypedBindingExtensions
 		where TBindingContext : class?
 
 	{
-		var getterFunc = ConvertExpressionToFunc(getter);
-		var path = GetMemberPathOrNullForCapturedValue(getter);
+		var getterFunc = ExpressionPathHelpers.ConvertExpressionToFunc(getter);
+		var path = ExpressionPathHelpers.GetMemberPathOrNullForCapturedValue(getter);
 
 		return SetTypedBinding(
 			bindable,
@@ -256,57 +256,4 @@ public static partial class TypedBindingExtensions
 			fallbackValue);
 	}
 
-	static Func<TBindingContext, TSource> ConvertExpressionToFunc<TBindingContext, TSource>(in Expression<Func<TBindingContext, TSource>> expression)
-	{
-		ArgumentNullException.ThrowIfNull(expression);
-
-		return expression.Compile();
-	}
-
-	static string GetMemberPath<TBindingContext>((Func<TBindingContext, object?>, string)[] handlers)
-	{
-		ArgumentNullException.ThrowIfNull(handlers);
-
-		if (handlers.Length is 0 || handlers.Any(static handler => string.IsNullOrWhiteSpace(handler.Item2)))
-		{
-			throw CreateInvalidGetterException();
-		}
-
-		return string.Join(".", handlers.Select(static handler => handler.Item2));
-	}
-
-	static string? GetMemberPathOrNullForCapturedValue<T>(in Expression<T> expression)
-	{
-		ArgumentNullException.ThrowIfNull(expression);
-
-		var members = new Stack<string>();
-		var currentExpression = UnwrapConvertExpression(expression.Body);
-
-		while (currentExpression is MemberExpression memberExpression)
-		{
-			members.Push(memberExpression.Member.Name);
-			currentExpression = UnwrapConvertExpression(memberExpression.Expression);
-		}
-
-		return currentExpression switch
-		{
-			ParameterExpression when members.Count > 0 => string.Join(".", members),
-			ConstantExpression when members.Count > 0 => null,
-			null when members.Count > 0 => null,
-			_ => throw CreateInvalidGetterException()
-		};
-	}
-
-	static Expression? UnwrapConvertExpression(Expression? expression)
-	{
-		while (expression is UnaryExpression { NodeType: ExpressionType.Convert or ExpressionType.ConvertChecked } unaryExpression)
-		{
-			expression = unaryExpression.Operand;
-		}
-
-		return expression;
-	}
-
-	static InvalidOperationException CreateInvalidGetterException()
-		=> new("Invalid getter. The `getter` parameter must point directly to a property in the ViewModel and cannot add additional logic");
 }

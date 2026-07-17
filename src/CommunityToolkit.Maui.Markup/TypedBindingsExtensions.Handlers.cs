@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Input;
 
 namespace CommunityToolkit.Maui.Markup;
@@ -56,7 +57,7 @@ public static partial class TypedBindingExtensions
 		SetTypedBinding<TBindable, TCommandBindingContext, ICommand, object?, object?>(bindable,
 			commandProperty,
 			getter,
-			GetMemberPath(handlers),
+			ExpressionPathHelpers.GetMemberPath(handlers),
 			setter,
 			commandBindingMode,
 			source: source);
@@ -67,7 +68,7 @@ public static partial class TypedBindingExtensions
 				bindable,
 				parameterProperty,
 				parameterGetter,
-				parameterHandlers is null ? null : GetMemberPath(parameterHandlers),
+				parameterHandlers is null ? null : ExpressionPathHelpers.GetMemberPath(parameterHandlers),
 				parameterSetter,
 				parameterBindingMode,
 				source: parameterSource);
@@ -163,7 +164,7 @@ public static partial class TypedBindingExtensions
 		return SetTypedBinding(bindable,
 			targetProperty,
 			getter,
-			GetMemberPath(handlers),
+			ExpressionPathHelpers.GetMemberPath(handlers),
 			setter,
 			mode,
 			converter,
@@ -194,7 +195,7 @@ public static partial class TypedBindingExtensions
 		return SetTypedBinding(bindable,
 			targetProperty,
 			getter,
-			GetMemberPath(handlers),
+			ExpressionPathHelpers.GetMemberPath(handlers),
 			setter,
 			mode,
 			converter,
@@ -238,7 +239,7 @@ public static partial class TypedBindingExtensions
 
 		if (path is null && setter is not null)
 		{
-			throw CreateInvalidGetterException();
+			throw ExpressionPathHelpers.CreateInvalidGetterException();
 		}
 
 		RemoveSourceUpdateHandler(bindable, targetProperty);
@@ -262,19 +263,21 @@ public static partial class TypedBindingExtensions
 			{
 				isApplyingBinding = true;
 				var bindingConverter = path is null
-					? new GetterValueConverter<TBindingContext, TSource>(getter, converter, targetUpdateTracker)
-					: targetUpdateTracker is null ? converter : new TargetUpdateTrackingConverter(converter, targetUpdateTracker);
+					? new GetterValueConverter<TBindingContext, TSource>(getter, converter, targetUpdateTracker, stringFormat, targetNullValue, fallbackValue)
+					: targetUpdateTracker is null ? converter : new TargetUpdateTrackingConverter(converter, targetUpdateTracker, stringFormat, targetNullValue, fallbackValue);
 				var binding = new Binding(
 					path ?? Binding.SelfPath,
 					GetTargetUpdateBindingMode(resolvedMode),
 					bindingConverter,
 					converterParameter,
-					stringFormat,
-					source)
+					targetUpdateTracker is null ? stringFormat : null,
+					source);
+
+				if (targetUpdateTracker is null)
 				{
-					TargetNullValue = targetNullValue,
-					FallbackValue = fallbackValue
-				};
+					binding.TargetNullValue = targetNullValue;
+					binding.FallbackValue = fallbackValue;
+				}
 
 				bindable.SetBinding(targetProperty, binding);
 			}
@@ -505,38 +508,71 @@ public static partial class TypedBindingExtensions
 		}
 	}
 
-	sealed class TargetUpdateTrackingConverter(IValueConverter? converter, TargetUpdateTracker targetUpdateTracker) : IValueConverter
+	static object? ApplyTargetValueHandlers(object? targetValue, string? stringFormat, object? targetNullValue, object? fallbackValue, CultureInfo culture)
 	{
-		public object? Convert(object? value, Type? targetType, object? parameter, System.Globalization.CultureInfo? culture)
+		if (ReferenceEquals(targetValue, Binding.DoNothing))
 		{
-			var targetValue = converter?.Convert(value, targetType ?? typeof(object), parameter, culture ?? System.Globalization.CultureInfo.CurrentUICulture) ?? value;
-			targetUpdateTracker.Track(targetValue);
+			return Binding.DoNothing;
+		}
+
+		if (ReferenceEquals(targetValue, BindableProperty.UnsetValue))
+		{
+			targetValue = fallbackValue;
+		}
+
+		targetValue ??= targetNullValue;
+
+		return stringFormat is null
+			? targetValue
+			: string.Format(culture, stringFormat, targetValue);
+	}
+
+	static void TrackTargetValue(TargetUpdateTracker? targetUpdateTracker, object? targetValue)
+	{
+		if (!ReferenceEquals(targetValue, Binding.DoNothing))
+		{
+			targetUpdateTracker?.Track(targetValue);
+		}
+	}
+
+	sealed class TargetUpdateTrackingConverter(IValueConverter? converter, TargetUpdateTracker targetUpdateTracker, string? stringFormat, object? targetNullValue, object? fallbackValue) : IValueConverter
+	{
+		public object? Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
+		{
+			var targetCulture = culture ?? CultureInfo.CurrentUICulture;
+			var convertedValue = converter?.Convert(value, targetType ?? typeof(object), parameter, targetCulture) ?? value;
+			var targetValue = ApplyTargetValueHandlers(convertedValue, stringFormat, targetNullValue, fallbackValue, targetCulture);
+			TrackTargetValue(targetUpdateTracker, targetValue);
 			return targetValue;
 		}
 
-		public object? ConvertBack(object? value, Type? targetType, object? parameter, System.Globalization.CultureInfo? culture)
-			=> converter?.ConvertBack(value, targetType ?? typeof(object), parameter, culture ?? System.Globalization.CultureInfo.CurrentUICulture) ?? value;
+		public object? ConvertBack(object? value, Type? targetType, object? parameter, CultureInfo? culture)
+			=> converter?.ConvertBack(value, targetType ?? typeof(object), parameter, culture ?? CultureInfo.CurrentUICulture) ?? value;
 
 		public override string? ToString() => converter?.ToString();
 	}
 
-	sealed class GetterValueConverter<TBindingContext, TSource>(Func<TBindingContext, TSource> getter, IValueConverter? converter, TargetUpdateTracker? targetUpdateTracker) : IValueConverter
+	sealed class GetterValueConverter<TBindingContext, TSource>(Func<TBindingContext, TSource> getter, IValueConverter? converter, TargetUpdateTracker? targetUpdateTracker, string? stringFormat, object? targetNullValue, object? fallbackValue) : IValueConverter
 		where TBindingContext : class?
 	{
-		public object? Convert(object? value, Type? targetType, object? parameter, System.Globalization.CultureInfo? culture)
+		public object? Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
 		{
 			if (value is not TBindingContext sourceObject)
 			{
-				return BindableProperty.UnsetValue;
+				var fallbackTargetValue = ApplyTargetValueHandlers(BindableProperty.UnsetValue, stringFormat, targetNullValue, fallbackValue, culture ?? CultureInfo.CurrentUICulture);
+				TrackTargetValue(targetUpdateTracker, fallbackTargetValue);
+				return fallbackTargetValue;
 			}
 
+			var targetCulture = culture ?? CultureInfo.CurrentUICulture;
 			var sourceValue = getter(sourceObject);
-			var targetValue = converter?.Convert(sourceValue, targetType ?? typeof(object), parameter, culture ?? System.Globalization.CultureInfo.CurrentUICulture) ?? sourceValue;
-			targetUpdateTracker?.Track(targetValue);
+			var convertedValue = converter?.Convert(sourceValue, targetType ?? typeof(object), parameter, targetCulture) ?? sourceValue;
+			var targetValue = ApplyTargetValueHandlers(convertedValue, stringFormat, targetNullValue, fallbackValue, targetCulture);
+			TrackTargetValue(targetUpdateTracker, targetValue);
 			return targetValue;
 		}
 
-		public object? ConvertBack(object? value, Type? targetType, object? parameter, System.Globalization.CultureInfo? culture)
+		public object? ConvertBack(object? value, Type? targetType, object? parameter, CultureInfo? culture)
 			=> BindableProperty.UnsetValue;
 
 		public override string? ToString() => converter?.ToString() ?? base.ToString();

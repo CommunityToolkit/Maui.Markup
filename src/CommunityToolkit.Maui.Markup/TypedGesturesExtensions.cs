@@ -50,14 +50,14 @@ public static class TypedGesturesExtensions
 		where TCommandBindingContext : class
 		where TParameterBindingContext : class
 	{
-		var getterFunc = ConvertExpressionToFunc(getter);
+		var getterFunc = ExpressionPathHelpers.ConvertExpressionToFunc(getter);
 		var parameterGetterFunc = parameterGetter switch
 		{
 			null => null,
-			_ => ConvertExpressionToFunc(parameterGetter)
+			_ => ExpressionPathHelpers.ConvertExpressionToFunc(parameterGetter)
 		};
 
-		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = GetMemberPathOrNullForCapturedValue(parameterGetter) switch
+		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = ExpressionPathHelpers.GetMemberPathOrNullForCapturedValue(parameterGetter) switch
 		{
 			null => null,
 			var memberPath => [(b => b, memberPath)]
@@ -67,7 +67,7 @@ public static class TypedGesturesExtensions
 			gestureElement,
 			getterFunc,
 			[
-				(b => b, GetMemberPathOrNullForCapturedValue(getter) ?? throw CreateInvalidGetterException())
+				(b => b, ExpressionPathHelpers.GetMemberPathOrNullForCapturedValue(getter) ?? throw ExpressionPathHelpers.CreateInvalidGetterException())
 			],
 			setter,
 			source,
@@ -175,14 +175,14 @@ public static class TypedGesturesExtensions
 		where TCommandBindingContext : class
 		where TParameterBindingContext : class
 	{
-		var getterFunc = ConvertExpressionToFunc(getter);
+		var getterFunc = ExpressionPathHelpers.ConvertExpressionToFunc(getter);
 		var parameterGetterFunc = parameterGetter switch
 		{
 			null => null,
-			_ => ConvertExpressionToFunc(parameterGetter)
+			_ => ExpressionPathHelpers.ConvertExpressionToFunc(parameterGetter)
 		};
 
-		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = GetMemberPathOrNullForCapturedValue(parameterGetter) switch
+		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = ExpressionPathHelpers.GetMemberPathOrNullForCapturedValue(parameterGetter) switch
 		{
 			null => null,
 			var memberPath => [(b => b, memberPath)]
@@ -192,7 +192,7 @@ public static class TypedGesturesExtensions
 			gestureElement,
 			getterFunc,
 			[
-				(b => b, GetMemberPathOrNullForCapturedValue(getter) ?? throw CreateInvalidGetterException())
+				(b => b, ExpressionPathHelpers.GetMemberPathOrNullForCapturedValue(getter) ?? throw ExpressionPathHelpers.CreateInvalidGetterException())
 			],
 			setter,
 			source,
@@ -258,46 +258,6 @@ public static class TypedGesturesExtensions
 
 		return gestureElement.ConfigureTapGesture(tapGesture, numberOfTapsRequired);
 	}
-
-	static Func<TBindingContext, TSource> ConvertExpressionToFunc<TBindingContext, TSource>(in Expression<Func<TBindingContext, TSource>> expression) => expression.Compile();
-
-	static string? GetMemberPathOrNullForCapturedValue<T>(in Expression<T>? expression)
-	{
-		if (expression is null)
-		{
-			return null;
-		}
-
-		var members = new Stack<string>();
-		var currentExpression = UnwrapConvertExpression(expression.Body);
-
-		while (currentExpression is MemberExpression memberExpression)
-		{
-			members.Push(memberExpression.Member.Name);
-			currentExpression = UnwrapConvertExpression(memberExpression.Expression);
-		}
-
-		return currentExpression switch
-		{
-			ParameterExpression when members.Count > 0 => string.Join(".", members),
-			ConstantExpression when members.Count > 0 => null,
-			null when members.Count > 0 => null,
-			_ => throw CreateInvalidGetterException()
-		};
-	}
-
-	static Expression? UnwrapConvertExpression(Expression? expression)
-	{
-		while (expression is UnaryExpression { NodeType: ExpressionType.Convert or ExpressionType.ConvertChecked } unaryExpression)
-		{
-			expression = unaryExpression.Operand;
-		}
-
-		return expression;
-	}
-
-	static InvalidOperationException CreateInvalidGetterException()
-		=> new("Invalid getter. The `getter` parameter must point directly to a property in the ViewModel and cannot add additional logic");
 
 	static TGestureRecognizer BindGesture<TGestureRecognizer, TGestureElement, TCommandBindingContext, TParameterBindingContext, TParameterSource>(
 		this TGestureElement gestureElement,

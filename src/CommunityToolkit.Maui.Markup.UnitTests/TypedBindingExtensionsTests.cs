@@ -477,6 +477,86 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		});
 	}
 
+	[Test]
+	public void SourceUpdateWithStringFormatDoesNotWriteBackToSource()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		var converter = new ConvertBackCountingConverter(0.1);
+		var entry = new Entry
+		{
+			BindingContext = viewModel
+		}.Bind<Entry, ViewModel, double, object?, string>(
+			Entry.TextProperty,
+			static viewModel => viewModel.Percentage,
+			static (viewModel, percentage) => viewModel.Percentage = percentage,
+			converter: converter,
+			stringFormat: "{0}%");
+
+		viewModel.Percentage = 0.6;
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(entry.Text, Is.EqualTo("0.6%"));
+			Assert.That(viewModel.Percentage, Is.EqualTo(0.6));
+			Assert.That(converter.ConvertBackCount, Is.Zero);
+		});
+	}
+
+	[Test]
+	public void SourceUpdateWithTargetNullValueDoesNotWriteBackToSource()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		viewModel.Age = 1;
+		var converter = new ConvertBackCountingConverter(42);
+		var entry = new Entry
+		{
+			BindingContext = viewModel
+		}.Bind<Entry, ViewModel, int?, object?, string>(
+			Entry.TextProperty,
+			static viewModel => viewModel.Age,
+			static (viewModel, age) => viewModel.Age = age,
+			converter: converter,
+			targetNullValue: "(none)");
+
+		viewModel.Age = null;
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(entry.Text, Is.EqualTo("(none)"));
+			Assert.That(viewModel.Age, Is.Null);
+			Assert.That(converter.ConvertBackCount, Is.Zero);
+		});
+	}
+
+	[Test]
+	public void SourceUpdateWithFallbackValueDoesNotWriteBackToSource()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		viewModel.Age = 1;
+		var converter = new ConvertBackCountingConverter(42, static value => value is null ? BindableProperty.UnsetValue : value);
+		var entry = new Entry
+		{
+			BindingContext = viewModel
+		}.Bind<Entry, ViewModel, int?, object?, string>(
+			Entry.TextProperty,
+			static viewModel => viewModel.Age,
+			static (viewModel, age) => viewModel.Age = age,
+			converter: converter,
+			fallbackValue: "(fallback)");
+
+		viewModel.Age = null;
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(entry.Text, Is.EqualTo("(fallback)"));
+			Assert.That(viewModel.Age, Is.Null);
+			Assert.That(converter.ConvertBackCount, Is.Zero);
+		});
+	}
+
 	[TestCase(false, false)]
 	[TestCase(false, true)]
 	[TestCase(true, false)]
@@ -919,6 +999,19 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => value is double sourceValue ? sourceValue / 2 : value;
 
 		public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => value is double targetValue ? targetValue / 10 : value;
+	}
+
+	sealed class ConvertBackCountingConverter(object? convertBackValue, Func<object?, object?>? convert = null) : IValueConverter
+	{
+		public int ConvertBackCount { get; private set; }
+
+		public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => convert?.Invoke(value) ?? value;
+
+		public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+		{
+			ConvertBackCount++;
+			return convertBackValue;
+		}
 	}
 
 	class ViewModel : INotifyPropertyChanged
