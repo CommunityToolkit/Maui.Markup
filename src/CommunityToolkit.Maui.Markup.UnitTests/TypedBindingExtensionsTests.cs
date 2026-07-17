@@ -73,6 +73,44 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	}
 
 	[Test]
+	public void BindCommandParameterGetterWithoutHandlersDoesNotThrowForNullPath()
+	{
+		var button = new Button
+		{
+			BindingContext = new NestedViewModel()
+		};
+
+		Assert.DoesNotThrow(() => button.BindCommand<Button, NestedViewModel, NestedViewModel, Guid>(
+			vm => vm.Command,
+			[
+				(vm => vm, nameof(ViewModel.Command))
+			],
+			parameterGetter: vm => vm.Model!.Id));
+
+		BindingHelpers.AssertTypedBindingExists(button, Button.CommandParameterProperty, BindingMode.OneTime, button.BindingContext);
+		Assert.That(button.CommandParameter, Is.Null);
+	}
+
+	[Test]
+	public void BindCommandParameterSetterWithoutHandlersThrows()
+	{
+		var button = new Button
+		{
+			BindingContext = viewModel
+		};
+
+		var exception = Assert.Throws<ArgumentNullException>(() => button.BindCommand<Button, ViewModel, ViewModel, Guid>(
+			vm => vm.Command,
+			[
+				(vm => vm, nameof(ViewModel.Command))
+			],
+			parameterGetter: vm => vm.Id,
+			parameterSetter: static (_, _) => { }));
+
+		Assert.That(exception?.ParamName, Is.EqualTo("parameterHandlers"));
+	}
+
+	[Test]
 	public void BindCommandWithDefaults()
 	{
 		var button = new Button

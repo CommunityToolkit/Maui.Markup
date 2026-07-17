@@ -64,6 +64,11 @@ public static partial class TypedBindingExtensions
 
 		if (parameterGetter is not null)
 		{
+			if (parameterSetter is not null && parameterHandlers is null)
+			{
+				throw new ArgumentNullException(nameof(parameterHandlers));
+			}
+
 			var resolvedParameterBindingMode = parameterHandlers is null && parameterSetter is null && parameterBindingMode is BindingMode.Default
 				? BindingMode.OneTime
 				: parameterBindingMode;
@@ -569,7 +574,18 @@ public static partial class TypedBindingExtensions
 			}
 
 			var targetCulture = culture ?? CultureInfo.CurrentUICulture;
-			var sourceValue = getter(sourceObject);
+			TSource sourceValue;
+			try
+			{
+				sourceValue = getter(sourceObject);
+			}
+			catch (Exception ex) when (ex is NullReferenceException or KeyNotFoundException or IndexOutOfRangeException or ArgumentOutOfRangeException)
+			{
+				var fallbackTargetValue = ApplyTargetValueHandlers(BindableProperty.UnsetValue, stringFormat, targetNullValue, fallbackValue, targetCulture);
+				TrackTargetValue(targetUpdateTracker, fallbackTargetValue);
+				return fallbackTargetValue;
+			}
+
 			var convertedValue = converter?.Convert(sourceValue, targetType ?? typeof(object), parameter, targetCulture) ?? sourceValue;
 			var targetValue = ApplyTargetValueHandlers(convertedValue, stringFormat, targetNullValue, fallbackValue, targetCulture);
 			TrackTargetValue(targetUpdateTracker, targetValue);
