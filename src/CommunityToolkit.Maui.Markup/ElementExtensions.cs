@@ -114,7 +114,7 @@ public static class ElementExtensions
 	/// <typeparam name="TElement"></typeparam>
 	/// <param name="bindable"></param>
 	/// <param name="properties"></param>
-	/// <returns>Layout without Dynamic Resource</returns>
+	/// <returns>Element without Dynamic Resource</returns>
 	public static TElement RemoveDynamicResources<TElement>(this TElement bindable, params ReadOnlySpan<BindableProperty> properties) where TElement : Element
 	{
 		foreach (var property in properties)
