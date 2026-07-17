@@ -48,6 +48,27 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 			],
 			parameterGetter: _ => Colors.Black);
 
+		BindingHelpers.AssertTypedBindingExists(button, Button.CommandParameterProperty, BindingMode.OneTime, viewModel);
+		Assert.That(button.CommandParameter, Is.EqualTo(Colors.Black));
+	}
+
+	[Test]
+	public void BindCommandSupportsExplicitParameterBindingModeWithoutHandlers()
+	{
+		var button = new Button
+		{
+			BindingContext = viewModel
+		};
+
+		button.BindCommand<Button, ViewModel, object?, Color>(
+			vm => vm.Command,
+			[
+				(vm => vm, nameof(ViewModel.Command))
+			],
+			parameterGetter: _ => Colors.Black,
+			parameterBindingMode: BindingMode.OneWay);
+
+		BindingHelpers.AssertTypedBindingExists(button, Button.CommandParameterProperty, BindingMode.OneWay, viewModel);
 		Assert.That(button.CommandParameter, Is.EqualTo(Colors.Black));
 	}
 

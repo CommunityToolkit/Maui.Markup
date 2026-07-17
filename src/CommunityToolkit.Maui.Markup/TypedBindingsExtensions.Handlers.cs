@@ -64,13 +64,17 @@ public static partial class TypedBindingExtensions
 
 		if (parameterGetter is not null)
 		{
+			var resolvedParameterBindingMode = parameterHandlers is null && parameterSetter is null && parameterBindingMode is BindingMode.Default
+				? BindingMode.OneTime
+				: parameterBindingMode;
+
 			SetTypedBinding<TBindable, TParameterBindingContext, TParameterSource, object?, object?>(
 				bindable,
 				parameterProperty,
 				parameterGetter,
 				parameterHandlers is null ? null : ExpressionPathHelpers.GetMemberPath(parameterHandlers),
 				parameterSetter,
-				parameterBindingMode,
+				resolvedParameterBindingMode,
 				source: parameterSource);
 		}
 
