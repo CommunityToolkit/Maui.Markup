@@ -49,7 +49,7 @@ static class ExpressionPathHelpers
 	}
 
 	public static InvalidOperationException CreateInvalidGetterException()
-		=> new("Invalid getter. The `getter` parameter must point directly to a property in the ViewModel and cannot add additional logic");
+		=> new("Invalid getter. The `getter` parameter must point to a property path in the ViewModel and cannot add additional logic");
 
 	static Expression? UnwrapConvertExpression(Expression? expression)
 	{

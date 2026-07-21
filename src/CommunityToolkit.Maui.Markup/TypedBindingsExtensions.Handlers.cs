@@ -345,7 +345,8 @@ public static partial class TypedBindingExtensions
 	{
 		return (_, args) =>
 		{
-			if (!string.Equals(args.PropertyName, targetProperty.PropertyName, StringComparison.Ordinal))
+			if (!string.IsNullOrEmpty(args.PropertyName)
+				&& !string.Equals(args.PropertyName, targetProperty.PropertyName, StringComparison.Ordinal))
 			{
 				return;
 			}
