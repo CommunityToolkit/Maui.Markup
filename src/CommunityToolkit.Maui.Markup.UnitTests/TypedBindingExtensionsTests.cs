@@ -290,6 +290,33 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	}
 
 	[Test]
+	public void TypedBindingWritesBackWhenTargetRaisesAllPropertiesChanged()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		var writeBackCount = 0;
+		var entry = new AllPropertiesChangedEntry
+		{
+			BindingContext = viewModel
+		}.Bind(Entry.TextProperty, static (ViewModel viewModel) => viewModel.Age, (viewModel, age) =>
+		{
+			writeBackCount++;
+			viewModel.Age = age;
+		});
+
+		entry.SetTextWithoutNotification("13");
+		Assert.That(writeBackCount, Is.Zero);
+
+		entry.RaiseAllPropertiesChanged();
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(writeBackCount, Is.EqualTo(1));
+			Assert.That(viewModel.Age, Is.EqualTo(13));
+		});
+	}
+
+	[Test]
 	public void DefaultTwoWayObjectTypedBindingWithoutSetterDoesNotWriteBack()
 	{
 		ArgumentNullException.ThrowIfNull(viewModel);
@@ -1171,6 +1198,30 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		{
 			get;
 			set => SetProperty(ref field, value);
+		}
+	}
+
+	sealed class AllPropertiesChangedEntry : Entry
+	{
+		bool suppressTextPropertyChanged;
+
+		public void SetTextWithoutNotification(string text)
+		{
+			suppressTextPropertyChanged = true;
+			Text = text;
+			suppressTextPropertyChanged = false;
+		}
+
+		public void RaiseAllPropertiesChanged() => base.OnPropertyChanged(string.Empty);
+
+		protected override void OnPropertyChanged(string? propertyName = null)
+		{
+			if (suppressTextPropertyChanged && string.Equals(propertyName, TextProperty.PropertyName, StringComparison.Ordinal))
+			{
+				return;
+			}
+
+			base.OnPropertyChanged(propertyName);
 		}
 	}
 }
