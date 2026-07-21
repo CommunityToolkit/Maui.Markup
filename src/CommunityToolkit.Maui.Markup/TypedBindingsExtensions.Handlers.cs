@@ -429,8 +429,16 @@ public static partial class TypedBindingExtensions
 	{
 		try
 		{
-			var convertedValue = converter?.ConvertBack(targetValue, typeof(TSource), converterParameter, System.Globalization.CultureInfo.CurrentUICulture) ?? targetValue;
+			var convertedValue = converter is null
+				? targetValue
+				: converter.ConvertBack(targetValue, typeof(TSource), converterParameter, System.Globalization.CultureInfo.CurrentUICulture);
 			if (ReferenceEquals(convertedValue, BindableProperty.UnsetValue) || ReferenceEquals(convertedValue, Binding.DoNothing))
+			{
+				sourceValue = default;
+				return false;
+			}
+
+			if (convertedValue is null && Nullable.GetUnderlyingType(typeof(TSource)) is null && typeof(TSource).IsValueType)
 			{
 				sourceValue = default;
 				return false;

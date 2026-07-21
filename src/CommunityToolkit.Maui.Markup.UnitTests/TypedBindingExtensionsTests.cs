@@ -348,6 +348,25 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	}
 
 	[Test]
+	public void NullConvertBackSkipsNonNullableValueTypeSetterWriteBack()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		var slider = new Slider
+		{
+			BindingContext = viewModel
+		}.Bind<Slider, ViewModel, double, object?, double>(
+			Slider.ValueProperty,
+			static viewModel => viewModel.Percentage,
+			static (viewModel, percentage) => viewModel.Percentage = percentage,
+			converter: new NullConvertBackConverter());
+
+		slider.Value = 1;
+
+		Assert.That(viewModel.Percentage, Is.EqualTo(ViewModel.DefaultPercentage));
+	}
+
+	[Test]
 	public void InvalidTargetValueDoesNotCrashSetterWriteBack()
 	{
 		ArgumentNullException.ThrowIfNull(viewModel);
@@ -1051,6 +1070,13 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => value;
 
 		public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new FormatException();
+	}
+
+	sealed class NullConvertBackConverter : IValueConverter
+	{
+		public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => value;
+
+		public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => null;
 	}
 
 	sealed class NonReversibleConverter : IValueConverter
