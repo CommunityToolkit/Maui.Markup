@@ -260,6 +260,27 @@ public static partial class TypedBindingExtensions
 			? new TargetUpdateTracker()
 			: null;
 
+		ApplyBinding();
+
+		if (setter is null || !UpdatesSource(resolvedMode))
+		{
+			return bindable;
+		}
+
+		var sourceUpdateHandler = CreateSourceUpdateHandler(bindable, targetProperty, getter, setter, converter, converterParameter, source, () => isApplyingBinding, targetUpdateTracker, ApplyBinding);
+		var bindingContextChangedHandler = source is null && !updatesTarget
+			? CreateBindingContextChangedHandler(bindable, targetProperty, getter, setter, converter, converterParameter, source)
+			: null;
+
+		SetSourceUpdateHandler(bindable, targetProperty, sourceUpdateHandler, bindingContextChangedHandler);
+
+		if (!updatesTarget)
+		{
+			UpdateSourceFromTarget(bindable, targetProperty, getter, setter, converter, converterParameter, source);
+		}
+
+		return bindable;
+
 		void ApplyBinding()
 		{
 			if (!updatesTarget)
@@ -295,25 +316,6 @@ public static partial class TypedBindingExtensions
 				isApplyingBinding = false;
 			}
 		}
-
-		ApplyBinding();
-
-		if (setter is not null && UpdatesSource(resolvedMode))
-		{
-			var sourceUpdateHandler = CreateSourceUpdateHandler(bindable, targetProperty, getter, setter, converter, converterParameter, source, () => isApplyingBinding, targetUpdateTracker, ApplyBinding);
-			var bindingContextChangedHandler = source is null && !updatesTarget
-				? CreateBindingContextChangedHandler(bindable, targetProperty, getter, setter, converter, converterParameter, source)
-				: null;
-
-			SetSourceUpdateHandler(bindable, targetProperty, sourceUpdateHandler, bindingContextChangedHandler);
-
-			if (!updatesTarget)
-			{
-				UpdateSourceFromTarget(bindable, targetProperty, getter, setter, converter, converterParameter, source);
-			}
-		}
-
-		return bindable;
 	}
 
 	static BindingMode ResolveBindingMode(BindableProperty targetProperty, BindingMode mode)
