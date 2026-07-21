@@ -17,12 +17,12 @@ static class ExpressionPathHelpers
 
 		if (handlers.Length is 0)
 		{
-			throw new ArgumentException("The `handlers` parameter must include at least one member path segment.", nameof(handlers));
+			throw new InvalidOperationException("Invalid handlers. The `handlers` parameter must include at least one member path segment.");
 		}
 
 		if (handlers.Any(static handler => string.IsNullOrWhiteSpace(handler.Item2)))
 		{
-			throw new ArgumentException("The `handlers` parameter cannot contain null/empty member names.", nameof(handlers));
+			throw new InvalidOperationException("Invalid handlers. The `handlers` parameter cannot contain null/empty member names.");
 		}
 
 		return string.Join(".", handlers.Select(static handler => handler.Item2));

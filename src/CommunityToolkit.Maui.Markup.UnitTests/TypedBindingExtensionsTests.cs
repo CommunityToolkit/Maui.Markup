@@ -136,31 +136,27 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	}
 
 	[Test]
-	public void BindWithEmptyHandlersThrowsArgumentException()
+	public void BindWithEmptyHandlersThrowsInvalidOperationException()
 	{
 		var label = new Label();
 
-		var exception = Assert.Throws<ArgumentException>(() => label.Bind<Label, ViewModel, double>(
+		Assert.Throws<InvalidOperationException>(() => label.Bind<Label, ViewModel, double>(
 			Label.HeightRequestProperty,
 			static vm => vm.HeightRequest,
 			[]));
-
-		Assert.That(exception?.ParamName, Is.EqualTo("handlers"));
 	}
 
 	[Test]
-	public void BindWithWhitespaceHandlerNameThrowsArgumentException()
+	public void BindWithWhitespaceHandlerNameThrowsInvalidOperationException()
 	{
 		var label = new Label();
 
-		var exception = Assert.Throws<ArgumentException>(() => label.Bind<Label, ViewModel, double>(
+		Assert.Throws<InvalidOperationException>(() => label.Bind<Label, ViewModel, double>(
 			Label.HeightRequestProperty,
 			static vm => vm.HeightRequest,
 			[
 				(static vm => vm, "  ")
 			]));
-
-		Assert.That(exception?.ParamName, Is.EqualTo("handlers"));
 	}
 
 	[Test]
