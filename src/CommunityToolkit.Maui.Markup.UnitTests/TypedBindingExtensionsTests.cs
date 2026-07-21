@@ -34,21 +34,6 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	}
 
 	[Test]
-	public void GetMemberPathThrowsArgumentExceptionForInvalidHandlers()
-	{
-		Assert.Multiple(() =>
-		{
-			Assert.That(
-				Assert.Throws<ArgumentException>(() => ExpressionPathHelpers.GetMemberPath<ViewModel>([]))?.ParamName,
-				Is.EqualTo("handlers"));
-
-			Assert.That(
-				Assert.Throws<ArgumentException>(() => ExpressionPathHelpers.GetMemberPath<ViewModel>([(static vm => vm, " ")]))?.ParamName,
-				Is.EqualTo("handlers"));
-		});
-	}
-
-	[Test]
 	public void BindCommandSupportsParameterGetterWithoutHandlers()
 	{
 		var button = new Button
@@ -151,27 +136,31 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	}
 
 	[Test]
-	public void BindWithEmptyHandlersThrowsInvalidOperationException()
+	public void BindWithEmptyHandlersThrowsArgumentException()
 	{
 		var label = new Label();
 
-		Assert.Throws<InvalidOperationException>(() => label.Bind<Label, ViewModel, double>(
+		var exception = Assert.Throws<ArgumentException>(() => label.Bind<Label, ViewModel, double>(
 			Label.HeightRequestProperty,
 			static vm => vm.HeightRequest,
 			[]));
+
+		Assert.That(exception?.ParamName, Is.EqualTo("handlers"));
 	}
 
 	[Test]
-	public void BindWithWhitespaceHandlerNameThrowsInvalidOperationException()
+	public void BindWithWhitespaceHandlerNameThrowsArgumentException()
 	{
 		var label = new Label();
 
-		Assert.Throws<InvalidOperationException>(() => label.Bind<Label, ViewModel, double>(
+		var exception = Assert.Throws<ArgumentException>(() => label.Bind<Label, ViewModel, double>(
 			Label.HeightRequestProperty,
 			static vm => vm.HeightRequest,
 			[
 				(static vm => vm, "  ")
 			]));
+
+		Assert.That(exception?.ParamName, Is.EqualTo("handlers"));
 	}
 
 	[Test]
