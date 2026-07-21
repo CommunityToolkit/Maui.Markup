@@ -34,6 +34,21 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	}
 
 	[Test]
+	public void GetMemberPathThrowsArgumentExceptionForInvalidHandlers()
+	{
+		Assert.Multiple(() =>
+		{
+			Assert.That(
+				Assert.Throws<ArgumentException>(() => ExpressionPathHelpers.GetMemberPath<ViewModel>([]))?.ParamName,
+				Is.EqualTo("handlers"));
+
+			Assert.That(
+				Assert.Throws<ArgumentException>(() => ExpressionPathHelpers.GetMemberPath<ViewModel>([(static vm => vm, " ")]))?.ParamName,
+				Is.EqualTo("handlers"));
+		});
+	}
+
+	[Test]
 	public void BindCommandSupportsParameterGetterWithoutHandlers()
 	{
 		var button = new Button
