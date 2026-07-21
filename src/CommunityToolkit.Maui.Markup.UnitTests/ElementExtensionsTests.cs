@@ -94,6 +94,66 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 	public void FontWithFamilyNamedParameter()
 		=> TestPropertiesSet(l => l.Font(family: "AFontName"), (Label.FontFamilyProperty, string.Empty, "AFontName"));
 
+	[TestCaseSource(nameof(textStyleCases))]
+	public void FontAndTextColorSupportedOnTextStyleElement(TextStyleCase textStyleCase)
+	{
+		var bindable = textStyleCase.Create();
+
+		textStyleCase.ApplyFontAndTextColor(bindable);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(bindable.GetValue(textStyleCase.FontFamilyProperty), Is.EqualTo("AFontName"));
+			Assert.That(bindable.GetValue(textStyleCase.FontSizeProperty), Is.EqualTo(8.0));
+			Assert.That(bindable.GetValue(textStyleCase.FontAttributesProperty), Is.EqualTo(FontAttributes.Bold | FontAttributes.Italic));
+			Assert.That(bindable.GetValue(textStyleCase.TextColorProperty), Is.EqualTo(Colors.Purple));
+		});
+	}
+
+	[Test]
+	public void FontSizeOnUnsupportedTextStyleElementThrowsNotSupportedException()
+		=> Assert.Throws<NotSupportedException>(() => new UnsupportedTextStyleView().FontSize(8));
+
+	[Test]
+	public void BoldOnUnsupportedTextStyleElementThrowsNotSupportedException()
+		=> Assert.Throws<NotSupportedException>(() => new UnsupportedTextStyleView().Bold());
+
+	[Test]
+	public void ItalicOnUnsupportedTextStyleElementThrowsNotSupportedException()
+		=> Assert.Throws<NotSupportedException>(() => new UnsupportedTextStyleView().Italic());
+
+	[Test]
+	public void FontFamilyOnUnsupportedTextStyleElementThrowsNotSupportedException()
+		=> Assert.Throws<NotSupportedException>(() => new UnsupportedTextStyleView().Font(family: "AFontName"));
+
+	[Test]
+	public void TextColorOnUnsupportedTextStyleElementThrowsNotSupportedException()
+		=> Assert.Throws<NotSupportedException>(() => new UnsupportedTextStyleView().TextColor(Colors.Red));
+
+	[Test]
+	public void TextOnUnsupportedTextElementThrowsNotSupportedException()
+		=> Assert.Throws<NotSupportedException>(() => new UnsupportedTextView().Text("Hello World"));
+
+	static readonly TextStyleCase[] textStyleCases =
+	[
+		new("DatePicker", static () => new DatePicker(), DatePicker.FontFamilyProperty, DatePicker.FontSizeProperty, DatePicker.FontAttributesProperty, DatePicker.TextColorProperty, static bindable => ((DatePicker)bindable).Font("AFontName", 8, bold: true, italic: true).TextColor(Colors.Purple)),
+		new("Picker", static () => new Picker(), Picker.FontFamilyProperty, Picker.FontSizeProperty, Picker.FontAttributesProperty, Picker.TextColorProperty, static bindable => ((Picker)bindable).Font("AFontName", 8, bold: true, italic: true).TextColor(Colors.Purple)),
+		new("RadioButton", static () => new RadioButton(), RadioButton.FontFamilyProperty, RadioButton.FontSizeProperty, RadioButton.FontAttributesProperty, RadioButton.TextColorProperty, static bindable => ((RadioButton)bindable).Font("AFontName", 8, bold: true, italic: true).TextColor(Colors.Purple)),
+		new("TimePicker", static () => new TimePicker(), TimePicker.FontFamilyProperty, TimePicker.FontSizeProperty, TimePicker.FontAttributesProperty, TimePicker.TextColorProperty, static bindable => ((TimePicker)bindable).Font("AFontName", 8, bold: true, italic: true).TextColor(Colors.Purple))
+	];
+
+	public sealed record TextStyleCase(
+		string Name,
+		Func<BindableObject> Create,
+		BindableProperty FontFamilyProperty,
+		BindableProperty FontSizeProperty,
+		BindableProperty FontAttributesProperty,
+		BindableProperty TextColorProperty,
+		Action<BindableObject> ApplyFontAndTextColor)
+	{
+		public override string ToString() => Name;
+	}
+
 	static Label AssertDynamicResources()
 	{
 		var label = new Label
@@ -126,4 +186,17 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 
 		return label;
 	}
+}
+class UnsupportedTextStyleView : View, ITextStyle
+{
+	public Color TextColor { get; set; } = Colors.Black;
+
+	public Microsoft.Maui.Font Font => Microsoft.Maui.Font.Default;
+
+	public double CharacterSpacing => 0;
+}
+
+sealed class UnsupportedTextView : UnsupportedTextStyleView, IText
+{
+	public string Text => string.Empty;
 }

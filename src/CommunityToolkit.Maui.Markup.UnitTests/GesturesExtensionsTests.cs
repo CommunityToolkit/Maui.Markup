@@ -506,6 +506,30 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 			Assert.That(gestureElement.GestureRecognizers[1], Is.InstanceOf<TapGestureRecognizer>());
 		});
 	}
+
+	[Test]
+	public void BindTapGestureWithCapturedCommandGetterThrowsInvalidOperationException()
+	{
+		var capturedCommand = new Command(static () => { });
+		var gestureElement = new TGestureElement
+		{
+			BindingContext = new ViewModel()
+		};
+
+		Assert.Throws<InvalidOperationException>(() => gestureElement.BindTapGesture((ViewModel _) => capturedCommand));
+	}
+
+	[Test]
+	public void BindSwipeGestureWithCapturedCommandGetterThrowsInvalidOperationException()
+	{
+		var capturedCommand = new Command(static () => { });
+		var gestureElement = new TGestureElement
+		{
+			BindingContext = new ViewModel()
+		};
+
+		Assert.Throws<InvalidOperationException>(() => gestureElement.BindSwipeGesture((ViewModel _) => capturedCommand));
+	}
 }
 
 class DerivedFromLabel : Label

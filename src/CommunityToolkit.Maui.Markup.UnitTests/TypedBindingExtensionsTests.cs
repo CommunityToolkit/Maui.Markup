@@ -111,6 +111,287 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	}
 
 	[Test]
+	public void BindCommandWithHandlersOverloadBindsCommandProperty()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		var button = new Button
+		{
+			BindingContext = viewModel
+		};
+
+		button.BindCommand<Button, ViewModel>(
+			static vm => vm.Command,
+			[
+				(static vm => vm, nameof(ViewModel.Command))
+			]);
+
+		BindingHelpers.AssertTypedBindingExists(button, Button.CommandProperty, BindingMode.OneWay, viewModel);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(button.Command, Is.EqualTo(viewModel.Command));
+			Assert.That(BindingHelpers.GetBinding(button, Button.CommandParameterProperty), Is.Null);
+		});
+	}
+
+	[Test]
+	public void BindWithEmptyHandlersThrowsInvalidOperationException()
+	{
+		var label = new Label();
+
+		Assert.Throws<InvalidOperationException>(() => label.Bind<Label, ViewModel, double>(
+			Label.HeightRequestProperty,
+			static vm => vm.HeightRequest,
+			[]));
+	}
+
+	[Test]
+	public void BindWithWhitespaceHandlerNameThrowsInvalidOperationException()
+	{
+		var label = new Label();
+
+		Assert.Throws<InvalidOperationException>(() => label.Bind<Label, ViewModel, double>(
+			Label.HeightRequestProperty,
+			static vm => vm.HeightRequest,
+			[
+				(static vm => vm, "  ")
+			]));
+	}
+
+	[Test]
+	public void MethodCallGetterThrowsInvalidOperationException()
+	{
+		var label = new Label();
+
+		Assert.Throws<InvalidOperationException>(() => label.Bind(Label.TextProperty, static (ViewModel vm) => vm.ToString()));
+	}
+
+	[Test]
+	public void ParameterOnlyGetterThrowsInvalidOperationException()
+	{
+		var label = new Label();
+
+		Assert.Throws<InvalidOperationException>(() => label.Bind(Label.BindingContextProperty, static (ViewModel vm) => vm));
+	}
+
+	[Test]
+	public void ConstantLiteralGetterThrowsInvalidOperationException()
+	{
+		var label = new Label();
+
+		Assert.Throws<InvalidOperationException>(() => label.Bind(Label.HeightRequestProperty, static (ViewModel _) => 12.0));
+	}
+
+	[Test]
+	public void NegationGetterThrowsInvalidOperationException()
+	{
+		var label = new Label();
+
+		Assert.Throws<InvalidOperationException>(() => label.Bind(Label.HeightRequestProperty, static (ViewModel vm) => -vm.HeightRequest));
+	}
+
+	[Test]
+	public void CapturedValueTypedBindingWithSetterThrowsInvalidOperationException()
+	{
+		var label = new Label();
+
+		Assert.Throws<InvalidOperationException>(() => label.Bind(
+			Label.TextColorProperty,
+			static (ViewModel _) => Colors.Red,
+			static (viewModel, color) => viewModel.TextColor = color));
+	}
+
+	[Test]
+	public void CapturedLocalVariableBindingEvaluatesGetterAgainstCapturedValue()
+	{
+		var capturedViewModel = new ViewModel
+		{
+			HeightRequest = 123
+		};
+
+		var label = new Label
+		{
+			BindingContext = viewModel
+		}.Bind(Label.HeightRequestProperty, (ViewModel _) => capturedViewModel.HeightRequest);
+
+		Assert.That(label.HeightRequest, Is.EqualTo(123));
+	}
+
+	[Test]
+	public void BoxingConversionGetterUsesMemberPath()
+	{
+		var label = new Label
+		{
+			BindingContext = viewModel
+		}.Bind<Label, ViewModel, object>(Label.HeightRequestProperty, static vm => vm.HeightRequest);
+
+		var binding = BindingHelpers.GetBinding(label, Label.HeightRequestProperty) ?? throw new NullReferenceException();
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(binding.Path, Is.EqualTo(nameof(ViewModel.HeightRequest)));
+			Assert.That(label.HeightRequest, Is.EqualTo(ViewModel.DefaultHeightRequest));
+		});
+	}
+
+	[Test]
+	public void CheckedConversionGetterUsesMemberPath()
+	{
+		var label = new Label
+		{
+			BindingContext = viewModel
+		}.Bind<Label, ViewModel, long>(Label.HeightRequestProperty, static vm => checked((long)vm.HeightRequest));
+
+		var binding = BindingHelpers.GetBinding(label, Label.HeightRequestProperty) ?? throw new NullReferenceException();
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(binding.Path, Is.EqualTo(nameof(ViewModel.HeightRequest)));
+			Assert.That(label.HeightRequest, Is.EqualTo(ViewModel.DefaultHeightRequest));
+		});
+	}
+
+	[Test]
+	public void BindWithHandlersWithoutConversionSetsTargetValue()
+	{
+		var label = new Label
+		{
+			BindingContext = viewModel
+		}.Bind<Label, ViewModel, double, double>(
+			Label.HeightRequestProperty,
+			static vm => vm.HeightRequest,
+			[
+				(static vm => vm, nameof(ViewModel.HeightRequest))
+			],
+			convert: null);
+
+		Assert.That(label.HeightRequest, Is.EqualTo(ViewModel.DefaultHeightRequest));
+	}
+
+	[Test]
+	public void BindWithHandlersAndFuncConversionConvertsTargetValue()
+	{
+		var label = new Label
+		{
+			BindingContext = viewModel
+		}.Bind<Label, ViewModel, double, double>(
+			Label.HeightRequestProperty,
+			static vm => vm.HeightRequest,
+			[
+				(static vm => vm, nameof(ViewModel.HeightRequest))
+			],
+			convert: static height => height / 2);
+
+		Assert.That(label.HeightRequest, Is.EqualTo(ViewModel.DefaultHeightRequest / 2));
+	}
+
+	[Test]
+	public void BindWithHandlersAndFuncTwoWayConversionWritesBackConvertedValue()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		var slider = new Slider
+		{
+			BindingContext = viewModel,
+			Maximum = 100
+		}.Bind<Slider, ViewModel, double, double>(
+			Slider.ValueProperty,
+			static vm => vm.Percentage,
+			[
+				(static vm => vm, nameof(ViewModel.Percentage))
+			],
+			static (vm, percentage) => vm.Percentage = percentage,
+			BindingMode.TwoWay,
+			convert: static percentage => percentage * 4,
+			convertBack: static value => value / 4);
+
+		Assert.That(slider.Value, Is.EqualTo(ViewModel.DefaultPercentage * 4));
+
+		slider.Value = 3;
+
+		Assert.That(viewModel.Percentage, Is.EqualTo(0.75));
+
+		viewModel.Percentage = 0.25;
+
+		Assert.That(slider.Value, Is.EqualTo(1));
+	}
+
+	[Test]
+	public void BindWithHandlersAndConvertBackOnlyWritesBackConvertedValue()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		var slider = new Slider
+		{
+			BindingContext = viewModel,
+			Maximum = 100
+		}.Bind<Slider, ViewModel, double, double>(
+			Slider.ValueProperty,
+			static vm => vm.Percentage,
+			[
+				(static vm => vm, nameof(ViewModel.Percentage))
+			],
+			static (vm, percentage) => vm.Percentage = percentage,
+			BindingMode.TwoWay,
+			convertBack: static value => value / 4);
+
+		slider.Value = 3;
+
+		Assert.That(viewModel.Percentage, Is.EqualTo(0.75));
+	}
+
+	[Test]
+	public void ExpressionBindWithoutConversionFuncsUsesNoConverter()
+	{
+		var slider = new Slider
+		{
+			BindingContext = viewModel
+		}.Bind<Slider, ViewModel, double, double>(
+			Slider.ValueProperty,
+			static vm => vm.Percentage,
+			convert: null);
+
+		Assert.That(slider.Value, Is.EqualTo(ViewModel.DefaultPercentage));
+	}
+
+	[Test]
+	public void ExpressionBindWithConvertOnlyConvertsTargetValue()
+	{
+		var slider = new Slider
+		{
+			BindingContext = viewModel,
+			Maximum = 100
+		}.Bind<Slider, ViewModel, double, double>(
+			Slider.ValueProperty,
+			static vm => vm.Percentage,
+			convert: static percentage => percentage * 4);
+
+		Assert.That(slider.Value, Is.EqualTo(ViewModel.DefaultPercentage * 4));
+	}
+
+	[Test]
+	public void ExpressionBindWithConvertBackOnlyWritesBackConvertedValue()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		var slider = new Slider
+		{
+			BindingContext = viewModel,
+			Maximum = 100
+		}.Bind<Slider, ViewModel, double, double>(
+			Slider.ValueProperty,
+			static vm => vm.Percentage,
+			static (vm, percentage) => vm.Percentage = percentage,
+			BindingMode.TwoWay,
+			convertBack: static value => value / 4);
+
+		slider.Value = 3;
+
+		Assert.That(viewModel.Percentage, Is.EqualTo(0.75));
+	}
+
+	[Test]
 	public void BindCommandWithDefaults()
 	{
 		var button = new Button
@@ -406,6 +687,165 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 
 		Assert.DoesNotThrow(() => entry.Text = "abc");
 		Assert.That(viewModel.Age, Is.EqualTo(1));
+	}
+
+	[Test]
+	public void SetterWriteBackWithoutBindingContextDoesNotCrash()
+	{
+		var writeBackCount = 0;
+		var entry = new Entry().Bind(Entry.TextProperty, static (ViewModel viewModel) => viewModel.Age, (viewModel, age) =>
+		{
+			writeBackCount++;
+			viewModel.Age = age;
+		});
+
+		Assert.DoesNotThrow(() => entry.Text = "42");
+		Assert.That(writeBackCount, Is.Zero);
+	}
+
+	[Test]
+	public void SetterWriteBackSkipsWhenGetterThrowsNullReferenceException()
+	{
+		var nestedViewModel = new NestedViewModel();
+		var writeBackCount = 0;
+
+		var entry = new Entry
+		{
+			BindingContext = nestedViewModel
+		}.Bind(Entry.TextProperty, static (NestedViewModel viewModel) => viewModel.Model!.Age, (viewModel, age) =>
+		{
+			writeBackCount++;
+			viewModel.Model!.Age = age;
+		});
+
+		Assert.DoesNotThrow(() => entry.Text = "42");
+		Assert.That(writeBackCount, Is.Zero);
+	}
+
+	[Test]
+	public void SetterWriteBackSkipsWhenSourceValueAlreadyMatchesTargetValue()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		viewModel.Age = 42;
+		var writeBackCount = 0;
+
+		var entry = new Entry
+		{
+			BindingContext = viewModel,
+			Text = "42"
+		}.Bind(Entry.TextProperty, static (ViewModel viewModel) => viewModel.Age, (viewModel, age) =>
+		{
+			writeBackCount++;
+			viewModel.Age = age;
+		}, BindingMode.OneWayToSource);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(writeBackCount, Is.Zero);
+			Assert.That(viewModel.Age, Is.EqualTo(42));
+		});
+	}
+
+	[Test]
+	public void UnsetValueConvertBackSkipsSetterWriteBack()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		var slider = new Slider
+		{
+			BindingContext = viewModel
+		}.Bind<Slider, ViewModel, double, object?, double>(
+			Slider.ValueProperty,
+			static viewModel => viewModel.Percentage,
+			static (viewModel, percentage) => viewModel.Percentage = percentage,
+			converter: new UnsetValueConvertBackConverter());
+
+		slider.Value = 1;
+
+		Assert.That(viewModel.Percentage, Is.EqualTo(ViewModel.DefaultPercentage));
+	}
+
+	[Test]
+	public void NullConvertBackWritesNullToReferenceTypeSource()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		var label = new Label
+		{
+			BindingContext = viewModel
+		}.Bind<Label, ViewModel, Color?, object?, Color?>(
+			Label.TextColorProperty,
+			static viewModel => viewModel.TextColor,
+			static (viewModel, color) => viewModel.TextColor = color,
+			BindingMode.TwoWay,
+			converter: new NullConvertBackConverter());
+
+		Assume.That(viewModel.TextColor, Is.Not.Null);
+
+		label.TextColor = Colors.Red;
+
+		Assert.That(viewModel.TextColor, Is.Null);
+	}
+
+	[Test]
+	public void EmptyStringTargetValueWritesNullToNullableSource()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		viewModel.Age = 42;
+		var entry = new Entry
+		{
+			BindingContext = viewModel
+		}.Bind(Entry.TextProperty, static (ViewModel viewModel) => viewModel.Age, static (viewModel, age) => viewModel.Age = age);
+
+		Assume.That(entry.Text, Is.EqualTo("42"));
+
+		entry.Text = string.Empty;
+
+		Assert.That(viewModel.Age, Is.Null);
+	}
+
+	[Test]
+	public void ConvertReturningDoNothingKeepsTargetValue()
+	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
+		var slider = new Slider
+		{
+			BindingContext = viewModel
+		}.Bind<Slider, ViewModel, double, object?, double>(
+			Slider.ValueProperty,
+			static viewModel => viewModel.Percentage,
+			static (viewModel, percentage) => viewModel.Percentage = percentage,
+			converter: new DoNothingConvertConverter());
+
+		Assert.That(slider.Value, Is.EqualTo((double)Slider.ValueProperty.DefaultValue));
+	}
+
+	[Test]
+	public void RemoveTypedBindingRemovesBindingContextChangedHandler()
+	{
+		var writeBackCount = 0;
+		var entry = new Entry
+		{
+			Text = "12"
+		}.Bind(Entry.TextProperty, static (ViewModel viewModel) => viewModel.Age, (viewModel, age) =>
+		{
+			writeBackCount++;
+			viewModel.Age = age;
+		}, BindingMode.OneWayToSource);
+
+		entry.RemoveTypedBinding(Entry.TextProperty);
+
+		var lateViewModel = new ViewModel();
+		entry.BindingContext = lateViewModel;
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(writeBackCount, Is.Zero);
+			Assert.That(lateViewModel.Age, Is.Null);
+		});
 	}
 
 	[Test]
@@ -1104,6 +1544,20 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => value;
 
 		public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => null;
+	}
+
+	sealed class UnsetValueConvertBackConverter : IValueConverter
+	{
+		public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => value;
+
+		public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => BindableProperty.UnsetValue;
+	}
+
+	sealed class DoNothingConvertConverter : IValueConverter
+	{
+		public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => Binding.DoNothing;
+
+		public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => value;
 	}
 
 	sealed class NonReversibleConverter : IValueConverter

@@ -32,6 +32,31 @@ class PaceholderExtensionsTests : BaseMarkupTestFixture<Entry>
 	}
 
 	[Test]
+	public void SupportsSearchHandler()
+	{
+		var searchHandler = new SearchHandler()
+			.Placeholder("Hello World")
+			.PlaceholderColor(Colors.Blue)
+			.Placeholder("Hello World 2", Colors.Red);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(searchHandler.Placeholder, Is.EqualTo("Hello World 2"));
+			Assert.That(searchHandler.PlaceholderColor, Is.EqualTo(Colors.Red));
+		});
+	}
+
+	[Test]
+	public void SupportDerivedFromSearchHandler()
+	{
+		Assert.That(new DerivedFromSearchHandler()
+					.Placeholder("Hello World")
+					.PlaceholderColor(Colors.Blue)
+					.Placeholder("Hello World 2", Colors.Red),
+					Is.InstanceOf<DerivedFromSearchHandler>());
+	}
+
+	[Test]
 	public void SupportDerivedFromEditor()
 	{
 		Assert.That(new DerivedFromEditor()
@@ -42,6 +67,11 @@ class PaceholderExtensionsTests : BaseMarkupTestFixture<Entry>
 	}
 
 	class DerivedFromEditor : Editor
+	{
+
+	}
+
+	class DerivedFromSearchHandler : SearchHandler
 	{
 
 	}
