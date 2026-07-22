@@ -8,18 +8,11 @@ public static class ImageExtensions
 	/// <summary>
 	/// Sets the <see cref="IImageSourcePart.Source" /> property.
 	/// </summary>
-	/// <typeparam name="TImage">The <see cref="Image"/> type.</typeparam>
+	/// <typeparam name="TBindable">The <see cref="BindableObject"/> type implementing <see cref="IImageSourcePart"/>.</typeparam>
 	/// <param name="bindable">The <see cref="BindableObject"/> on which to set the <see cref="IImageSourcePart.Source"/> property.</param>
 	/// <param name="imageSource">The <see cref="Microsoft.Maui.Controls.ImageSource"/> value</param>
-	/// <param name="overload">Unused overload discriminator.</param>
 	/// <returns></returns>
-	public static TImage Source<TImage>(this TImage bindable, ImageSource? imageSource, Image? overload = null) where TImage : Image
-	{
-		return SetSource(bindable, imageSource);
-	}
-
-	/// <inheritdoc />
-	public static TImageButton Source<TImageButton>(this TImageButton bindable, ImageSource? imageSource, ImageButton? overload = null) where TImageButton : ImageButton
+	public static TBindable Source<TBindable>(this TBindable bindable, ImageSource? imageSource) where TBindable : BindableObject, IImageSourcePart
 	{
 		return SetSource(bindable, imageSource);
 	}
@@ -27,18 +20,11 @@ public static class ImageExtensions
 	/// <summary>
 	/// Sets the <see cref="Microsoft.Maui.IImage.Aspect" /> property.
 	/// </summary>
-	/// <typeparam name="TImage">The <see cref="Image"/> type.</typeparam>
+	/// <typeparam name="TBindable">The <see cref="BindableObject"/> type implementing <see cref="Microsoft.Maui.IImage"/>.</typeparam>
 	/// <param name="bindable">The <see cref="BindableObject"/> on which to set the <see cref="Microsoft.Maui.IImage.Aspect"/> property.</param>
 	/// <param name="aspect">The <see cref="Microsoft.Maui.Aspect"/> value.</param>
-	/// <param name="overload">Unused overload discriminator.</param>
 	/// <returns></returns>
-	public static TImage Aspect<TImage>(this TImage bindable, Aspect aspect, Image? overload = null) where TImage : Image
-	{
-		return SetAspect(bindable, aspect);
-	}
-
-	/// <inheritdoc />
-	public static TImageButton Aspect<TImageButton>(this TImageButton bindable, Aspect aspect, ImageButton? overload = null) where TImageButton : ImageButton
+	public static TBindable Aspect<TBindable>(this TBindable bindable, Aspect aspect) where TBindable : BindableObject, Microsoft.Maui.IImage
 	{
 		return SetAspect(bindable, aspect);
 	}
@@ -46,18 +32,11 @@ public static class ImageExtensions
 	/// <summary>
 	/// Sets the <see cref="Microsoft.Maui.IImage.IsOpaque" /> property.
 	/// </summary>
-	/// <typeparam name="TImage">The <see cref="Image"/> type.</typeparam>
+	/// <typeparam name="TBindable">The <see cref="BindableObject"/> type implementing <see cref="Microsoft.Maui.IImage"/>.</typeparam>
 	/// <param name="bindable">The <see cref="BindableObject"/> on which to set the <see cref="Microsoft.Maui.IImage.IsOpaque"/> property.</param>
 	/// <param name="isOpaque">The <see cref="bool"/> value.</param>
-	/// <param name="overload">Unused overload discriminator.</param>
 	/// <returns></returns>
-	public static TImage IsOpaque<TImage>(this TImage bindable, bool isOpaque, Image? overload = null) where TImage : Image
-	{
-		return SetIsOpaque(bindable, isOpaque);
-	}
-
-	/// <inheritdoc />
-	public static TImageButton IsOpaque<TImageButton>(this TImageButton bindable, bool isOpaque, ImageButton? overload = null) where TImageButton : ImageButton
+	public static TBindable IsOpaque<TBindable>(this TBindable bindable, bool isOpaque) where TBindable : BindableObject, Microsoft.Maui.IImage
 	{
 		return SetIsOpaque(bindable, isOpaque);
 	}
