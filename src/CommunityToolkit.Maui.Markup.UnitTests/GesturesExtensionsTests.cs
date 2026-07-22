@@ -206,7 +206,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<TapGestureRecognizer>());
 		});
 
-		BindingHelpers.AssertTypedBindingExists((TapGestureRecognizer)gestureElement.GestureRecognizers[0], TapGestureRecognizer.CommandProperty, BindingMode.Default, gestureElement.BindingContext);
+		BindingHelpers.AssertTypedBindingExists((TapGestureRecognizer)gestureElement.GestureRecognizers[0], TapGestureRecognizer.CommandProperty, BindingMode.OneWay, gestureElement.BindingContext);
 	}
 
 	[Test]
@@ -232,6 +232,29 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		});
 
 		BindingHelpers.AssertTypedBindingExists((TapGestureRecognizer)gestureElement.GestureRecognizers[0], TapGestureRecognizer.CommandProperty, BindingMode.OneTime, gestureElement.BindingContext);
+		Assert.That(BindingHelpers.GetBinding((TapGestureRecognizer)gestureElement.GestureRecognizers[0], TapGestureRecognizer.CommandProperty)?.Path, Is.EqualTo("NestedCommand.SetGuidCommand"));
+	}
+
+	[Test]
+	public void BindTapGestureExpressionOverloadUsesNestedBindingPaths()
+	{
+		var gestureElement = new TGestureElement
+		{
+			BindingContext = new ViewModel()
+		};
+
+		gestureElement.BindTapGesture(
+			getter: static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
+			commandBindingMode: BindingMode.OneTime,
+			parameterGetter: static (ViewModel vm) => vm.NestedCommand.Id);
+
+		var tapGestureRecognizer = (TapGestureRecognizer)gestureElement.GestureRecognizers[0];
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(BindingHelpers.GetBinding(tapGestureRecognizer, TapGestureRecognizer.CommandProperty)?.Path, Is.EqualTo("NestedCommand.SetGuidCommand"));
+			Assert.That(BindingHelpers.GetBinding(tapGestureRecognizer, TapGestureRecognizer.CommandParameterProperty)?.Path, Is.EqualTo("NestedCommand.Id"));
+		});
 	}
 
 	[Test]
@@ -308,7 +331,12 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		});
 
 		BindingHelpers.AssertTypedBindingExists(tapGestureRecognizer, TapGestureRecognizer.CommandProperty, BindingMode.OneTime, gestureElement.BindingContext);
-		BindingHelpers.AssertTypedBindingExists(tapGestureRecognizer, TapGestureRecognizer.CommandParameterProperty, BindingMode.Default, gestureElement.BindingContext);
+		BindingHelpers.AssertTypedBindingExists(tapGestureRecognizer, TapGestureRecognizer.CommandParameterProperty, BindingMode.OneWay, gestureElement.BindingContext);
+		Assert.Multiple(() =>
+		{
+			Assert.That(BindingHelpers.GetBinding(tapGestureRecognizer, TapGestureRecognizer.CommandProperty)?.Path, Is.EqualTo("NestedCommand.SetGuidCommand"));
+			Assert.That(BindingHelpers.GetBinding(tapGestureRecognizer, TapGestureRecognizer.CommandParameterProperty)?.Path, Is.EqualTo("NestedCommand.Id"));
+		});
 	}
 
 	[Test]
@@ -323,7 +351,7 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 
 		Assert.That(gestureElement.GestureRecognizers, Has.Count.EqualTo(1));
 		Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<SwipeGestureRecognizer>());
-		BindingHelpers.AssertTypedBindingExists((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0], SwipeGestureRecognizer.CommandProperty, BindingMode.Default, gestureElement.BindingContext);
+		BindingHelpers.AssertTypedBindingExists((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0], SwipeGestureRecognizer.CommandProperty, BindingMode.OneWay, gestureElement.BindingContext);
 	}
 
 	[Test]
@@ -349,6 +377,29 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		});
 
 		BindingHelpers.AssertTypedBindingExists((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0], SwipeGestureRecognizer.CommandProperty, BindingMode.OneTime, gestureElement.BindingContext);
+		Assert.That(BindingHelpers.GetBinding((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0], SwipeGestureRecognizer.CommandProperty)?.Path, Is.EqualTo("NestedCommand.SetGuidCommand"));
+	}
+
+	[Test]
+	public void BindSwipeGestureExpressionOverloadUsesNestedBindingPaths()
+	{
+		var gestureElement = new TGestureElement
+		{
+			BindingContext = new ViewModel()
+		};
+
+		gestureElement.BindSwipeGesture(
+			getter: static (ViewModel vm) => vm.NestedCommand.SetGuidCommand,
+			commandBindingMode: BindingMode.OneTime,
+			parameterGetter: static (ViewModel vm) => vm.NestedCommand.Id);
+
+		var swipeGestureRecognizer = (SwipeGestureRecognizer)gestureElement.GestureRecognizers[0];
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(BindingHelpers.GetBinding(swipeGestureRecognizer, SwipeGestureRecognizer.CommandProperty)?.Path, Is.EqualTo("NestedCommand.SetGuidCommand"));
+			Assert.That(BindingHelpers.GetBinding(swipeGestureRecognizer, SwipeGestureRecognizer.CommandParameterProperty)?.Path, Is.EqualTo("NestedCommand.Id"));
+		});
 	}
 
 	[Test]
@@ -429,7 +480,13 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 		});
 
 		BindingHelpers.AssertTypedBindingExists((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0], SwipeGestureRecognizer.CommandProperty, BindingMode.OneTime, gestureElement.BindingContext);
-		BindingHelpers.AssertTypedBindingExists((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0], SwipeGestureRecognizer.CommandParameterProperty, BindingMode.Default, gestureElement.BindingContext);
+		BindingHelpers.AssertTypedBindingExists((SwipeGestureRecognizer)gestureElement.GestureRecognizers[0], SwipeGestureRecognizer.CommandParameterProperty, BindingMode.OneWay, gestureElement.BindingContext);
+		Assert.Multiple(() =>
+		{
+			var swipeGestureRecognizer = (SwipeGestureRecognizer)gestureElement.GestureRecognizers[0];
+			Assert.That(BindingHelpers.GetBinding(swipeGestureRecognizer, SwipeGestureRecognizer.CommandProperty)?.Path, Is.EqualTo("NestedCommand.SetGuidCommand"));
+			Assert.That(BindingHelpers.GetBinding(swipeGestureRecognizer, SwipeGestureRecognizer.CommandParameterProperty)?.Path, Is.EqualTo("NestedCommand.Id"));
+		});
 	}
 
 	[Test]
@@ -448,6 +505,30 @@ class GesturesExtensionsTypedBindingsTests<TGestureElement> : BaseMarkupTestFixt
 			Assert.That(gestureElement.GestureRecognizers[0], Is.InstanceOf<SwipeGestureRecognizer>());
 			Assert.That(gestureElement.GestureRecognizers[1], Is.InstanceOf<TapGestureRecognizer>());
 		});
+	}
+
+	[Test]
+	public void BindTapGestureWithCapturedCommandGetterThrowsInvalidOperationException()
+	{
+		var capturedCommand = new Command(static () => { });
+		var gestureElement = new TGestureElement
+		{
+			BindingContext = new ViewModel()
+		};
+
+		Assert.Throws<InvalidOperationException>(() => gestureElement.BindTapGesture((ViewModel _) => capturedCommand));
+	}
+
+	[Test]
+	public void BindSwipeGestureWithCapturedCommandGetterThrowsInvalidOperationException()
+	{
+		var capturedCommand = new Command(static () => { });
+		var gestureElement = new TGestureElement
+		{
+			BindingContext = new ViewModel()
+		};
+
+		Assert.Throws<InvalidOperationException>(() => gestureElement.BindSwipeGesture((ViewModel _) => capturedCommand));
 	}
 }
 

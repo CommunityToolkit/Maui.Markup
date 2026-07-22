@@ -50,24 +50,24 @@ public static class TypedGesturesExtensions
 		where TCommandBindingContext : class
 		where TParameterBindingContext : class
 	{
-		var getterFunc = ConvertExpressionToFunc(getter);
+		var getterFunc = ExpressionPathHelpers.ConvertExpressionToFunc(getter);
 		var parameterGetterFunc = parameterGetter switch
 		{
 			null => null,
-			_ => ConvertExpressionToFunc(parameterGetter)
+			_ => ExpressionPathHelpers.ConvertExpressionToFunc(parameterGetter)
 		};
 
-		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = parameterGetter switch
+		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = ExpressionPathHelpers.GetMemberPathOrNullForCapturedValue(parameterGetter) switch
 		{
 			null => null,
-			_ => [(b => b, GetMemberName(parameterGetter))]
+			var memberPath => [(b => b, memberPath)]
 		};
 
 		return BindSwipeGesture(
 			gestureElement,
 			getterFunc,
 			[
-				(b => b, GetMemberName(getter))
+				(b => b, ExpressionPathHelpers.GetMemberPathOrNullForCapturedValue(getter) ?? throw ExpressionPathHelpers.CreateInvalidGetterException())
 			],
 			setter,
 			source,
@@ -175,24 +175,24 @@ public static class TypedGesturesExtensions
 		where TCommandBindingContext : class
 		where TParameterBindingContext : class
 	{
-		var getterFunc = ConvertExpressionToFunc(getter);
+		var getterFunc = ExpressionPathHelpers.ConvertExpressionToFunc(getter);
 		var parameterGetterFunc = parameterGetter switch
 		{
 			null => null,
-			_ => ConvertExpressionToFunc(parameterGetter)
+			_ => ExpressionPathHelpers.ConvertExpressionToFunc(parameterGetter)
 		};
 
-		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = parameterGetter switch
+		(Func<TParameterBindingContext, object?>, string)[]? parameterGetterHandlers = ExpressionPathHelpers.GetMemberPathOrNullForCapturedValue(parameterGetter) switch
 		{
 			null => null,
-			_ => [(b => b, GetMemberName(parameterGetter))]
+			var memberPath => [(b => b, memberPath)]
 		};
 
 		return BindTapGesture(
 			gestureElement,
 			getterFunc,
 			[
-				(b => b, GetMemberName(getter))
+				(b => b, ExpressionPathHelpers.GetMemberPathOrNullForCapturedValue(getter) ?? throw ExpressionPathHelpers.CreateInvalidGetterException())
 			],
 			setter,
 			source,
@@ -258,15 +258,6 @@ public static class TypedGesturesExtensions
 
 		return gestureElement.ConfigureTapGesture(tapGesture, numberOfTapsRequired);
 	}
-
-	static Func<TBindingContext, TSource> ConvertExpressionToFunc<TBindingContext, TSource>(in Expression<Func<TBindingContext, TSource>> expression) => expression.Compile();
-
-	static string GetMemberName<T>(in Expression<T> expression) => expression.Body switch
-	{
-		MemberExpression m => m.Member.Name,
-		UnaryExpression { Operand: MemberExpression m } => m.Member.Name,
-		_ => throw new InvalidOperationException("Invalid getter. The `getter` parameter must point directly to a property in the ViewModel and cannot add additional logic")
-	};
 
 	static TGestureRecognizer BindGesture<TGestureRecognizer, TGestureElement, TCommandBindingContext, TParameterBindingContext, TParameterSource>(
 		this TGestureElement gestureElement,

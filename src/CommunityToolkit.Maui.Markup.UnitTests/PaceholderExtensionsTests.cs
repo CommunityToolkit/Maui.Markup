@@ -6,15 +6,55 @@ class PaceholderExtensionsTests : BaseMarkupTestFixture<Entry>
 {
 	[Test]
 	public void SetPlaceholderTest()
-		=> TestPropertiesSet(e => e.Placeholder("Hello World"), (PlaceholderElement.PlaceholderProperty, "Hello World"));
+		=> TestPropertiesSet(e => e.Placeholder("Hello World"), (Entry.PlaceholderProperty, "Hello World"));
 
 	[Test]
 	public void SetPlaceholderAndColorTest()
-		=> TestPropertiesSet(e => e.Placeholder("Hello World", Colors.Red), (PlaceholderElement.PlaceholderProperty, "Hello World"), (PlaceholderElement.PlaceholderColorProperty, Colors.Red));
+		=> TestPropertiesSet(e => e.Placeholder("Hello World", Colors.Red), (Entry.PlaceholderProperty, "Hello World"), (Entry.PlaceholderColorProperty, Colors.Red));
 
 	[Test]
 	public void SetPlaceholderColorTest()
-		=> TestPropertiesSet(e => e.PlaceholderColor(Colors.Red), (PlaceholderElement.PlaceholderColorProperty, Colors.Red));
+		=> TestPropertiesSet(e => e.PlaceholderColor(Colors.Red), (Entry.PlaceholderColorProperty, Colors.Red));
+
+	[Test]
+	public void SupportsSearchBar()
+	{
+		var searchBar = new SearchBar()
+			.Placeholder("Hello World")
+			.PlaceholderColor(Colors.Blue)
+			.Placeholder("Hello World 2", Colors.Red);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(searchBar.Placeholder, Is.EqualTo("Hello World 2"));
+			Assert.That(searchBar.PlaceholderColor, Is.EqualTo(Colors.Red));
+		});
+	}
+
+	[Test]
+	public void SupportsSearchHandler()
+	{
+		var searchHandler = new SearchHandler()
+			.Placeholder("Hello World")
+			.PlaceholderColor(Colors.Blue)
+			.Placeholder("Hello World 2", Colors.Red);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(searchHandler.Placeholder, Is.EqualTo("Hello World 2"));
+			Assert.That(searchHandler.PlaceholderColor, Is.EqualTo(Colors.Red));
+		});
+	}
+
+	[Test]
+	public void SupportDerivedFromSearchHandler()
+	{
+		Assert.That(new DerivedFromSearchHandler()
+					.Placeholder("Hello World")
+					.PlaceholderColor(Colors.Blue)
+					.Placeholder("Hello World 2", Colors.Red),
+					Is.InstanceOf<DerivedFromSearchHandler>());
+	}
 
 	[Test]
 	public void SupportDerivedFromEditor()
@@ -27,6 +67,11 @@ class PaceholderExtensionsTests : BaseMarkupTestFixture<Entry>
 	}
 
 	class DerivedFromEditor : Editor
+	{
+
+	}
+
+	class DerivedFromSearchHandler : SearchHandler
 	{
 
 	}

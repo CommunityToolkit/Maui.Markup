@@ -6,11 +6,11 @@ class LabelTextTests : BaseMarkupTestFixture<Label>
 {
 	[Test]
 	public void LabelTextColor_ProvidedColor()
-		=> TestPropertiesSet(l => l.TextColor(Colors.Red), (TextElement.TextColorProperty, Colors.Red));
+		=> TestPropertiesSet(l => l.TextColor(Colors.Red), (Label.TextColorProperty, Colors.Red));
 
 	[Test]
 	public void LabelTextColor_CustomColor()
-		=> TestPropertiesSet(l => l.TextColor(new Color(0.124f, 0.654f, 0.9234f, 0.100f)), (TextElement.TextColorProperty, new Color(0.124f, 0.654f, 0.9234f, 0.100f)));
+		=> TestPropertiesSet(l => l.TextColor(new Color(0.124f, 0.654f, 0.9234f, 0.100f)), (Label.TextColorProperty, new Color(0.124f, 0.654f, 0.9234f, 0.100f)));
 
 	[Test]
 	public void LabelText_NoColor()
@@ -18,11 +18,11 @@ class LabelTextTests : BaseMarkupTestFixture<Label>
 
 	[Test]
 	public void LabelText_ProvidedColor()
-		=> TestPropertiesSet(l => l.Text("Hello World", Colors.Green), (Label.TextProperty, "Hello World"), (TextElement.TextColorProperty, Colors.Green));
+		=> TestPropertiesSet(l => l.Text("Hello World", Colors.Green), (Label.TextProperty, "Hello World"), (Label.TextColorProperty, Colors.Green));
 
 	[Test]
 	public void LabelText_CustomColor()
-		=> TestPropertiesSet(l => l.Text("Hello World", new Color(250, 5, 128, 1)), (Label.TextProperty, "Hello World"), (TextElement.TextColorProperty, new Color(250, 5, 128, 1)));
+		=> TestPropertiesSet(l => l.Text("Hello World", new Color(250, 5, 128, 1)), (Label.TextProperty, "Hello World"), (Label.TextColorProperty, new Color(250, 5, 128, 1)));
 
 	[Test]
 	public void SupportDerivedFromLabel()
@@ -46,11 +46,11 @@ class ButtonTextTests : BaseMarkupTestFixture<Button>
 {
 	[Test]
 	public void ButtonTextColor_ProvidedColor()
-		=> TestPropertiesSet(b => b.TextColor(Colors.Red), (TextElement.TextColorProperty, Colors.Red));
+		=> TestPropertiesSet(b => b.TextColor(Colors.Red), (Button.TextColorProperty, Colors.Red));
 
 	[Test]
 	public void ButtonTextColor_CustomColor()
-		=> TestPropertiesSet(b => b.TextColor(new Color(0.124f, 0.654f, 0.9234f, 0.100f)), (TextElement.TextColorProperty, new Color(0.124f, 0.654f, 0.9234f, 0.100f)));
+		=> TestPropertiesSet(b => b.TextColor(new Color(0.124f, 0.654f, 0.9234f, 0.100f)), (Button.TextColorProperty, new Color(0.124f, 0.654f, 0.9234f, 0.100f)));
 
 	[Test]
 	public void ButtonText_NoColor()
@@ -58,11 +58,11 @@ class ButtonTextTests : BaseMarkupTestFixture<Button>
 
 	[Test]
 	public void ButtonText_ProvidedColor()
-		=> TestPropertiesSet(b => b.Text("Hello World", Colors.Green), (Button.TextProperty, "Hello World"), (TextElement.TextColorProperty, Colors.Green));
+		=> TestPropertiesSet(b => b.Text("Hello World", Colors.Green), (Button.TextProperty, "Hello World"), (Button.TextColorProperty, Colors.Green));
 
 	[Test]
 	public void ButtonText_CustomColor()
-		=> TestPropertiesSet(b => b.Text("Hello World", new Color(250, 5, 128, 1)), (Button.TextProperty, "Hello World"), (TextElement.TextColorProperty, new Color(250, 5, 128, 1)));
+		=> TestPropertiesSet(b => b.Text("Hello World", new Color(250, 5, 128, 1)), (Button.TextProperty, "Hello World"), (Button.TextColorProperty, new Color(250, 5, 128, 1)));
 
 	[Test]
 	public void SupportDerivedFromButton()
@@ -114,11 +114,11 @@ class EditorTextTests : BaseMarkupTestFixture<Editor>
 {
 	[Test]
 	public void EditorTextColor_ProvidedColor()
-		=> TestPropertiesSet(b => b.TextColor(Colors.Red), (TextElement.TextColorProperty, Colors.Red));
+		=> TestPropertiesSet(b => b.TextColor(Colors.Red), (Editor.TextColorProperty, Colors.Red));
 
 	[Test]
 	public void EditorTextColor_CustomColor()
-		=> TestPropertiesSet(b => b.TextColor(new Color(0.124f, 0.654f, 0.9234f, 0.100f)), (TextElement.TextColorProperty, new Color(0.124f, 0.654f, 0.9234f, 0.100f)));
+		=> TestPropertiesSet(b => b.TextColor(new Color(0.124f, 0.654f, 0.9234f, 0.100f)), (Editor.TextColorProperty, new Color(0.124f, 0.654f, 0.9234f, 0.100f)));
 
 	[Test]
 	public void EditorText_NoColor()
@@ -126,11 +126,11 @@ class EditorTextTests : BaseMarkupTestFixture<Editor>
 
 	[Test]
 	public void EditorText_ProvidedColor()
-		=> TestPropertiesSet(b => b.Text("Hello World", Colors.Green), (Editor.TextProperty, "Hello World"), (TextElement.TextColorProperty, Colors.Green));
+		=> TestPropertiesSet(b => b.Text("Hello World", Colors.Green), (Editor.TextProperty, "Hello World"), (Editor.TextColorProperty, Colors.Green));
 
 	[Test]
 	public void EditorText_CustomColor()
-		=> TestPropertiesSet(b => b.Text("Hello World", new Color(250, 5, 128, 1)), (Editor.TextProperty, "Hello World"), (TextElement.TextColorProperty, new Color(250, 5, 128, 1)));
+		=> TestPropertiesSet(b => b.Text("Hello World", new Color(250, 5, 128, 1)), (Editor.TextProperty, "Hello World"), (Editor.TextColorProperty, new Color(250, 5, 128, 1)));
 
 	[Test]
 	public void SupportDerivedFromEnditor()
@@ -154,11 +154,11 @@ class EntryTextTests : BaseMarkupTestFixture<Entry>
 {
 	[Test]
 	public void EntryTextColor_ProvidedColor()
-		=> TestPropertiesSet(b => b.TextColor(Colors.Red), (TextElement.TextColorProperty, Colors.Red));
+		=> TestPropertiesSet(b => b.TextColor(Colors.Red), (Entry.TextColorProperty, Colors.Red));
 
 	[Test]
 	public void EntryTextColor_CustomColor()
-		=> TestPropertiesSet(b => b.TextColor(new Color(0.124f, 0.654f, 0.9234f, 0.100f)), (TextElement.TextColorProperty, new Color(0.124f, 0.654f, 0.9234f, 0.100f)));
+		=> TestPropertiesSet(b => b.TextColor(new Color(0.124f, 0.654f, 0.9234f, 0.100f)), (Entry.TextColorProperty, new Color(0.124f, 0.654f, 0.9234f, 0.100f)));
 
 	[Test]
 	public void EntryText_NoColor()
@@ -166,11 +166,11 @@ class EntryTextTests : BaseMarkupTestFixture<Entry>
 
 	[Test]
 	public void EntryText_ProvidedColor()
-		=> TestPropertiesSet(b => b.Text("Hello World", Colors.Green), (Entry.TextProperty, "Hello World"), (TextElement.TextColorProperty, Colors.Green));
+		=> TestPropertiesSet(b => b.Text("Hello World", Colors.Green), (Entry.TextProperty, "Hello World"), (Entry.TextColorProperty, Colors.Green));
 
 	[Test]
 	public void EntryText_CustomColor()
-		=> TestPropertiesSet(b => b.Text("Hello World", new Color(250, 5, 128, 1)), (Entry.TextProperty, "Hello World"), (TextElement.TextColorProperty, new Color(250, 5, 128, 1)));
+		=> TestPropertiesSet(b => b.Text("Hello World", new Color(250, 5, 128, 1)), (Entry.TextProperty, "Hello World"), (Entry.TextColorProperty, new Color(250, 5, 128, 1)));
 
 	[Test]
 	public void SupportDerivedFromEntry()
@@ -194,11 +194,11 @@ class SearchBarTextTests : BaseMarkupTestFixture<SearchBar>
 {
 	[Test]
 	public void SearchBarTextColor_ProvidedColor()
-		=> TestPropertiesSet(b => b.TextColor(Colors.Red), (TextElement.TextColorProperty, Colors.Red));
+		=> TestPropertiesSet(b => b.TextColor(Colors.Red), (SearchBar.TextColorProperty, Colors.Red));
 
 	[Test]
 	public void SearchBarTextColor_CustomColor()
-		=> TestPropertiesSet(b => b.TextColor(new Color(0.124f, 0.654f, 0.9234f, 0.100f)), (TextElement.TextColorProperty, new Color(0.124f, 0.654f, 0.9234f, 0.100f)));
+		=> TestPropertiesSet(b => b.TextColor(new Color(0.124f, 0.654f, 0.9234f, 0.100f)), (SearchBar.TextColorProperty, new Color(0.124f, 0.654f, 0.9234f, 0.100f)));
 
 	[Test]
 	public void SearchBarText_NoColor()
@@ -206,11 +206,11 @@ class SearchBarTextTests : BaseMarkupTestFixture<SearchBar>
 
 	[Test]
 	public void SearchBarText_ProvidedColor()
-		=> TestPropertiesSet(b => b.Text("Hello World", Colors.Green), (SearchBar.TextProperty, "Hello World"), (TextElement.TextColorProperty, Colors.Green));
+		=> TestPropertiesSet(b => b.Text("Hello World", Colors.Green), (SearchBar.TextProperty, "Hello World"), (SearchBar.TextColorProperty, Colors.Green));
 
 	[Test]
 	public void SearchBarText_CustomColor()
-		=> TestPropertiesSet(b => b.Text("Hello World", new Color(250, 5, 128, 1)), (SearchBar.TextProperty, "Hello World"), (TextElement.TextColorProperty, new Color(250, 5, 128, 1)));
+		=> TestPropertiesSet(b => b.Text("Hello World", new Color(250, 5, 128, 1)), (SearchBar.TextProperty, "Hello World"), (SearchBar.TextColorProperty, new Color(250, 5, 128, 1)));
 
 	[Test]
 	public void SupportDerivedFromSearchBar()

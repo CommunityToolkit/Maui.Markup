@@ -1,65 +1,52 @@
-﻿using Microsoft.Maui.Controls.Internals;
-namespace CommunityToolkit.Maui.Markup;
+﻿namespace CommunityToolkit.Maui.Markup;
 
 /// <summary>
 /// Extension Methods for Elements
 /// </summary>
 public static class ElementExtensions
 {
-	/// <summary>
-	/// Set Padding
-	/// </summary>
-	/// <typeparam name="TLayout"></typeparam>
-	/// <param name="paddingElement"></param>
-	/// <param name="padding"></param>
-	/// <returns>Layout with added Padding</returns>
-	public static TLayout Padding<TLayout>(this TLayout paddingElement, Thickness padding) where TLayout : Element, IPaddingElement
-	{
-		paddingElement.SetValue(PaddingElement.PaddingProperty, padding);
+	/// <summary>Set Padding.</summary>
+	/// <typeparam name="TVisualElement">The <see cref="VisualElement"/> type implementing <see cref="IPadding"/>.</typeparam>
+	/// <param name="paddingElement">Element on which to set padding.</param>
+	/// <param name="padding">Padding to set.</param>
+	/// <returns>Element with added Padding.</returns>
+	public static TVisualElement Padding<TVisualElement>(this TVisualElement paddingElement, Thickness padding) where TVisualElement : VisualElement, IPadding => SetPadding(paddingElement, padding);
 
-		return paddingElement;
-	}
+	/// <inheritdoc cref="Padding{TVisualElement}(TVisualElement, Thickness)" />
+	public static Page Padding(this Page paddingElement, Thickness padding) => SetPadding(paddingElement, padding);
 
-	/// <summary>
-	/// Set Padding
-	/// </summary>
-	/// <typeparam name="TLayout"></typeparam>
-	/// <param name="paddingElement"></param>
-	/// <param name="horizontalSize"></param>
-	/// <param name="verticalSize"></param>
-	/// <returns>Layout with added Padding</returns>
-	public static TLayout Padding<TLayout>(this TLayout paddingElement, double horizontalSize, double verticalSize) where TLayout : Element, IPaddingElement
-	{
-		paddingElement.SetValue(PaddingElement.PaddingProperty, new Thickness(horizontalSize, verticalSize));
+	/// <summary>Set Padding.</summary>
+	/// <typeparam name="TVisualElement">The <see cref="VisualElement"/> type implementing <see cref="IPadding"/>.</typeparam>
+	/// <param name="paddingElement">Element on which to set padding.</param>
+	/// <param name="horizontalSize">Horizontal padding.</param>
+	/// <param name="verticalSize">Vertical padding.</param>
+	/// <returns>Element with added Padding.</returns>
+	public static TVisualElement Padding<TVisualElement>(this TVisualElement paddingElement, double horizontalSize, double verticalSize) where TVisualElement : VisualElement, IPadding => SetPadding(paddingElement, new Thickness(horizontalSize, verticalSize));
 
-		return paddingElement;
-	}
+	/// <inheritdoc cref="Padding{TVisualElement}(TVisualElement, double, double)" />
+	public static Page Padding(this Page paddingElement, double horizontalSize, double verticalSize) => SetPadding(paddingElement, new Thickness(horizontalSize, verticalSize));
 
-	/// <summary>
-	/// Set Padding
-	/// </summary>
-	/// <typeparam name="TLayout"></typeparam>
-	/// <param name="paddingElement"></param>
-	/// <param name="left"></param>
-	/// <param name="top"></param>
-	/// <param name="right"></param>
-	/// <param name="bottom"></param>
-	/// <returns>Layout with added Padding</returns>
-	public static TLayout Paddings<TLayout>(this TLayout paddingElement, double left = 0, double top = 0, double right = 0, double bottom = 0) where TLayout : Element, IPaddingElement
-	{
-		paddingElement.SetValue(PaddingElement.PaddingProperty, new Thickness(left, top, right, bottom));
+	/// <summary>Set Padding.</summary>
+	/// <typeparam name="TVisualElement">The <see cref="VisualElement"/> type implementing <see cref="IPadding"/>.</typeparam>
+	/// <param name="paddingElement">Element on which to set padding.</param>
+	/// <param name="left">Left padding.</param>
+	/// <param name="top">Top padding.</param>
+	/// <param name="right">Right padding.</param>
+	/// <param name="bottom">Bottom padding.</param>
+	/// <returns>Element with added Padding.</returns>
+	public static TVisualElement Paddings<TVisualElement>(this TVisualElement paddingElement, double left = 0, double top = 0, double right = 0, double bottom = 0) where TVisualElement : VisualElement, IPadding => SetPadding(paddingElement, new Thickness(left, top, right, bottom));
 
-		return paddingElement;
-	}
+	/// <inheritdoc cref="Paddings{TVisualElement}(TVisualElement, double, double, double, double)" />
+	public static Page Paddings(this Page paddingElement, double left = 0, double top = 0, double right = 0, double bottom = 0) => SetPadding(paddingElement, new Thickness(left, top, right, bottom));
 
 	/// <summary>
 	/// Remove Dynamic Resource
 	/// </summary>
-	/// <typeparam name="TBindable"></typeparam>
+	/// <typeparam name="TElement"></typeparam>
 	/// <param name="bindable"></param>
 	/// <param name="properties"></param>
-	/// <returns>Layout without Dynamic Resource</returns>
-	public static TBindable RemoveDynamicResources<TBindable>(this TBindable bindable, params ReadOnlySpan<BindableProperty> properties) where TBindable : BindableObject
+	/// <returns>Element without Dynamic Resource</returns>
+	public static TElement RemoveDynamicResources<TElement>(this TElement bindable, params ReadOnlySpan<BindableProperty> properties) where TElement : Element
 	{
 		foreach (var property in properties)
 		{
@@ -89,86 +76,78 @@ public static class ElementExtensions
 	/// <summary>
 	/// Sets FontSize
 	/// </summary>
-	/// <typeparam name="TFontElement"></typeparam>
+	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="fontElement"></param>
 	/// <param name="size"></param>
-	/// <returns></returns>
-	public static TFontElement FontSize<TFontElement>(this TFontElement fontElement, double size) where TFontElement : BindableObject, IFontElement
-	{
-		fontElement.SetValue(FontElement.FontSizeProperty, size);
-		return fontElement;
-	}
+	/// <returns>Element with updated font size</returns>
+	public static TBindable FontSize<TBindable>(this TBindable fontElement, double size) where TBindable : BindableObject, ITextStyle => SetFontSize(fontElement, size);
+
+	/// <inheritdoc cref="FontSize{TBindable}(TBindable, double)" />
+	public static Span FontSize(this Span fontElement, double size) => SetFontSize(fontElement, size);
+
+	/// <inheritdoc cref="FontSize{TBindable}(TBindable, double)" />
+	public static SearchHandler FontSize(this SearchHandler fontElement, double size) => SetFontSize(fontElement, size);
 
 	/// <summary>
 	/// Sets Bold
 	/// </summary>
-	/// <typeparam name="TFontElement"></typeparam>
+	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="fontElement"></param>
 	/// <returns>Font element with added Bold</returns>
-	public static TFontElement Bold<TFontElement>(this TFontElement fontElement) where TFontElement : BindableObject, IFontElement
-	{
-		fontElement.SetValue(FontElement.FontAttributesProperty, FontAttributes.Bold);
-		return fontElement;
-	}
+	public static TBindable Bold<TBindable>(this TBindable fontElement) where TBindable : BindableObject, ITextStyle => SetFontAttributes(fontElement, FontAttributes.Bold);
+
+	/// <inheritdoc cref="Bold{TBindable}(TBindable)" />
+	public static Span Bold(this Span fontElement) => SetFontAttributes(fontElement, FontAttributes.Bold);
+
+	/// <inheritdoc cref="Bold{TBindable}(TBindable)" />
+	public static SearchHandler Bold(this SearchHandler fontElement) => SetFontAttributes(fontElement, FontAttributes.Bold);
 
 	/// <summary>
 	/// Sets Italic
 	/// </summary>
-	/// <typeparam name="TFontElement"></typeparam>
+	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="fontElement"></param>
 	/// <returns>Font element with added Italic</returns>
-	public static TFontElement Italic<TFontElement>(this TFontElement fontElement) where TFontElement : BindableObject, IFontElement
-	{
-		fontElement.SetValue(FontElement.FontAttributesProperty, FontAttributes.Italic);
-		return fontElement;
-	}
+	public static TBindable Italic<TBindable>(this TBindable fontElement) where TBindable : BindableObject, ITextStyle => SetFontAttributes(fontElement, FontAttributes.Italic);
+
+	/// <inheritdoc cref="Italic{TBindable}(TBindable)" />
+	public static Span Italic(this Span fontElement) => SetFontAttributes(fontElement, FontAttributes.Italic);
+
+	/// <inheritdoc cref="Italic{TBindable}(TBindable)" />
+	public static SearchHandler Italic(this SearchHandler fontElement) => SetFontAttributes(fontElement, FontAttributes.Italic);
 
 	/// <summary>
 	/// Sets Font Properties
 	/// </summary>
-	/// <typeparam name="TFontElement"></typeparam>
+	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="fontElement"></param>
 	/// <param name="family"></param>
 	/// <param name="size"></param>
 	/// <param name="bold"></param>
 	/// <param name="italic"></param>
 	/// <returns>Font element with added Font properties</returns>
-	public static TFontElement Font<TFontElement>(
-		this TFontElement fontElement,
+	public static TBindable Font<TBindable>(
+		this TBindable fontElement,
 		string? family = null,
 		double? size = null,
 		bool? bold = null,
-		bool? italic = null) where TFontElement : BindableObject, IFontElement
-	{
-		if (family != null)
-		{
-			fontElement.SetValue(FontElement.FontFamilyProperty, family);
-		}
+		bool? italic = null) where TBindable : BindableObject, ITextStyle => SetFont(fontElement, family, size, bold, italic);
 
-		if (size.HasValue)
-		{
-			fontElement.SetValue(FontElement.FontSizeProperty, size.Value);
-		}
+	/// <inheritdoc cref="Font{TBindable}(TBindable, string?, double?, bool?, bool?)" />
+	public static Span Font(
+		this Span fontElement,
+		string? family = null,
+		double? size = null,
+		bool? bold = null,
+		bool? italic = null) => SetFont(fontElement, family, size, bold, italic);
 
-		if (bold.HasValue || italic.HasValue)
-		{
-			var attributes = FontAttributes.None;
-
-			if (bold is true)
-			{
-				attributes |= FontAttributes.Bold;
-			}
-
-			if (italic is true)
-			{
-				attributes |= FontAttributes.Italic;
-			}
-
-			fontElement.SetValue(FontElement.FontAttributesProperty, attributes);
-		}
-
-		return fontElement;
-	}
+	/// <inheritdoc cref="Font{TBindable}(TBindable, string?, double?, bool?, bool?)" />
+	public static SearchHandler Font(
+		this SearchHandler fontElement,
+		string? family = null,
+		double? size = null,
+		bool? bold = null,
+		bool? italic = null) => SetFont(fontElement, family, size, bold, italic);
 
 	/// <summary>
 	/// Sets <see cref="ITextStyle.TextColor"/> Property
@@ -176,7 +155,7 @@ public static class ElementExtensions
 	/// <typeparam name="TBindable"><see cref="BindableObject"/></typeparam>
 	/// <param name="bindable">Element</param>
 	/// <param name="textColor">Text <see cref="Color"/></param>
-	/// <returns></returns>
+	/// <returns>Element with updated text color</returns>
 	public static TBindable TextColor<TBindable>(this TBindable bindable, Color? textColor) where TBindable : BindableObject, ITextStyle
 	{
 		if (bindable is MenuItem)
@@ -184,7 +163,7 @@ public static class ElementExtensions
 			throw new NotSupportedException($"{typeof(MenuItem)} is not supported");
 		}
 
-		bindable.SetValue(TextElement.TextColorProperty, textColor);
+		bindable.SetValue(BindablePropertyHelpers.GetTextColorProperty(bindable), textColor);
 
 		return bindable;
 	}
@@ -195,7 +174,7 @@ public static class ElementExtensions
 	/// <typeparam name="TBindable"><see cref="BindableObject"/></typeparam>
 	/// <param name="bindable">Element</param>
 	/// <param name="text"></param>
-	/// <returns></returns>
+	/// <returns>Element with updated text</returns>
 	public static TBindable Text<TBindable>(this TBindable bindable, string? text) where TBindable : BindableObject, IText
 	{
 		switch (bindable)
@@ -238,8 +217,64 @@ public static class ElementExtensions
 	/// <param name="bindable">Element</param>
 	/// <param name="text"></param>
 	/// <param name="textColor">Text <see cref="Color"/></param>
+	/// <returns>Element with updated text and text color</returns>
 	public static TBindable Text<TBindable>(this TBindable bindable, string? text, Color? textColor) where TBindable : BindableObject, IText
 	{
 		return bindable.Text(text).TextColor(textColor);
+	}
+
+	static TBindable SetFontSize<TBindable>(TBindable fontElement, double size) where TBindable : BindableObject
+	{
+		fontElement.SetValue(BindablePropertyHelpers.GetFontSizeProperty(fontElement), size);
+		return fontElement;
+	}
+
+	static TBindable SetFontAttributes<TBindable>(TBindable fontElement, FontAttributes attributes) where TBindable : BindableObject
+	{
+		fontElement.SetValue(BindablePropertyHelpers.GetFontAttributesProperty(fontElement), attributes);
+		return fontElement;
+	}
+
+	static TBindable SetFont<TBindable>(
+		TBindable fontElement,
+		string? family,
+		double? size,
+		bool? bold,
+		bool? italic) where TBindable : BindableObject
+	{
+		if (family != null)
+		{
+			fontElement.SetValue(BindablePropertyHelpers.GetFontFamilyProperty(fontElement), family);
+		}
+
+		if (size.HasValue)
+		{
+			fontElement.SetValue(BindablePropertyHelpers.GetFontSizeProperty(fontElement), size.Value);
+		}
+
+		if (bold.HasValue || italic.HasValue)
+		{
+			var attributes = FontAttributes.None;
+
+			if (bold is true)
+			{
+				attributes |= FontAttributes.Bold;
+			}
+
+			if (italic is true)
+			{
+				attributes |= FontAttributes.Italic;
+			}
+
+			fontElement.SetValue(BindablePropertyHelpers.GetFontAttributesProperty(fontElement), attributes);
+		}
+
+		return fontElement;
+	}
+	
+	static TElement SetPadding<TElement>(TElement paddingElement, Thickness padding) where TElement : BindableObject
+	{
+		paddingElement.SetValue(BindablePropertyHelpers.GetPaddingProperty(paddingElement), padding);
+		return paddingElement;
 	}
 }

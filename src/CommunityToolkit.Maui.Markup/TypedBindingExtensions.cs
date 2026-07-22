@@ -198,17 +198,18 @@ public static partial class TypedBindingExtensions
 		where TBindingContext : class?
 
 	{
-		var getterFunc = ConvertExpressionToFunc(getter);
+		var getterFunc = ExpressionPathHelpers.ConvertExpressionToFunc(getter);
+		var path = ExpressionPathHelpers.GetMemberPathOrNullForCapturedValue(getter);
+		var converter = CreateTypedBindingFuncConverter(convert, convertBack);
 
-		return Bind(
+		return SetTypedBinding(
 			bindable,
 			targetProperty,
 			getterFunc,
-			[(b => b, GetMemberName(getter))],
+			path,
 			setter,
 			mode,
-			convert,
-			convertBack,
+			converter,
 			converterParameter,
 			stringFormat,
 			source,
@@ -233,13 +234,14 @@ public static partial class TypedBindingExtensions
 		where TBindingContext : class?
 
 	{
-		var getterFunc = ConvertExpressionToFunc(getter);
+		var getterFunc = ExpressionPathHelpers.ConvertExpressionToFunc(getter);
+		var path = ExpressionPathHelpers.GetMemberPathOrNullForCapturedValue(getter);
 
-		return Bind(
+		return SetTypedBinding(
 			bindable,
 			targetProperty,
 			getterFunc,
-			[(b => b, GetMemberName(getter))],
+			path,
 			setter,
 			mode,
 			converter,
@@ -250,12 +252,4 @@ public static partial class TypedBindingExtensions
 			fallbackValue);
 	}
 
-	static Func<TBindingContext, TSource> ConvertExpressionToFunc<TBindingContext, TSource>(in Expression<Func<TBindingContext, TSource>> expression) => expression.Compile();
-
-	static string GetMemberName<T>(in Expression<T> expression) => expression.Body switch
-	{
-		MemberExpression m => m.Member.Name,
-		UnaryExpression { Operand: MemberExpression m } => m.Member.Name,
-		_ => throw new InvalidOperationException("Invalid getter. The `getter` parameter must point directly to a property in the ViewModel and cannot add additional logic")
-	};
 }

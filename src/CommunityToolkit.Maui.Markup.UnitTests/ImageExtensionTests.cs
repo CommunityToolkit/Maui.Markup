@@ -23,14 +23,29 @@ class ImageExtensionTests : BaseMarkupTestFixture<Image>
 	[Test]
 	public void SetAspectTest()
 	{
-		TestPropertiesSet(i => i.Aspect(Aspect.AspectFill), (ImageElement.AspectProperty, Aspect.AspectFill));
-		TestPropertiesSet(i => i.Aspect(Aspect.Center), (ImageElement.AspectProperty, Aspect.Center));
-		TestPropertiesSet(i => i.Aspect(Aspect.Fill), (ImageElement.AspectProperty, Aspect.Fill));
+		TestPropertiesSet(i => i.Aspect(Aspect.AspectFill), (Image.AspectProperty, Aspect.AspectFill));
+		TestPropertiesSet(i => i.Aspect(Aspect.Center), (Image.AspectProperty, Aspect.Center));
+		TestPropertiesSet(i => i.Aspect(Aspect.Fill), (Image.AspectProperty, Aspect.Fill));
 	}
 
 	[Test]
 	public void SetIsOpaqueTest()
-		=> TestPropertiesSet(i => i.IsOpaque(true), (ImageElement.IsOpaqueProperty, true));
+		=> TestPropertiesSet(i => i.IsOpaque(true), (Image.IsOpaqueProperty, true));
+
+	[Test]
+	public void SupportsImageButton()
+	{
+		var imageButton = new ImageButton().Source(resourceToLoad);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(imageButton.Source, Is.InstanceOf<FileImageSource>());
+			Assert.That(((FileImageSource)imageButton.Source).File, Is.EqualTo(resourceToLoad));
+		});
+
+		TestPropertiesSet(new ImageButton(), imageButton => imageButton.Aspect(Aspect.Center), (ImageButton.AspectProperty, Aspect.Center));
+		TestPropertiesSet(new ImageButton(), imageButton => imageButton.IsOpaque(true), (ImageButton.IsOpaqueProperty, true));
+	}
 
 	[Test]
 	public void SupportDerivedFromImage()
