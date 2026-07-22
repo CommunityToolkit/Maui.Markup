@@ -512,15 +512,52 @@ public static partial class TypedBindingExtensions
 		Func<TDest?, TParam?, TSource>? convertBack) : IValueConverter
 	{
 		public object? Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
-			=> convert is null
-				? value
-				: convert(value is null ? default : (TSource)value, parameter is null ? default : (TParam)parameter);
+		{
+			if (ReferenceEquals(value, BindableProperty.UnsetValue) || ReferenceEquals(value, Binding.DoNothing))
+			{
+				return value;
+			}
+
+			if (convert is null)
+			{
+				return value;
+			}
+
+			var typedParameter = parameter is TParam typed ? typed : default;
+
+			if (value is null)
+			{
+				return convert(default, typedParameter);
+			}
+
+			return value is TSource typedValue
+				? convert(typedValue, typedParameter)
+				: BindableProperty.UnsetValue;
+		}
 
 		public object? ConvertBack(object? value, Type? targetType, object? parameter, CultureInfo? culture)
-			=> convertBack is null
-				? Binding.DoNothing
-				: convertBack(value is null ? default : (TDest)value, parameter is null ? default : (TParam)parameter);
+		{
+			if (convertBack is null)
+			{
+				return Binding.DoNothing;
+			}
 
+			if (ReferenceEquals(value, BindableProperty.UnsetValue) || ReferenceEquals(value, Binding.DoNothing))
+			{
+				return Binding.DoNothing;
+			}
+
+			var typedParameter = parameter is TParam typed ? typed : default;
+
+			if (value is null)
+			{
+				return convertBack(default, typedParameter);
+			}
+
+			return value is TDest typedValue
+				? convertBack(typedValue, typedParameter)
+				: Binding.DoNothing;
+		}
 		public override string? ToString() => new FuncConverter<TSource, TDest, TParam>(convert, convertBack).ToString();
 	}
 
