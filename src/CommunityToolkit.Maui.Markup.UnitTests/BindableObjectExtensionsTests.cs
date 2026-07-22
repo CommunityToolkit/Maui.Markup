@@ -804,13 +804,22 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			var label = new Label { BindingContext = viewModel };
 			label.Bind(Label.TextProperty, BindingBase.Create(static (OuterViewModel vm) => vm.NestedObject.Text, BindingMode.OneWay));
 
-			entry.Text = text;
+entry.Text = text;
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(viewModel.NestedObject.Text, Is.EqualTo(text), "TwoWay binding should update the nested ViewModel");
-				Assert.That(label.Text, Is.EqualTo(text), "OneWay binding should reflect the nested ViewModel");
-			});
+Assert.Multiple(() =>
+{
+	Assert.That(viewModel.NestedObject.Text, Is.EqualTo(text), "TwoWay binding should update the nested ViewModel");
+	Assert.That(label.Text, Is.EqualTo(text), "OneWay binding should reflect the nested ViewModel");
+});
+
+var updatedText = $"{text}-updated";
+viewModel.NestedObject.Text = updatedText;
+
+Assert.Multiple(() =>
+{
+	Assert.That(entry.Text, Is.EqualTo(updatedText), "TwoWay binding should reflect changes from the nested ViewModel");
+	Assert.That(label.Text, Is.EqualTo(updatedText), "OneWay binding should reflect the nested ViewModel");
+});
 		}
 
 		sealed class ViewModel
