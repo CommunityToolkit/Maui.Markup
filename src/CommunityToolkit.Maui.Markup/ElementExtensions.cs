@@ -149,11 +149,13 @@ public static class ElementExtensions
 	/// <param name="fontElement"></param>
 	/// <param name="size"></param>
 	/// <returns></returns>
-	public static TBindable FontSize<TBindable>(this TBindable fontElement, double size) where TBindable : BindableObject, ITextStyle
-	{
-		fontElement.SetValue(BindablePropertyHelpers.GetFontSizeProperty(fontElement), size);
-		return fontElement;
-	}
+	public static TBindable FontSize<TBindable>(this TBindable fontElement, double size) where TBindable : BindableObject, ITextStyle => SetFontSize(fontElement, size);
+
+	/// <inheritdoc cref="FontSize{TBindable}(TBindable, double)" />
+	public static TSpan FontSize<TSpan>(this TSpan fontElement, double size, Span? overload = null) where TSpan : Span => SetFontSize(fontElement, size);
+
+	/// <inheritdoc cref="FontSize{TBindable}(TBindable, double)" />
+	public static TSearchHandler FontSize<TSearchHandler>(this TSearchHandler fontElement, double size, SearchHandler? overload = null) where TSearchHandler : SearchHandler => SetFontSize(fontElement, size);
 
 	/// <summary>
 	/// Sets Bold
@@ -161,11 +163,13 @@ public static class ElementExtensions
 	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="fontElement"></param>
 	/// <returns>Font element with added Bold</returns>
-	public static TBindable Bold<TBindable>(this TBindable fontElement) where TBindable : BindableObject, ITextStyle
-	{
-		fontElement.SetValue(BindablePropertyHelpers.GetFontAttributesProperty(fontElement), FontAttributes.Bold);
-		return fontElement;
-	}
+	public static TBindable Bold<TBindable>(this TBindable fontElement) where TBindable : BindableObject, ITextStyle => SetFontAttributes(fontElement, FontAttributes.Bold);
+
+	/// <inheritdoc cref="Bold{TBindable}(TBindable)" />
+	public static TSpan Bold<TSpan>(this TSpan fontElement, Span? overload = null) where TSpan : Span => SetFontAttributes(fontElement, FontAttributes.Bold);
+
+	/// <inheritdoc cref="Bold{TBindable}(TBindable)" />
+	public static TSearchHandler Bold<TSearchHandler>(this TSearchHandler fontElement, SearchHandler? overload = null) where TSearchHandler : SearchHandler => SetFontAttributes(fontElement, FontAttributes.Bold);
 
 	/// <summary>
 	/// Sets Italic
@@ -173,11 +177,13 @@ public static class ElementExtensions
 	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="fontElement"></param>
 	/// <returns>Font element with added Italic</returns>
-	public static TBindable Italic<TBindable>(this TBindable fontElement) where TBindable : BindableObject, ITextStyle
-	{
-		fontElement.SetValue(BindablePropertyHelpers.GetFontAttributesProperty(fontElement), FontAttributes.Italic);
-		return fontElement;
-	}
+	public static TBindable Italic<TBindable>(this TBindable fontElement) where TBindable : BindableObject, ITextStyle => SetFontAttributes(fontElement, FontAttributes.Italic);
+
+	/// <inheritdoc cref="Italic{TBindable}(TBindable)" />
+	public static TSpan Italic<TSpan>(this TSpan fontElement, Span? overload = null) where TSpan : Span => SetFontAttributes(fontElement, FontAttributes.Italic);
+
+	/// <inheritdoc cref="Italic{TBindable}(TBindable)" />
+	public static TSearchHandler Italic<TSearchHandler>(this TSearchHandler fontElement, SearchHandler? overload = null) where TSearchHandler : SearchHandler => SetFontAttributes(fontElement, FontAttributes.Italic);
 
 	/// <summary>
 	/// Sets Font Properties
@@ -194,7 +200,44 @@ public static class ElementExtensions
 		string? family = null,
 		double? size = null,
 		bool? bold = null,
-		bool? italic = null) where TBindable : BindableObject, ITextStyle
+		bool? italic = null) where TBindable : BindableObject, ITextStyle => SetFont(fontElement, family, size, bold, italic);
+
+	/// <inheritdoc cref="Font{TBindable}(TBindable, string?, double?, bool?, bool?)" />
+	public static TSpan Font<TSpan>(
+		this TSpan fontElement,
+		string? family = null,
+		double? size = null,
+		bool? bold = null,
+		bool? italic = null,
+		Span? overload = null) where TSpan : Span => SetFont(fontElement, family, size, bold, italic);
+
+	/// <inheritdoc cref="Font{TBindable}(TBindable, string?, double?, bool?, bool?)" />
+	public static TSearchHandler Font<TSearchHandler>(
+		this TSearchHandler fontElement,
+		string? family = null,
+		double? size = null,
+		bool? bold = null,
+		bool? italic = null,
+		SearchHandler? overload = null) where TSearchHandler : SearchHandler => SetFont(fontElement, family, size, bold, italic);
+
+	static TBindable SetFontSize<TBindable>(TBindable fontElement, double size) where TBindable : BindableObject
+	{
+		fontElement.SetValue(BindablePropertyHelpers.GetFontSizeProperty(fontElement), size);
+		return fontElement;
+	}
+
+	static TBindable SetFontAttributes<TBindable>(TBindable fontElement, FontAttributes attributes) where TBindable : BindableObject
+	{
+		fontElement.SetValue(BindablePropertyHelpers.GetFontAttributesProperty(fontElement), attributes);
+		return fontElement;
+	}
+
+	static TBindable SetFont<TBindable>(
+		TBindable fontElement,
+		string? family,
+		double? size,
+		bool? bold,
+		bool? italic) where TBindable : BindableObject
 	{
 		if (family != null)
 		{

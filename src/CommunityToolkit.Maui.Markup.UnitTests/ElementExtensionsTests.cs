@@ -94,6 +94,64 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 	public void FontWithFamilyNamedParameter()
 		=> TestPropertiesSet(l => l.Font(family: "AFontName"), (Label.FontFamilyProperty, string.Empty, "AFontName"));
 
+	[Test]
+	public void FontSupportedOnSpan()
+	{
+		var span = new Span().Font("AFontName", 8, bold: true, italic: true);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(span.GetValue(Span.FontFamilyProperty), Is.EqualTo("AFontName"));
+			Assert.That(span.GetValue(Span.FontSizeProperty), Is.EqualTo(8.0));
+			Assert.That(span.GetValue(Span.FontAttributesProperty), Is.EqualTo(FontAttributes.Bold | FontAttributes.Italic));
+		});
+	}
+
+	[Test]
+	public void FontSizeSupportedOnSpan()
+		=> Assert.That(new Span().FontSize(8).GetValue(Span.FontSizeProperty), Is.EqualTo(8.0));
+
+	[Test]
+	public void BoldSupportedOnSpan()
+		=> Assert.That(new Span().Bold().GetValue(Span.FontAttributesProperty), Is.EqualTo(FontAttributes.Bold));
+
+	[Test]
+	public void ItalicSupportedOnSpan()
+		=> Assert.That(new Span().Italic().GetValue(Span.FontAttributesProperty), Is.EqualTo(FontAttributes.Italic));
+
+	[Test]
+	public void SupportDerivedFromSpan()
+		=> Assert.That(new DerivedFromSpan().Font("AFontName").FontSize(8).Bold().Italic(), Is.InstanceOf<DerivedFromSpan>());
+
+	[Test]
+	public void FontSupportedOnSearchHandler()
+	{
+		var searchHandler = new SearchHandler().Font("AFontName", 8, bold: true, italic: true);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(searchHandler.GetValue(SearchHandler.FontFamilyProperty), Is.EqualTo("AFontName"));
+			Assert.That(searchHandler.GetValue(SearchHandler.FontSizeProperty), Is.EqualTo(8.0));
+			Assert.That(searchHandler.GetValue(SearchHandler.FontAttributesProperty), Is.EqualTo(FontAttributes.Bold | FontAttributes.Italic));
+		});
+	}
+
+	[Test]
+	public void FontSizeSupportedOnSearchHandler()
+		=> Assert.That(new SearchHandler().FontSize(8).GetValue(SearchHandler.FontSizeProperty), Is.EqualTo(8.0));
+
+	[Test]
+	public void BoldSupportedOnSearchHandler()
+		=> Assert.That(new SearchHandler().Bold().GetValue(SearchHandler.FontAttributesProperty), Is.EqualTo(FontAttributes.Bold));
+
+	[Test]
+	public void ItalicSupportedOnSearchHandler()
+		=> Assert.That(new SearchHandler().Italic().GetValue(SearchHandler.FontAttributesProperty), Is.EqualTo(FontAttributes.Italic));
+
+	[Test]
+	public void SupportDerivedFromSearchHandler()
+		=> Assert.That(new DerivedFromSearchHandler().Font("AFontName").FontSize(8).Bold().Italic(), Is.InstanceOf<DerivedFromSearchHandler>());
+
 	[TestCaseSource(nameof(textStyleCases))]
 	public void FontAndTextColorSupportedOnTextStyleElement(TextStyleCase textStyleCase)
 	{
@@ -199,4 +257,12 @@ class UnsupportedTextStyleView : View, ITextStyle
 sealed class UnsupportedTextView : UnsupportedTextStyleView, IText
 {
 	public string Text => string.Empty;
+}
+
+sealed class DerivedFromSpan : Span
+{
+}
+
+sealed class DerivedFromSearchHandler : SearchHandler
+{
 }
