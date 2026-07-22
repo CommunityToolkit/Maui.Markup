@@ -47,6 +47,11 @@ static class ExpressionPathHelpers
 		return currentExpression switch
 		{
 			ParameterExpression when members.Count > 0 => string.Join(".", members),
+			// Getters rooted in a captured variable (`ConstantExpression`, e.g. `_ => capturedViewModel.HeightRequest`)
+			// or in a static member (`null`, e.g. `_ => Colors.Black`) do not reference the binding context.
+			// Both are intentionally treated as captured values: the binding has no member path and evaluates
+			// the compiled getter as a one-time constant. Setters remain unsupported for these getters because
+			// there is no resolvable member path for source write-back.
 			ConstantExpression when members.Count > 0 => null,
 			null when members.Count > 0 => null,
 			_ => throw CreateInvalidGetterException()
