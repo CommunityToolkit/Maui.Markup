@@ -253,16 +253,16 @@ public static partial class TypedBindingExtensions
 
 		RemoveSourceUpdateHandler(bindable, targetProperty);
 
-		var resolvedMode = ResolveBindingMode(targetProperty, mode);
-		var updatesTarget = UpdatesTarget(resolvedMode);
+		var resolvedMode = GetBindingMode(targetProperty, mode);
+		var updatesTarget = DoesUpdateTarget(resolvedMode);
 		var isApplyingBinding = false;
-		var targetUpdateTracker = setter is not null && UpdatesSource(resolvedMode) && updatesTarget
-			? new TargetUpdateTracker()
-			: null;
+		var targetUpdateTracker = setter is not null
+		                          && DoesUpdateSource(resolvedMode)
+		                          && updatesTarget ? new TargetUpdateTracker() : null;
 
 		ApplyBinding();
 
-		if (setter is null || !UpdatesSource(resolvedMode))
+		if (setter is null || !DoesUpdateSource(resolvedMode))
 		{
 			return bindable;
 		}
@@ -294,7 +294,9 @@ public static partial class TypedBindingExtensions
 				isApplyingBinding = true;
 				var bindingConverter = path is null
 					? new GetterValueConverter<TBindingContext, TSource>(getter, converter, targetUpdateTracker, stringFormat, targetNullValue, fallbackValue)
-					: targetUpdateTracker is null ? converter : new TargetUpdateTrackingConverter(converter, targetUpdateTracker, stringFormat, targetNullValue, fallbackValue);
+					: targetUpdateTracker is null
+						? converter
+						: new TargetUpdateTrackingConverter(converter, targetUpdateTracker, stringFormat, targetNullValue, fallbackValue);
 				var binding = new Binding(
 					path ?? Binding.SelfPath,
 					GetTargetUpdateBindingMode(resolvedMode),
@@ -318,13 +320,13 @@ public static partial class TypedBindingExtensions
 		}
 	}
 
-	static BindingMode ResolveBindingMode(BindableProperty targetProperty, BindingMode mode)
+	static BindingMode GetBindingMode(BindableProperty targetProperty, BindingMode mode)
 		=> mode is BindingMode.Default ? targetProperty.DefaultBindingMode : mode;
 
-	static bool UpdatesTarget(BindingMode mode)
+	static bool DoesUpdateTarget(BindingMode mode)
 		=> mode is BindingMode.OneWay or BindingMode.TwoWay or BindingMode.OneTime;
 
-	static bool UpdatesSource(BindingMode mode)
+	static bool DoesUpdateSource(BindingMode mode)
 		=> mode is BindingMode.TwoWay or BindingMode.OneWayToSource;
 
 	static BindingMode GetTargetUpdateBindingMode(BindingMode mode)
@@ -346,7 +348,7 @@ public static partial class TypedBindingExtensions
 		return (_, args) =>
 		{
 			if (!string.IsNullOrEmpty(args.PropertyName)
-				&& !string.Equals(args.PropertyName, targetProperty.PropertyName, StringComparison.Ordinal))
+			    && !string.Equals(args.PropertyName, targetProperty.PropertyName, StringComparison.Ordinal))
 			{
 				return;
 			}
