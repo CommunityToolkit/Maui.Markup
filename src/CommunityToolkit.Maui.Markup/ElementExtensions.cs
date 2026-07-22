@@ -39,12 +39,6 @@ public static class ElementExtensions
 	/// <inheritdoc cref="Paddings{TVisualElement}(TVisualElement, double, double, double, double)" />
 	public static Page Paddings(this Page paddingElement, double left = 0, double top = 0, double right = 0, double bottom = 0) => SetPadding(paddingElement, new Thickness(left, top, right, bottom));
 
-	static TElement SetPadding<TElement>(TElement paddingElement, Thickness padding) where TElement : BindableObject
-	{
-		paddingElement.SetValue(BindablePropertyHelpers.GetPaddingProperty(paddingElement), padding);
-		return paddingElement;
-	}
-
 	/// <summary>
 	/// Remove Dynamic Resource
 	/// </summary>
@@ -85,7 +79,7 @@ public static class ElementExtensions
 	/// <typeparam name="TBindable"></typeparam>
 	/// <param name="fontElement"></param>
 	/// <param name="size"></param>
-	/// <returns></returns>
+	/// <returns>Element with updated font size</returns>
 	public static TBindable FontSize<TBindable>(this TBindable fontElement, double size) where TBindable : BindableObject, ITextStyle => SetFontSize(fontElement, size);
 
 	/// <inheritdoc cref="FontSize{TBindable}(TBindable, double)" />
@@ -154,14 +148,14 @@ public static class ElementExtensions
 		double? size = null,
 		bool? bold = null,
 		bool? italic = null) => SetFont(fontElement, family, size, bold, italic);
-	
+
 	/// <summary>
 	/// Sets <see cref="ITextStyle.TextColor"/> Property
 	/// </summary>
 	/// <typeparam name="TBindable"><see cref="BindableObject"/></typeparam>
 	/// <param name="bindable">Element</param>
 	/// <param name="textColor">Text <see cref="Color"/></param>
-	/// <returns></returns>
+	/// <returns>Element with updated text color</returns>
 	public static TBindable TextColor<TBindable>(this TBindable bindable, Color? textColor) where TBindable : BindableObject, ITextStyle
 	{
 		if (bindable is MenuItem)
@@ -180,10 +174,39 @@ public static class ElementExtensions
 	/// <typeparam name="TBindable"><see cref="BindableObject"/></typeparam>
 	/// <param name="bindable">Element</param>
 	/// <param name="text"></param>
-	/// <returns></returns>
+	/// <returns>Element with updated text</returns>
 	public static TBindable Text<TBindable>(this TBindable bindable, string? text) where TBindable : BindableObject, IText
 	{
-		bindable.SetValue(Label.TextProperty, text);
+		switch (bindable)
+		{
+			case ILabel:
+				bindable.SetValue(Label.TextProperty, text);
+				break;
+
+			case IButton:
+				bindable.SetValue(Button.TextProperty, text);
+				break;
+
+			case MenuItem:
+				bindable.SetValue(MenuItem.TextProperty, text);
+				break;
+
+			case IEditor:
+				bindable.SetValue(Editor.TextProperty, text);
+				break;
+
+			case IEntry:
+				bindable.SetValue(Entry.TextProperty, text);
+				break;
+
+			case ISearchBar:
+				bindable.SetValue(SearchBar.TextProperty, text);
+				break;
+
+			default:
+				throw new NotSupportedException($"{typeof(TBindable)} is not supported");
+		}
+
 		return bindable;
 	}
 
@@ -194,6 +217,7 @@ public static class ElementExtensions
 	/// <param name="bindable">Element</param>
 	/// <param name="text"></param>
 	/// <param name="textColor">Text <see cref="Color"/></param>
+	/// <returns>Element with updated text and text color</returns>
 	public static TBindable Text<TBindable>(this TBindable bindable, string? text, Color? textColor) where TBindable : BindableObject, IText
 	{
 		return bindable.Text(text).TextColor(textColor);
@@ -246,5 +270,11 @@ public static class ElementExtensions
 		}
 
 		return fontElement;
+	}
+	
+	static TElement SetPadding<TElement>(TElement paddingElement, Thickness padding) where TElement : BindableObject
+	{
+		paddingElement.SetValue(BindablePropertyHelpers.GetPaddingProperty(paddingElement), padding);
+		return paddingElement;
 	}
 }
