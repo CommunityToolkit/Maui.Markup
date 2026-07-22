@@ -164,11 +164,7 @@ public static partial class TypedBindingExtensions
 		where TBindable : BindableObject
 		where TBindingContext : class?
 	{
-		var converter = (convert, convertBack) switch
-		{
-			(null, null) => null,
-			_ => new FuncConverter<TSource, TDest, TParam>(convert, convertBack)
-		};
+		var converter = CreateTypedBindingFuncConverter(convert, convertBack);
 
 		return SetTypedBinding(bindable,
 			targetProperty,
@@ -331,6 +327,13 @@ public static partial class TypedBindingExtensions
 
 	static BindingMode GetTargetUpdateBindingMode(BindingMode mode)
 		=> mode is BindingMode.OneTime ? BindingMode.OneTime : BindingMode.OneWay;
+
+	static IValueConverter? CreateTypedBindingFuncConverter<TSource, TDest, TParam>(
+		Func<TSource?, TParam?, TDest>? convert,
+		Func<TDest?, TParam?, TSource>? convertBack)
+		=> convert is null && convertBack is null
+			? null
+			: new TypedBindingFuncConverter<TSource, TDest, TParam>(convert, convertBack);
 
 	static PropertyChangedEventHandler CreateSourceUpdateHandler<TBindingContext, TSource, TParam>(
 		BindableObject bindable,
@@ -503,6 +506,23 @@ public static partial class TypedBindingExtensions
 	}
 
 	sealed record SourceUpdateHandlers(PropertyChangedEventHandler PropertyChangedHandler, EventHandler? BindingContextChangedHandler);
+
+	sealed class TypedBindingFuncConverter<TSource, TDest, TParam>(
+		Func<TSource?, TParam?, TDest>? convert,
+		Func<TDest?, TParam?, TSource>? convertBack) : IValueConverter
+	{
+		public object? Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
+			=> convert is null
+				? value
+				: convert(value is null ? default : (TSource)value, parameter is null ? default : (TParam)parameter);
+
+		public object? ConvertBack(object? value, Type? targetType, object? parameter, CultureInfo? culture)
+			=> convertBack is null
+				? Binding.DoNothing
+				: convertBack(value is null ? default : (TDest)value, parameter is null ? default : (TParam)parameter);
+
+		public override string? ToString() => new FuncConverter<TSource, TDest, TParam>(convert, convertBack).ToString();
+	}
 
 	sealed class TargetUpdateTracker
 	{

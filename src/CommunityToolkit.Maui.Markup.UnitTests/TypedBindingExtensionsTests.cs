@@ -272,6 +272,8 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	[Test]
 	public void BindWithHandlersAndFuncConversionConvertsTargetValue()
 	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
 		var label = new Label
 		{
 			BindingContext = viewModel
@@ -281,9 +283,15 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 			[
 				(static vm => vm, nameof(ViewModel.HeightRequest))
 			],
+			static (vm, height) => vm.HeightRequest = height,
+			BindingMode.TwoWay,
 			convert: static height => height / 2);
 
 		Assert.That(label.HeightRequest, Is.EqualTo(ViewModel.DefaultHeightRequest / 2));
+
+		label.HeightRequest = 100;
+
+		Assert.That(viewModel.HeightRequest, Is.EqualTo(ViewModel.DefaultHeightRequest));
 	}
 
 	[Test]
@@ -336,6 +344,8 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 			BindingMode.TwoWay,
 			convertBack: static value => value / 4);
 
+		Assert.That(slider.Value, Is.EqualTo(ViewModel.DefaultPercentage));
+
 		slider.Value = 3;
 
 		Assert.That(viewModel.Percentage, Is.EqualTo(0.75));
@@ -358,6 +368,8 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	[Test]
 	public void ExpressionBindWithConvertOnlyConvertsTargetValue()
 	{
+		ArgumentNullException.ThrowIfNull(viewModel);
+
 		var slider = new Slider
 		{
 			BindingContext = viewModel,
@@ -365,9 +377,15 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		}.Bind<Slider, ViewModel, double, double>(
 			Slider.ValueProperty,
 			static vm => vm.Percentage,
+			static (vm, percentage) => vm.Percentage = percentage,
+			BindingMode.TwoWay,
 			convert: static percentage => percentage * 4);
 
 		Assert.That(slider.Value, Is.EqualTo(ViewModel.DefaultPercentage * 4));
+
+		slider.Value = 3;
+
+		Assert.That(viewModel.Percentage, Is.EqualTo(ViewModel.DefaultPercentage));
 	}
 
 	[Test]
@@ -385,6 +403,8 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 			static (vm, percentage) => vm.Percentage = percentage,
 			BindingMode.TwoWay,
 			convertBack: static value => value / 4);
+
+		Assert.That(slider.Value, Is.EqualTo(ViewModel.DefaultPercentage));
 
 		slider.Value = 3;
 

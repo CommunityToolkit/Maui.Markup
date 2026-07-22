@@ -200,11 +200,7 @@ public static partial class TypedBindingExtensions
 	{
 		var getterFunc = ExpressionPathHelpers.ConvertExpressionToFunc(getter);
 		var path = ExpressionPathHelpers.GetMemberPathOrNullForCapturedValue(getter);
-		var converter = (convert, convertBack) switch
-		{
-			(null, null) => null,
-			_ => new FuncConverter<TSource, TDest, TParam>(convert, convertBack)
-		};
+		var converter = CreateTypedBindingFuncConverter(convert, convertBack);
 
 		return SetTypedBinding(
 			bindable,
