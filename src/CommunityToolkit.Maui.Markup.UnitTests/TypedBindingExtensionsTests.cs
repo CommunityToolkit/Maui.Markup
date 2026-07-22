@@ -219,6 +219,17 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 	}
 
 	[Test]
+	public void StaticMemberGetterBindingEvaluatesGetterAsCapturedValue()
+	{
+		var label = new Label
+		{
+			BindingContext = viewModel
+		}.Bind(Label.TextColorProperty, static (ViewModel _) => Colors.Fuchsia);
+
+		Assert.That(label.TextColor, Is.EqualTo(Colors.Fuchsia));
+	}
+
+	[Test]
 	public void BoxingConversionGetterUsesMemberPath()
 	{
 		var label = new Label
