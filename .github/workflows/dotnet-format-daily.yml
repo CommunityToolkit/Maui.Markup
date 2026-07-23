@@ -27,12 +27,15 @@ jobs:
           dotnet workload install maui
           dotnet workload update
 
+      - name: Build solution
+        run: dotnet build samples/CommunityToolkit.Maui.Markup.Sample.slnx
+
       # CS0612, CS0618, CS0672, CS1062 and CS1064 are excluded to stop `dotnet format` from applying
       # Roslyn's "Add [Obsolete]" code fix, which adds the [Obsolete] attribute to every member that
       # uses or overrides an obsolete API (see https://github.com/dotnet/format/issues/1230).
       # Excluding them here only affects `dotnet format`; `dotnet build` still reports these warnings.
       - name: Run dotnet format
-        run: dotnet format samples/CommunityToolkit.Maui.Sample.slnx --exclude-diagnostics CS0612 CS0618 CS0672 CS1062 CS1064
+        run: dotnet format samples/CommunityToolkit.Maui.Markup.Sample.slnx --exclude-diagnostics CS0612 CS0618 CS0672 CS1062 CS1064
 
       - name: Check for changes
         id: format
