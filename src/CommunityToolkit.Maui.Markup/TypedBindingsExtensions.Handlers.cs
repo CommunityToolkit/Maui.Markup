@@ -253,8 +253,8 @@ public static partial class TypedBindingExtensions
 		var updatesTarget = DoesUpdateTarget(resolvedMode);
 		var isApplyingBinding = false;
 		var targetUpdateTracker = setter is not null
-		                          && DoesUpdateSource(resolvedMode)
-		                          && updatesTarget ? new TargetUpdateTracker() : null;
+								  && DoesUpdateSource(resolvedMode)
+								  && updatesTarget ? new TargetUpdateTracker() : null;
 
 		ApplyBinding();
 
@@ -351,7 +351,7 @@ public static partial class TypedBindingExtensions
 		return (_, args) =>
 		{
 			if (!string.IsNullOrEmpty(args.PropertyName)
-			    && !string.Equals(args.PropertyName, targetProperty.PropertyName, StringComparison.Ordinal))
+				&& !string.Equals(args.PropertyName, targetProperty.PropertyName, StringComparison.Ordinal))
 			{
 				return;
 			}

@@ -271,7 +271,7 @@ public static class ElementExtensions
 
 		return fontElement;
 	}
-	
+
 	static TElement SetPadding<TElement>(TElement paddingElement, Thickness padding) where TElement : BindableObject
 	{
 		paddingElement.SetValue(BindablePropertyHelpers.GetPaddingProperty(paddingElement), padding);
