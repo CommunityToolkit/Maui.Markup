@@ -5,6 +5,14 @@ namespace CommunityToolkit.Maui.Markup.UnitTests;
 [TestFixture]
 class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 {
+	static readonly TextStyleCase[] textStyleCases =
+	[
+		new("DatePicker", static () => new DatePicker(), DatePicker.FontFamilyProperty, DatePicker.FontSizeProperty, DatePicker.FontAttributesProperty, DatePicker.TextColorProperty, static bindable => ((DatePicker)bindable).Font("AFontName", 8, bold: true, italic: true).TextColor(Colors.Purple)),
+		new("Picker", static () => new Picker(), Picker.FontFamilyProperty, Picker.FontSizeProperty, Picker.FontAttributesProperty, Picker.TextColorProperty, static bindable => ((Picker)bindable).Font("AFontName", 8, bold: true, italic: true).TextColor(Colors.Purple)),
+		new("RadioButton", static () => new RadioButton(), RadioButton.FontFamilyProperty, RadioButton.FontSizeProperty, RadioButton.FontAttributesProperty, RadioButton.TextColorProperty, static bindable => ((RadioButton)bindable).Font("AFontName", 8, bold: true, italic: true).TextColor(Colors.Purple)),
+		new("TimePicker", static () => new TimePicker(), TimePicker.FontFamilyProperty, TimePicker.FontSizeProperty, TimePicker.FontAttributesProperty, TimePicker.TextColorProperty, static bindable => ((TimePicker)bindable).Font("AFontName", 8, bold: true, italic: true).TextColor(Colors.Purple))
+	];
+
 	[Test]
 	public void RemoveDynamicResources()
 	{
@@ -192,26 +200,6 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 	public void TextOnUnsupportedTextElementThrowsNotSupportedException()
 		=> Assert.Throws<NotSupportedException>(() => new UnsupportedTextView().Text("Hello World"));
 
-	static readonly TextStyleCase[] textStyleCases =
-	[
-		new("DatePicker", static () => new DatePicker(), DatePicker.FontFamilyProperty, DatePicker.FontSizeProperty, DatePicker.FontAttributesProperty, DatePicker.TextColorProperty, static bindable => ((DatePicker)bindable).Font("AFontName", 8, bold: true, italic: true).TextColor(Colors.Purple)),
-		new("Picker", static () => new Picker(), Picker.FontFamilyProperty, Picker.FontSizeProperty, Picker.FontAttributesProperty, Picker.TextColorProperty, static bindable => ((Picker)bindable).Font("AFontName", 8, bold: true, italic: true).TextColor(Colors.Purple)),
-		new("RadioButton", static () => new RadioButton(), RadioButton.FontFamilyProperty, RadioButton.FontSizeProperty, RadioButton.FontAttributesProperty, RadioButton.TextColorProperty, static bindable => ((RadioButton)bindable).Font("AFontName", 8, bold: true, italic: true).TextColor(Colors.Purple)),
-		new("TimePicker", static () => new TimePicker(), TimePicker.FontFamilyProperty, TimePicker.FontSizeProperty, TimePicker.FontAttributesProperty, TimePicker.TextColorProperty, static bindable => ((TimePicker)bindable).Font("AFontName", 8, bold: true, italic: true).TextColor(Colors.Purple))
-	];
-
-	public sealed record TextStyleCase(
-		string Name,
-		Func<BindableObject> Create,
-		BindableProperty FontFamilyProperty,
-		BindableProperty FontSizeProperty,
-		BindableProperty FontAttributesProperty,
-		BindableProperty TextColorProperty,
-		Action<BindableObject> ApplyFontAndTextColor)
-	{
-		public override string ToString() => Name;
-	}
-
 	static Label AssertDynamicResources()
 	{
 		var label = new Label
@@ -243,6 +231,18 @@ class ElementExtensionsTests : BaseMarkupTestFixture<Label>
 		});
 
 		return label;
+	}
+
+	public sealed record TextStyleCase(
+		string Name,
+		Func<BindableObject> Create,
+		BindableProperty FontFamilyProperty,
+		BindableProperty FontSizeProperty,
+		BindableProperty FontAttributesProperty,
+		BindableProperty TextColorProperty,
+		Action<BindableObject> ApplyFontAndTextColor)
+	{
+		public override string ToString() => Name;
 	}
 }
 class UnsupportedTextStyleView : View, ITextStyle

@@ -11,14 +11,14 @@ sealed partial class NewsViewModel(
 	readonly WeakEventManager pullToRefreshEventManager = new();
 	readonly SemaphoreSlim insertIntoSortedCollectionSemaphore = new(1, 1);
 
-	[ObservableProperty]
-	public partial bool IsListRefreshing { get; set; }
-
 	public event EventHandler<string> PullToRefreshFailed
 	{
 		add => pullToRefreshEventManager.AddEventHandler(value);
 		remove => pullToRefreshEventManager.RemoveEventHandler(value);
 	}
+
+	[ObservableProperty]
+	public partial bool IsListRefreshing { get; set; }
 
 	public ObservableCollection<StoryModel> TopStoryCollection { get; } = [];
 

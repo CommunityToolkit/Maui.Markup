@@ -58,11 +58,6 @@ class BindableLayoutExtensionsTests : BaseMarkupTestFixture<VerticalStackLayout>
 		TestPropertiesSet(l => l.ItemTemplateSelector(selector), (BindableLayout.ItemTemplateSelectorProperty, selector));
 	}
 
-	class Selector : DataTemplateSelector
-	{
-		protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new(() => new BoxView());
-	}
-
 	[Test]
 	public void SupportDerivedFromView()
 	{
@@ -72,6 +67,11 @@ class BindableLayoutExtensionsTests : BaseMarkupTestFixture<VerticalStackLayout>
 			.ItemsSource(Array.Empty<string>())
 			.ItemTemplate(new DataTemplate(() => new BoxView()))
 			.ItemTemplateSelector(new Selector());
+	}
+
+	class Selector : DataTemplateSelector
+	{
+		protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new(() => new BoxView());
 	}
 
 	class DerivedFromView : VerticalStackLayout

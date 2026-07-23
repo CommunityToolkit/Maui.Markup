@@ -505,6 +505,33 @@ public static partial class TypedBindingExtensions
 		}
 	}
 
+	static object? ApplyTargetValueHandlers(object? targetValue, string? stringFormat, object? targetNullValue, object? fallbackValue, CultureInfo culture)
+	{
+		if (ReferenceEquals(targetValue, Binding.DoNothing))
+		{
+			return Binding.DoNothing;
+		}
+
+		if (ReferenceEquals(targetValue, BindableProperty.UnsetValue))
+		{
+			targetValue = fallbackValue;
+		}
+
+		targetValue ??= targetNullValue;
+
+		return stringFormat is null
+			? targetValue
+			: string.Format(culture, stringFormat, targetValue);
+	}
+
+	static void TrackTargetValue(TargetUpdateTracker? targetUpdateTracker, object? targetValue)
+	{
+		if (!ReferenceEquals(targetValue, Binding.DoNothing))
+		{
+			targetUpdateTracker?.Track(targetValue);
+		}
+	}
+
 	sealed record SourceUpdateHandlers(PropertyChangedEventHandler PropertyChangedHandler, EventHandler? BindingContextChangedHandler);
 
 	sealed class TypedBindingFuncConverter<TSource, TDest, TParam>(
@@ -584,33 +611,6 @@ public static partial class TypedBindingExtensions
 			hasPendingTargetValue = false;
 
 			return isPendingUpdate;
-		}
-	}
-
-	static object? ApplyTargetValueHandlers(object? targetValue, string? stringFormat, object? targetNullValue, object? fallbackValue, CultureInfo culture)
-	{
-		if (ReferenceEquals(targetValue, Binding.DoNothing))
-		{
-			return Binding.DoNothing;
-		}
-
-		if (ReferenceEquals(targetValue, BindableProperty.UnsetValue))
-		{
-			targetValue = fallbackValue;
-		}
-
-		targetValue ??= targetNullValue;
-
-		return stringFormat is null
-			? targetValue
-			: string.Format(culture, stringFormat, targetValue);
-	}
-
-	static void TrackTargetValue(TargetUpdateTracker? targetUpdateTracker, object? targetValue)
-	{
-		if (!ReferenceEquals(targetValue, Binding.DoNothing))
-		{
-			targetUpdateTracker?.Track(targetValue);
 		}
 	}
 

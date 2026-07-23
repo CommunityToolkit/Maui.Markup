@@ -1621,6 +1621,8 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 			Command = new Command(() => TextColor = colors.Skip(Random.Shared.Next(colors.Keys.Count())).First().Value);
 		}
 
+		public event PropertyChangedEventHandler? PropertyChanged;
+
 		public static Color DefaultColor { get; } = Colors.Transparent;
 
 		public bool IsRed => Equals(TextColor, Colors.Red);
@@ -1628,8 +1630,6 @@ class TypedBindingExtensionsTests : BaseMarkupTestFixture
 		public Guid Id { get; } = Guid.NewGuid();
 
 		public ICommand Command { get; }
-
-		public event PropertyChangedEventHandler? PropertyChanged;
 
 		public object? SelectedItem
 		{

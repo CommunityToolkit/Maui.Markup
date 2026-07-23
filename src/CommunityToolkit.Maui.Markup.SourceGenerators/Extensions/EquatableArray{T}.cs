@@ -7,24 +7,6 @@ using System.Runtime.CompilerServices;
 namespace CommunityToolkit.Maui.Markup.SourceGenerators;
 
 /// <summary>
-/// Extensions for <see cref="EquatableArray{T}"/>.
-/// </summary>
-static class EquatableArray
-{
-	/// <summary>
-	/// Creates an <see cref="EquatableArray{T}"/> instance from a given <see cref="ImmutableArray{T}"/>.
-	/// </summary>
-	/// <typeparam name="T">The type of items in the input array.</typeparam>
-	/// <param name="array">The input <see cref="ImmutableArray{T}"/> instance.</param>
-	/// <returns>An <see cref="EquatableArray{T}"/> instance from a given <see cref="ImmutableArray{T}"/>.</returns>
-	public static EquatableArray<T> AsEquatableArray<T>(this ImmutableArray<T> array)
-		where T : IEquatable<T>
-	{
-		return new(array);
-	}
-}
-
-/// <summary>
 /// An imutable, equatable array. This is equivalent to <see cref="ImmutableArray{T}"/> but with value equality support.
 /// </summary>
 /// <typeparam name="T">The type of values in the array.</typeparam>
@@ -43,6 +25,15 @@ readonly struct EquatableArray<T> : IEquatable<EquatableArray<T>>, IEnumerable<T
 	public EquatableArray(ImmutableArray<T> array)
 	{
 		this.array = Unsafe.As<ImmutableArray<T>, T[]?>(ref array);
+	}
+
+	/// <summary>
+	/// Gets a value indicating whether the current array is empty.
+	/// </summary>
+	public bool IsEmpty
+	{
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get => AsImmutableArray().IsEmpty;
 	}
 
 	/// <summary>
@@ -94,15 +85,6 @@ readonly struct EquatableArray<T> : IEquatable<EquatableArray<T>>, IEnumerable<T
 	public static bool operator !=(EquatableArray<T> left, EquatableArray<T> right)
 	{
 		return !left.Equals(right);
-	}
-
-	/// <summary>
-	/// Gets a value indicating whether the current array is empty.
-	/// </summary>
-	public bool IsEmpty
-	{
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		get => AsImmutableArray().IsEmpty;
 	}
 
 	/// <summary>
@@ -186,5 +168,23 @@ readonly struct EquatableArray<T> : IEquatable<EquatableArray<T>>, IEnumerable<T
 	IEnumerator IEnumerable.GetEnumerator()
 	{
 		return ((IEnumerable)AsImmutableArray()).GetEnumerator();
+	}
+}
+
+/// <summary>
+/// Extensions for <see cref="EquatableArray{T}"/>.
+/// </summary>
+static class EquatableArray
+{
+	/// <summary>
+	/// Creates an <see cref="EquatableArray{T}"/> instance from a given <see cref="ImmutableArray{T}"/>.
+	/// </summary>
+	/// <typeparam name="T">The type of items in the input array.</typeparam>
+	/// <param name="array">The input <see cref="ImmutableArray{T}"/> instance.</param>
+	/// <returns>An <see cref="EquatableArray{T}"/> instance from a given <see cref="ImmutableArray{T}"/>.</returns>
+	public static EquatableArray<T> AsEquatableArray<T>(this ImmutableArray<T> array)
+		where T : IEquatable<T>
+	{
+		return new(array);
 	}
 }

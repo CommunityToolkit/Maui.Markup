@@ -5,6 +5,11 @@ using NUnit.Framework;
 using Unique.Namespace.To.Test.Interface;
 namespace CommunityToolkit.Maui.Markup.UnitTests
 {
+	interface IMyEntry
+	{
+		string Type { get; set; }
+	}
+
 	[TestFixture]
 	class TextAlignmentExtensionsTests : BaseMarkupTestFixture<Picker>
 	{
@@ -262,11 +267,6 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 	{
 		public string Type { get; set; } = string.Empty;
 	}
-
-	interface IMyEntry
-	{
-		string Type { get; set; }
-	}
 }
 
 namespace CommunityToolkit.Maui.Markup.UnitTests
@@ -425,24 +425,27 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 namespace CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions
 {
+	// Ensures custom ITextAlignment interfaces are supported
+	interface ICustomTextAlignment : ITextAlignment
+	{
+
+	}
+
+	public readonly record struct RecordStructContstraint
+	{
+
+	}
+
+	public struct StructConstraint
+	{
+
+	}
+
 	public class PublicTextAlignmentView : View, ICustomTextAlignment
 	{
 		public TextAlignment HorizontalTextAlignment { get; set; }
 
 		public TextAlignment VerticalTextAlignment { get; set; }
-	}
-
-	class InternalTextAlignmentView : View, ICustomTextAlignment
-	{
-		public TextAlignment HorizontalTextAlignment { get; set; }
-
-		public TextAlignment VerticalTextAlignment { get; set; }
-	}
-
-	// Ensures custom ITextAlignment interfaces are supported
-	interface ICustomTextAlignment : ITextAlignment
-	{
-
 	}
 
 	public class ClassConstraintWithInterface : ISomeInterface
@@ -455,28 +458,7 @@ namespace CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions
 
 	}
 
-	class MyGenericPicker<T> : Picker
-	{
-
-	}
-
 	public record RecordClassContstraint
-	{
-
-	}
-
-
-	public readonly record struct RecordStructContstraint
-	{
-
-	}
-
-	class MoreGenericPicker<T> : MyGenericPicker<T>
-	{
-
-	}
-
-	public struct StructConstraint
 	{
 
 	}
@@ -499,6 +481,23 @@ namespace CommunityToolkit.Maui.UnitTests.Extensions.TextAlignmentExtensions
 		public TextAlignment HorizontalTextAlignment { get; set; }
 
 		public TextAlignment VerticalTextAlignment { get; set; }
+	}
+
+	class InternalTextAlignmentView : View, ICustomTextAlignment
+	{
+		public TextAlignment HorizontalTextAlignment { get; set; }
+
+		public TextAlignment VerticalTextAlignment { get; set; }
+	}
+
+	class MyGenericPicker<T> : Picker
+	{
+
+	}
+
+	class MoreGenericPicker<T> : MyGenericPicker<T>
+	{
+
 	}
 
 	class BrandNewControl : View, ITextAlignment

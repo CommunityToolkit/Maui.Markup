@@ -4,6 +4,8 @@ namespace CommunityToolkit.Maui.Markup.Sample.Views.News;
 
 class StoryDataTemplate() : DataTemplate(CreateGrid)
 {
+	enum Row { Title, Description, BottomPadding }
+
 	static Grid CreateGrid() => new()
 	{
 		RowSpacing = 1,
@@ -29,6 +31,4 @@ class StoryDataTemplate() : DataTemplate(CreateGrid)
 				.SemanticHint("The description of the news article.")
 		}
 	};
-
-	enum Row { Title, Description, BottomPadding }
 }

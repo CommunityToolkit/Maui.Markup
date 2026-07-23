@@ -24,6 +24,37 @@ public static class GridRowsColumns
 	public static GridLength Stars(double value) => new(value, GridUnitType.Star);
 
 	/// <summary>
+	/// Get Enum Value Count
+	/// </summary>
+	/// <typeparam name="TEnum"></typeparam>
+	/// <returns>Count of enum values</returns>
+	/// <exception cref="ArgumentNullException"></exception>
+	/// <exception cref="InvalidOperationException"></exception>
+	public static int All<TEnum>() where TEnum : struct, Enum
+	{
+		var values = Enum.GetValues<TEnum>();
+		int span = 1 + (int)(values.GetValue(values.Length - 1) ?? throw new InvalidOperationException("Value Not Found"));
+
+		return span;
+	}
+
+	/// <summary>
+	/// Get Last Enum value
+	/// </summary>
+	/// <typeparam name="TEnum"></typeparam>
+	/// <returns>Last value in Enum</returns>
+	/// <exception cref="InvalidOperationException"></exception>
+	public static int Last<TEnum>() where TEnum : struct, Enum
+	{
+		var values = Enum.GetValues<TEnum>();
+		int last = (int)(values.GetValue(values.Length - 1) ?? throw new InvalidOperationException("Value Not Found"));
+
+		return last;
+	}
+
+	static int ToInt(this Enum enumValue) => Convert.ToInt32(enumValue, CultureInfo.InvariantCulture);
+
+	/// <summary>
 	/// Grid Columns
 	/// </summary>
 	public static class Columns
@@ -118,35 +149,4 @@ public static class GridRowsColumns
 			return rowDefinitions;
 		}
 	}
-
-	/// <summary>
-	/// Get Enum Value Count
-	/// </summary>
-	/// <typeparam name="TEnum"></typeparam>
-	/// <returns>Count of enum values</returns>
-	/// <exception cref="ArgumentNullException"></exception>
-	/// <exception cref="InvalidOperationException"></exception>
-	public static int All<TEnum>() where TEnum : struct, Enum
-	{
-		var values = Enum.GetValues<TEnum>();
-		int span = 1 + (int)(values.GetValue(values.Length - 1) ?? throw new InvalidOperationException("Value Not Found"));
-
-		return span;
-	}
-
-	/// <summary>
-	/// Get Last Enum value
-	/// </summary>
-	/// <typeparam name="TEnum"></typeparam>
-	/// <returns>Last value in Enum</returns>
-	/// <exception cref="InvalidOperationException"></exception>
-	public static int Last<TEnum>() where TEnum : struct, Enum
-	{
-		var values = Enum.GetValues<TEnum>();
-		int last = (int)(values.GetValue(values.Length - 1) ?? throw new InvalidOperationException("Value Not Found"));
-
-		return last;
-	}
-
-	static int ToInt(this Enum enumValue) => Convert.ToInt32(enumValue, CultureInfo.InvariantCulture);
 }

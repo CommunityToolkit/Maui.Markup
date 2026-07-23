@@ -39,13 +39,13 @@ sealed class MockDispatcherProvider : IDispatcherProvider, IDisposable
 	{
 		Timer? timer;
 
+		public event EventHandler? Tick;
+
 		public TimeSpan Interval { get; set; }
 
 		public bool IsRepeating { get; set; }
 
 		public bool IsRunning => timer != null;
-
-		public event EventHandler? Tick;
 
 		public void Start()
 		{

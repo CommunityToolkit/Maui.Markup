@@ -13,6 +13,17 @@ sealed partial class NewsDetailViewModel(IBrowser browser) : BaseViewModel, IQue
 	[ObservableProperty]
 	public partial string ScoreDescription { get; set; } = string.Empty;
 
+	void IQueryAttributable.ApplyQueryAttributes(IDictionary<string, object> query)
+	{
+		var url = (string)query[nameof(Uri)];
+		var title = (string)query[nameof(Title)];
+		var scoreDescription = (string)query[nameof(ScoreDescription)];
+
+		Uri = new Uri(url);
+		Title = title;
+		ScoreDescription = scoreDescription;
+	}
+
 	[RelayCommand]
 	Task OpenBrowser()
 	{
@@ -24,16 +35,5 @@ sealed partial class NewsDetailViewModel(IBrowser browser) : BaseViewModel, IQue
 		};
 
 		return browser.OpenAsync(Uri, browserOptions);
-	}
-
-	void IQueryAttributable.ApplyQueryAttributes(IDictionary<string, object> query)
-	{
-		var url = (string)query[nameof(Uri)];
-		var title = (string)query[nameof(Title)];
-		var scoreDescription = (string)query[nameof(ScoreDescription)];
-
-		Uri = new Uri(url);
-		Title = title;
-		ScoreDescription = scoreDescription;
 	}
 }

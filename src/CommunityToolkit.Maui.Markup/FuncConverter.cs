@@ -204,14 +204,14 @@ public class NotConverter : FuncConverter<bool, bool>
 	static readonly Lazy<NotConverter> instance = new(() => new NotConverter());
 
 	/// <summary>
-	/// Gets a singleton instance of the <see cref="NotConverter" />.
-	/// </summary>
-	public static NotConverter Instance => instance.Value;
-
-	/// <summary>
 	/// Initializes a new instance of <see cref="NotConverter" />.
 	/// </summary>
 	public NotConverter() : base(t => !t, t => !t)
 	{
 	}
+
+	/// <summary>
+	/// Gets a singleton instance of the <see cref="NotConverter" />.
+	/// </summary>
+	public static NotConverter Instance => instance.Value;
 }

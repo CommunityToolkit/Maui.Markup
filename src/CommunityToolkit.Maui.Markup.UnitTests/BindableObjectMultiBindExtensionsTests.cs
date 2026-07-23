@@ -462,10 +462,6 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 		AssertLabelTextMultiBound(label, 5, testConvert, testConvertBack, 2, converter);
 	}
 
-	List<BindingBase> GetTestBindings(int count) => testBindings?.Take(count).ToList() ?? [];
-
-	object[] GetTestConvertValues(int count) => testConvertValues?.Take(count).ToArray() ?? [];
-
 	static string PrefixDots(object? value, int count) => $"{new string('.', count)}{value}";
 
 	static string RemoveDots(string text, int count) => text[count..];
@@ -493,6 +489,10 @@ class BindableObjectMultiBindExtensionsTests : BaseMarkupTestFixture
 			n > 7 ? double.Parse(split[7]) : 0,
 			n > 9 ? int.Parse(split[9]) : 0);
 	}
+
+	List<BindingBase> GetTestBindings(int count) => testBindings?.Take(count).ToList() ?? [];
+
+	object[] GetTestConvertValues(int count) => testConvertValues?.Take(count).ToArray() ?? [];
 
 	void AssertLabelTextMultiBound(Label label, int nBindings, bool testConvert, bool testConvertBack, int parameter, IMultiValueConverter? converter = null)
 	{

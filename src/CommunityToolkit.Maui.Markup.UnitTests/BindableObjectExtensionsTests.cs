@@ -822,21 +822,6 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 			});
 		}
 
-		sealed class ViewModel
-		{
-			public Guid Id { get; set; }
-
-			public ICommand? Command { get; set; }
-
-			public string? Text { get; set; }
-
-			public Color TextColor { get; set; } = Colors.Transparent;
-
-			public bool IsRed { get; set; }
-
-			public double HeightRequest { get; set; }
-		}
-
 		internal class OuterViewModel
 		{
 			internal NestedViewModel NestedObject { get; } = new();
@@ -844,6 +829,8 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 		internal class NestedViewModel : INotifyPropertyChanged
 		{
+			public event PropertyChangedEventHandler? PropertyChanged;
+
 			public string? Text
 			{
 				get;
@@ -864,8 +851,21 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 
 			void OnPropertyChanged([CallerMemberName] string propertyName = "") =>
 				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
 
-			public event PropertyChangedEventHandler? PropertyChanged;
+		sealed class ViewModel
+		{
+			public Guid Id { get; set; }
+
+			public ICommand? Command { get; set; }
+
+			public string? Text { get; set; }
+
+			public Color TextColor { get; set; } = Colors.Transparent;
+
+			public bool IsRed { get; set; }
+
+			public double HeightRequest { get; set; }
 		}
 	}
 }

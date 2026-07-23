@@ -7,19 +7,6 @@
 public class Style<T> where T : BindableObject
 {
 	/// <summary>
-	/// Converts <see cref="CommunityToolkit.Maui.Markup.Style{T}"/> to <see cref="Microsoft.Maui.Controls.Style"/>
-	/// </summary>
-	/// <param name="style"></param>
-	public static implicit operator Style(Style<T> style) => style.MauiStyle;
-
-	/// <summary>
-	/// Converts <see cref="Microsoft.Maui.Controls.Style"/> to <see cref="CommunityToolkit.Maui.Markup.Style{T}"/>
-	/// </summary>
-	/// <param name="style"></param>
-	/// <returns></returns>
-	public static implicit operator Style<T>(Style style) => new(style);
-
-	/// <summary>
 	/// Initialize Style
 	/// </summary>
 	/// <param name="property">"The <see cref="BindableProperty"/> to mauiStyle </param>
@@ -57,6 +44,19 @@ public class Style<T> where T : BindableObject
 	/// Style(typeof(T))
 	/// </summary>
 	public Style MauiStyle { get; }
+
+	/// <summary>
+	/// Converts <see cref="CommunityToolkit.Maui.Markup.Style{T}"/> to <see cref="Microsoft.Maui.Controls.Style"/>
+	/// </summary>
+	/// <param name="style"></param>
+	public static implicit operator Style(Style<T> style) => style.MauiStyle;
+
+	/// <summary>
+	/// Converts <see cref="Microsoft.Maui.Controls.Style"/> to <see cref="CommunityToolkit.Maui.Markup.Style{T}"/>
+	/// </summary>
+	/// <param name="style"></param>
+	/// <returns></returns>
+	public static implicit operator Style<T>(Style style) => new(style);
 
 	/// <summary>
 	/// Apply to derived types
