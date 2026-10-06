@@ -29,7 +29,7 @@ public class MauiProgram
 		builder.Services.AddSingleton<SettingsService>();
 		builder.Services.AddSingleton(Preferences.Default);
 		builder.Services.AddSingleton<HackerNewsAPIService>();
-		builder.Services.AddRefitClient<IHackerNewsApi>()
+		builder.Services.AddRefitGeneratedClient<IHackerNewsApi>()
 			.ConfigureHttpClient(client => client.BaseAddress = new Uri("https://hacker-news.firebaseio.com/v0"))
 			.AddStandardResilienceHandler(options => options.Retry = new MobileHttpRetryStrategyOptions());
 
