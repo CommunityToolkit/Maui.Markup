@@ -353,7 +353,8 @@ public static class StyleExtensions
 			return false;
 		}
 
-		// A style can be applied if the element's type is or derives from the TargetType
-		return style.TargetType.IsAssignableFrom(targetObjectType);
+		// Exact target types always apply; subclasses require ApplyToDerivedTypes.
+		return style.TargetType == targetObjectType ||
+			(style.ApplyToDerivedTypes && targetObjectType.IsSubclassOf(style.TargetType));
 	}
 }
