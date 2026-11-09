@@ -62,12 +62,14 @@ abstract class BaseTestFixture
 		var mauiApp = appBuilder.Build();
 
 		var application = (MockApplication)mauiApp.Services.GetRequiredService<IApplication>();
-		application.OpenWindow(new Window());
 		serviceProvider = mauiApp.Services;
 
 		IPlatformApplication.Current = application;
 
 		application.Handler = new ApplicationHandlerStub();
 		application.Handler.SetMauiContext(new HandlersContextStub(mauiApp.Services));
+
+		// Application.OpenWindow relies on the Handler to add the Window to Application.Windows, so the Handler must be set first
+		application.OpenWindow(new Window());
 	}
 }
