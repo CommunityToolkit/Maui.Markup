@@ -8,6 +8,7 @@
     <File Path="../.editorconfig" />
     <File Path="../Directory.Build.props" />
     <File Path="../global.json" />
+    <File Path="..\..\CommunityToolkit.Maui\Directory.Build.targets" />
   </Folder>
   <Project Path="../src/CommunityToolkit.Maui.Markup.Benchmarks/CommunityToolkit.Maui.Markup.Benchmarks.csproj" />
   <Project Path="../src/CommunityToolkit.Maui.Markup.SourceGenerators/CommunityToolkit.Maui.Markup.SourceGenerators.csproj" />

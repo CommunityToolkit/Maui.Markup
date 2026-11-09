@@ -18,7 +18,7 @@ env:
   # When we create a tag, we set the NuGet version to the tag number, the below values are only for PR builds.
   CurrentSemanticVersionBase: '99.0.0' # Only used for PR builds
   NugetPackageVersion: '99.0.0-preview${{ github.run_number }}' # Only used for PR builds
-  NET_VERSION: '10.0.x'
+  NET_VERSION: '11.0.x'
   RunPoliCheck: false
   PathToLibrarySolution: 'src/CommunityToolkit.Maui.Markup.slnx'
   PathToSamplesSolution: 'samples/CommunityToolkit.Maui.Markup.Sample.slnx'

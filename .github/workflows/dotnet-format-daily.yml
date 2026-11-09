@@ -14,8 +14,8 @@ jobs:
       - name: Install .NET SDK
         uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
         with:
-          dotnet-version: '10.0.x'
-          dotnet-quality: 'ga'
+          dotnet-version: '11.0.x'
+          dotnet-quality: 'preview'
 
       - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
         with:
