@@ -341,4 +341,19 @@ class StyleTests : BaseMarkupTestFixture
 	}
 
 	class LabelBehavior : Behavior<Label>;
+
+}
+
+public static class StyleExtensions
+{
+	public static bool CanBeAppliedTo(this Style? style, Type? targetObjectType)
+	{
+		if (style is null || targetObjectType is null)
+		{
+			return false;
+		}
+
+		// A style can be applied if the element's type is or derives from the TargetType
+		return style.TargetType.IsAssignableFrom(targetObjectType);
+	}
 }

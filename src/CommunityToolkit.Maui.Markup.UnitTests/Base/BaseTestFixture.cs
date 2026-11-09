@@ -62,7 +62,7 @@ abstract class BaseTestFixture
 		var mauiApp = appBuilder.Build();
 
 		var application = (MockApplication)mauiApp.Services.GetRequiredService<IApplication>();
-		application.AddWindow(new Window());
+		application.OpenWindow(new Window());
 		serviceProvider = mauiApp.Services;
 
 		IPlatformApplication.Current = application;

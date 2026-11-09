@@ -19,7 +19,7 @@ public static class ApplicationTestHelpers
 
 			ArgumentNullException.ThrowIfNull(Application.Current);
 
-			Application.Current.AddWindow(new Window(new ContentPage
+			Application.Current.OpenWindow(new Window(new ContentPage
 			{
 				Content = bindable
 			}));
@@ -30,7 +30,7 @@ public static class ApplicationTestHelpers
 		}
 		finally
 		{
-			Application.ClearCurrent();
+			Application.Current = null;
 		}
 	}
 }
