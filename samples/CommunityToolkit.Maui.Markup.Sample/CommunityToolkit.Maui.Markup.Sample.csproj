@@ -82,10 +82,4 @@
     <TrimmerRootAssembly Include="CommunityToolkit.Maui" RootMode="All"/>
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Platforms\MacCatalyst\SceneDelegate.cs">
-      <ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
-    </Compile>
-  </ItemGroup>
-
 </Project>
