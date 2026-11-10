@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Nullable>enable</Nullable>
     <NoWarn>NETSDK1023</NoWarn>
-    <NetVersion>net10.0</NetVersion>
+    <NetVersion>net11.0</NetVersion>
     <LangVersion>preview</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
@@ -20,7 +20,7 @@
     <NuGetAuditMode>all</NuGetAuditMode>
 
     <!-- MAUI Specific -->
-    <MauiPackageVersion>10.0.120</MauiPackageVersion>
+    <MauiPackageVersion>11.0.0</MauiPackageVersion>
     <MauiCommunityToolkitPackageVersion>16.0.0</MauiCommunityToolkitPackageVersion>
     <MauiStrictXamlCompilation>true</MauiStrictXamlCompilation>
     <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
@@ -100,7 +100,4 @@
     <InternalsVisibleTo Include="CommunityToolkit.Maui.Markup.UnitTests" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(TF_BUILD)' == 'true' and $([MSBuild]::IsOSPlatform('windows')) == 'true'">
-    <IncludeTizenTargetFrameworks>true</IncludeTizenTargetFrameworks>
-  </PropertyGroup>
 </Project>

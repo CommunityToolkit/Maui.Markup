@@ -341,4 +341,20 @@ class StyleTests : BaseMarkupTestFixture
 	}
 
 	class LabelBehavior : Behavior<Label>;
+
+}
+
+public static class StyleExtensions
+{
+	public static bool CanBeAppliedTo(this Style? style, Type? targetObjectType)
+	{
+		if (style is null || targetObjectType is null)
+		{
+			return false;
+		}
+
+		// Exact target types always apply; subclasses require ApplyToDerivedTypes.
+		return style.TargetType == targetObjectType ||
+			(style.ApplyToDerivedTypes && targetObjectType.IsSubclassOf(style.TargetType));
+	}
 }

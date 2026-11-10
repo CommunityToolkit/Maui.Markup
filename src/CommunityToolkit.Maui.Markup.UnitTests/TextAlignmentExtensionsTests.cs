@@ -15,34 +15,34 @@ namespace CommunityToolkit.Maui.Markup.UnitTests
 	{
 		[Test]
 		public void TextStart()
-			=> TestPropertiesSet(l => l.TextStart(), (TextAlignmentElement.HorizontalTextAlignmentProperty, TextAlignment.End, TextAlignment.Start));
+			=> TestPropertiesSet(l => l.TextStart(), (Picker.HorizontalTextAlignmentProperty, TextAlignment.End, TextAlignment.Start));
 
 		[Test]
 		public void TextCenterHorizontal()
-			=> TestPropertiesSet(l => l.TextCenterHorizontal(), (TextAlignmentElement.HorizontalTextAlignmentProperty, TextAlignment.Start, TextAlignment.Center));
+			=> TestPropertiesSet(l => l.TextCenterHorizontal(), (Picker.HorizontalTextAlignmentProperty, TextAlignment.Start, TextAlignment.Center));
 
 		[Test]
 		public void TextEnd()
-			=> TestPropertiesSet(l => l.TextEnd(), (TextAlignmentElement.HorizontalTextAlignmentProperty, TextAlignment.Start, TextAlignment.End));
+			=> TestPropertiesSet(l => l.TextEnd(), (Picker.HorizontalTextAlignmentProperty, TextAlignment.Start, TextAlignment.End));
 
 		[Test]
 		public void TextTop()
-			=> TestPropertiesSet(l => l.TextTop(), (TextAlignmentElement.VerticalTextAlignmentProperty, TextAlignment.End, TextAlignment.Start));
+			=> TestPropertiesSet(l => l.TextTop(), (Picker.VerticalTextAlignmentProperty, TextAlignment.End, TextAlignment.Start));
 
 		[Test]
 		public void TextCenterVertical()
-			=> TestPropertiesSet(l => l.TextCenterVertical(), (TextAlignmentElement.VerticalTextAlignmentProperty, TextAlignment.Start, TextAlignment.Center));
+			=> TestPropertiesSet(l => l.TextCenterVertical(), (Picker.VerticalTextAlignmentProperty, TextAlignment.Start, TextAlignment.Center));
 
 		[Test]
 		public void TextBottom()
-			=> TestPropertiesSet(l => l.TextBottom(), (TextAlignmentElement.VerticalTextAlignmentProperty, TextAlignment.Start, TextAlignment.End));
+			=> TestPropertiesSet(l => l.TextBottom(), (Picker.VerticalTextAlignmentProperty, TextAlignment.Start, TextAlignment.End));
 
 		[Test]
 		public void TextCenter()
 			=> TestPropertiesSet(
 					l => l.TextCenter(),
-					(TextAlignmentElement.HorizontalTextAlignmentProperty, TextAlignment.Start, TextAlignment.Center),
-					(TextAlignmentElement.VerticalTextAlignmentProperty, TextAlignment.Start, TextAlignment.Center));
+					(Picker.HorizontalTextAlignmentProperty, TextAlignment.Start, TextAlignment.Center),
+					(Picker.VerticalTextAlignmentProperty, TextAlignment.Start, TextAlignment.Center));
 
 		[Test]
 		public void PublicTextAlignmentView()
