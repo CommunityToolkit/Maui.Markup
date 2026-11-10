@@ -26,7 +26,6 @@ env:
   PathToCommunityToolkitSampleCsproj: 'samples/CommunityToolkit.Maui.Markup.Sample/CommunityToolkit.Maui.Markup.Sample.csproj'
   PathToCommunityToolkitUnitTestCsproj: 'src/CommunityToolkit.Maui.Markup.UnitTests/CommunityToolkit.Maui.Markup.UnitTests.csproj'
   PathToCommunityToolkitSourceGeneratorsCsproj: 'src/CommunityToolkit.Maui.Markup.SourceGenerators/CommunityToolkit.Maui.Markup.SourceGenerators.csproj'
-  Xcode_Version: '27.0'
   ShouldCheckDependencies: true
 
 concurrency:
@@ -44,12 +43,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      - name: Set Latest Xcode Version
-        if: runner.os == 'macOS'
-        uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1
-        with:
-          xcode-version: ${{ env.Xcode_Version }}
 
       - name: Install Latest .NET SDK, v${{ env.NET_VERSION }}
         uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
@@ -95,12 +88,6 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         run: echo "NugetPackageVersion=${{ env.CurrentSemanticVersionBase }}-build-${{ github.event.pull_request.number }}.${{ github.run_number }}+${{ github.sha }}"  >> $GITHUB_ENV
         shell: bash
-
-      - name: Set Xcode Version
-        if: runner.os == 'macOS'
-        uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1
-        with:
-          xcode-version: ${{ env.Xcode_Version }}
 
       - name: Install .NET SDK v${{ env.NET_VERSION }}
         uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
