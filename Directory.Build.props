@@ -20,7 +20,7 @@
     <NuGetAuditMode>all</NuGetAuditMode>
 
     <!-- MAUI Specific -->
-    <MauiPackageVersion>11.0.0</MauiPackageVersion>
+    <MauiPackageVersion>11.0.10</MauiPackageVersion>
     <MauiCommunityToolkitPackageVersion>16.0.0</MauiCommunityToolkitPackageVersion>
     <MauiStrictXamlCompilation>true</MauiStrictXamlCompilation>
     <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
