@@ -7,5 +7,5 @@ namespace CommunityToolkit.Maui.Markup.Sample;
 [Register(nameof(SceneDelegate))]
 public class SceneDelegate : MauiUISceneDelegate
 {
-	
+
 }
